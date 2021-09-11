@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="WPFPages.UserControls.ImgButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		 xmlns:local="clr-namespace:WPFPages.UserControls"
+             xmlns:conv="clr-namespace:WPFPages.Converts"
+             mc:Ignorable="d"
+  		 DataContext="ImgButton"
+		 x:Name="Imgbutton"
+             d:DesignHeight="125" Width="348">
+
+      <UserControl.Resources>
+            <conv:ResetTextWidth x:Key="resetTextWidth" />
+            <conv:PadImgConverter x:Key="padImgConverter" />
+            <conv:PadTextBlock x:Key="padTextblock" />
+            <conv:TextWidthMinus10Percent x:Key="ReduceTextwidthConverter" />
+            <conv:PadImageBase x:Key="padImageBase" />
+
+            <!--<wpfpages:DesignTimeResourceDictionary DesignTimeSource="pack://application:,,,/ColorsDictionary.xml" x:Key="DesignDict" />-->
+
+            <Style x:Key="TextBlockStye1"
+			 TargetType="TextBlock">
+                  <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                              <Setter Property="Opacity" Value="1" />
+                              <Setter Property="Width" Value="{Binding ActualWidth, ElementName=TxtCell}" />
+                              <Setter Property="Height" Value="{Binding ActualHeight, ElementName=TxtCell}" />
+                        </Trigger>
+                  </Style.Triggers>
+            </Style>
+
+            <!--<ControlTemplate x:Key="ImgButtonTemplate" TargetType="Button">
+		</ControlTemplate>-->
+      </UserControl.Resources>
+
+      <Grid x:Name="OuterGrid"
+ 	      MouseEnter="RectBtn_MouseEnter"
+	      MouseLeave="RectBtn_MouseLeave"
+  		Margin="4,-13,0,-23">
+
+
+            <!--This is full external size as displayed--> 
+            <Grid x:Name="InnerGrid"
+                  Background="Transparent"
+ 			MouseEnter="RectBtn_MouseEnter"
+			MouseLeave="RectBtn_MouseLeave"
+		      MouseLeftButtonDown="OnClick"
+		      Panel.ZIndex="0" Margin="4,30,4,26" RenderTransformOrigin="0.5,0.5">
+
+                  <Rectangle x:Name="TextblockBorder"					     
+				Fill="{Binding BackColor, ElementName=Imgbutton}"
+				Loaded="RectBtn_Loaded"
+				IsHitTestVisible="True"
+				OverridesDefaultStyle="True"
+				Panel.ZIndex="0"  
+				RadiusX="10"
+				RadiusY="10"
+				Stroke="{Binding BorderColor, ElementName=Imgbutton}"
+				StrokeThickness="{Binding BorderWidth, ElementName=Imgbutton}"
+				RenderTransformOrigin="0.5,0.5" 
+				Margin="-7,-2,-4,3" 
+				Visibility="Visible"
+							>
+                        <Rectangle.RenderTransform>
+                              <TransformGroup>
+                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="0" Y="0"/>
+                              </TransformGroup>
+                        </Rectangle.RenderTransform>
+                        <!--<Rectangle.Effect>
+                              -->
+                        <!--// This uses ALL options-->
+                        <!--
+                              <DropShadowEffect 						
+						Color="{Binding ShadowBlurColor, ElementName=Imgbutton}"
+						Opacity="{Binding ShadowOpacity, ElementName=Imgbutton}"
+						ShadowDepth="{Binding ShadowBlurSize, ElementName=Imgbutton}"
+						BlurRadius="{Binding ShadowBlurRadius, ElementName=Imgbutton}"
+						RenderingBias="Quality"						
+						Direction="49"/>
+                        </Rectangle.Effect>-->
+                  </Rectangle>
+
+                  <StackPanel x:Name="DisplayStackpanel"
+                              Orientation="Horizontal"
+                               HorizontalAlignment="Left"    
+                                   Height="{Binding ActualHeight, ElementName=InnerGrid}" 
+                              Width="{Binding ActualWidth, ElementName=InnerGrid}"
+                              Panel.ZIndex="1"
+                              VerticalAlignment="Top" Margin="-5,0,-1,0" 
+                                    >
+                        <!--<TextBlock x:Name="DisplayStackpanel"/>-->
+                        <Image x:Name="BtnImage"
+                              Source="{Binding ImgSource, ElementName=Imgbutton}"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"                           
+                              MouseEnter="RectBtn_MouseEnter"
+                              MouseLeave="RectBtn_MouseLeave"
+                              Opacity="1"                                      
+                              Panel.ZIndex="10"  
+                              Height="{Binding ActualHeight, ElementName=TextblockBorder}" 
+                              Width="{Binding ImgWidth, ElementName=Imgbutton}" 
+                              Margin="5,5,5,5"
+                               Visibility="Visible">
+                              <Image.RenderTransform>
+                                    <TransformGroup>
+                                          <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                          <SkewTransform/>
+                                          <RotateTransform/>
+                                          <TranslateTransform 
+                                                X="0" 
+                                                Y="{Binding ImageTopOffset, ElementName=Imgbutton}"/>
+                                    </TransformGroup>
+                              </Image.RenderTransform>
+
+                        </Image>
+
+                        <!--Width="{Binding ActualWidth, ElementName=TextblockBorder}"-->
+                        <Border x:Name="TextBorder"
+                              Height="{Binding ActualHeight, ElementName=TextblockBorder}" 
+                              Width="{Binding Width, Converter={StaticResource resetTextWidth}, ConverterParameter=35}"
+                              Panel.ZIndex="3"  >
+
+                              <TextBlock x:Name="BtnTextBlock"
+  					      TextWrapping="{Binding TextWrap, ElementName=Imgbutton}"
+					      Text="{Binding BtnText, ElementName=Imgbutton}"
+					      FontSize="{Binding TextSize, ElementName=Imgbutton, FallbackValue=16}"
+					      FontStyle="{Binding FontDecoration, ElementName=Imgbutton}"
+					      Foreground="{Binding BtnTextColor, ElementName=Imgbutton, FallbackValue=Black}"
+					      TextAlignment="Left"
+                                    HorizontalAlignment="Left"
+   					      VerticalAlignment="Center"
+					      UseLayoutRounding="True"
+					      MouseEnter="RectBtn_MouseEnter"
+					      MouseLeave="RectBtn_MouseLeave"
+					      Panel.ZIndex="10"
+					      Opacity="1"
+                                    Height="{Binding ActualHeight, ElementName=TextblockBorder}" 
+                                    Width="{Binding Width, Converter={StaticResource resetTextWidth}, ConverterParameter=35}"
+                                    Margin="2,2,0,-2" 
+                                          >
+                                    <TextBlock.RenderTransform>
+                                          <TransformGroup>
+                                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                <SkewTransform/>
+                                                <RotateTransform/>
+                                                <TranslateTransform 
+                                                      X="0" 
+                                                      Y="{Binding TextTopOffset, ElementName=Imgbutton}"/>
+                                          </TransformGroup>
+                                    </TextBlock.RenderTransform>
+
+                                    <TextBlock.Effect>
+                                          <DropShadowEffect
+						                        ShadowDepth="{Binding TextShadowSize, ElementName=Imgbutton}"
+						                        Direction="{Binding TextShadowDirection, ElementName=Imgbutton}"
+						                        Color="{Binding TextShadowColor, ElementName=Imgbutton}"
+						                        Opacity="{Binding TextShadowOpacity, ElementName=Imgbutton}"
+						                        BlurRadius="{Binding TextShadowRadius, ElementName=Imgbutton}" />
+                                    </TextBlock.Effect>
+                              </TextBlock>
+                        </Border>
+                  </StackPanel>
+              </Grid>
+      </Grid>
+</UserControl>
