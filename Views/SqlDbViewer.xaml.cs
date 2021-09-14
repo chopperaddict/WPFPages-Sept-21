@@ -1875,17 +1875,6 @@ namespace WPFPages
 			//Just "Close" the Filter panel
 		}
 
-		private void ContextMenu1_Click ( object sender, RoutedEventArgs e )
-		{
-			//Add a new row
-			if ( CurrentDb == "BANKACCOUNT" )
-			{
-				//DataRow dr = BankAccountViewModel . dtBank . NewRow ( );
-				//BankAccountViewModel . dtBank . Rows . Add ( dr );
-				//				BankGrid.DataContext = dtBank;
-			}
-		}
-
 		private void ContextMenu2_Click ( object sender, RoutedEventArgs e )
 		{
 			//Delete current Row

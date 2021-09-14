@@ -1,12 +1,13 @@
-﻿//#define TESTING
-
-using System;
+﻿using System;
+using System . CodeDom;
+using System . Collections . Generic;
 using System . Collections . ObjectModel;
 using System . Data;
 using System . Data . SqlClient;
 using System . Diagnostics;
 using System . Threading;
 using System . Windows;
+using System . Windows . Automation . Peers;
 using System . Windows . Controls;
 using System . Windows . Documents;
 using System . Windows . Input;
@@ -14,6 +15,9 @@ using System . Windows . Media;
 using System . Windows . Media . Animation;
 using System . Windows . Media . Imaging;
 using System . Windows . Threading;
+
+using WPFPages . UserControls;
+using WPFPages . ViewModels;
 
 namespace WPFPages . Views
 {
@@ -28,9 +32,15 @@ namespace WPFPages . Views
                 private int defaultMenuheight = 0;
                 private int CurrentIndex = 0;
                 private bool ComboChangeinProcess = false;
+                public static List<string> treedata = new List<string> ( );
+
+                public static ObservableCollection<TopLevel> Tlevel = new ObservableCollection<TopLevel> ( );
+                public static ObservableCollection<MidLevel> Mlevel = new ObservableCollection<MidLevel> ( );
+                public static ObservableCollection<BaseLevel> Blevel = new ObservableCollection<BaseLevel> ( );
+
                 public static ObservableCollection<nwcustomer> nwc = new ObservableCollection<nwcustomer> ( );
                 public static nwcustomer NwCust = new nwcustomer ( );
-
+                Lazy<ObservableCollection<nwcustomer>> LoadCustomers = new Lazy<ObservableCollection<nwcustomer>> ( ( ) => Loadcustomers ( ) );
                 private static Point currentwinpos;
                 private static Point currentCtrlpos;
                 private static Point menupos;
@@ -80,9 +90,7 @@ namespace WPFPages . Views
                 #endregion std properties
 
                 private DispatcherTimer timer = new ( );
-
                 private long _timercount;
-
                 public long timercount
                 {
                         get
@@ -94,6 +102,26 @@ namespace WPFPages . Views
                         {
                                 _timercount = value;
                         }
+                }
+
+                private void UiElement_Click ( object sender, RoutedEventArgs e )
+                {
+                        UIElement uiElement = sender as UIElement;
+                        //                        ShowDependencyProperties ( Btn1);
+                        ImgButton . ThisControl . BtnImage . Refresh ( );
+                        // //DependencyProperty dp = new DependencyProperty (this );
+                        //object obj =  ImgButton.ThisControl . GetValue ( ImgButton.ImageFullOffsetProperty );
+                        if ( ImgButton . ThisControl . ImgBorder . Visibility == Visibility . Hidden )
+                        {
+                                ImgButton . ThisControl . ImgBorder . Visibility = Visibility . Visible;
+                                ImgButton . ThisControl . BtnImage . Visibility = Visibility . Visible;
+                        }
+                        else
+                        {
+                                ImgButton . ThisControl . BtnImage . Visibility = Visibility . Visible;
+                                ImgButton . ThisControl . ImgBorder . BorderBrush = Brushes . Transparent;
+                        }
+                        ImgButton . ThisControl . BtnImage . UpdateLayout ( );
                 }
 
                 #region Full Properties
@@ -128,7 +156,7 @@ namespace WPFPages . Views
                         }
                 }
 
-                private string menu1Text = "Panel 1";
+                private string menu1Text = "Image Buttons";
 
                 public string Menu1Text
                 {
@@ -203,7 +231,6 @@ namespace WPFPages . Views
                 }
 
                 private string menu6Text = "Experiments";
-
                 public string Menu6Text
                 {
                         get
@@ -218,7 +245,6 @@ namespace WPFPages . Views
                 }
 
                 private string menu7Text = "Unused 1";
-
                 public string Menu7Text
                 {
                         get
@@ -234,23 +260,11 @@ namespace WPFPages . Views
 
                 #endregion Full Properties
 
-                #region Dummy strings
-
-                private string dummymenutext1 = "\n3D Buttons ";
-                private string dummymenutext2 = "\njust uses the Width property of the image but the values of the From [the Width property of the image but the values of the From] ... ";
-                private string dummymenutext3 = "\n\nthe Completed event handler to restart the animation... ";
-                private string dummymenutext4 = "\n\nI have created an application which displays... ";
-                private string dummymenutext5 = "\n\nhe above code initially creates a rectangle... ";
-                private string dummymenutext6 = "\n\nFollowing is the output of the above code:... ";
-                private string dummymenutext7 = "\n\nThe Very End....";
-
-                #endregion Dummy strings
-
                 public AnimationTest ( )
                 {
-                        this . DataContext = this;
                         InitializeComponent ( );
                         Utils . SetupWindowDrag ( this );
+
                         Storyboard s = ( Storyboard ) TryFindResource ( "HideLeftMenu" );
                         s . Begin ( );
                         this . LeftMenuTogglePanel . Opacity = 0.0;
@@ -258,24 +272,53 @@ namespace WPFPages . Views
                         timer . Interval = TimeSpan . FromMilliseconds ( 1 );
                         timer . Tick += Timer_Tick;
                         timer . Start ( );
-                        this . DataContext = nwc;
-                        nwc = Loadcustomers ( );
-                        dg1 . ItemsSource = nwc;
-                        lv1 . Items . Clear ( );
-                        lv1 . ItemsSource = nwc;
-                        lv1 . SelectedIndex = 0;
-                        lv2 . Items . Clear ( );
-                        lv2 . ItemsSource = nwc;
-                        lv2 . SelectedIndex = 0;
-                        cb1 . ItemsSource = nwc;
-                        cb2 . ItemsSource = nwc;
-                        cb3 . ItemsSource = nwc;
-                        cb4 . ItemsSource = nwc;
-                        lv1 . ItemContainerGenerator . StatusChanged += ItemContainerGenerator_StatusChanged;
+                        this.DataContext = nwc;
+
+                        //TreeviewDataModel tvdm = new TreeviewDataModel ( );
+                        //Tlevel = TreeviewDataModel . Toplevel;
+                        //Mlevel = TreeviewDataModel . Midlevel;
+                        //Blevel = TreeviewDataModel . Baselevel;
+                        //Tree1 . ItemsSource = null;
+                        //Tree1 . Items . Clear ( );
+                        //Tree1 . ItemsSource = Tlevel;
+
                         expander . IsExpanded = false;
                         expander2 . IsExpanded = false;
-                        ImageTest1.Refresh();
+                        ImageTest1 . Refresh ( );
+
                 }
+                private void AnimWin_Loaded ( object sender, RoutedEventArgs e )
+                {
+                        this . LeftMenuTogglePanel . Opacity = 0.0;
+                }
+
+                #region Attached properties
+
+                #region RowHeight
+                public static double GetRowHeight ( DependencyObject obj )
+                {
+                        return ( double ) obj . GetValue ( RowHeightProperty );
+                }
+
+                public static void SetRowHeight ( DependencyObject obj, double value )
+                {
+                        obj . SetValue ( RowHeightProperty, value );
+                }
+
+                // Using a DependencyProperty as the backing store for ImageWidth.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty RowHeightProperty =
+                    DependencyProperty . RegisterAttached ( "RowHeight", typeof ( double ), typeof ( AnimationTest ), new PropertyMetadata ( ( double ) 15, SetTextHeightProperty ) );
+
+                private static void SetTextHeightProperty ( DependencyObject d, DependencyPropertyChangedEventArgs e )
+                {
+                        //if(e.NewValue )
+                        double i = ( double ) d . GetValue ( Grid . HeightProperty );
+                        d . SetValue ( TextHeightProperty, i );
+                }
+
+                #endregion
+
+                #endregion Attached properties
 
                 #region Dependency properties
 
@@ -544,42 +587,11 @@ namespace WPFPages . Views
 
                 #endregion TextShadowSize
 
-                #region TextShadowDirection (UNUSED)
-
-                //public double TextShadowDirection
-                //{
-                //        get
-                //        {
-                //                return ( double ) GetValue ( TextShadowDirectionProperty );
-                //        }
-
-                //        //set { }
-                //        set
-                //        {
-                //                SetValue ( TextShadowDirectionProperty, value );
-                //                this . Refresh ( );
-                //        }
-                //}
-
-                //public static readonly DependencyProperty TextShadowDirectionProperty =
-                //        DependencyProperty . Register ( "TextShadowDirection",
-                //        typeof ( double ),
-                //        typeof ( AnimationTest ),
-                //        new PropertyMetadata ( ( double ) 330 ), OnTextShadowDirectionPropertyProperty );
-
-                //private static bool OnTextShadowDirectionPropertyProperty ( object value )
-                //{
-                //        return true;
-                //}
-
-                #endregion TextShadowDirection
-
                 #endregion Dependency properties
-
 
                 #region Load NW Data from SQl server
 
-                public ObservableCollection<nwcustomer> Loadcustomers ( )
+                public static ObservableCollection<nwcustomer> Loadcustomers ( )
                 {
                         DataTable dt = new DataTable ( "Customers" );
                         string ConString = ( string ) Properties . Settings . Default [ "NorthwindConnectionString" ];
@@ -603,7 +615,7 @@ namespace WPFPages . Views
                         return nwc;
                 }
 
-                public bool CreateCustCollection ( DataTable dt )
+                public static bool CreateCustCollection ( DataTable dt )
                 {
                         int count = 0;
                         try
@@ -648,12 +660,6 @@ namespace WPFPages . Views
                                 timercount = 0;
                         timercount++;
                         //			Console . WriteLine ( $"{timercount}" );
-                }
-
-
-                private void TestRectangle_Copy3_MouseLeftButtonDown ( object sender, MouseButtonEventArgs e )
-                {
-                        this . Close ( );
                 }
 
                 #region menu Bar Control
@@ -707,57 +713,6 @@ namespace WPFPages . Views
                 }
 
                 #endregion menu Bar Control
-
-                #region TestButton functionality
-
-                private void Testbutton_MouseEnter ( object sender, MouseEventArgs e )
-                {
-                        //Button b = sender as Button;
-                        //if ( b != null )
-                        //	b . Background = ( SolidColorBrush ) FindResource ( "Magenta2" );
-                        //else
-                        //{
-                        //	Rectangle r = sender as Rectangle;
-                        //	if ( r != null )
-                        //		r . Fill = ( SolidColorBrush ) FindResource ( "Magenta2" );
-                        //}
-                }
-
-                private void Testbutton_MouseLeave ( object sender, MouseEventArgs e )
-                {
-                        //Button b = sender as Button;
-                        //if ( b != null )
-                        //	b . Background = ( SolidColorBrush ) FindResource ( "Red3" );
-                        //else
-                        //{
-                        //	Rectangle r = sender as Rectangle;
-                        //	if ( r != null )
-                        //		r . Fill = ( SolidColorBrush ) FindResource ( "Red3" );
-                        //}
-                }
-
-                private void Xscale_Click ( object sender, RoutedEventArgs e )
-                {
-                        //Testbuton functionality
-                }
-
-                #endregion TestButton functionality
-
-                private void AnimWin_Loaded ( object sender, RoutedEventArgs e )
-                {
-                        this . LeftMenuTogglePanel . Opacity = 0.0;
-                }
-
-                
-                private void TestEllipse_Click ( object sender, RoutedEventArgs e )
-                {
-                        System . Diagnostics . Debugger . Break ( );
-                }
-
-                private void Btn2_Click ( object sender, RoutedEventArgs e )
-                {
-                        this . Close ( );
-                }
 
                 #region scale changing
 
@@ -833,32 +788,6 @@ namespace WPFPages . Views
 
                 #endregion Drag functionality
 
-                private void TextHeightChange ( object sender, MouseButtonEventArgs e )
-                {
-                        //Rectangle r = sender as Rectangle;
-                        //TestRectangle_Copy4 . Visibility = Visibility . Hidden;
-                        //TextHeightSettings . Visibility = Visibility . Visible;
-                        //TextHeightSettings . Text = Btn1 . Height . ToString ( );
-                        ////TextHeightSettings . Text.
-                        //TextHeightSettings . Focus ( );
-                }
-
-                private void TextHeightSettings_KeyDown ( object sender, KeyEventArgs e )
-                {
-                        if ( e . Key == Key . Enter )
-                        {
-                                //int val = Convert.ToInt32(TextHeightSettings.Text);
-                                ////				Btn1 . TextHeight = val;
-                                ////				Btn1 . FontSize = val;
-                                //if ( val < 30 )
-                                //	val = 30;
-                                //Btn1 . Height = val;
-                                //Btn1 . Refresh ( );
-                                //TextHeightSettings . Visibility = Visibility . Hidden;
-                                //TestRectangle_Copy4 . Visibility = Visibility . Visible;
-                        }
-                }
-
                 private void Togglepanel ( object sender, MouseButtonEventArgs e )
                 {
                         if ( LeftPanel . Visibility == Visibility . Visible )
@@ -888,11 +817,6 @@ namespace WPFPages . Views
                         }
                 }
 
-                private void Image_Click ( object sender, MouseButtonEventArgs e )
-                {
-                        this . Close ( );
-                }
-
                 private void Tb1_MouseLeftButtonDown ( object sender, MouseButtonEventArgs e )
                 {
                         if ( this . SlideOutMenu . Width > 0 )
@@ -901,7 +825,7 @@ namespace WPFPages . Views
                                 s . Begin ( );
                                 //				SlideOutMenu . Visibility = Visibility . Visible;
                                 this . Tb1 . Visibility = Visibility . Visible;
-                              //  this . SlideOutMenu . Visibility = Visibility . Hidden;
+                                //  this . SlideOutMenu . Visibility = Visibility . Hidden;
                         }
                         else
                         {
@@ -913,51 +837,58 @@ namespace WPFPages . Views
                         }
                 }
 
-                private void Menu0_Click ( object sender, MouseButtonEventArgs e )
-                {
-                }
-
                 private void Menu1_Click ( object sender, MouseButtonEventArgs e )
                 {
                         this . Panel2 . Visibility = Visibility . Hidden;
                         //			this . Panel3 . Visibility = Visibility . Hidden;
+                        this . Panel3 . Visibility = Visibility . Hidden;
                         this . Panel4 . Visibility = Visibility . Hidden;
                         this . TabControlPanel . Visibility = Visibility . Hidden;
                         this . ThreeDButtonsPanel . Visibility = Visibility . Hidden;
 
                         this . Panel1 . Visibility = Visibility . Visible;
-                        this . Title = "Panel1 visible";
+                        this . Title = "Image Buttons visible";
                 }
 
                 private void Menu2_Click ( object sender, MouseButtonEventArgs e )
                 {
                         this . Panel1 . Visibility = Visibility . Hidden;
-                        //			this . Panel3 . Visibility = Visibility . Hidden;
+                        this . Panel3 . Visibility = Visibility . Hidden;
                         this . Panel4 . Visibility = Visibility . Hidden;
                         this . TabControlPanel . Visibility = Visibility . Hidden;
                         this . ThreeDButtonsPanel . Visibility = Visibility . Hidden;
 
                         this . Panel2 . Visibility = Visibility . Visible;
-                        this . Title = "Panel2 visible";
+                        this . Title = "Expander Demo visible";
                 }
 
                 private void Menu3_Click ( object sender, MouseButtonEventArgs e )
                 {
                         this . Panel1 . Visibility = Visibility . Hidden;
                         this . Panel2 . Visibility = Visibility . Hidden;
+                        this . Panel3 . Visibility = Visibility . Hidden;
                         this . Panel4 . Visibility = Visibility . Hidden;
                         this . TabControlPanel . Visibility = Visibility . Hidden;
                         this . ThreeDButtonsPanel . Visibility = Visibility . Hidden;
 
-                        //			this . Panel3 . Visibility = Visibility . Visible;
-                        Title = "Panel3Canvas visible";
+                        this . Panel3 . Visibility = Visibility . Visible;
+                        TreeviewDataModel tvdm = new TreeviewDataModel ( );
+
+                        Tlevel = TreeviewDataModel . Toplevel;
+                        Mlevel = TreeviewDataModel . Midlevel;
+                        Blevel = TreeviewDataModel . Baselevel;
+                        Tree1 . ItemsSource = null;
+                        Tree1 . Items . Clear ( );
+                        Tree1 . ItemsSource = Tlevel;
+                        //Tree1 . DataContext = treedata;
+                        Title = "Panel3 (TreeView) visible";
                 }
 
                 private void Menu4_Click ( object sender, MouseButtonEventArgs e )
                 {
                         this . Panel1 . Visibility = Visibility . Hidden;
                         this . Panel2 . Visibility = Visibility . Hidden;
-                        //			this . Panel3 . Visibility = Visibility . Hidden;
+                        this . Panel3 . Visibility = Visibility . Hidden;
                         this . Panel4 . Visibility = Visibility . Hidden;
                         this . ThreeDButtonsPanel . Visibility = Visibility . Hidden;
 
@@ -970,7 +901,7 @@ namespace WPFPages . Views
                 {
                         this . Panel1 . Visibility = Visibility . Hidden;
                         this . Panel2 . Visibility = Visibility . Hidden;
-                        //			this . Panel3 . Visibility = Visibility . Hidden;
+                        this . Panel3 . Visibility = Visibility . Hidden;
                         this . Panel4 . Visibility = Visibility . Hidden;
                         this . TabControlPanel . Visibility = Visibility . Hidden;
 
@@ -983,398 +914,27 @@ namespace WPFPages . Views
                 {
                         this . Panel1 . Visibility = Visibility . Hidden;
                         this . Panel2 . Visibility = Visibility . Hidden;
-                        //			this . Panel3 . Visibility = Visibility . Hidden;
+                        this . Panel3 . Visibility = Visibility . Hidden;
                         this . TabControlPanel . Visibility = Visibility . Hidden;
                         this . ThreeDButtonsPanel . Visibility = Visibility . Hidden;
 
                         this . Panel4 . Visibility = Visibility . Visible;
-                        this . Title = "Panel 4 visible";
+                        this . Title = "Mixed buttons visible";
                 }
 
                 private void Menu7_Click ( object sender, MouseButtonEventArgs e )
                 {
                         this . Panel1 . Visibility = Visibility . Hidden;
                         this . Panel2 . Visibility = Visibility . Hidden;
-                        //			this . Panel3 . Visibility = Visibility . Hidden;
+                        this . Panel3 . Visibility = Visibility . Hidden;
                         this . Panel4 . Visibility = Visibility . Hidden;
                         this . TabControlPanel . Visibility = Visibility . Hidden;
                         this . ThreeDButtonsPanel . Visibility = Visibility . Hidden;
-                        this . Title = "Unused1 visible";
+                        this . Title = "Blank panel";
                 }
-
-                private void Expand_MenuItemBorder ( object sender, MouseEventArgs e )
-                {
-                        //Thickness t = new Thickness ( );
-                        //Border b = sender as Border;
-                        //b . Height = 120;
-                        //if ( b . Name == "Menu6" )
-                        //{
-                        //	t = tb6 . Margin;
-                        //	t . Top = 0;
-                        //	//				tb6 . Margin = t;
-                        //	TextTopZero = t;
-                        //}
-                }
-
-                private void Expand_MenuItemTextblock ( object sender, MouseEventArgs e )
-                {
-                        TextBlock b = sender as TextBlock;
-                        b . Height = 120;
-                }
-
-                private void Contract_Textblock1 ( object sender, MouseEventArgs e )
-                {
-                        TextBlock b = sender as TextBlock;
-                        b . Height = 40;
-                }
-
-                private void Contract_Textblock2 ( object sender, MouseEventArgs e )
-                {
-                        TextBlock b = sender as TextBlock;
-                        b . Height = 40;
-                }
-
-                private void Contract_Textblock3 ( object sender, MouseEventArgs e )
-                {
-                        TextBlock b = sender as TextBlock;
-                        b . Height = 40;
-                }
-
-                private void Contract_Textblock4 ( object sender, MouseEventArgs e )
-                {
-                        TextBlock b = sender as TextBlock;
-                        b . Height = 40;
-                }
-
-                private void Contract_Textblock5 ( object sender, MouseEventArgs e )
-                {
-                        TextBlock b = sender as TextBlock;
-                        b . Height = 40;
-                }
-
-                private void Contract_Textblock7 ( object sender, MouseEventArgs e )
-                {
-                        TextBlock b = sender as TextBlock;
-                        b . Height = 40;
-                }
-
-                private static void GetPointerPosition ( AnimationTest AnimWin, Canvas LeftPanel, Border Menu1 )
-                {
-                        currentwinpos = Mouse . GetPosition ( AnimWin );
-                        currentCtrlpos = Mouse . GetPosition ( LeftPanel );
-                        menupos = Mouse . GetPosition ( Menu1 );
-                        if ( menupos . Y < 10 )
-                        {
-                                menupos . Y += Menu1 . ActualHeight / 2;
-                                currentCtrlpos . Y = Menu1 . ActualHeight / 2;
-                        }
-                }
-
-                private void SetPointerPosition ( AnimationTest AnimWin, Canvas LeftPanel, Border Menu1 )
-                {
-                        currentCtrlpos . Y += menupos . Y;
-                        currentwinpos = PointToScreen ( currentCtrlpos );
-                        Point newpos = new Point ( 0, 0 );
-                        newpos . X = ( int ) currentwinpos . X;
-                        newpos . Y = ( int ) currentwinpos . Y + 20;//
-                        Console . WriteLine ( $"win= {currentwinpos . X}:{currentwinpos . Y}\nMenu1 = {menupos . X} : {menupos . Y}\nnewpos = {newpos . X} : {newpos . Y}\n" );
-                        //			NativeMethods . SetCursorPos ( ( int ) newpos . X, ( int ) newpos . Y );
-                }
-
-                private void Expand_MenuItemBorder2 ( object sender, MouseEventArgs e )
-                {
-                        //defaultMenuheight = ( int ) Menu2 . ActualHeight;
-                        ////			GetPointerPosition ( AnimWin, LeftPanel, Menu2 );
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	defaultMenuheight = ( int ) b . Height;
-                        //	Expanded ( b, tb2, Menu2Text, dummymenutext2 );
-                        //}
-                        //else
-                        //{
-                        //	t = sender as TextBlock;
-                        //	defaultMenuheight = ( int ) t . Height;
-                        //	Expanded ( Menu2, t, Menu2Text, dummymenutext2 );
-                        //}
-                        //			ShowMenuOptions ( null, false );
-                }
-
-                private void Contract_Border2 ( object sender, MouseEventArgs e )
-                {
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	if ( CheckCallerOpen ( Menu2 ) == false )
-                        //		return;
-                        //	Contract ( b, tb2, Menu2Text );
-                        //	//				Menu2 . Height = defaultMenuheight;
-                        //	Menu2 . Refresh ( );
-                        //}
-                        //else
-                        //{
-                        //	if ( CheckCallerOpen ( Menu2 ) == false )
-                        //		return;
-                        //	t = sender as TextBlock;
-                        //	Contract ( Menu2, t, Menu2Text );
-                        //	//				Menu2 . Height = defaultMenuheight;
-                        //	Menu2 . Refresh ( );
-                        //}
-                        ////			ShowMenuOptions ( Menu2, false );
-                }
-
-                private void Expand_MenuItemBorder3 ( object sender, MouseEventArgs e )
-                {
-                        //defaultMenuheight = ( int ) Menu3 . ActualHeight;
-                        ////			GetPointerPosition ( AnimWin, LeftPanel, Menu3 );
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	defaultMenuheight = ( int ) b . Height;
-                        //	Expanded ( b, tb3, Menu3Text, dummymenutext3 );
-                        //}
-                        //else
-                        //{
-                        //	t = sender as TextBlock;
-                        //	defaultMenuheight = ( int ) t . Height;
-                        //	Expanded ( Menu3, t, Menu3Text, dummymenutext3 );
-                        //}
-                        ////			ShowMenuOptions ( Menu3, true );
-                }
-
-                private void Contract_Border3 ( object sender, MouseEventArgs e )
-                {
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	if ( CheckCallerOpen ( Menu3 ) == false )
-                        //		return;
-                        //	Contract ( b, tb3, Menu3Text );
-                        //	//				Menu3 . Height = defaultMenuheight;
-                        //	Menu3 . Refresh ( );
-                        //}
-                        //else
-                        //{
-                        //	if ( CheckCallerOpen ( Menu3 ) == false )
-                        //		return;
-                        //	t = sender as TextBlock;
-                        //	Contract ( Menu3, t, Menu3Text );
-                        //	//				Menu3 . Height = defaultMenuheight;
-                        //	Menu3 . Refresh ( );
-                        //}
-                        ////			ShowMenuOptions ( Menu3, false );
-                }
-
-                private void Expand_MenuItemBorder4 ( object sender, MouseEventArgs e )
-                {
-                        //defaultMenuheight = ( int ) Menu4 . ActualHeight;
-                        ////			GetPointerPosition ( AnimWin, LeftPanel, Menu4 );
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	defaultMenuheight = ( int ) b . Height;
-                        //	Expanded ( b, tb4, Menu4Text, dummymenutext4 );
-                        //}
-                        //else
-                        //{
-                        //	t = sender as TextBlock;
-                        //	defaultMenuheight = ( int ) t . Height;
-                        //	Expanded ( Menu4, t, Menu4Text, dummymenutext4 );
-                        //}
-                        //			ShowMenuOptions ( Menu4, true );
-                }
-
-                private void Contract_Border4 ( object sender, MouseEventArgs e )
-                {
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	if ( CheckCallerOpen ( Menu4 ) == false )
-                        //		return;
-                        //	Contract ( b, tb4, Menu4Text );
-                        //	//				Menu4 . Height = defaultMenuheight;
-                        //	Menu4 . Refresh ( );
-                        //}
-                        //else
-                        //{
-                        //	if ( CheckCallerOpen ( Menu4 ) == false )
-                        //		return;
-                        //	t = sender as TextBlock;
-                        //	Contract ( Menu4, t, Menu4Text );
-                        //	//				Menu4 . Height = defaultMenuheight;
-                        //	Menu4 . Refresh ( );
-                        //}
-                        //			ShowMenuOptions ( Menu4, false );
-                }
-
-                private void Expand_MenuItemBorder5 ( object sender, MouseEventArgs e )
-                {
-                        //defaultMenuheight = ( int ) Menu5 . ActualHeight;
-                        ////			GetPointerPosition ( AnimWin, LeftPanel, Menu5 );
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	defaultMenuheight = ( int ) b . Height;
-                        //	Expanded ( b, tb5, Menu5Text, dummymenutext5 );
-                        //}
-                        //else
-                        //{
-                        //	t = sender as TextBlock;
-                        //	defaultMenuheight = ( int ) t . Height;
-                        //	Expanded ( Menu5, t, Menu5Text, dummymenutext5 );
-                        //}
-                        ////			ShowMenuOptions ( Menu5, true );
-                }
-
-                private void Contract_Border5 ( object sender, MouseEventArgs e )
-                {
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	if ( CheckCallerOpen ( Menu5 ) == false )
-                        //		return;
-                        //	Contract ( b, tb5, Menu5Text );
-                        //	//				Menu5 . Height = defaultMenuheight;
-                        //	Menu5 . Refresh ( );
-                        //}
-                        //else
-                        //{
-                        //	if ( CheckCallerOpen ( Menu5 ) == false )
-                        //		return;
-                        //	t = sender as TextBlock;
-                        //	Contract ( Menu5, t, Menu5Text );
-                        //	//				Menu5 . Height = defaultMenuheight;
-                        //	Menu5 . Refresh ( );
-                        //}
-                        ////			ShowMenuOptions ( Menu5, false );
-                }
-
-                private void Expand_MenuItemBorder6 ( object sender, MouseEventArgs e )
-                {
-                        //defaultMenuheight = ( int ) Menu6 . ActualHeight;
-                        ////			GetPointerPosition ( AnimWin, LeftPanel, Menu6 );
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	defaultMenuheight = ( int ) b . Height;
-                        //	Expanded ( b, tb6, Menu6Text, dummymenutext6 );
-                        //}
-                        //else
-                        //{
-                        //	t = sender as TextBlock;
-                        //	defaultMenuheight = ( int ) t . Height;
-                        //	Expanded ( Menu6, t, Menu6Text, dummymenutext6 );
-                        //}
-                        ////			ShowMenuOptions ( Menu6, true );
-                }
-
-                private void Contract_Border6 ( object sender, MouseEventArgs e )
-                {
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	if ( CheckCallerOpen ( Menu6 ) == false )
-                        //		return;
-                        //	Contract ( b, tb6, Menu6Text );
-                        //	Menu6 . Refresh ( );
-                        //}
-                        //else
-                        //{
-                        //	if ( CheckCallerOpen ( Menu6 ) == false )
-                        //		return;
-                        //	t = sender as TextBlock;
-                        //	Contract ( Menu6, t, Menu6Text );
-                        //	Menu6 . Refresh ( );
-                        //}
-                        //Thread . Sleep ( 100 );
-                        //			ShowMenuOptions ( Menu6, false );
-                }
-
-                private void Expand_MenuItemBorder7 ( object sender, MouseEventArgs e )
-                {
-                        //defaultMenuheight = ( int ) Menu7 . ActualHeight;
-                        ////			GetPointerPosition ( AnimWin, LeftPanel, Menu7 );
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	defaultMenuheight = ( int ) b . Height;
-                        //	Expanded ( b, tb7, Menu7Text, dummymenutext7 );
-                        //}
-                        //else
-                        //{
-                        //	t = sender as TextBlock;
-                        //	defaultMenuheight = ( int ) t . Height;
-                        //	Expanded ( Menu7, t, Menu7Text, dummymenutext7 );
-                        //}
-                        //			ShowMenuOptions ( Menu7, true );
-                }
-
-                private void Contract_Border7 ( object sender, MouseEventArgs e )
-                {
-                        //Border b = sender as Border;
-                        //TextBlock t = new TextBlock ( );
-                        //if ( b != null )
-                        //{
-                        //	if ( CheckCallerOpen ( Menu7 ) == false )
-                        //		return;
-                        //	Contract ( b, tb7, Menu7Text );
-                        //	Menu7 . Refresh ( );
-                        //}
-                        //else
-                        //{
-                        //	if ( CheckCallerOpen ( Menu7 ) == false )
-                        //		return;
-                        //	t = sender as TextBlock;
-                        //	Contract ( Menu7, t, Menu7Text );
-                        //	Menu7 . Refresh ( );
-                        //}
-                        //Thread . Sleep ( 100 );
-                        //			ShowMenuOptions ( Menu7, false );
-                }
-
-                private void Tb1_Mouseover ( object sender, MouseEventArgs e )
-                {
-                        if ( SlideOutMenu . Width > 0 )
-                        {
-                                Storyboard s = ( Storyboard ) TryFindResource ( "HideLeftMenu" );
-                                s . Begin ( );
-                                Tb1 . Visibility = Visibility . Visible;
-                        }
-                        else
-                        {
-                                Storyboard s = ( Storyboard ) TryFindResource ( "ShowLeftMenu" );
-                                s . Begin ( );
-                                Tb1 . Visibility = Visibility . Hidden;
-                        }
-                }
-
-                private void MenuTimerCallback ( object state )
-                {
-                        TimeSpan ts = timer . Interval;
-                        if ( timer . IsEnabled && ts . Ticks < 500 )
-                        {
-                                Thread . Sleep ( 200 );
-                        }
-                }
-
+       
                 private void Expand_MenuItemBorder0 ( object sender, MouseEventArgs e )
                 {
-                }
-
-                private void Contract_Border0 ( object sender, MouseEventArgs e )
-                {
-                        //ShowMenuOptions ( null, false);
                 }
 
                 private void MenuOpen_Click ( object sender, MouseButtonEventArgs e )
@@ -1401,11 +961,6 @@ namespace WPFPages . Views
                         //if ( Menu1 . Visibility == Visibility . Visible )
                         //	ShowMenuOptions ( null, false );
                         //else
-                        ShowMenuOptions ( null, true );
-                }
-
-                private void Contract_BorderOpen ( object sender, MouseEventArgs e )
-                {
                         ShowMenuOptions ( null, true );
                 }
 
@@ -1474,11 +1029,6 @@ namespace WPFPages . Views
 
                 private void Expanded ( Border border, TextBlock textblock, string originaltext, string newtext )
                 {
-                        //	if ( IsMenuOpen )
-                        //		return;
-                        //			if ( timer . IsRunning )
-                        //				return;
-                        //			timer . Start ( );
                         double dtemp = 0;
                         textblock . Text = "";
                         textblock . Height = 0;
@@ -1490,8 +1040,7 @@ namespace WPFPages . Views
                         textblock . Refresh ( );
                         border . Height = dtemp + 15;
                         border . Refresh ( );
-                        //			Thread . Sleep ( 10 );
-                        Thickness t = textblock . Margin;
+                          Thickness t = textblock . Margin;
                         t . Top = 0;
                         t . Bottom = 0;
                         t . Left = 0;
@@ -1506,20 +1055,14 @@ namespace WPFPages . Views
 
                 private void Contract ( Border border, TextBlock textblock, string originaltext )
                 {
-                        //if ( !IsMenuOpen )
-                        //	return;
-                        //			timer . Stop ( );
                         if ( CheckCallerOpen ( border ) == false )
                                 return;
-                        //			if ( timer .< 10000)
-                        //				return;
-                        textblock . Text = "";
+                         textblock . Text = "";
                         textblock . Height = 0;
                         border . Height = 0;
                         textblock . Text = originaltext;
                         textblock . Refresh ( );
-                        //textblock . Height = textblock . Height;
-                        border . Height = 0;
+                         border . Height = 0;
                         border . Refresh ( );
                         border . Height = textblock . ActualHeight + 15;
                         textblock . Height = border . Height;
@@ -1589,70 +1132,6 @@ namespace WPFPages . Views
                         this . LeftMenuTogglePanel . Opacity = 1;
                 }
 
-                private void SlideMenu_mouseLeave ( object sender, MouseEventArgs e )
-                {
-                        this . LeftMenuTogglePanel . Opacity = 0.5;
-
-                        //if ( LeftMenuTogglePanel . Opacity >= 1.0 )
-                        //{
-                        //	Storyboard s = ( Storyboard ) TryFindResource ( "FadeOutMenu" );
-                        //	s . Begin ( );
-                        //}
-                }
-
-                private void TogglePanes_Loaded ( object sender, RoutedEventArgs e )
-                {
-                }
-
-                private void ShadowLabelClick ( object sender, MouseButtonEventArgs e )
-                {
-                        Console . WriteLine ( $"New LabelText Clicked" );
-                }
-
-                private void ImgButton_Loaded ( object sender, RoutedEventArgs e )
-                {
-                }
-
-                private void ImgButton_MouseDoubleClick ( object sender, MouseButtonEventArgs e )
-                {
-                        Console . WriteLine ( $"click passed through successfully" );
-                }
-
-                private void ImgButton_Click ( object sender, RoutedEventArgs e )
-                {
-                        //this . Close ( );
-                } 
-
- 
-   
-                private void lv1_PreviewMouseDown ( object sender, MouseButtonEventArgs e )
-                {
-                        //Get current index and reset color before it changes
-                        //int indx = lv1 . SelectedIndex;
-    
-                        //if ( indx == -1 )
-                        //        return;
-                        //ComboChangeinProcess = true;
-                        //ListBox lv = sender as ListBox;
-
-                        //ListBoxItem lbi = ( ListBoxItem ) lv1 . ItemContainerGenerator . ContainerFromIndex ( indx) as ListBoxItem;
-                        //if ( lbi != null )
-                        //{
-                        //        //                                lv1.Items.B
-                        //        Console . WriteLine ( $"lv1 resetting foreground of previous selection: Index = {indx}" );
-                        //        lbi . Background = ( Brush ) FindResource ( "Green2" );
-                        //        // lbi . BorderBrush = ( Brush ) FindResource ( "Green2" );
-                        //        if ( lbi . IsSelected )
-                        //                lbi . Foreground = ( Brush ) FindResource ( "White0" );
-                        //        else
-                        //                lbi . Foreground = ( Brush ) FindResource ( "Black0" );
-                        //        lbi . IsSelected = false;
-                        //        lv1 . Refresh ( );
-                        //        ComboChangeinProcess = false;
-                        //        //Store current index
-                        //}
-                }
-
                 private void ItemContainerGenerator_StatusChanged ( object sender, EventArgs e )
                 {
                         //ListBoxItem lbi = ( ListBoxItem ) lv1 . ItemContainerGenerator . ContainerFromIndex ( lv1 . SelectedIndex ) as ListBoxItem;
@@ -1666,13 +1145,15 @@ namespace WPFPages . Views
                         //}
                 }
 
-       #region Expander handlers
+                #region Expander handlers
                 private void expander_Expanded ( object sender, RoutedEventArgs e )
                 {
                         Expander ex = sender as Expander;
                         expander2 . Visibility = Visibility . Collapsed;
                         ex . BringIntoView ( );
                         expander . Height = 250;
+
+
                 }
 
                 private void expander_Collapsed ( object sender, RoutedEventArgs e )
@@ -1682,14 +1163,46 @@ namespace WPFPages . Views
                         expander2 . Visibility = Visibility . Visible;
                         ex . BringIntoView ( );
                 }
+                private void lv1_Loaded ( object sender, RoutedEventArgs e )
+                {
+                        if ( lv1 . Items . Count > 1 && dg1 . Items . Count > 1 )
+                                return;
+                        if ( lv1 . SelectedItem == null && lv1 . Items . Count == 1 )
+                        {
+                                lv1 . Items . Clear ( );
+                        }
+                        if ( lv2 . SelectedItem == null && lv2 . Items . Count == 1 )
+                        {
+                                lv2 . Items . Clear ( );
+                        }
+                        //==================
+                        // This is being LAZY LOADED
+                        //==================
+                        nwc = LoadCustomers . Value;
+
+                        dg1 . ItemsSource = null;
+                        dg1 . ItemsSource = nwc;
+                        lv1 . ItemsSource = null;
+                        lv1 . ItemsSource = nwc;
+                        lv1 . SelectedIndex = 0;
+                        lv2 . ItemsSource = null;
+                        lv2 . ItemsSource = nwc;
+                        lv2 . SelectedIndex = 0;
+                        cb1 . ItemsSource = nwc;
+                        cb2 . ItemsSource = nwc;
+                        cb3 . ItemsSource = nwc;
+                        cb4 . ItemsSource = nwc;
+                        lv1 . ItemContainerGenerator . StatusChanged += ItemContainerGenerator_StatusChanged;
+                }
+
                 private void expander2_Expanded ( object sender, RoutedEventArgs e )
                 {
                         Expander ex = sender as Expander;
                         ex . BringIntoView ( );
                         expander2 . Height = 350;
-                        if(grid1 != null)
+                        if ( grid1 != null )
                                 grid1 . Height = 290;
-                        if(lv1 != null)
+                        if ( lv1 != null )
                                 lv1 . Height = 225;
                 }
 
@@ -1708,8 +1221,8 @@ namespace WPFPages . Views
                 private void cb_SelectionChanged ( object sender, SelectionChangedEventArgs e )
                 {
                         int select = 0;
- //                       if ( ComboChangeinProcess )
-    //                            return;
+                        //                       if ( ComboChangeinProcess )
+                        //                            return;
                         if ( ( ComboBox ) sender == cb1 )
                         {
                                 ComboChangeinProcess = true;
@@ -1765,19 +1278,19 @@ namespace WPFPages . Views
                         //lbi . FontSize = 24;
 
                         ComboChangeinProcess = true;
-                        cb1 . SelectedIndex = lb.SelectedIndex;
+                        cb1 . SelectedIndex = lb . SelectedIndex;
                         cb2 . SelectedIndex = lb . SelectedIndex;
                         CurrentIndex = lb . SelectedIndex;
-                //        if ( lbi != null )
-                //        {
-                //                //                                lv1.Items.B
-                //                Console . WriteLine ( $"lv1 Selected : lbi={lbi}, IsSelected = {lbi . IsSelected}, Index = {lv1 . SelectedIndex}" );
-                //                lbi . Background = ( Brush ) FindResource ( "Blue0" );
-                //                lbi . Foreground = ( Brush ) FindResource ( "White0" );
-                //                lbi . IsSelected = true;
-                //                lv1 . Refresh ( );
-                //        }
-               }
+                        //        if ( lbi != null )
+                        //        {
+                        //                //                                lv1.Items.B
+                        //                Console . WriteLine ( $"lv1 Selected : lbi={lbi}, IsSelected = {lbi . IsSelected}, Index = {lv1 . SelectedIndex}" );
+                        //                lbi . Background = ( Brush ) FindResource ( "Blue0" );
+                        //                lbi . Foreground = ( Brush ) FindResource ( "White0" );
+                        //                lbi . IsSelected = true;
+                        //                lv1 . Refresh ( );
+                        //        }
+                }
 
                 private void cb2_Selected ( object sender, RoutedEventArgs e )
                 {
@@ -1820,9 +1333,5 @@ namespace WPFPages . Views
 
                 #endregion
 
-                private void ShadowLabelControl_Loaded ( object sender, RoutedEventArgs e )
-                {
-
-                }
         }
 }

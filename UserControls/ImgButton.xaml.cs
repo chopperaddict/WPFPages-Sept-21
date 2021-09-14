@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define DEBUG
+using System;
 using System . ComponentModel;
 using System . Windows;
 using System . Windows . Controls;
@@ -6,7 +7,11 @@ using System . Windows . Input;
 using System . Windows . Media;
 using System . Windows . Media . Effects;
 
+using Newtonsoft . Json . Linq;
+
 using WPFPages . Views;
+
+using XamlGeneratedNamespace;
 
 #pragma warning (disable :0103)
 #pragma warning (disable :CS0103)
@@ -18,26 +23,53 @@ namespace WPFPages . UserControls
         /// </summary>
         public partial class ImgButton : UserControl
         {
+                public static ImgButton ThisControl;
+
                 public ImgButton ( )
                 {
                         InitializeComponent ( );
-                        this.DataContext = this;
-                        //TranslateTransform translateTransform = new TranslateTransform ( );
-                        //translateTransform . X -= 2;
-                        //translateTransform . Y += 1;
-                        //this . OuterGrid . RenderTransform = translateTransform;
-                        //DropShadowEffect dropShadowEffect = new DropShadowEffect ( );
-                        //dropShadowEffect . BlurRadius = ShadowBlurRadius;
-                        //dropShadowEffect . Color = TextShadowColor;
-                        //dropShadowEffect . Direction = 49;
-                        //dropShadowEffect . Opacity = ShadowOpacity;
-                        //dropShadowEffect . ShadowDepth = ShadowSize;
-                        //this . OuterGrid . Effect = dropShadowEffect;
+                        this . DataContext = this;
+                        ThisControl = this;
                         this . OuterGrid . Refresh ( );
-                          this . Refresh ( );
+                        this . Refresh ( );
                 }
 
-                #region Dependency proiperties
+                private void ImgButton_GetHelp ( object sender, bool e )
+                {
+                        MessageBox . Show ( $"Sorry, Not yet implemented..." );
+                }
+
+                #region Attached properties
+
+                #region TextColumnWidth
+                public static double GetTextColumnWidth ( DependencyObject obj )
+                {
+                        return ( double ) obj . GetValue ( TextColumnWidthProperty );
+                }
+
+                public static void SetTextColumnWidth ( DependencyObject obj, double value )
+                {
+                        obj . SetValue ( TextColumnWidthProperty, value );
+                }
+
+                // Using a DependencyProperty as the backing store for ImageWidth.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty TextColumnWidthProperty =
+                    DependencyProperty . RegisterAttached ( "TextColumnWidth", typeof ( double ), typeof ( ImgButton ), new PropertyMetadata ( ( double ) 0, SetTextWidth ) );
+
+                private static void SetTextWidth ( DependencyObject d, DependencyPropertyChangedEventArgs e )
+                {
+                        //        Image img = d as Image;
+                        //        int currentwidth = (int)img.Width;
+                        //        int twidth = (int)d.GetValue(TextWidthProperty);
+                        //        d. SetValue ( TextWidthProperty, currentwidth  -  (int)e . NewValue );
+                        Console . WriteLine ( $"IMGBUTTON : Attached TEXTCOLUMNWIDTH property now set to {( double ) e . NewValue}" );
+                }
+
+                #endregion
+
+                #endregion Attached properties
+
+                #region Dependency properties
 
                 #region BackColor
 
@@ -45,7 +77,7 @@ namespace WPFPages . UserControls
                 {
                         get
                         {
-                                Imgbutton. Refresh ( );
+                                Imgbutton . Refresh ( );
                                 return ( Brush ) GetValue ( BackColorProperty );
                         }
 
@@ -250,25 +282,19 @@ namespace WPFPages . UserControls
                 #endregion FontDecoration
 
                 #region ImgSource
-
                 public string ImgSource
                 {
                         get
                         {
                                 return ( string ) GetValue ( ImgSourceProperty );
                         }
-
                         set
                         {
                                 SetValue ( ImgSourceProperty, value );
-                                BtnImage . Refresh ( );
-                                DisplayStackpanel . Refresh ( );
-                                Imgbutton . Refresh ( );
                         }
-                        //set{}
-                }
+                 }
 
-                new public static readonly DependencyProperty ImgSourceProperty =
+                public static readonly DependencyProperty ImgSourceProperty =
                         DependencyProperty . Register ( "ImgSource",
                         typeof ( string ),
                         typeof ( ImgButton ),
@@ -276,6 +302,9 @@ namespace WPFPages . UserControls
 
                 private static void OnImgSourcePropertyCallBack ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
                 {
+                        ThisControl.BtnImage . Refresh ( );
+                        ThisControl ?. DisplayStackpanel . Refresh ( );
+                        ThisControl ?. Imgbutton . Refresh ( );
                         Console . WriteLine ( $"IMGBUTTON : ImgSource  set to  [{e . NewValue}]." );
                 }
 
@@ -292,9 +321,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( ImgHeightProperty, value );
-                                BtnImage . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty ImgHeightProperty =
@@ -305,10 +332,96 @@ namespace WPFPages . UserControls
 
                 private static void OnHeightChangedCallBack ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
+                        ThisControl ?. BtnImage . Refresh ( );
+                        ThisControl ?. Refresh ( );
                         Console . WriteLine ( $"IMGBUTTON : ImageHeight set to  [{e . NewValue}]." );
                 }
 
                 #endregion ImgWidth
+
+                #region ImageLeftOffset 
+                public double ImageLeftOffset
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( ImageLeftOffsetProperty );
+                        }
+                        set
+                        {
+                                SetValue ( ImageLeftOffsetProperty, value );
+                        }
+                }
+
+                public static readonly DependencyProperty ImageLeftOffsetProperty =
+                        DependencyProperty . Register ( "ImageLeftOffset",
+                        typeof ( double ),
+                        typeof ( ImgButton ),
+                        new FrameworkPropertyMetadata ( Double . NaN, FrameworkPropertyMetadataOptions . None, new PropertyChangedCallback ( OnImageLeftOffsetChanged ), new CoerceValueCallback ( Coerceleft ) ) );
+
+                private static bool isvalidOffset ( object value )
+                {
+                        return true;
+                }
+
+                private static object Coerceleft ( DependencyObject d, object baseValue )
+                {
+                        object result;
+                        ThisControl ?. Refresh ( );
+                        DependencyObject dep = new DependencyObject ( );
+                        result = ( double ) baseValue;
+                        double width = ( double ) dep . GetValue ( ImgWidthProperty );
+                        if ( ( double ) result > 0 && width > 0 )
+                                dep . SetValue ( ImageFullOffsetProperty, ( double ) result + width );
+                        ThisControl ?. BtnImage . Refresh ( );
+                        return ( object ) result;
+                }
+
+                private static void OnImageLeftOffsetChanged ( DependencyObject d, DependencyPropertyChangedEventArgs e )
+                {
+
+                }
+
+                private static object CoerceValue ( DependencyObject d, object baseValue )
+                {
+                        DependencyObject dep = new DependencyObject ( );
+                        object width = dep . GetValue ( ImageFullOffsetProperty );
+                        return baseValue;
+
+                }
+
+
+
+                #endregion ImageLeftOffset
+
+                #region ImageFullOffset 
+                public double ImageFullOffset
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( ImageFullOffsetProperty );
+                        }
+                        set
+                        {
+                                SetValue ( ImageFullOffsetProperty, value );
+                          }
+                }
+
+                public static readonly DependencyProperty ImageFullOffsetProperty =
+                        DependencyProperty . Register ( "ImageFullOffset",
+                        typeof ( double ),
+                        typeof ( ImgButton ),
+                        new PropertyMetadata ( ( double ) 0 ), OnImageFullOffsetChanged );
+
+                private static bool OnImageFullOffsetChanged ( object value )
+                {
+                        ThisControl ?. BtnImage . BringIntoView ( );
+                        ThisControl ?. BtnImage . Refresh ( );
+                        ThisControl ?. Refresh ( );
+                        Console . WriteLine ( $"ImageFullOffset has been saved = {( double ) value}" );
+                        return true;
+                }
+
+                #endregion ImageLeftOffset
 
                 #region ImageTopOffset
                 public double ImageTopOffset
@@ -317,13 +430,9 @@ namespace WPFPages . UserControls
                         {
                                 return ( double ) GetValue ( ImageTopOffsetProperty );
                         }
-
-                        //set { }
                         set
                         {
                                 SetValue ( ImageTopOffsetProperty, value );
-                                BtnImage . Refresh ( );
-                                Imgbutton . Refresh ( );
                         }
                 }
 
@@ -331,14 +440,17 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "ImageTopOffset",
                         typeof ( double ),
                         typeof ( ImgButton ),
-                        new PropertyMetadata ( ( double ) -8 ), OnImageTopOffsetChanged );
+                        new PropertyMetadata ( ( double ) 0 ), OnImageTopOffsetChanged );
 
                 private static bool OnImageTopOffsetChanged ( object value )
                 {
+                        ThisControl ?. BtnImage . Refresh ( );
+                        ThisControl?. BtnImage . BringIntoView ( );
+                        ThisControl?. Refresh ( );
                         return true;
                 }
 
-                #endregion TextTopPadding
+                #endregion ImageTopOffset
 
                 #region ImgWidth
                 public double ImgWidth
@@ -347,13 +459,10 @@ namespace WPFPages . UserControls
                         {
                                 return ( double ) GetValue ( ImgWidthProperty );
                         }
-
                         set
                         {
                                 SetValue ( ImgWidthProperty, value );
-                                BtnImage . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty ImgWidthProperty =
@@ -364,6 +473,9 @@ namespace WPFPages . UserControls
 
                 private static void OnWidthChangedCallBack ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
+                        ThisControl ?.BtnImage . Refresh ( );
+                        ThisControl ?. Refresh ( );
+
                         Console . WriteLine ( $"IMGBUTTON : ImageWidth set to  [{e . NewValue}]." );
                 }
 
@@ -376,13 +488,9 @@ namespace WPFPages . UserControls
                         {
                                 return ( double ) GetValue ( ShadowDirectionProperty );
                         }
-
-                        //set { }
                         set
                         {
                                 SetValue ( ShadowDirectionProperty, value );
-                                TextblockBorder . Refresh ( );
-                                Imgbutton . Refresh ( );
                         }
                 }
 
@@ -394,6 +502,8 @@ namespace WPFPages . UserControls
 
                 private static bool OnShadowDirectionPropertyProperty ( object value )
                 {
+                        ThisControl?.TextblockBorder . Refresh ( );
+                        ThisControl?. Imgbutton . Refresh ( );
                         return true;
                 }
 
@@ -411,9 +521,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( ShadowOpacityProperty, value );
-                                DisplayStackpanel . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty ShadowOpacityProperty =
@@ -424,8 +532,8 @@ namespace WPFPages . UserControls
 
                 private static bool OnShadowOpacityProperty ( object value )
                 {
-                        //			Console . WriteLine ( $"ShadowOpacityProperty   = {value}" );
-
+                        ThisControl?.DisplayStackpanel . Refresh ( );
+                        ThisControl?. Imgbutton . Refresh ( );
                         return true;
                 }
 
@@ -443,8 +551,6 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( ShadowSizeProperty, value );
-                                TextblockBorder . Refresh ( );
-                                Imgbutton . Refresh ( );
                         }
                 }
 
@@ -456,8 +562,8 @@ namespace WPFPages . UserControls
 
                 private static bool OnShadowSizeProperty ( object value )
                 {
-                        //			Console . WriteLine ( $"ShadowBlurSizeProperty = {value}" );
-
+                        ThisControl?.TextblockBorder . Refresh ( );
+                        ThisControl ?. Imgbutton . Refresh ( );
                         return true;
                 }
                 #endregion ShadowBlurSize
@@ -474,9 +580,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( ShadowBlurRadiusProperty, value );
-                                TextblockBorder . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty ShadowBlurRadiusProperty =
@@ -487,6 +591,8 @@ namespace WPFPages . UserControls
 
                 private static bool OnShadowBlurRadiusProperty ( object value )
                 {
+                        ThisControl?.TextblockBorder . Refresh ( );
+                        ThisControl ?. Imgbutton . Refresh ( );
                         return true;
                 }
                 #endregion ShadowBlurRadius
@@ -502,9 +608,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( ShadowColorProperty, value );
-                                TextblockBorder . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                          }
                         //set{}
                 }
 
@@ -512,9 +616,46 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "ShadowColor",
                         typeof ( Color ),
                         typeof ( ImgButton ),
-                        new PropertyMetadata ( Colors . Transparent) );
+                        new PropertyMetadata ( Colors . Transparent ) );
 
                 #endregion ShadowBlurColor
+
+                #region SkewX
+                public double SkewX
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( SkewXProperty );
+                        }
+                        set
+                        {
+                                SetValue ( SkewXProperty, value );
+                        }
+                }
+
+                // Using a DependencyProperty as the backing store for SkewX.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty SkewXProperty =
+                    DependencyProperty . Register ( "SkewX", typeof ( double ), typeof ( ImgButton ), new PropertyMetadata ( 0.0 ) );
+
+                #endregion
+
+                #region SkewY
+                public double SkewY
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( SkewYProperty );
+                        }
+                        set
+                        {
+                                SetValue ( SkewYProperty, value );
+                        }
+                }
+
+                // Using a DependencyProperty as the backing store for SkewY.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty SkewYProperty =
+                    DependencyProperty . Register ( "SkewY", typeof ( double ), typeof ( ImgButton ), new PropertyMetadata ( 0.0 ) );
+                #endregion
 
                 #region TextSize
                 public int TextSize
@@ -523,14 +664,10 @@ namespace WPFPages . UserControls
                         {
                                 return ( int ) GetValue ( TextSizeProperty );
                         }
-
-                        //set { }
-                        set
+                      set
                         {
                                 SetValue ( TextSizeProperty, value );
-                                BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                       }
                 }
 
                 public static readonly DependencyProperty TextSizeProperty =
@@ -541,47 +678,37 @@ namespace WPFPages . UserControls
 
                 private static bool OnTextSizeChanged ( object value )
                 {
-                        //			Console . WriteLine ( $"TextSize DP = {value}" );
+                        ThisControl?.TextBorder . Refresh ( );
+                        ThisControl?.Imgbutton . Refresh ( );
                         return true;
                 }
 
                 #endregion TextSize
 
                 #region TextWidth
-                public int TextWidth
+                public double TextWidth
                 {
                         get
                         {
-                                return ( int ) GetValue ( TextWidthProperty );
+                                return ( double ) GetValue ( TextWidthProperty );
                         }
 
                         set
                         {
-                                //if ( value < 50 )
-                                //	value = 120;
                                 SetValue ( TextWidthProperty, value );
-                                BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty TextWidthProperty =
                         DependencyProperty . Register ( "TextWidth",
-                        typeof ( int ),
+                        typeof ( double ),
                         typeof ( ImgButton ),
                         new PropertyMetadata ( default ), OnTextWidthChanged );
 
                 private static bool OnTextWidthChanged ( object value )
                 {
-                        //int val = Convert . ToInt32 ( value );
-                        //Console . WriteLine ( $"TextWidth received = {value}" );
-                        //if ( val < 100 )
-                        //{
-                        //	value = 120 as object;
-                        //	val = 120;
-                        //}
-                        //Console . WriteLine ( $"TextWidth returned = {val}" );
+                       // ThisControl.BtnTextBlock . Refresh ( );
+                       Console . WriteLine ( $" *** TextWidth set to {( double ) value}" );
                         return true;
                 }
 
@@ -597,11 +724,7 @@ namespace WPFPages . UserControls
 
                         set
                         {
-                                //if ( value < 50 )
-                                //	value = 120;
                                 SetValue ( TextHeightProperty, value );
-                                BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
                         }
                         //set{}
                 }
@@ -614,14 +737,8 @@ namespace WPFPages . UserControls
 
                 private static bool OnTextHeightPropertyPropertyChanged ( object value )
                 {
-                        //int val = Convert . ToInt32 ( value );
-                        //Console . WriteLine ( $"TextWidth received = {value}" );
-                        //if ( val < 100 )
-                        //{
-                        //	value = 120 as object;
-                        //	val = 120;
-                        //}
-                        //Console . WriteLine ( $"TextWidth returned = {val}" );
+                        ThisControl ?. BtnTextBlock . Refresh ( );
+                        ThisControl ?. Refresh ( );
                         return true;
                 }
 
@@ -639,9 +756,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( TextHeightScaleProperty, value );
-                                BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                       }
                 }
 
                 public static readonly DependencyProperty TextHeightScaleProperty =
@@ -652,6 +767,8 @@ namespace WPFPages . UserControls
 
                 private static bool OnTextHeightScalePropertyPropertyChanged ( object value )
                 {
+                        ThisControl ?.BtnTextBlock . Refresh ( );
+                        ThisControl ?. Refresh ( );
                         return true;
                 }
 
@@ -670,7 +787,7 @@ namespace WPFPages . UserControls
                         {
                                 SetValue ( TextTopOffsetProperty, value );
                                 BtnTextBlock . Refresh ( );
-                                Imgbutton. Refresh ( );
+                                ThisControl ?. Refresh ( );
                         }
                 }
 
@@ -695,7 +812,6 @@ namespace WPFPages . UserControls
 
                 #endregion TextTopOffset
 
-
                 #region TextTopPadding
                 public double TextTopPadding
                 {
@@ -709,7 +825,7 @@ namespace WPFPages . UserControls
                         {
                                 SetValue ( TextTopPaddingProperty, value );
                                 BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
+                                ThisControl ?. Refresh ( );
                         }
                 }
 
@@ -739,7 +855,7 @@ namespace WPFPages . UserControls
                         {
                                 SetValue ( TextWidthPaddingProperty, value );
                                 BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
+                                ThisControl ?. Refresh ( );
                         }
                 }
 
@@ -768,7 +884,7 @@ namespace WPFPages . UserControls
                         {
                                 SetValue ( TextWidthScaleProperty, value );
                                 BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
+                                ThisControl ?. Refresh ( );
                         }
                 }
 
@@ -798,7 +914,7 @@ namespace WPFPages . UserControls
                         {
                                 SetValue ( UrlProperty, value );
                                 BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
+                                ThisControl ?. Refresh ( );
                         }
                         //set{}
                 }
@@ -814,7 +930,7 @@ namespace WPFPages . UserControls
                         Console . WriteLine ( $"IMGBUTTON : Url DP changed - Image set to [{ e . NewValue}]" );
                 }
 
-                  #endregion Url
+                #endregion Url
 
                 #region TextWrap
                 public TextWrapping TextWrap
@@ -828,7 +944,7 @@ namespace WPFPages . UserControls
                         {
                                 SetValue ( TextWrapProperty, value );
                                 BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
+                                ThisControl ?. Refresh ( );
                         }
                 }
 
@@ -858,7 +974,7 @@ namespace WPFPages . UserControls
                         {
                                 SetValue ( TextShadowOpacitProperty, value );
                                 BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
+                                ThisControl ?. Refresh ( );
                         }
                 }
 
@@ -994,7 +1110,7 @@ namespace WPFPages . UserControls
 
                 #endregion TextShadowColor
 
-                    #endregion Dependency proiperties
+                #endregion Dependency proiperties
 
                 private void RectBtn_MouseEnter ( object sender, MouseEventArgs e )
                 {
@@ -1054,7 +1170,101 @@ namespace WPFPages . UserControls
                         RectBtn_MouseEnter ( null, null );
                         RectBtn_MouseLeave ( null, null );
                         this . Refresh ( );
-                        this . Refresh (  );
+                        this . Refresh ( );
+                        //                        Console . WriteLine ( $"    $$$$$$    imgwidth hasbeen set to {imgwidth}" );
+
+                }
+
+                private void BtnTextBlock_Loaded ( object sender, RoutedEventArgs e )
+                {
+                        double width = BtnTextBlock . Width;
+                        double textwidthpadding = ( double ) ThisControl ?. GetValue ( TextWidthPaddingProperty );
+                        if ( textwidthpadding != 0 )
+                        {
+                                ThisControl ?. SetValue ( TextWidthProperty, width - textwidthpadding );
+                                Console . WriteLine ( $"Text loaded - TextWidthProperty = {width}, padding={textwidthpadding}, TextWidthProperty set to ={ThisControl ?. GetValue ( TextWidthProperty )}\n" );
+                        }
+                        else
+                        {
+                                ThisControl ?. SetValue ( TextWidthProperty, width );
+                                Console . WriteLine ( $"Text loaded - TextWidthProperty = {width}, padding={textwidthpadding}, TextWidthProperty set to ={ThisControl ?. GetValue ( TextWidthProperty )}\n" );
+                        }
+                }
+
+                private void BtnImage_Loaded ( object sender, RoutedEventArgs e )
+                {
+                        // Save image width initially
+                        //                        double imgwidth = ( double ) BtnImage.Width;
+
+
+                        //var isdesign = Application . Current is App;
+                        //if(!isdesign)
+                        //ImgBorder . Opacity = 0.0;
+
+                        // ThisControl . SetValue ( ImgWidthProperty, imgwidth);
+
+                        //// Get sizes of textblock and all potential text/Image offsets
+                        // double txtwidth = BtnTextBlock . ActualWidth;
+                        // txtwidth = DisplayStackpanel.ActualWidth;
+                        // double imgleftoffset = ( double ) ThisControl . GetValue ( ImageLeftOffsetProperty );
+                        // imgwidth = ( double ) ThisControl . GetValue ( ImgWidthProperty );
+                        // txtwidth = ( double ) ThisControl . GetValue ( TextWidthProperty );
+                        // double textwidthpadding = ( double ) ThisControl . GetValue ( TextWidthPaddingProperty );
+                        // if ( imgwidth > 0 && imgleftoffset != 0 )
+                        //         imgwidth += imgleftoffset;
+                        // if ( textwidthpadding != 0 )
+                        //         txtwidth -= textwidthpadding;
+                        // if (imgwidth != 0)
+                        // {
+                        //         if( imgleftoffset > 0)
+                        //                 ThisControl . SetValue ( TextWidthProperty, txtwidth - (imgwidth + imgleftoffset));
+                        //         else
+                        //                 ThisControl . SetValue ( TextWidthProperty, (txtwidth - imgwidth ) + imgleftoffset);
+                        // }
+                        // else if ( imgwidth > 0 )
+                        // {
+                        //         ThisControl . SetValue ( TextWidthProperty, txtwidth - imgwidth );
+                        // }
+                        // else
+                        // {
+                        //         ThisControl . SetValue ( TextWidthProperty, txtwidth );
+                        // }
+                        // Console . WriteLine ( $"Image loaded - imgwidth = {ImgWidth},\n  TextWidth={txtwidth},\n  ImaageLeftOffset={imgleftoffset},\n  New setting = {ThisControl.GetValue(TextWidthProperty)} \n" );
+                }
+
+
+
+                private void OuterGrid_Loaded ( object sender, RoutedEventArgs e )
+                {
+                        if ( DesignerProperties . GetIsInDesignMode ( this ) == false)
+                        {
+                                if ( ImgBorder . Visibility == Visibility . Hidden )
+                                {
+                                        ImgBorder . Visibility = Visibility . Visible;
+                                        BtnImage . Visibility = Visibility . Visible;
+                                }
+                                else
+                                {
+                                        BtnImage . Visibility = Visibility . Visible;
+                                        ImgBorder . BorderBrush = Brushes . Transparent;
+                                }
+                        }
+                }
+
+                private void ImgButton_PreviewKeyDown ( object sender, KeyEventArgs e )
+                {
+                        if ( e . Key == Key . F1 )
+                                MessageBox . Show ( $"Sorry, Not yet implemented..." );
+                }
+
+                private void OuterGrid_Unloaded ( object sender, RoutedEventArgs e )
+                {
+                }
+
+                private void BtnImage_Initialized ( object sender, EventArgs e )
+                {
+                        int i = 0;
+                        //BtnImage . Refresh ( );
                 }
         }
 }

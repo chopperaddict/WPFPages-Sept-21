@@ -424,6 +424,44 @@ namespace WPFPages . Views
 
                 #endregion PressedHoleHeight
 
+                #region SkewX
+                public double SkewX
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( SkewXProperty );
+                        }
+                        set
+                        {
+                                SetValue ( SkewXProperty, value );
+                        }
+                }
+
+                // Using a DependencyProperty as the backing store for SkewX.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty SkewXProperty =
+                    DependencyProperty . Register ( "SkewX", typeof ( double ), typeof ( ThreeDeeBtnControl ), new PropertyMetadata ( 0.0 ) );
+
+                #endregion
+
+                #region SkewY
+                public double SkewY
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( SkewYProperty );
+                        }
+                        set
+                        {
+                                SetValue ( SkewYProperty, value );
+                        }
+                }
+
+                // Using a DependencyProperty as the backing store for SkewY.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty SkewYProperty =
+                    DependencyProperty . Register ( "SkewY", typeof ( double ), typeof ( ThreeDeeBtnControl ), new PropertyMetadata ( 0.0 ) );
+                #endregion
+
+
                 #region TextHeight
 
                 ///// <summary>

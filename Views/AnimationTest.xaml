@@ -6,6 +6,8 @@
     xmlns:conv="clr-namespace:WPFPages.Converts"
     xmlns:userctrl="clr-namespace:WPFPages.UserControls"
     xmlns:data="clr-namespace:WPFPages.Views"
+      xmlns:local="clr-namespace:WPFPages.Views"
+      xmlns:Treedata="clr-namespace:WPFPages.ViewModels"
     x:Class="WPFPages.Views.AnimationTest"
         mc:Ignorable="d"
  	  x:Name="AnimWin"
@@ -27,6 +29,11 @@
             <userctrl:ShadowLabelControl x:Key="ShadowTextControl" />
             <userctrl:ShadowLabelControl x:Key="ShadowTextConlistviewtrol" />
             <userctrl:ImgButton x:Key="ImgControl" />
+            <userctrl:SharedGrid x:Key="Sharedgrid" />
+            <Treedata:TopLevel x:Key="toplevel"/>
+            <Treedata:MidLevel x:Key="midlevel"/>
+            <Treedata:BaseLevel x:Key="baselevel"/>
+            <Treedata:TreeviewDataModel x:Key="treeview"/>
 
             <!--#region Colors/Brushes-->
 
@@ -340,6 +347,37 @@
                   </Border>
             </DataTemplate>
 
+            <DataTemplate x:Key="DataTemplate2" >
+                  <Border x:Name="_border">
+                        <StackPanel Orientation="Horizontal"
+                              DataContext="{StaticResource treeview}">
+                              <ContentControl Content="{Binding TopLine}">
+                                    <ContentControl.ContentTemplate>
+                                          <DataTemplate>
+                                                <Grid>
+                                                      <TextBlock                                    
+                                                      Text="{Binding TopIndex, ElementName=toplevel}"
+                                                      FontSize="12"
+                                                      Margin="5 0 5 0"
+                                                      Foreground="{StaticResource Black0}"
+                                                      HorizontalAlignment="Left"
+                                                      TextAlignment="Center"/>
+                                                      <TextBlock
+                                                      Text="{Binding TopLine, ElementName=toplevel}"
+                                                      FontSize="12"
+                                                      Margin="5 0 5 0"
+                                                      Foreground="{StaticResource Black0}"
+                                                      HorizontalAlignment="Left"
+                                                      TextAlignment="Center"/>
+                                                </Grid>
+                                          </DataTemplate>
+                                    </ContentControl.ContentTemplate>
+
+                              </ContentControl>
+                        </StackPanel>
+                  </Border>
+            </DataTemplate>
+
             <!--// Default Listbox template //-->
             <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#FF5A0FFF"/>
             <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#FF1C26DA"/>
@@ -525,6 +563,7 @@
 
       <Window.DataContext>
             <data:nwcustomer />
+            <!--<Treedata:treedata/>-->
       </Window.DataContext>
 
       <!--START OF FUNCTIONALITY-->
@@ -549,7 +588,6 @@
 						Background="Red"
 						MouseLeftButtonDown="Tb1_MouseLeftButtonDown"
 						MouseEnter="SlideMenu_mouseEnter"
-						MouseLeave="SlideMenu_mouseLeave"
 						Height="128"
 						UseLayoutRounding="True"
 						Panel.ZIndex="10"
@@ -563,7 +601,6 @@
 							FontFamily="Verdana"
 							TextWrapping="Wrap"
 							MouseEnter="SlideMenu_mouseEnter"
-							MouseLeave="SlideMenu_mouseLeave"
 							MouseLeftButtonDown="Tb1_MouseLeftButtonDown"
 							Text=" ME NU"
 							FontSize="20"
@@ -585,10 +622,13 @@
             </Canvas>
             <!--#endregion Left Slide menu permanent button-->
 
+            <!--#region Main grid setup -->
             <Grid x:Name="InnerGrid"
 				  Height="{Binding Height, ElementName=MasterGrid}"
-				  Width="{Binding Width, ElementName=MasterGrid}"
-				  Background="{StaticResource Gray3}" Margin="0,-2,-4,0" RenderTransformOrigin="0.5,0.5"
+				  Width="{Binding Width, ElementName=MasterGrid}"                  
+				  Background="{StaticResource Gray3}" 
+                        Margin="0,-2,-4,0" 
+                        RenderTransformOrigin="0.5,0.5"
 				Visibility="Visible">
                   <Grid.RenderTransform>
                         <TransformGroup>
@@ -600,21 +640,21 @@
                   </Grid.RenderTransform>
 
                   <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="*" SharedSizeGroup="Col0" />
+                        <ColumnDefinition Width="200"  SharedSizeGroup="Col1"/>
                   </Grid.ColumnDefinitions>
 
 
                   <!--Open Buttons panel indicator-->
                   <Image x:Name="OpenButton"
 					Source="/WPFPages;component/Icons/left-arrow.png"
-					Width="20" Height="20"
+					Width="20" Height="20" 
 					ToolTip="Click to Hide the menu bar"
 					MouseLeftButtonDown="Image_MouseLeftButtonDown"
 					RenderTransformOrigin="14.6,1.9"
-					Margin="170,-62,10,459" Grid.Column="1"
-					Visibility="Hidden" />
-
+					Margin="170,-62,10,459" Grid.Column="1"                         
+					Visibility="Visible" />
+                  <!--#endregion-->
 
                   <!--#region Slide out from left menu-->
                   <!--mostly Shadow labels-->
@@ -630,7 +670,7 @@
 					Background="{StaticResource Black5}"
                               Canvas.Top="12"
                               Canvas.Left="189"
-                              Margin="0,0,0,-3">
+                              Margin="-1,-1,0,-2">
 
                         <Border Height="10" />
 
@@ -642,11 +682,12 @@
 					BorderColor="{DynamicResource Orange1}"
 					BorderThickness="1"
 					BorderShadowColor="White"
-					BtnTextColor="{DynamicResource Black1}"
 					FontStyle="Normal"
 					FontFamily="Garamonde"
 					FontWeight="Bold"
-					Text="Hide Menu"
+					
+                              Text="Hide Menu"
+					BtnTextColor="{DynamicResource Black1}"
 
                               BtnColorDown="{DynamicResource Green3}"
 					BtnTextColorDown="{DynamicResource Yellow0}"
@@ -710,50 +751,55 @@
 					UseLayoutRounding="True"
 					MouseLeftButtonDown="MenuOpen_Click"
                               RenderTransformOrigin="0.5,0.5" />
-
                         <userctrl:ShadowLabelControl
 					x:Name="Menu1"
 					BorderPadding="1"
 					BorderColor="{DynamicResource Orange1}"
-					BorderThickness="1"
-					Text="{Binding Menu1Text, ElementName=AnimWin, FallbackValue=12345 67890}"
-					BtnTextColor="{DynamicResource Orange0}"
+					BorderThickness="0"
 					BtnColorDown="{DynamicResource Blue5}"
 					BtnTextColorDown="{DynamicResource Black0}"
 					CornerRadius="0"
 					Background="{DynamicResource Green6}"
 					LinearBackground="{DynamicResource HeaderBorderBrushGreen}"
 					LinearBackgroundDown="{DynamicResource HeaderBorderBrushYellow}"
-					FontStyle="Normal"
+                              UseStandardBackground="False"
+
+                              Text="{Binding Menu1Text, ElementName=AnimWin, FallbackValue=Image Buttons}"
+					BtnTextColor="{DynamicResource Blue0}"
+                              TextSize="14"
+                              TextTopOffset="2"
+
+                              FontStyle="Normal"
 					FontFamily="Garamonde"
 					FontWeight="Bold"
-					UseLayoutRounding="True"
+
+                              UseLayoutRounding="True"
 					MouseLeftButtonDown="Menu1_Click"
 					MouseoverColor="{DynamicResource Green8}"
 
 					RenderTransformOrigin="0.5,0.5"
 
 					Width="135"
-					TextShadowSize="1"
+					TextShadowSize="3"
 					TextShadowDirection="330"
 					TextShadowColor="White"
 					TextShadowOpacity="0.9"
 					TextShadowBlurSize="0"
 
-
-
-                              UseStandardBackground="False"
-					Margin="6,0,4,0" Height="34" />
+					Margin="6,0,4,0" Height="40" />
 
                         <userctrl:ShadowLabelControl
 					x:Name="Menu2"
 					BorderPadding="1"
 					BorderColor="{DynamicResource Orange1}"
-					BorderThickness="1"
-					Text="{Binding Menu2Text, ElementName=AnimWin, FallbackValue=12345 67890}"
-					BtnTextColor="{DynamicResource Black1}"
+					BorderThickness="0"
+					Text="{Binding Menu2Text, ElementName=AnimWin, FallbackValue=Expander Demo}"
+					BtnTextColor="{DynamicResource White1}"
 					BtnColorDown="{DynamicResource Blue5}"
 					BtnTextColorDown="{DynamicResource Black0}"
+					LinearBackground="{DynamicResource HeaderBorderBrushGreen}"
+					LinearBackgroundDown="{DynamicResource HeaderBorderBrushYellow}"
+                              UseStandardBackground="False"
 					CornerRadius="0"
 					Background="Cyan"
 					FontStyle="Normal"
@@ -762,6 +808,8 @@
 					UseLayoutRounding="True"
 					MouseLeftButtonDown="Menu2_Click"
 					MouseoverColor="{DynamicResource Green8}"
+                              TextSize="11"
+                              TextTopOffset="2"
 
 					RenderTransformOrigin="0.5,0.5"
 
@@ -770,21 +818,22 @@
 					TextShadowDirection="330"
 					TextShadowColor="Red"
 					TextShadowOpacity="0.9"
-					TextShadowBlurSize="1"
-
-					TextSize ="16"
-	
-				Loaded="TogglePanes_Loaded" Margin="6,0,5,0" Height="37" />
+					TextShadowBlurSize="1"	
+                              Margin="6,0,5,0" 
+                              Height="40" />
 
                         <userctrl:ShadowLabelControl
 					x:Name="Menu3"
 					BorderPadding="1"
 					BorderColor="{DynamicResource Orange1}"
-					BorderThickness="1"
-					Text="{Binding Menu3Text, ElementName=AnimWin, FallbackValue=12345 67890}"
+					BorderThickness="0"
+					Text="{Binding Menu3Text, ElementName=AnimWin, FallbackValue=Panel 3}"
 					BtnTextColor="{DynamicResource Black1}"
 					BtnColorDown="{DynamicResource Blue5}"
 					BtnTextColorDown="{DynamicResource Black0}"
+					LinearBackground="{DynamicResource HeaderBorderBrushGreen}"
+					LinearBackgroundDown="{DynamicResource HeaderBorderBrushYellow}"
+                              UseStandardBackground="False"
 					CornerRadius="0"
 					Background="Cyan"
 					FontStyle="Normal"
@@ -797,31 +846,32 @@
 					RenderTransformOrigin="0.5,0.5"
 
 					Width="135"
-					TextShadowSize="1.5"
+					TextShadowSize="2.5"
 					TextShadowDirection="330"
-					TextShadowColor="Red"
+					TextShadowColor="White"
 					TextShadowOpacity="0.9"
 					TextShadowBlurSize="1"
 
-					TextSize ="16"
+					TextSize ="14"
 
-				Loaded="TogglePanes_Loaded" Margin="6,0,4,0" Height="37" />
+				Margin="6,0,4,0" Height="40" />
 
                         <userctrl:ShadowLabelControl
 					x:Name="Menu4"
 					BorderPadding="1"
 					BorderColor="{DynamicResource Orange1}"
-					BorderThickness="1"
-					Text="{Binding Menu4Text, ElementName=AnimWin, FallbackValue=12345 67890 panel}"
+					BorderThickness="0"
+					Text="{Binding Menu4Text, ElementName=AnimWin, FallbackValue=Tab Control Panel}"
 					BtnTextColor="{DynamicResource White0}"
 					BtnColorDown="{DynamicResource Blue5}"
 					BtnTextColorDown="{DynamicResource Black0}"
 					CornerRadius="0"
 					
                               Background="Cyan"
-                              LinearBackground="{StaticResource HeaderBrushGreen}"
-                              LinearBackgroundDown="{StaticResource HeaderBrushGreenReversed}"
+					LinearBackground="{DynamicResource HeaderBorderBrushGreen}"
+					LinearBackgroundDown="{DynamicResource HeaderBorderBrushYellow}"
                               UseStandardBackground="False"
+
                               FontStyle="Normal"
 					FontFamily="Garamonde"
 					FontWeight="Bold"
@@ -833,30 +883,31 @@
 
 					Width="135"
 					
-					TextTopOffset="3"
-					TextSize ="16"
-					TextWidth="100"
-                              TextHeight="45"
+					TextTopOffset="0"
+					TextSize ="14"
+					TextWidth="800"
+                              TextHeight="15"
 
                               TextShadowSize="3"
 					TextShadowDirection="330"
 					TextShadowColor="{StaticResource ClrRed5}"
 					TextShadowOpacity="0.9"
 					TextShadowBlurSize="0"                         
-				Loaded="TogglePanes_Loaded" Margin="7,0,4,0" Height="49" />
+				Margin="7,0,4,0" Height="40" />
 
                         <!--Text="{Binding Menu5Text, ElementName=AnimWin, FallbackValue=12345 67890 panel}"-->
                         <userctrl:ShadowLabelControl
 					x:Name="Menu5"
 					BorderPadding="1"
 					BorderColor="{DynamicResource Orange1}"
-					BorderThickness="1"
-                              Text="3D Button Panel"
+					BorderThickness="0"
+					Text="{Binding Menu5Text, ElementName=AnimWin, FallbackValue=3D Button Panel}"
 					BtnTextColor="{DynamicResource White0}"
 					BtnColorDown="{DynamicResource Blue5}"
 					BtnTextColorDown="{DynamicResource Yellow2}"
-                              LinearBackground="{StaticResource HeaderBrushGreen}"
-                              LinearBackgroundDown="{StaticResource HeaderBrushGreenReversed}"
+					LinearBackground="{DynamicResource HeaderBorderBrushGreen}"
+					LinearBackgroundDown="{DynamicResource HeaderBorderBrushYellow}"
+                              UseStandardBackground="False"
 
                               RectCorner="22"
 					Background="Cyan"
@@ -868,12 +919,12 @@
 					MouseoverColor="{DynamicResource Cyan4}"
 
 					RenderTransformOrigin="0.5,0.5"
-                              Height="58"
+                              Height="40"
                               
-					TextHeight="45"
-					TextSize ="16"
-					TextWidth="100"
-                              TextTopOffset="5"
+					TextHeight="15"
+					TextSize ="14"
+					TextWidth="110"
+                              TextTopOffset="0"
 
                               Width="Auto"
 					TextShadowSize="2"
@@ -881,7 +932,6 @@
 					TextShadowColor="Red"
 					TextShadowOpacity="0.9"
 					TextShadowBlurSize="0"
-				      Loaded="TogglePanes_Loaded" 
                               Margin="7,0,5,0"  />
 
                         <userctrl:ShadowLabelControl
@@ -890,12 +940,14 @@
 					BorderColor="{DynamicResource Orange1}"
 					BorderThickness="1"
 					CornerRadius="2"
-
                               BorderShadowBlurSize="0"
                               BorderShadowColor="LightGreen"
                               BorderShadowDepth="0"
                               BorderShadowDirection="310"
 
+					LinearBackground="{DynamicResource HeaderBorderBrushGreen}"
+					LinearBackgroundDown="{DynamicResource HeaderBorderBrushYellow}"
+                              UseStandardBackground="False"
 					Background="{StaticResource HeaderBorderBrushGreen}"
 					FontStyle="Normal"
 					FontFamily="Garamonde"
@@ -904,12 +956,11 @@
 					BtnColorDown="{DynamicResource Blue5}"
 					MouseLeftButtonDown="Menu6_Click"
 					MouseoverColor="{DynamicResource Yellowbackground}"
-					UseStandardBackground="False"
 					RenderTransformOrigin="0.5,0.5"
 
 					BtnTextColor="{DynamicResource White0}"
 					BtnTextColorDown="{DynamicResource Black0}"
-					Text="{Binding Menu6Text, ElementName=AnimWin, FallbackValue=12345 67890}"
+					Text="{Binding Menu6Text, ElementName=AnimWin, FallbackValue=Experiments}"
 
 					TextHeight="20"
 					TextSize ="16"
@@ -923,21 +974,26 @@
 					TextShadowBlurSize="0"
 
 					UseLayoutRounding="True"
-      				Loaded="TogglePanes_Loaded"
-                              Margin="6,0,2,0" />
+      				
+                              Margin="8,0,3,0" />
 
                         <userctrl:ShadowLabelControl
 					x:Name="Menu7"
 					BorderPadding="1"
 					BorderColor="{DynamicResource Orange1}"
 					BorderThickness="1"
-					Text="{Binding Menu6Text, ElementName=AnimWin, FallbackValue=12345 67890}"
-					BtnTextColor="{DynamicResource Black1}"
+					Text="{Binding Menu7Text, ElementName=AnimWin, FallbackValue=Unused Panel}"
+                              TextSize="14"
+					BtnTextColor="{DynamicResource Gray4}"
 					BtnColorDown="{DynamicResource Blue5}"
 					BtnTextColorDown="{DynamicResource Black0}"
 					CornerRadius="0"
 					Background="Cyan"
-					FontStyle="Normal"
+					LinearBackground="{DynamicResource HeaderBorderBrushGreen}"
+					LinearBackgroundDown="{DynamicResource HeaderBorderBrushYellow}"
+                              UseStandardBackground="False"
+
+                              FontStyle="Normal"
 					FontFamily="Garamonde"
 					FontWeight="Bold"
 					Height="40"
@@ -950,28 +1006,14 @@
 					Width="135"
 					TextShadowSize="3"
 					TextShadowDirection="330"
-					TextShadowColor="{StaticResource ClrRed7}"
+					TextShadowColor="{StaticResource ClrWhite4}"
 					TextShadowOpacity="0.9"
 					TextShadowBlurSize="0"
 
 					TextHeight="20"
-					TextSize ="16"
 					TextWidth="100"
+                              Margin="3,0,0,0" />
 
-				Loaded="TogglePanes_Loaded" Margin="3,0,0,0" />
-
-                        <!--<userctrl:ShadowLabelControl
-					TextShadowColor="Violet"
-					ShadowBlurSize="2"
-					TextShadowDepth="3"
-					TextShadowDirection="333"
-					Background="White"
-					CornerRadius="15"
-					LinearBackground="{DynamicResource Yellowbackground}"
-					LinearBackgroundDown="{DynamicResource Greenbackground}"
-					Height="85" Margin="12,0,6,0"
-					UseStandardBackground="True"
-					/>-->
                   </StackPanel>
 
                   <!--#endregion-->
@@ -993,7 +1035,7 @@
 						Width="{Binding Width, ElementName=Panel1}">
 
                               <userctrl:ImgButton x:Name="ImageTest1"
-                                    Canvas.Left="127" Canvas.Top="25"
+                                    Canvas.Left="127" Canvas.Top="4"
                                     BackColor="{StaticResource Red5}"
 
                                     ShadowDirection="40"
@@ -1002,13 +1044,17 @@
                                     ShadowSize="4"
                                     ShadowOpacity="1"
                                     
-                                    ImgSource="/Icons/cloud.png"  
-                                    ImgWidth="45"
-                                    ImageTopOffset="0"                                   
-                                    Padding="1 0 0 -25"
+                                    ImgSource="/Icons/mailbox-receive-message.png"  
+         					ImageLeftOffset="5"
+                                    ImageTopOffset="0"
+						ImgWidth="57"
                                     
                                     BtnText="Yah boo sucks, jumps around but does not display correctly most of the time either..."
                                     TextTopOffset="0"
+						TextTopPadding="1"
+                                    TextWidthPadding="24"                                    
+
+
                                     TextSize="14"
                                     TextWrap="Wrap"                                    
                                     
@@ -1020,7 +1066,7 @@
                                     
                                     
                                     Cornerradius="18" 
-                                    Height="72" Width="342"
+                                    Height="93" Width="342"
                                     BtnTextColor="{StaticResource White0}"
                                    />
                               <userctrl:ImgButton x:Name="ImageTest1_Copy"
@@ -1033,15 +1079,16 @@
                                     ShadowSize="4"
                                     ShadowOpacity="1"
                                     
-                                    ImgSource="/Icons/cloud.png"  
-                                    ImgWidth="45"
-                                    ImageTopOffset="0"                                   
-                                    Padding="1 0 0 -25"
-                                    
+                                    ImgSource="/Icons/message.png"  
+        					ImageLeftOffset="5"
+                                    ImageTopOffset="-4"
+						ImgWidth="57"
+                                   
                                     BtnText="Yah boo sucks, jumps around but does not display correctly most of the time either..."
-                                    TextTopOffset="0"
+                                    TextTopPadding="1"
                                     TextSize="14"
-                                    TextWrap="Wrap"                                    
+                                    TextWrap="Wrap"   
+                                    TextWidthPadding="15"
                                     
                                     TextShadowColor="DarkGreen"
                                     TextShadowDirection="40"
@@ -1051,42 +1098,43 @@
                                     
                                     
                                     Cornerradius="18" 
-                                    Height="86" Width="273"
+                                    Height="86" Width="314"
                                     BtnTextColor="{StaticResource White0}"
                                    />
                               <userctrl:ImgButton x:Name="ImageTest1_Copy1"
                                     Canvas.Left="167" Canvas.Top="187"
                                     BackColor="{StaticResource Magenta0}"
 
-                                    ShadowDirection="40"
-                                    ShadowColor="DarkGray"
-                                    ShadowBlurRadius="10"                                    
-                                    ShadowSize="4"
-                                    ShadowOpacity="1"
+                                    Height="82"
+                                    Width="218"
+						Cornerradius="10"
+						BtnText="123456789 abcdefg hijklm nopqrst uvwxyz"
+						BtnTextColor="White"
                                     
-                                    ImgSource="/Icons/cloud.png"  
-                                    ImgWidth="45"
-                                    ImageTopOffset="0"                                   
-                                    Padding="1 0 0 -25"
+                                    ShadowColor="{StaticResource BackgroundColor1}"
+                                    ShadowDirection="363"
+                                    ShadowSize="5"
+                                    ShadowOpacity="0.9"
+                                    ShadowBlurRadius="18"
                                     
-                                    BtnText="Yah boo sucks, jumps around but does not display correctly most of the time either..."
-                                    TextTopOffset="0"
-                                    TextSize="14"
-                                    TextWrap="Wrap"                                    
+						TextSize="12"
+						TextTopPadding="2"
+                                    TextWidthPadding="20"                                    
+
+						ImageLeftOffset="-10"
+                                    ImageTopOffset="0"
+						ImgWidth="57"
+
+                                    TextWrap="Wrap"
+						TextShadowColor="Red"
+						TextShadowSize="3"
+						TextShadowRadius="2"
+						ImgSource="/Icons/phone-wifi2.png"
+  						RenderTransformOrigin="0.5,0.5" 
                                     
-                                    TextShadowColor="{StaticResource ClrWhite5}"
-                                    TextShadowDirection="40"
-                                    TextShadowSize="4"
-                                    TextShadowRadius="0"
-                                    TextShadowOpacity="1"
-                                    
-                                    
-                                    Cornerradius="18" 
-                                    Height="86" Width="273"
-                                    BtnTextColor="{StaticResource White0}"
-                                   />
+                                        />
                               <userctrl:ImgButton x:Name="ImageTest1_Copy2"
-                                    Canvas.Left="160" Canvas.Top="276"
+                                    Canvas.Left="159" Canvas.Top="319"
                                     BackColor="{StaticResource Green8}"
 
                                     ShadowDirection="40"
@@ -1096,12 +1144,13 @@
                                     ShadowOpacity="1"
                                     
                                     ImgSource="/Icons/cloud.png"  
-                                    ImgWidth="45"
-                                    ImageTopOffset="0"                                   
-                                    Padding="1 0 0 -25"
+    	      				ImageLeftOffset="1"
+                                    ImageTopOffset="0"
+						ImgWidth="57"
                                     
                                     BtnText="Yah boo sucks, jumps around but does not display correctly most of the time either..."
-                                    TextTopOffset="0"
+                                    TextTopPadding="0"
+                                    TextWidthPadding="20"
                                     TextSize="14"
                                     TextWrap="Wrap"                                    
                                     
@@ -1113,7 +1162,7 @@
                                     
                                     
                                     Cornerradius="18" 
-                                    Height="145" Width="171"
+                                    Height="106" Width="242"
                                     BtnTextColor="{StaticResource Black0}"
                                    />
 
@@ -1122,7 +1171,7 @@
                   <!--#endregion-->
 
                   <!--#region panel2 (Expanders etc)Canvas -->
-                  <Grid x:Name="Panel2"
+                  <Grid x:Name="Panel2"                        
 					  Height="{Binding Height, ElementName=InnerGrid}"
 					  Width="{Binding Width, ElementName=InnerGrid}"
 					Visibility="Hidden">
@@ -1137,10 +1186,10 @@
 						Visibility="Visible">
                               <Grid
                                     Background="lightgray"
-                                    Canvas.Left="83"
-                                    Canvas.Top="388"
-                                    Width="379"
-                                    Height="126">
+                                    Canvas.Left="102"
+                                    Canvas.Top="487"
+                                    Width="380"
+                                    Height="69">
 
                                     <TextBlock
 						      Background="Aqua"
@@ -1152,15 +1201,8 @@
 						      VerticalAlignment="Center"
                                           HorizontalAlignment="Center"
 
-						      Height="100"
-						      Width="188" Margin="12,14,179,12" />
-
-                                    <!--<userctrl:ShadowLabelControl Width="Auto" Text="12345 67890" Height="Auto" Margin="212,12,15,78" Loaded="ShadowLabelControl_Loaded" />
-                                    <userctrl:ShadowLabelControl Margin="214,66,19,23"/>-->
-                                    <!--<Grid.RowDefinitions>
-                                          <RowDefinition Height="65" />
-                                          <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>-->
+						      Height="53"
+						      Width="188" Margin="12,12,180,4" />
                               </Grid>
                               <Expander x:Name="expander"
                                               Height="44" Width="404"
@@ -1280,9 +1322,9 @@
                                                       SelectedItem="{Binding nwcustomer}"
                                                       VirtualizingPanel.IsVirtualizing="True"
                                                       SelectionChanged="lv1_Selected"
-                                                      PreviewMouseDown="lv1_PreviewMouseDown" 
                                                       OverridesDefaultStyle="False"
                                                       Height="112"
+                                                         Loaded="lv1_Loaded"
                                                       Margin="0,0,0,0"  ItemTemplate="{DynamicResource DataTemplate1}" 
                                                       ItemContainerStyle="{DynamicResource ListBoxItemStyle1}">
                                                       />
@@ -1298,6 +1340,51 @@
                                           </StackPanel>
                                     </Grid>
                               </Expander>
+                              <userctrl:SharedGrid
+                                    Height="76" Width="379" Canvas.Left="72" Canvas.Top="362"/>
+                        </Canvas>
+                  </Grid>
+
+                  <!--#endregion-->
+
+                  <!--#region panel3 (More Experiments) Canvas -->
+
+                  <Grid x:Name="Panel3"
+					  Height="{Binding Height, ElementName=InnerGrid}"
+					  Width="{Binding Width, ElementName=InnerGrid}"
+					Visibility="Hidden">
+
+                        <Canvas x:Name="Panel3Canvas"
+						Background="{StaticResource Gray3}"
+						Grid.Column="0"
+						Grid.ColumnSpan="1"
+						Height="{Binding Height, ElementName=Panel3}"
+						Panel.ZIndex="0"
+						Width="{Binding Width, ElementName=Panel3}"
+                                    >
+                              <ListView x:Name="Tree1"
+                                    Height="256" Width="398" 
+                                    Canvas.Left="52" Canvas.Top="22"
+                                    ItemTemplate="{DynamicResource DataTemplate2}" 
+                                    ItemContainerStyle="{DynamicResource ListViewItemStyle1}">
+
+                                    <!--<ListView.ItemTemplate>
+                                          <DataTemplate>
+                                                <TextBlock
+                                                      Width="200"
+                                                      Height="25"
+                                                      FontSize="18"
+                                                      Text="{Binding line1}"
+                                                      Foreground="{StaticResource White1}">
+                                                   </TextBlock>
+                                          </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ContentPresenter>
+
+                                    </ContentPresenter>-->
+
+                              </ListView>
+
                         </Canvas>
                   </Grid>
 
@@ -1308,7 +1395,7 @@
                   <Grid x:Name="Panel4"
 					  Height="{Binding Height, ElementName=InnerGrid}"
 					  Width="{Binding Width, ElementName=InnerGrid}"
-					Visibility="Hidden">
+					Visibility="Visible">
 
                         <Canvas x:Name="Panel4Canvas"
 						Background="{StaticResource Gray3}"
@@ -1317,70 +1404,121 @@
 						Height="{Binding Height, ElementName=Panel4}"
 						Panel.ZIndex="0"
 						Width="{Binding Width, ElementName=Panel4}"
-						>
+                                    >
+
+                              <Button x:Name="Btn1"
+                                    Width="96" Height="42" Canvas.Left="317" Canvas.Top="394"
+                                      Content="Click me - UIElement"
+                                      Background="{StaticResource Blue0}"
+                                      Foreground="{StaticResource White1}"
+                                      Click="UiElement_Click" 
+                                      FontSize="24"/>
 
                               <userctrl:ImgButton
-                                    Height="108"
-                                    Width="404"
-						Canvas.Left="94"
-						Canvas.Top="414"
-						Click="ImgButton_Click"		
+                                    Height="82"
+                                    Width="232"
+						Canvas.Left="147"
+						Canvas.Top="458"
+						
 						Cornerradius="10"
 						BackColor="{StaticResource HeaderBorderBrushGreen}"
 						BtnText="123456789 abcdefg hijklm nopqrst uvwxyz"
 						BtnTextColor="White"
-						TextSize="18"
-						TextTopPadding="-9"
-						TextWidthPadding="0"
-						TextWrap="Wrap"
+                                    
+                                    ShadowColor="{StaticResource BackgroundColor1}"
+                                    ShadowDirection="363"
+                                    ShadowSize="5"
+                                    ShadowOpacity="0.9"
+                                    ShadowBlurRadius="18"
+                                    
+						TextSize="12"
+						TextTopPadding="12"
+                                    TextWidthPadding="24"                                    
+
+						ImageLeftOffset="15"
+                                    ImageTopOffset="0"
+						ImgWidth="47"
+                                    
+                                    SkewX="-20"
+                                    SkewY="-8"
+
+                                    TextWrap="Wrap"
 						TextShadowColor="Red"
 						TextShadowSize="3"
 						TextShadowRadius="2"
 						ImgSource="/Icons/cloud.png"
-						ImgWidth="45"
-						RenderTransformOrigin="0.713,0.521" 
+  						RenderTransformOrigin="0.5,0.5"                                     
                                       />
 
-                              <userctrl:ShadowLabelControl Height="45" Width="150" Canvas.Left="220" Canvas.Top="336"
+                              <userctrl:ShadowLabelControl 
+                                    Height="82" Width="184" 
+                                    Canvas.Left="98" Canvas.Top="80"
+                                    BtnText="12345 67890 abcdefg"  
+                                    BtnTextColor="Black"
+                                    TextSize="25"
+                                    MouseoverColor="{StaticResource Red3}"
+                                    BtnTextColorDown="{StaticResource White3}"
+                                    SkewX="10"
+                                    SkewY="15"
+                                    />
+
+
+                              <data:ThreeDeeBtnControl
+                                    Height="77" Width="135" Canvas.Left="153" Canvas.Top="279"   
+                                    FillTop="{StaticResource Green3}"
+                                    FillSide="{StaticResource Red5}"
+                                    FillHole="{StaticResource Black1}"
+                                    SkewX="-12"
+                                    SkewY="12"
+                                    />
+
+
+
+                              <userctrl:ShadowLabelControl Height="48" Width="132" Canvas.Left="145" Canvas.Top="379"
                                     UseLayoutRounding="True"
                                     Background="Lime"
                                     BtnTextColor="Red"
+                                    BtnColorDown="DarkGray"
+                                    BtnTextColorDown="White"
                                     BorderColor="Red"
-                                    TextLeftOffset="0"
                                     BorderPadding="1"
                                     BorderThickness="1"
                                     CornerRadius="11"
+                                                           
+                                    TextLeftOffset="0"
                                     Text="12345 67890"
-                                    TextTopOffset="2"
+                                    TextTopOffset="0"
+                                    TextSize="20"
+                                    TextHeight="7"                                    
+                                    TextWidth="0"                                                           
 
-                                    BtnColorDown="DarkGray"
-                                    BtnTextColorDown="White"
-
+                                    SkewX="10"
+                                                           SkewY="5"
                                     BorderShadowDirection="310"
                                     BorderShadowColor="Black"
-                                    BorderShadowBlurSize="2"
+                                    BorderShadowBlurSize="3"
                                     BorderShadowDepth="8"
                                     BorderShadowOpacity="0.5"
 
                                     TextShadowDirection="340"
-                                    TextShadowColor="White"
-                                    TextShadowBlurSize="1"
+                                    TextShadowColor="Black"
+                                    TextShadowBlurSize="4"
                                     TextShadowSize="2"
                                     TextShadowOpacity="1" />
 
                               <ToolBarTray  x:Name="Toolbar1"
-                                    Background="Transparent"
+                                    Background="{StaticResource Red5}"
                                     Orientation="Horizontal"
                                     HorizontalAlignment="Left"
-                                    Height="62"
+                                    Height="66"
                                     VerticalAlignment="Top"
-                                    Width="401"
-                                    Canvas.Top="0" Canvas.Left="40">
+                                    Width="391"
+                                    Canvas.Top="0" Canvas.Left="50">
                                     <ToolBar
                                           Height="25"
                                           Width="125"
                                           Band="1"
-                                          BandIndex="1">
+                                          BandIndex="1" >
                                           <Button Command="Cut"
                                                   ToolBar.OverflowMode="AsNeeded"
                                                   Height="25"
@@ -1408,11 +1546,11 @@
                                     </ToolBar>
 
                                     <ToolBar x:Name="toolBar"
-                                          Height="29"
+                                          Height="25"
                                          Band="2"
                                           BandIndex="2"
                                           Width="144"
-                                         Padding="3">
+                                         Padding="3" >
                                           <Button x:Name="toolBtn1"
                                                    Height="25"
                                                   Width="25"
@@ -1520,8 +1658,7 @@
 							BtnText="Debug Break "
 							BtnTextColor="{StaticResource White0}"
 							BtnTextColorDown="{StaticResource Yellow0}"
-							Click="TestEllipse_Click"
-							FillHole="{StaticResource Black0}"
+      						FillHole="{StaticResource Black0}"
 							FillSide="{StaticResource Green6}"
 							FillTop="{DynamicResource localMultiGreenRadial}"
 							FillShadow="Red"
@@ -1535,10 +1672,7 @@
 							TextWidthScale="0.5"
 							Width="88" />
 
-                              <!--MouseEnter="Testbutton_MouseEnter"
-							MouseLeave="Testbutton_MouseLeave"-->
                               <Button x:Name="Testbutton"
-							Click="Xscale_Click"
 							Height="26"  Width="90"
 							Canvas.Left="294"
 							Canvas.Top="5"
@@ -1585,7 +1719,6 @@
 						BtnText="Smaller Button"
 						BtnTextColor="{StaticResource White0}"
 						BtnTextColorDown="{StaticResource Yellow0}"
-						Click="TestEllipse_Click"
 						FillHole="{StaticResource Black0}"
 						FillSide="{StaticResource Green6}"
 						FillTop="{DynamicResource HeaderBrushRed}"
@@ -1605,7 +1738,7 @@
 						BtnText="Great bright Yellow Btn"
 						BtnTextColor="{StaticResource Red0}"
 						BtnTextColorDown="{StaticResource Red5}"
-						Click="Btn2_Click"
+						
 						BtnTextDown="Closing..."
 						FillSide="{StaticResource Orange2}"
 						FillTop="{DynamicResource localMultiYellowRadial}"
@@ -1634,7 +1767,8 @@
                   <Grid x:Name="TabControlPanel"
 					  Height="{Binding Height, ElementName=InnerGrid}"
 					  Width="{Binding Width, ElementName=InnerGrid}"
-					 Visibility="Visible">
+					 Visibility="Hidden">
+
                         <Canvas x:Name="TabControlCanvas"
 						Background="{StaticResource Gray3}"
 						Grid.Column="0"
@@ -1644,7 +1778,7 @@
 						Width="{Binding Width, ElementName=TabControlPanel}"
 						Margin="0,0,170,0">
                               <!--Set up data context pointing to Bank data for our Listview i the tab control-->
-                
+
                               <!--<Canvas.DataContext>
 						<datamodel:BankAccountViewModel />
 					</Canvas.DataContext>-->
@@ -1712,7 +1846,7 @@
                                                             SelectedItem="{Binding nwcustomer}"
                                                             ItemTemplate="{DynamicResource DataTemplate1}" 
                                                             ItemContainerStyle="{DynamicResource ListViewItemStyle1}">
-                                                            >
+
                                                             <!--<ListView.ItemTemplate>
                                                                   <DataTemplate>
                                                                         <StackPanel Orientation="Horizontal">
@@ -1720,12 +1854,14 @@
                                                                               <Label Content="{Binding Age}" />
                                                                         </StackPanel>
                                                                   </DataTemplate>
-                                                                  --><!--<DataTemplate>
+                                                                  -->
+                                                            <!--<DataTemplate>
 												<StackPanel Orientation="Horizontal">
 												<TextBlock x:Name="Tb1" Text="{Binding BankNo, FallbackValue=123456}" />
 												<TextBlock x:Name="Tb2" Text="{Binding CustNo, FallbackValue=567321}" />
 												</StackPanel>
-											</DataTemplate>--><!--
+											</DataTemplate>-->
+                                                            <!--
                                                             </ListView.ItemTemplate>-->
                                                       </ListView>
                                                 </Canvas>
@@ -1764,7 +1900,7 @@
 										BtnText="Close"
 										BtnTextColor="{StaticResource Red0}"
 										BtnTextColorDown="{StaticResource Red5}"
-										Click="Btn2_Click"
+										
 										BtnTextDown="Closing..."
 										FillSide="{StaticResource Orange2}"
 										FillTop="{DynamicResource localMultiYellowRadial}"
@@ -1832,7 +1968,7 @@
 							BtnText="Great bright Yellow Btn"
 							BtnTextColor="{StaticResource Red0}"
 							BtnTextColorDown="{StaticResource Red5}"
-							Click="Btn2_Click"
+							
 							BtnTextDown="Closing..."
 							FillSide="{StaticResource Orange2}"
 							FillTop="{DynamicResource localMultiGreenRadial}"
@@ -1873,24 +2009,13 @@
                               </TransformGroup>
                         </StackPanel.RenderTransform>
 
-                        <!--<StackPanel.RenderTransform>
-						<TransformGroup>
-							<ScaleTransform />
-							<SkewTransform />
-							<RotateTransform />
-							<TranslateTransform />
-						</TransformGroup>
-					</StackPanel.RenderTransform>-->
-
-                        <!--#endregion Retangle Buttons-->
-
-                        <!--#region Retangle Buttons-->
+                        <!--#region Rectangle Buttons-->
 
                         <Canvas x:Name="xRectbuttonStackPanel"
 					Background="{StaticResource Gray0}"
 					Margin="15,1,5,0" Grid.Column="1" 
                               RenderTransformOrigin="0.5,0.5"
-                              Visibility="Hidden">
+                              Visibility="Visible">
 
 
                               <Canvas.RenderTransform>
@@ -1910,15 +2035,15 @@
 							Background="Transparent"
 							Height="492"
 							UseLayoutRounding="True"
-							Canvas.Top="0" Canvas.Left="1">
-                                    <!--Click to slide menu Out to right /Back-->
+							Canvas.Top="0" Canvas.Left="0">
+
                                     <Image x:Name="OpenCloseButton"
 								Source="/Icons/right-arrow.png"
 								Width="20" Height="20"
 								ToolTip="Click to Hide this menu bar"
 								MouseLeftButtonDown="Image_MouseLeftButtonDown"
 								RenderTransformOrigin="14.6,1.9"
-								Margin="0,7,0,465" />
+								Margin="18,9,-15,463" />
                               </Border>
 
                               <TextBlock x:Name="Scalelabel"
@@ -1942,7 +2067,6 @@
 							Foreground="{StaticResource ResourceKey=White0}"
 							Width="44" />
 
-                              <!--#region RectangleButtons-->
                               <userctrl:RectangleControl    x:Name="TogglePanes"
 							BorderWidth="2"
 							BtnBorder="{DynamicResource Green7}"
@@ -1975,8 +2099,10 @@
 							TextSize ="14"
 							TextWidth="122"
                                           TextLeftOffset="-8"
-							Width="163"
-							Loaded="TogglePanes_Loaded" />
+							Width="163">
+
+
+                              </userctrl:RectangleControl>
 
                               <userctrl:RectangleControl x:Name="TestRectangle"
 							Grid.Column="1"
@@ -2130,7 +2256,6 @@
 							FontWeight="DemiBold"
 							FillTop="{DynamicResource Blue4}"
 							MouseoverColor="{DynamicResource Blue1}"
-							MouseLeftButtonDown="TextHeightChange"
 							RenderTransformOrigin="0.5,0.5"
 							ShadowBlurColor="#FF2F3007"
 							ShadowOpacity="0.6"
@@ -2163,7 +2288,6 @@
 							FontFamily="Arial"
 							FontWeight="DemiBold"
 							FillTop="{DynamicResource Red1}"
-							MouseLeftButtonDown="TestRectangle_Copy3_MouseLeftButtonDown"
 							MouseoverColor="{DynamicResource Green6}"
 							RenderTransformOrigin="0.5,0.5"
 

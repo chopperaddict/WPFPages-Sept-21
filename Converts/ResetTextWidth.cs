@@ -18,7 +18,7 @@ namespace WPFPages . Converts
                 /// <returns></returns>
                 public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )
                 {
-                        double  currentvalue = 0;
+                        double currentvalue = 0;
                         double offset = 0;
                         double d = 0;
                         Type t = targetType;
@@ -28,12 +28,12 @@ namespace WPFPages . Converts
                                 d = ( double ) value;
                                 if ( d == 0 )
                                         return value;
-                                double param  = System . Convert . ToDouble ( parameter );
+                                double param = System . Convert . ToDouble ( parameter );
                                 if ( param > 0 )
                                 {
                                         // How to access a DP in a converter
-                                        currentvalue = d - ( param * 1.8 );
-                                        Console . WriteLine ( $"ResetTextWidth Converter: value={d} minus parameter={param} *3,  Returning {currentvalue}" );
+                                        currentvalue = d - ( param * 3 );
+                                        Console . WriteLine ( $"ResetTextWidth Converter: value={d} minus parameter={param} *2.3,  Returning {currentvalue}" );
                                 }
                                 else
                                 {

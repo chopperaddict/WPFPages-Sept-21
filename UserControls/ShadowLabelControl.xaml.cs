@@ -1,5 +1,6 @@
 ﻿using System;
 using System . ComponentModel;
+using System . Runtime . CompilerServices;
 using System . Windows;
 using System . Windows . Controls;
 using System . Windows . Input;
@@ -145,6 +146,7 @@ namespace WPFPages . UserControls
                 private static void OnBackgroundhangedCallBack ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
                         RectangleControl tc = d as RectangleControl;
+                        Console . WriteLine ($"SHADOWLABELCONTROL : Background set to {e.NewValue}");
                 }
 
                 #endregion Background
@@ -398,21 +400,19 @@ namespace WPFPages . UserControls
                 #endregion BtnColorDown
 
                 #region BtnText
-
                 public string BtnText
                 {
                         get
                         {
                                 return ( string ) GetValue ( BtnTextProperty );
                         }
-
                         set
                         {
                                 SetValue ( BtnTextProperty, value );
-                                ButtonText . Refresh ( );
+                                this . Refresh ( );
+                                this . UpdateLayout ( );
                         }
-                        //set{}
-                }
+                 }
 
                 public static readonly DependencyProperty BtnTextProperty =
                         DependencyProperty . Register ( "BtnText",
@@ -695,7 +695,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "MouseoverColor",
                         typeof ( Brush ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . Transparent ) ), OnMouseoverColorPropertyChangedCallBack );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . LightGreen ) ), OnMouseoverColorPropertyChangedCallBack );
 
                 private static bool OnMouseoverColorPropertyChangedCallBack ( object value )
                 {
@@ -756,6 +756,43 @@ namespace WPFPages . UserControls
 
                 #endregion RotateAngle
 
+                #region SkewX
+                public double SkewX
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( SkewXProperty );
+                        }
+                        set
+                        {
+                                SetValue ( SkewXProperty, value );
+                        }
+                }
+
+                // Using a DependencyProperty as the backing store for SkewX.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty SkewXProperty =
+                    DependencyProperty . Register ( "SkewX", typeof ( double ), typeof ( ShadowLabelControl ), new PropertyMetadata ( 0.0 ) );
+
+                #endregion
+
+                #region SkewY
+                public double SkewY
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( SkewYProperty );
+                        }
+                        set
+                        {
+                                SetValue ( SkewYProperty, value );
+                        }
+                }
+
+                // Using a DependencyProperty as the backing store for SkewY.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty SkewYProperty =
+                    DependencyProperty . Register ( "SkewY", typeof ( double ), typeof ( ShadowLabelControl ), new PropertyMetadata ( 0.0 ) );
+                #endregion
+
                 #region ShowBorder (UNUSED)
 
                 //              public Visibility ShowBorder
@@ -780,7 +817,7 @@ namespace WPFPages . UserControls
 
                 #region Text
 
-                 public string Text
+                public string Text
                 {
                         get
                         {
@@ -798,7 +835,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "Text",
                         typeof ( string ),
                         typeof ( ShadowLabelControl ),
-                        new FrameworkPropertyMetadata ( "Text Here...", new PropertyChangedCallback ( OnTextChangedCallBack ) ) );
+                        new FrameworkPropertyMetadata ( "Text Area", new PropertyChangedCallback ( OnTextChangedCallBack ) ) );
 
                 private static void OnTextChangedCallBack ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
                 {
@@ -893,7 +930,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextShadowColor",
                         typeof ( Color ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( Colors . DarkGray ) );
+                        new PropertyMetadata ( Colors .Red ) );
 
                 #endregion TextShadowColor
 
@@ -958,7 +995,6 @@ namespace WPFPages . UserControls
                 #endregion TextShadowRadius
 
                 #region TextShadowSize
-
                 public double TextShadowSize
                 {
                         get
@@ -1060,7 +1096,6 @@ namespace WPFPages . UserControls
                 #endregion TextWidthScale
 
                 #region TextTopOffset
-
                 public int TextTopOffset
                 {
                         get
@@ -1079,7 +1114,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextTopOffset",
                         typeof ( int ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( 0 ), OnTextTopOffsetPropertyChanged );
+                        new PropertyMetadata (40 ), OnTextTopOffsetPropertyChanged );
 
                 private static bool OnTextTopOffsetPropertyChanged ( object value )
                 {
@@ -1166,18 +1201,16 @@ namespace WPFPages . UserControls
                 #endregion TextSize
 
                 #region TextHeight
-
                 public double TextHeight
                 {
                         get
                         {
                                 return ( double ) GetValue ( TextHeightProperty );
                         }
-
                         set
                         {
                                  SetValue ( TextHeightProperty, value );
-                                ButtonText . Refresh ( );
+                                this . Refresh ( );
                         }
                 }
 
@@ -1185,7 +1218,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextHeight",
                         typeof ( double ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 20 ), OnTextHeightChanged );
+                        new PropertyMetadata ( ( double ) 0 ), OnTextHeightChanged );
 
                 private static bool OnTextHeightChanged ( object value )
                 {
@@ -1195,7 +1228,6 @@ namespace WPFPages . UserControls
                 #endregion TextWidth
 
                 #region TextWidth
-
                 public double TextWidth
                 {
                         get
@@ -1216,7 +1248,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextWidth",
                         typeof ( double ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 100 ), OnTextWidthChanged );
+                        new PropertyMetadata ( ( double ) 0 ), OnTextWidthChanged );
 
                 private static bool OnTextWidthChanged ( object value )
                 {
@@ -1494,8 +1526,6 @@ namespace WPFPages . UserControls
                         this . Refresh ( );
                 }
 
-
-
                 /// <summary>
                 /// Change color of the Text on mouseover
                 /// </summary>
@@ -1503,7 +1533,6 @@ namespace WPFPages . UserControls
                 /// <param name="e"></param>
                 private void RectBtn_MouseEnter ( object sender, MouseEventArgs e )
                 {
-                        this . border . Background = this . MouseoverColor;
                         this . dropshadow . Color = this . ShadowDownColor;
                         this . ButtonText . Foreground = this . BtnTextColorDown;
                         if ( !this . UseStandardBackground && this . LinearFill . Fill != ( LinearGradientBrush ) null )
@@ -1513,7 +1542,7 @@ namespace WPFPages . UserControls
                         }
                         else
                         {
-                                this . border . Background = this . BtnColorDown;
+                                border . Background = this . MouseoverColor;
                                 this . border . Refresh ( );
                         }
                         return;
@@ -1545,20 +1574,7 @@ namespace WPFPages . UserControls
                         return;
                 }
 
-                private void ReportStatus ( )
-                {
-                        //Console . WriteLine ( $"REPORT On Loading : \n"
-                        //	+ $" BtnText		: {BtnText}\n"
-                        //	+ $" BtnTextColor	: {BtnTextColor}\n"
-                        //	+ $" FontSize		: {FontSize}\n"
-                        //	+ $" FontDecoration	:	{FontDecoration}\n" +
-                        //	   $" FillTop	: {FillTop . ToString ( )}\n" +
-                        //	   $" FillSide	: {FillSide . ToString ( )}\n" +
-                        //	   $" FillHole	: {FillHole?.ToString ( )}\n"
-                        //	   );
-                }
-
-                private void ContainerGrid_SizeChanged ( object sender, SizeChangedEventArgs e )
+                   private void ContainerGrid_SizeChanged ( object sender, SizeChangedEventArgs e )
                 {
                         Grid grid = sender as Grid;
 

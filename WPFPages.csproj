@@ -96,6 +96,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converts\Actype2Name.cs" />
+    <Compile Include="Converts\Addoffset.cs" />
     <Compile Include="Converts\ApplyLeftOffset.cs" />
     <Compile Include="Converts\BtnWidthConverter.cs" />
     <Compile Include="Converts\CalculateLeftOffset.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Converts\PadImgConverter.cs" />
     <Compile Include="Converts\PadShadowLabelBorder.cs" />
     <Compile Include="Converts\PadTextBlock.cs" />
+    <Compile Include="Converts\ReduceTextWidth.cs" />
     <Compile Include="Converts\ResetTextWidth.cs" />
     <Compile Include="Converts\Resource2BrushConverter.cs" />
     <Compile Include="Converts\SetTextTopOffset.cs" />
@@ -154,7 +156,11 @@
     <Compile Include="UserControls\ShadowLabelControl.xaml.cs">
       <DependentUpon>ShadowLabelControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SharedGrid.xaml.cs">
+      <DependentUpon>SharedGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ObservableObject.cs" />
+    <Compile Include="ViewModels\TreeviewDataModel.cs" />
     <Compile Include="Views\AnimationTest.xaml.cs">
       <DependentUpon>AnimationTest.xaml</DependentUpon>
     </Compile>
@@ -377,6 +383,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ShadowLabelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SharedGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

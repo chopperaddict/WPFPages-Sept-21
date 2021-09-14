@@ -8,30 +8,57 @@
  		 DataContext="ShadowLabelControl"
 		 x:Name="ShadowTextControl"
 		 Loaded="RectBtn_Loaded"
-               Height="120" Width="360">
+             Height="120" Width="360" 
+             Style="{DynamicResource UserControlStyle}">
 
       <UserControl.Resources>
-
             <conv:SetTextTopOffset x:Key="SetTopOffset" />
             <conv:PadShadowLabelBorder x:Key="ShadowLabelBorder" />
+            <Style x:Key="UserControlStyle" TargetType="{x:Type UserControl}">
+                  <Setter Property="Template">
+                        <Setter.Value>
+                              <ControlTemplate TargetType="{x:Type UserControl}">
+                                    <Border x:Name="_border" 
+                                            BorderBrush="{TemplateBinding BorderBrush}" 
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                            Background="{TemplateBinding Background}" 
+                                            Padding="{TemplateBinding Padding}" 
+                                            SnapsToDevicePixels="true">
+                                          <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                          <Trigger Property="IsMouseOver" Value="True">
+                                         </Trigger>
+                                          
+                                    </ControlTemplate.Triggers>
+                              </ControlTemplate>
+                        </Setter.Value>
+                  </Setter>
+            </Style>
+
+
       </UserControl.Resources>
 
-      <!--Height="{Binding ControlHeight, ElementName=ShadowTextControl}"
-			Width="{Binding ControlWidth, ElementName=ShadowTextControl}"-->
       <Grid x:Name="RectBtn"
 		Margin="{Binding BorderPadding, ElementName=ShadowTextControl}"
-		Background="Transparent">
+		Background="Transparent"
+            >
             <Grid.RenderTransform>
-                  <TranslateTransform X="0" Y="0" />
+                  <SkewTransform 
+                        AngleX="{Binding SkewX, ElementName=ShadowTextControl}"
+                        AngleY="{Binding SkewY, ElementName=ShadowTextControl}"/>
             </Grid.RenderTransform>
 
-            <Border x:Name="border"
+                  <Border x:Name="border"
                   Height="{Binding Height, ElementName=RectBtn}"
                   Width="{Binding Width, ElementName=RectBtn}"
                   Background="{Binding Background, ElementName=ShadowTextControl,FallbackValue=DarkGray}"
                   CornerRadius="{Binding RectCorner, ElementName=ShadowTextControl}"
                   MouseEnter="RectBtn_MouseEnter"
                   MouseLeave="RectBtn_MouseLeave"
+                  
                   PreviewMouseRightButtonDown="border_PreviewMouseRightButtonDown"
                   PreviewMouseRightButtonUp="border_PreviewMouseRightButtonUp"
                   Loaded="border_loaded"
@@ -40,79 +67,81 @@
                   BorderBrush="{Binding BorderColor, ElementName=ShadowTextControl}"
                   Margin="2,2,2,2">
 
-                  <Border.Effect>
-                        <DropShadowEffect x:Name="borderdropshadow"
+                        <Border.Effect>
+                              <DropShadowEffect x:Name="borderdropshadow"
 							ShadowDepth="{Binding BorderShadowDepth, ElementName=ShadowTextControl}"
 							Direction="{Binding BorderShadowDirection, ElementName=ShadowTextControl}"
 							Color="{Binding BorderShadowColor, ElementName=ShadowTextControl,FallbackValue=White}"
 							Opacity="{Binding BorderShadowOpacity, ElementName=ShadowTextControl}"
 							BlurRadius="{Binding BorderShadowBlurSize, ElementName=ShadowTextControl}" />
-                  </Border.Effect>
+                        </Border.Effect>
 
-                  <Grid>
+                        <Grid>
 
-                        <Rectangle x:Name="LinearFill"
-                              Height="{Binding Height, ElementName=border}"
-                              Width="{Binding Width, ElementName=border}"
+                              <Rectangle x:Name="LinearFill"
+                              Height="{Binding ActualHeight, ElementName=border}"
+                              Width="{Binding ActualWidth, ElementName=border}"
                               Fill="{Binding LinearBackground, ElementName=ShadowTextControl}"
                               RadiusX="{Binding RectCorner, ElementName=ShadowTextControl}"
                               RadiusY="{Binding RectCorner, ElementName=ShadowTextControl}"
                               UseLayoutRounding="True"
                               Visibility="Visible" />
 
-                        <!--TextWrapping="{Binding TextWrap, ElementName=ShadowTextControl}"-->
-                        <TextBlock x:Name="ButtonText"
+                              <!--TextWrapping="{Binding TextWrap, ElementName=ShadowTextControl}"-->
+                              <TextBlock x:Name="ButtonText"
 				     Background="Transparent"
-					Height="{Binding TextHeight, ElementName=ShadowTextControl, FallbackValue=20}"
-					Width="{Binding TextWidth, ElementName=ShadowTextControl, FallbackValue=125}"
+					Height="{Binding ActualHeight, ElementName=ShadowTextControl, FallbackValue=30}"
+					Width="{Binding ActualWidth, ElementName=ShadowTextControl, FallbackValue=145}"
 					Panel.ZIndex="1"
-					FontSize="{Binding TextSize, ElementName=ShadowTextControl, FallbackValue=18}"
+					FontSize="{Binding TextSize, ElementName=ShadowTextControl, FallbackValue=25}"
 					FontStyle="{Binding FontDecoration, ElementName=ShadowTextControl, FallbackValue=Verdana}"
 					Foreground="{Binding BtnTextColor, ElementName=ShadowTextControl, FallbackValue=Black}"
 					TextTrimming="None"
 					TextAlignment="Center"
+       
 					TextOptions.TextRenderingMode="ClearType"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
                               TextWrapping="Wrap"
 					UseLayoutRounding="True"
-					Text="{Binding Text, ElementName=ShadowTextControl, FallbackValue=12345 67890}"
+					Text="{Binding BtnText, ElementName=ShadowTextControl}"
 					     >
-                              <TextBlock.ToolTip>
-                                    <Border BorderBrush="{StaticResource Red5}"
+                                    <TextBlock.ToolTip >
+                                          <Border BorderBrush="{StaticResource Red5}"
                                             BorderThickness="0 0 0 4">
-                                    <TextBlock
-                                          TextWrapping="Wrap"
-                                          Width="500"
-                                          Background="{StaticResource Yellow4}"
-                                          Foreground="Black"
-                                          Text="There are many properties that can be set to adjust the width height, left +top offsets, and it can be 'Scaled' both Horizontally and vertically.  See Documentation for further information. To see an example, right click and hold on this control to see the left offset change"
-                                          />
-                                    </Border>
-                              </TextBlock.ToolTip>
+                                                <TextBlock
+                                                TextWrapping="Wrap"
+                                                Width="500"
+                                                Background="{StaticResource Yellow4}"
+                                                Foreground="Black"
+                                                Text="There are many properties that can be set to adjust the width height,  left +top offsets, and it can be 'Scaled' both Horizontally and vertically.  See Documentation for further information. To see an example, right click and hold on this control to see the left offset change"
+                                                />
+                                          </Border>
+                                    </TextBlock.ToolTip>
 
 				<!--Needed to move text block down to force it to center the text in the border-->
                               <TextBlock.RenderTransform>
                                     <TransformGroup>
-
+                                               
+                                          
                                           <TranslateTransform
-                                                X="{Binding TextLeftOffset, ElementName=ShadowTextControl, FallbackValue=1}"
-						            Y="{Binding TextTopOffset, ElementName=ShadowTextControl, FallbackValue=1}" />
+                                                X="{Binding TextWidth, ElementName=ShadowTextControl, FallbackValue=ActualWidth}"
+						            Y="{Binding TextHeight, ElementName=ShadowTextControl, FallbackValue=ActualHeight}" />
 
                                           <ScaleTransform
-                                                ScaleX="{Binding TextWidthScale, ElementName=ShadowTextControl,FallbackValue=1}"
-                                                ScaleY="{Binding TextHeightScale, ElementName=ShadowTextControl, FallbackValue=1}"/>
+                                                ScaleX="{Binding TextWidthScale, ElementName=ShadowTextControl}"
+                                                ScaleY="{Binding TextHeightScale, ElementName=ShadowTextControl}"/>
 
                                     </TransformGroup>
                               </TextBlock.RenderTransform>
                                     
                               <TextBlock.Effect>
                                     <DropShadowEffect x:Name="dropshadow"
-							ShadowDepth="{Binding TextShadowSize, ElementName=ShadowTextControl, FallbackValue=1}"
+							ShadowDepth="{Binding TextShadowSize, ElementName=ShadowTextControl, FallbackValue=5}"
 							Direction="{Binding TextShadowDirection, ElementName=ShadowTextControl, FallbackValue=33}"
-							Color="{Binding TextShadowColor, ElementName=ShadowTextControl,FallbackValue=White}"
-							Opacity="{Binding TextShadowOpacity, ElementName=ShadowTextControl, FallbackValue=1}"
-							BlurRadius="{Binding TextShadowBlurSize, ElementName=ShadowTextControl, FallbackValue=0}" />
+							Color="{Binding TextShadowColor, ElementName=ShadowTextControl,FallbackValue=Red}"
+							Opacity="{Binding TextShadowOpacity, ElementName=ShadowTextControl, FallbackValue=1.0}"
+							BlurRadius="{Binding TextShadowBlurSize, ElementName=ShadowTextControl, FallbackValue=5}" />
                               </TextBlock.Effect>
                         </TextBlock>
                   </Grid>

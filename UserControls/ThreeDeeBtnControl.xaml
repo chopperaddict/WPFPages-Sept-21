@@ -211,6 +211,12 @@
 		Background="Transparent"
 		UseLayoutRounding="True"
 		BorderThickness="0">
+            
+            <Border.RenderTransform>
+                  <SkewTransform 
+                        AngleX="{Binding SkewX, ElementName=ThreeDBttn}"
+                        AngleY="{Binding SkewY, ElementName=ThreeDBttn}"/>
+            </Border.RenderTransform>
 
             <Button x:Name="ThreeDBtn"
 			Background="CadetBlue"
@@ -346,7 +352,7 @@
                                           <!--NB this allows designer to set angle of text on the button-->
                                           <ContentPresenter.RenderTransform>
                                                 <TransformGroup>
-                                                      <ScaleTransform ScaleY="{Binding TextHeightScale, RelativeSource={RelativeSource FindAncestor,			AncestorType=local:ThreeDeeBtnControl}}"
+                                                      <ScaleTransform ScaleY="{Binding TextHeightScale, RelativeSource={RelativeSource FindAncestor, AncestorType=local:ThreeDeeBtnControl}}"
 										ScaleX="{Binding TextWidthScale, RelativeSource={RelativeSource FindAncestor,	AncestorType=local:ThreeDeeBtnControl}}" />
                                                       <SkewTransform
 										CenterX="0"

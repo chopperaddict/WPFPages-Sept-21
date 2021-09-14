@@ -307,8 +307,8 @@
       </LinearGradientBrush>
 
       <LinearGradientBrush x:Key="HeaderBorderBrushGreen" StartPoint="0.5,0" EndPoint="0.5,1">
-		<GradientStop Offset="0.314" Color="#FF224022" />
-		<GradientStop Offset="0.553" Color="#FF336633" />
+            <GradientStop Offset="0.214" Color="#FF107F03" />
+            <GradientStop Offset="0.553" Color="#FF109803" />
 		<GradientStop Offset="1" Color="#FF00FF00" />
 	</LinearGradientBrush>
 
