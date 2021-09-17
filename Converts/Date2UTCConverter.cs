@@ -5,7 +5,7 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
-	public class Date2UTCConverter : IValueConverter
+        public class Date2UTCConverter : IValueConverter
 	{
 		public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
@@ -27,10 +27,10 @@ namespace WPFPages . Converts
 			Output += date [ 1 ];
 			return Output;
 		}
+
 		public object ConvertBack ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
 			return null as object;
 		}
 	}
-
 }

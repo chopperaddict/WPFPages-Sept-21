@@ -5,7 +5,7 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
-	public class DateTime2ShortDateConvertor : IValueConverter
+        public class DateTime2ShortDateConvertor : IValueConverter
 	{
 		public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
@@ -19,7 +19,5 @@ namespace WPFPages . Converts
 		{
 			return ( object ) null;
 		}
-
 	}
-
 }

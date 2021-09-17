@@ -30,10 +30,16 @@ namespace WPFPages . UserControls
                         InitializeComponent ( );
                         this . DataContext = this;
                         ThisControl = this;
+
+                        Height = 55;
+                        Width = 175;
                         this . OuterGrid . Refresh ( );
                         this . Refresh ( );
                 }
-
+                private void Imgbutton_Loaded ( object sender, RoutedEventArgs e )
+                {
+                     
+                }
                 private void ImgButton_GetHelp ( object sender, bool e )
                 {
                         MessageBox . Show ( $"Sorry, Not yet implemented..." );
@@ -84,7 +90,6 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BackColorProperty, value );
-                                Imgbutton . Refresh ( );
                         }
                 }
 
@@ -112,7 +117,6 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BorderColorProperty, value );
-                                Imgbutton . Refresh ( );
                         }
                         //set{}
                 }
@@ -137,7 +141,6 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BorderWidthProperty, value );
-                                Imgbutton . Refresh ( );
                         }
                         //set { }
                 }
@@ -162,9 +165,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BtnTextProperty, value );
-                                BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                       }
                         //set{}
                 }
 
@@ -182,7 +183,6 @@ namespace WPFPages . UserControls
                 #endregion BtnText
 
                 #region BtnTextColor
-
                 /// </summary>
                 public Brush BtnTextColor
                 {
@@ -194,9 +194,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BtnTextColorProperty, value );
-                                BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                         }
                         //set{}
                 }
 
@@ -204,7 +202,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "BtnTextColor",
                         typeof ( Brush ),
                         typeof ( ImgButton ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . Black ) ) );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . White ) ) );
 
                 #endregion BtnTextColor
 
@@ -220,9 +218,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( CornerradiusProperty, value );
-                                DisplayStackpanel . Refresh ( );
-                                Imgbutton . Refresh ( );
-                        }
+                      }
                         //set{}
                 }
 
@@ -259,8 +255,6 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( FontDecorationProperty, value );
-                                BtnTextBlock . Refresh ( );
-                                Imgbutton . Refresh ( );
                         }
                         //set{}
                 }
@@ -302,9 +296,6 @@ namespace WPFPages . UserControls
 
                 private static void OnImgSourcePropertyCallBack ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
                 {
-                        ThisControl.BtnImage . Refresh ( );
-                        ThisControl ?. DisplayStackpanel . Refresh ( );
-                        ThisControl ?. Imgbutton . Refresh ( );
                         Console . WriteLine ( $"IMGBUTTON : ImgSource  set to  [{e . NewValue}]." );
                 }
 
@@ -332,9 +323,7 @@ namespace WPFPages . UserControls
 
                 private static void OnHeightChangedCallBack ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
-                        ThisControl ?. BtnImage . Refresh ( );
-                        ThisControl ?. Refresh ( );
-                        Console . WriteLine ( $"IMGBUTTON : ImageHeight set to  [{e . NewValue}]." );
+                         Console . WriteLine ( $"IMGBUTTON : ImageHeight set to  [{e . NewValue}]." );
                 }
 
                 #endregion ImgWidth
@@ -674,7 +663,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextSize",
                         typeof ( int ),
                         typeof ( ImgButton ),
-                        new PropertyMetadata ( ( int ) 18 ), OnTextSizeChanged );
+                        new PropertyMetadata ( ( int ) 12 ), OnTextSizeChanged );
 
                 private static bool OnTextSizeChanged ( object value )
                 {
@@ -1170,9 +1159,6 @@ namespace WPFPages . UserControls
                         RectBtn_MouseEnter ( null, null );
                         RectBtn_MouseLeave ( null, null );
                         this . Refresh ( );
-                        this . Refresh ( );
-                        //                        Console . WriteLine ( $"    $$$$$$    imgwidth hasbeen set to {imgwidth}" );
-
                 }
 
                 private void BtnTextBlock_Loaded ( object sender, RoutedEventArgs e )
@@ -1193,46 +1179,7 @@ namespace WPFPages . UserControls
 
                 private void BtnImage_Loaded ( object sender, RoutedEventArgs e )
                 {
-                        // Save image width initially
-                        //                        double imgwidth = ( double ) BtnImage.Width;
-
-
-                        //var isdesign = Application . Current is App;
-                        //if(!isdesign)
-                        //ImgBorder . Opacity = 0.0;
-
-                        // ThisControl . SetValue ( ImgWidthProperty, imgwidth);
-
-                        //// Get sizes of textblock and all potential text/Image offsets
-                        // double txtwidth = BtnTextBlock . ActualWidth;
-                        // txtwidth = DisplayStackpanel.ActualWidth;
-                        // double imgleftoffset = ( double ) ThisControl . GetValue ( ImageLeftOffsetProperty );
-                        // imgwidth = ( double ) ThisControl . GetValue ( ImgWidthProperty );
-                        // txtwidth = ( double ) ThisControl . GetValue ( TextWidthProperty );
-                        // double textwidthpadding = ( double ) ThisControl . GetValue ( TextWidthPaddingProperty );
-                        // if ( imgwidth > 0 && imgleftoffset != 0 )
-                        //         imgwidth += imgleftoffset;
-                        // if ( textwidthpadding != 0 )
-                        //         txtwidth -= textwidthpadding;
-                        // if (imgwidth != 0)
-                        // {
-                        //         if( imgleftoffset > 0)
-                        //                 ThisControl . SetValue ( TextWidthProperty, txtwidth - (imgwidth + imgleftoffset));
-                        //         else
-                        //                 ThisControl . SetValue ( TextWidthProperty, (txtwidth - imgwidth ) + imgleftoffset);
-                        // }
-                        // else if ( imgwidth > 0 )
-                        // {
-                        //         ThisControl . SetValue ( TextWidthProperty, txtwidth - imgwidth );
-                        // }
-                        // else
-                        // {
-                        //         ThisControl . SetValue ( TextWidthProperty, txtwidth );
-                        // }
-                        // Console . WriteLine ( $"Image loaded - imgwidth = {ImgWidth},\n  TextWidth={txtwidth},\n  ImaageLeftOffset={imgleftoffset},\n  New setting = {ThisControl.GetValue(TextWidthProperty)} \n" );
-                }
-
-
+                 }
 
                 private void OuterGrid_Loaded ( object sender, RoutedEventArgs e )
                 {
@@ -1266,5 +1213,7 @@ namespace WPFPages . UserControls
                         int i = 0;
                         //BtnImage . Refresh ( );
                 }
+
+  
         }
 }

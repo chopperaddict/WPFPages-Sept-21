@@ -1,14 +1,8 @@
-﻿using System;
-using System . Collections . Generic;
-using System . Linq;
-using System . Text;
-using System . Threading . Tasks;
-using System . Windows;
-using System . Windows . Input;
+﻿using System . Windows . Input;
 
-namespace WPFPages.Commands
+namespace WPFPages . Commands
 {
-	public static class MyCommands
+        public static class MyCommands
 	{
 		public static readonly RoutedUICommand Exit = new RoutedUICommand
 			( "Exit", "Exit", typeof ( MyCommands ) );
@@ -21,6 +15,5 @@ namespace WPFPages.Commands
 
 		public static readonly RoutedCommand Hello = new RoutedCommand ( );
 		public static readonly RoutedCommand Bye = new RoutedCommand ( );
-
 	}
 }

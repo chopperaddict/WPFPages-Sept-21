@@ -25,13 +25,11 @@ namespace WPFPages . UserControls
 
                 public void DoSetup ( )
                 {
-                        this . Height = 37;
-                        this . Width = 120;
                         this . Background = Brushes . DarkGray;
                         this . BtnTextColor = Brushes . Black;
                         this . TextTopOffset = 0;
                         this . BtnColorDown = Brushes . Aqua;
-                        this . BtnText = "BtnText";
+                        this . BtnText = "Text here...";
                         //this . BtnTextColor = Brushes.White;
                         BorderPadding = 0;
                         if ( !UseStandardBackground && LinearFill . Fill != ( LinearGradientBrush ) null )
@@ -130,11 +128,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BackgroundProperty, value );
-                                InvalidateProperty ( BackgroundProperty );
-                                InvalidateProperty ( LinearBackgroundProperty );
-
-                                this . RectBtn . Refresh ( );
-                        }
+                         }
                 }
 
                 new public static readonly DependencyProperty BackgroundProperty =
@@ -145,7 +139,6 @@ namespace WPFPages . UserControls
 
                 private static void OnBackgroundhangedCallBack ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
-                        RectangleControl tc = d as RectangleControl;
                         Console . WriteLine ($"SHADOWLABELCONTROL : Background set to {e.NewValue}");
                 }
 
@@ -162,10 +155,7 @@ namespace WPFPages . UserControls
 
                         set
                         {
-                                //				if ( value < 50 )
-                                //					value = 120;
                                 SetValue ( BorderPaddingProperty, value );
-                                ButtonText . Refresh ( );
                         }
                 }
 
@@ -177,14 +167,6 @@ namespace WPFPages . UserControls
 
                 private static bool OnBorderPaddingPropertyChanged ( object value )
                 {
-                        //int val = Convert . ToInt32 ( value );
-                        //Console . WriteLine ( $"TextWidth received = {value}" );
-                        //if ( val < 100 )
-                        //{
-                        //	value = 120 as object;
-                        //	val = 120;
-                        //}
-                        //Console . WriteLine ( $"TextWidth returned = {val}" );
                         return true;
                 }
 
@@ -219,32 +201,27 @@ namespace WPFPages . UserControls
                 #endregion BorderColor
 
                 #region BorderShadowColor
-
                 public Color BorderShadowColor
                 {
                         get
                         {
                                 return ( Color ) GetValue ( BorderShadowColorProperty );
                         }
-
                         set
                         {
                                 SetValue ( BorderShadowColorProperty, value );
-                                ButtonText . Refresh ( );
                         }
-                        //set{}
-                }
+                  }
 
                 public static readonly DependencyProperty BorderShadowColorProperty =
                         DependencyProperty . Register ( "BorderShadowColor",
                         typeof ( Color ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( Colors . DarkGray ) );
+                        new PropertyMetadata ( Colors . DarkSlateGray ) );
 
                 #endregion BorderShadowColor
 
                 #region BorderShadowBlurSize
-
                 public double BorderShadowBlurSize
                 {
                         get
@@ -256,7 +233,6 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BorderShadowBlurSizeProperty, value );
-                                ButtonText . Refresh ( );
                         }
                 }
 
@@ -264,19 +240,16 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "BorderShadowBlurSize",
                         typeof ( double ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 4 ), OnBorderShadowBlurSizeProperty );
+                        new PropertyMetadata ( ( double ) 5 ), OnBorderShadowBlurSizeProperty );
 
                 private static bool OnBorderShadowBlurSizeProperty ( object value )
                 {
-                        //			Console . WriteLine ( $"ShadowBlurSizeProperty = {value}" );
-
-                        return true;
+                         return true;
                 }
 
                 #endregion BorderShadowBlurSize
 
                 #region BorderShadowDepth
-
                 public double BorderShadowDepth
                 {
                         get
@@ -288,8 +261,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BorderShadowDepthProperty, value );
-                                ButtonText . Refresh ( );
-                        }
+                          }
                 }
 
                 public static readonly DependencyProperty BorderShadowDepthProperty =
@@ -300,23 +272,18 @@ namespace WPFPages . UserControls
 
                 private static bool OnBorderShadowDepthPropertyChanged ( object value )
                 {
-                        //			Console . WriteLine ( $"TextSize DP = {value}" );
-                        //RectangleControl . Refresh();
                         return true;
                 }
 
                 #endregion BorderShadowDepth
 
                 #region BorderShadowDirection
-
                 public double BorderShadowDirection
                 {
                         get
                         {
                                 return ( double ) GetValue ( BorderShadowDirectionProperty );
                         }
-
-                        //set { }
                         set
                         {
                                 SetValue ( BorderShadowDirectionProperty, value );
@@ -328,12 +295,10 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "BorderShadowDirection",
                         typeof ( double ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 0 ), OnBorderShadowDirectionChanged );
+                        new PropertyMetadata ( ( double ) 33 ), OnBorderShadowDirectionChanged );
 
                 private static bool OnBorderShadowDirectionChanged ( object value )
                 {
-                        //			Console . WriteLine ( $"TextSize DP = {value}" );
-                        //RectangleControl . Refresh();
                         return true;
                 }
 
@@ -348,12 +313,10 @@ namespace WPFPages . UserControls
                                 return ( double ) GetValue ( BorderShadowOpacityProperty );
                         }
 
-                        //set { }
-                        set
+                          set
                         {
                                 SetValue ( BorderShadowOpacityProperty, value );
-                                ButtonText . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty BorderShadowOpacityProperty =
@@ -364,9 +327,7 @@ namespace WPFPages . UserControls
 
                 private static bool OnBorderShadowOpacityProperty ( object value )
                 {
-                        //			Console . WriteLine ( $"ShadowOpacityProperty   = {value}" );
-
-                        return true;
+                         return true;
                 }
 
                 #endregion BorderShadowOpacity
@@ -388,7 +349,6 @@ namespace WPFPages . UserControls
                                 SetValue ( BtnColorDownProperty, value );
                                 RectBtn . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty BtnColorDownProperty =
@@ -409,9 +369,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BtnTextProperty, value );
-                                this . Refresh ( );
-                                this . UpdateLayout ( );
-                        }
+                         }
                  }
 
                 public static readonly DependencyProperty BtnTextProperty =
@@ -422,10 +380,6 @@ namespace WPFPages . UserControls
 
                 private static void OnBtnTextChangedCallBack ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
                 {
-                        // Save width of our text to DP TextWidth
-                        //RectangleControl tc = sender as RectangleControl;
-                        //string s = e . NewValue . ToString ( );
-                        //tc . TextWidth = s . Length;
                 }
 
                 #endregion BtnText
@@ -445,9 +399,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BorderThicknessProperty, value );
-                                RectBtn . Refresh ( );
-                        }
-                        //set { }
+                         }
                 }
 
                 new public static readonly DependencyProperty BorderThicknessProperty =
@@ -470,7 +422,6 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BtnTextDownProperty, value );
-                                ButtonText . Refresh ( );
                         }
                         //set{}
                 }
@@ -484,30 +435,23 @@ namespace WPFPages . UserControls
                 #endregion BtnTextDown
 
                 #region BtnTextColor
-
-                /// <summary>
-                /// Color pf the text with button at rest
-                /// </summary>
-                public Brush BtnTextColor
+                 public Brush BtnTextColor
                 {
                         get
                         {
                                 return ( Brush ) GetValue ( BtnTextColorProperty );
                         }
-
                         set
                         {
                                 SetValue ( BtnTextColorProperty, value );
-                                ButtonText . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty BtnTextColorProperty =
                         DependencyProperty . Register ( "BtnTextColor",
                         typeof ( Brush ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . Gray ) ) );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . White ) ) );
 
                 #endregion BtnTextColor
 
@@ -526,34 +470,27 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( BtnTextColorProperty, value );
-                                ButtonText . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty BtnTextColorDownProperty =
                         DependencyProperty . Register ( "BtnTextColorDown",
                         typeof ( Brush ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . Black ) ) );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . White ) ) );
 
                 #endregion BtnTextColorDown
 
                 #region CornerRadius
-
                 public double CornerRadius
                 {
                         get
                         {
                                 return ( double ) GetValue ( CornerRadiusProperty );
-                        }
-
-                        set
+                        }set
                         {
                                 SetValue ( CornerRadiusProperty, value );
-                                RectBtn . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty CornerRadiusProperty =
@@ -564,38 +501,22 @@ namespace WPFPages . UserControls
 
                 private static bool OnCornerradiusPropertyChanged ( object value )
                 {
-                        //int val = Convert . ToInt32 ( value );
-                        //Console . WriteLine ( $"TextWidth received = {value}" );
-                        //if ( val < 100 )
-                        //{
-                        //	value = 120 as object;
-                        //	val = 120;
-                        //}
-                        //Console . WriteLine ( $"TextWidth returned = {val}" );
                         return true;
                 }
-
                 #endregion CornerRadius
 
                 #region FontDecoration
-
-                /// <summary>
-                /// Font Styling option - Typically Normal, Italic, Oblique
-                /// </summary>
                 public string FontDecoration
                 {
                         get
                         {
                                 return ( string ) GetValue ( FontDecorationProperty );
                         }
-
-                        set
+                      set
                         {
                                 SetValue ( FontDecorationProperty, value );
-                                ButtonText . Refresh ( );
                         }
-                        //set{}
-                }
+               }
 
                 public static readonly DependencyProperty FontDecorationProperty =
                         DependencyProperty . Register ( "FontDecoration",
@@ -605,16 +526,11 @@ namespace WPFPages . UserControls
 
                 private static void OnFontDecorationChangedCallBack ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
                 {
-                        //			Console . WriteLine ( $"FontDecoration Property changed to [{ value}]" );
-                        RectangleControl tc = sender as RectangleControl;
-                        //FontWeight fw = ( FontWeight)e . NewValue ;
-                        //tc . FontWeight = fw;
                 }
 
                 #endregion FontDecoration
 
                 #region LinearBackground
-
                 public Brush LinearBackground
                 {
                         get
@@ -622,14 +538,10 @@ namespace WPFPages . UserControls
                                 this . Refresh ( );
                                 return ( LinearGradientBrush ) GetValue ( LinearBackgroundProperty );
                         }
-
                         set
                         {
                                 SetValue ( LinearBackgroundProperty, value );
-                                InvalidateProperty ( BackgroundProperty );
-                                InvalidateProperty ( LinearBackgroundProperty );
-                                RectBtn . Refresh ( );
-                        }
+                      }
                 }
 
                 public static readonly DependencyProperty LinearBackgroundProperty =
@@ -640,13 +552,11 @@ namespace WPFPages . UserControls
 
                 private static void OnLinearBackgroundCallBack ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
-                        RectangleControl tc = d as RectangleControl;
-                }
+                 }
 
                 #endregion LinearBackground
 
                 #region LinearBackgroundDown
-
                 public Brush LinearBackgroundDown
                 {
                         get
@@ -654,11 +564,9 @@ namespace WPFPages . UserControls
                                 this . Refresh ( );
                                 return ( LinearGradientBrush ) GetValue ( LinearBackgroundDownProperty );
                         }
-
                         set
                         {
                                 SetValue ( LinearBackgroundDownProperty, value );
-                                RectBtn . Refresh ( );
                         }
                 }
 
@@ -670,24 +578,20 @@ namespace WPFPages . UserControls
 
                 private static void OnLinearBackgroundDownCallBack ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
-                        RectangleControl tc = d as RectangleControl;
                 }
 
                 #endregion LinearBackgroundDown
 
                 #region MouseoverColor
-
                 public Brush MouseoverColor
                 {
                         get
                         {
                                 return ( Brush ) GetValue ( MouseoverColorProperty );
                         }
-
                         set
                         {
                                 SetValue ( MouseoverColorProperty, value );
-                                RectBtn . Refresh ( );
                         }
                 }
 
@@ -695,26 +599,23 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "MouseoverColor",
                         typeof ( Brush ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . LightGreen ) ), OnMouseoverColorPropertyChangedCallBack );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . DarkGray ) ), OnMouseoverColorPropertyChangedCallBack );
 
                 private static bool OnMouseoverColorPropertyChangedCallBack ( object value )
                 {
-                        //			Console . WriteLine ( $"FillHoleProperty changed to [{ value}]" );
-                        return value != null ? true : false;
+                         return value != null ? true : false;
                 }
 
                 #endregion MouseoverColor
 
                 #region RectCorner
-
                 public double RectCorner
                 {
                         get
                         {
                                 return ( double ) GetValue ( RectCornerProperty );
                         }
-
-                        set
+                       set
                         {
                                 SetValue ( RectCornerProperty, value );
                         }
@@ -755,6 +656,27 @@ namespace WPFPages . UserControls
                 //}
 
                 #endregion RotateAngle
+
+                #region ShadowDownColor 
+                public Color ShadowDownColor
+                {
+                        get
+                        {
+                                return ( Color ) GetValue ( ShadowDownColorProperty );
+                        }
+                        set
+                        {
+                                SetValue ( ShadowDownColorProperty, value );
+                        }
+                        //set{}
+                }
+                public static readonly DependencyProperty ShadowDownColorProperty =
+                        DependencyProperty . Register ( "ShadowDownColor",
+                        typeof ( Color ),
+                        typeof ( ShadowLabelControl ),
+                        new PropertyMetadata ( Colors . White ) );
+
+                #endregion ShadowDownColor  (NOT USED)
 
                 #region SkewX
                 public double SkewX
@@ -816,18 +738,15 @@ namespace WPFPages . UserControls
                 #endregion ShowBorder (UNUSED)
 
                 #region Text
-
                 public string Text
                 {
                         get
                         {
                                 return ( string ) GetValue ( TextProperty );
                         }
-
                         set
                         {
                                 SetValue ( TextProperty, value );
-                                ButtonText . Refresh ( );
                         }
                  }
 
@@ -839,29 +758,21 @@ namespace WPFPages . UserControls
 
                 private static void OnTextChangedCallBack ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
                 {
-                        // Save width of our text to DP TextWidth
-                        //RectangleControl tc = sender as RectangleControl;
-                        //string s = e . NewValue . ToString ( );
-                        //tc . TextWidth = s . Length;
-                }
+                 }
 
                 #endregion Text
 
                 #region TextShadowBlurSize
-
                 public double TextShadowBlurSize
                 {
                         get
                         {
                                 return ( double ) GetValue ( TextShadowBlurSizeProperty );
                         }
-
-                        //set { }
-                        set
+                       set
                         {
                                 SetValue ( TextShadowBlurSizeProperty, value );
-                                ButtonText . Refresh ( );
-                        }
+                       }
                 }
 
                 public static readonly DependencyProperty TextShadowBlurSizeProperty =
@@ -872,35 +783,29 @@ namespace WPFPages . UserControls
 
                 private static bool OnTextShadowBlurSizeProperty ( object value )
                 {
-                        //			Console . WriteLine ( $"ShadowBlurSizeProperty = {value}" );
-
-                        return true;
+                          return true;
                 }
 
                 #endregion TextShadowBlurSize
 
                 #region TextShadowDirection
-
                 public double TextShadowDirection
                 {
                         get
                         {
                                 return ( double ) GetValue ( TextShadowDirectionProperty );
                         }
-
-                        //set { }
-                        set
+                      set
                         {
                                 SetValue ( TextShadowDirectionProperty, value );
-                                ButtonText . Refresh ( );
-                        }
+                       }
                 }
 
                 public static readonly DependencyProperty TextShadowDirectionProperty =
                         DependencyProperty . Register ( "TextShadowDirection",
                         typeof ( double ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 330 ), OnTextShadowDirectionPropertyProperty );
+                        new PropertyMetadata ( ( double ) 33 ), OnTextShadowDirectionPropertyProperty );
 
                 private static bool OnTextShadowDirectionPropertyProperty ( object value )
                 {
@@ -910,44 +815,36 @@ namespace WPFPages . UserControls
                 #endregion TextShadowDirection
 
                 #region TextShadowColor
-
                 public Color TextShadowColor
                 {
                         get
                         {
                                 return ( Color ) GetValue ( TextShadowColorProperty );
                         }
-
                         set
                         {
                                 SetValue ( TextShadowColorProperty, value );
-                                ButtonText . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty TextShadowColorProperty =
                         DependencyProperty . Register ( "TextShadowColor",
                         typeof ( Color ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( Colors .Red ) );
+                        new PropertyMetadata ( Colors .White ) );
 
                 #endregion TextShadowColor
 
                 #region TextShadowOpacity
-
                 public double TextShadowOpacity
                 {
                         get
                         {
                                 return ( double ) GetValue ( TextShadowOpacitProperty );
                         }
-
-                        //set { }
-                        set
+                    set
                         {
                                 SetValue ( TextShadowOpacitProperty, value );
-                                ButtonText . Refresh ( );
                         }
                 }
 
@@ -955,7 +852,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextShadowOpacity",
                         typeof ( double ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 0.5 ), OnTextShadowOpacityProperty );
+                        new PropertyMetadata ( ( double ) 1 ), OnTextShadowOpacityProperty );
 
                 private static bool OnTextShadowOpacityProperty ( object value )
                 {
@@ -963,37 +860,7 @@ namespace WPFPages . UserControls
                 }
 
                 #endregion TextShadowOpacity
-
-                #region TextShadowRadius
-
-                public double TextShadowRadius
-                {
-                        get
-                        {
-                                return ( double ) GetValue ( TextShadowRadiusProperty );
-                        }
-
-                        //set { }
-                        set
-                        {
-                                SetValue ( TextShadowRadiusProperty, value );
-                                ButtonText . Refresh ( );
-                        }
-                }
-
-                public static readonly DependencyProperty TextShadowRadiusProperty =
-                        DependencyProperty . Register ( "TextShadowRadius",
-                        typeof ( double ),
-                        typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 1 ), OnTextShadowRadiusProperty );
-
-                private static bool OnTextShadowRadiusProperty ( object value )
-                {
-                        return true;
-                }
-
-                #endregion TextShadowRadius
-
+ 
                 #region TextShadowSize
                 public double TextShadowSize
                 {
@@ -1001,12 +868,9 @@ namespace WPFPages . UserControls
                         {
                                 return ( double ) GetValue ( TextShadowSizeProperty );
                         }
-
-                        //set { }
                         set
                         {
                                 SetValue ( TextShadowSizeProperty, value );
-                                ButtonText . Refresh ( );
                         }
                 }
 
@@ -1014,35 +878,25 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextShadowSize",
                         typeof ( double ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 2 ), OnTextShadowSizePropertyProperty );
+                        new PropertyMetadata ( ( double ) 1 ), OnTextShadowSizePropertyProperty );
 
                 private static bool OnTextShadowSizePropertyProperty ( object value )
                 {
-                        //			Console . WriteLine ( $"ShadowBlurSizeProperty = {value}" );
-
-                        return true;
+                         return true;
                 }
 
                 #endregion TextShadowSize
 
-                  #region TextHeightScale
-
-                /// <summary>
-                /// Set to a value of  -x to +x to shrink or stretch text on a button
-                /// normally range is between 0 & 1
-                /// </summary>
+                #region TextHeightScale
                 public double TextHeightScale
                 {
                         get
                         {
                                 return ( double ) GetValue ( TextHeightScaleProperty );
                         }
-
-                        //set { }
-                        set
+                         set
                         {
                                 SetValue ( TextHeightScaleProperty, value );
-                                ButtonText . Refresh ( );
                         }
                 }
 
@@ -1054,7 +908,6 @@ namespace WPFPages . UserControls
 
                 private static bool OnTextHeightScalePropertyChanged ( object value )
                 {
-                        //			Console . WriteLine ( $"TextWidthScaleProperty   = {value}" );
                         return true;
                 }
 
@@ -1062,22 +915,15 @@ namespace WPFPages . UserControls
 
                 #region TextWidthScale
 
-                /// <summary>
-                /// Set to a value of  -x to +x to shrink or stretch text on a button
-                /// normally range is between 0 & 1
-                /// </summary>
-                public double TextWidthScale
+              public double TextWidthScale
                 {
                         get
                         {
                                 return ( double ) GetValue ( TextWidthScaleProperty );
                         }
-
-                        //set { }
                         set
                         {
                                 SetValue ( TextWidthScaleProperty, value );
-                                ButtonText . Refresh ( );
                         }
                 }
 
@@ -1089,8 +935,7 @@ namespace WPFPages . UserControls
 
                 private static bool OnTextWidthScalePropertyChanged ( object value )
                 {
-                        //			Console . WriteLine ( $"TextWidthScaleProperty   = {value}" );
-                        return true;
+                       return true;
                 }
 
                 #endregion TextWidthScale
@@ -1102,31 +947,21 @@ namespace WPFPages . UserControls
                         {
                                 return ( int ) GetValue ( TextTopOffsetProperty );
                         }
-
                         set
                         {
                                 SetValue ( TextTopOffsetProperty, value );
-                                ButtonText . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty TextTopOffsetProperty =
                         DependencyProperty . Register ( "TextTopOffset",
                         typeof ( int ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata (40 ), OnTextTopOffsetPropertyChanged );
+                        new PropertyMetadata (0 ), OnTextTopOffsetPropertyChanged );
 
                 private static bool OnTextTopOffsetPropertyChanged ( object value )
                 {
-                        //int val = Convert . ToInt32 ( value );
-                        //Console . WriteLine ( $"TextWidth received = {value}" );
-                        //if ( val < 100 )
-                        //{
-                        //	value = 120 as object;
-                        //	val = 120;
-                        //}
-                        //Console . WriteLine ( $"TextWidth returned = {val}" );
-                        return true;
+                    return true;
                 }
 
                 #endregion TextTopOffset
@@ -1143,8 +978,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( TextLeftOffsetProperty, value );
-                                ButtonText . Refresh ( );
-                        }
+                       }
                 }
 
                 public static readonly DependencyProperty TextLeftOffsetProperty =
@@ -1155,24 +989,12 @@ namespace WPFPages . UserControls
 
                 private static bool OnTextLeftOffsetPropertyPropertyChanged ( object value )
                 {
-                        //int val = Convert . ToInt32 ( value );
-                        //Console . WriteLine ( $"TextWidth received = {value}" );
-                        //if ( val < 100 )
-                        //{
-                        //	value = 120 as object;
-                        //	val = 120;
-                        //}
-                        //Console . WriteLine ( $"TextWidth returned = {val}" );
-                        return true;
+                      return true;
                 }
 
                 #endregion TextLeftOffset
 
                 #region TextSize
-
-                /// <summary>
-                /// Size of the button text
-                /// </summary>
                 public int TextSize
                 {
                         get
@@ -1183,7 +1005,6 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( TextSizeProperty, value );
-                                ButtonText . Refresh ( );
                         }
                 }
 
@@ -1191,7 +1012,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextSize",
                         typeof ( int ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( 18 ), OnTextSizeChanged );
+                        new PropertyMetadata ( 12 ), OnTextSizeChanged );
 
                 private static bool OnTextSizeChanged ( object value )
                 {
@@ -1200,27 +1021,26 @@ namespace WPFPages . UserControls
 
                 #endregion TextSize
 
-                #region TextHeight
-                public double TextHeight
+                #region TextTop
+                public double TextTop
                 {
                         get
                         {
-                                return ( double ) GetValue ( TextHeightProperty );
+                                return ( double ) GetValue ( TextTopProperty );
                         }
                         set
                         {
-                                 SetValue ( TextHeightProperty, value );
-                                this . Refresh ( );
+                                 SetValue ( TextTopProperty, value );
                         }
                 }
 
-                public static readonly DependencyProperty TextHeightProperty =
-                        DependencyProperty . Register ( "TextHeight",
+                public static readonly DependencyProperty TextTopProperty =
+                        DependencyProperty . Register ( "TextTop",
                         typeof ( double ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( ( double ) 0 ), OnTextHeightChanged );
+                        new PropertyMetadata ( ( double ) 0 ), OnTextTopChanged );
 
-                private static bool OnTextHeightChanged ( object value )
+                private static bool OnTextTopChanged ( object value )
                 {
                         return true;
                 }
@@ -1237,11 +1057,8 @@ namespace WPFPages . UserControls
 
                         set
                         {
-                                //if ( value < 50 )
-                                //	value = 120;
-                                SetValue ( TextWidthProperty, value );
-                                ButtonText . Refresh ( );
-                        }
+                               SetValue ( TextWidthProperty, value );
+                       }
                 }
 
                 public static readonly DependencyProperty TextWidthProperty =
@@ -1286,12 +1103,7 @@ namespace WPFPages . UserControls
                         set
                         {
                                 SetValue ( UseStandardBackgroundProperty, value );
-                                //ClearValue( BackgroundProperty );
-                                //ClearValue ( LinearBackgroundProperty );
-                                //InvalidateProperty ( BackgroundProperty );
-                                //InvalidateProperty ( LinearBackgroundProperty );
-                                RectBtn . Refresh ( );
-                        }
+                      }
                 }
 
                 // Using a DependencyProperty as the backing store for UseStandardBackground.  This enables animation, styling, binding, etc...
@@ -1306,30 +1118,7 @@ namespace WPFPages . UserControls
 
                 #endregion UseStandardBackground
 
-                #region ShadowDownColor 
-
-                public Color ShadowDownColor
-                {
-                        get
-                        {
-                                return ( Color ) GetValue ( ShadowDownColorProperty );
-                        }
-                        set
-                        {
-                                SetValue ( ShadowDownColorProperty, value );
-                                ButtonText . Refresh ( );
-                        }
-                        //set{}
-                }
-                public static readonly DependencyProperty ShadowDownColorProperty =
-                        DependencyProperty . Register ( "ShadowDownColor",
-                        typeof ( Color ),
-                        typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( Colors . White ) );
-
-                #endregion ShadowDownColor  (NOT USED)
-
-                #region TextShadowColor
+                 #region TextShadowColor
 
                 //public Color ShadowColor
                 //{

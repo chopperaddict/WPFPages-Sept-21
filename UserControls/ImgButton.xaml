@@ -9,6 +9,7 @@
              mc:Ignorable="d"
   		 DataContext="ImgButton"
 		 x:Name="Imgbutton"
+             Loaded="Imgbutton_Loaded"
              d:DesignHeight="125" Width="348">
 
       <UserControl.Resources>
@@ -21,36 +22,20 @@
             <conv:Addoffset x:Key="reduceTextWidth"/>
             <!--<wpfpages:DesignTimeResourceDictionary DesignTimeSource="pack://application:,,,/ColorsDictionary.xml" x:Key="DesignDict" />-->
 
-            <Style x:Key="TextBlockStye1"
-			 TargetType="TextBlock">
-                  <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="False">
-                              <Setter Property="Opacity" Value="1" />
-                              <Setter Property="Width" Value="{Binding ActualWidth, ElementName=TxtCell}" />
-                              <Setter Property="Height" Value="{Binding ActualHeight, ElementName=TxtCell}" />
-                        </Trigger>
-                  </Style.Triggers>
-            </Style>
-
+   
             <!--<ControlTemplate x:Key="ImgButtonTemplate" TargetType="Button">
 		</ControlTemplate>-->
       </UserControl.Resources>
 
-      <Grid x:Name="OuterGrid"
- 	      MouseEnter="RectBtn_MouseEnter"
-	      MouseLeave="RectBtn_MouseLeave"
-            Margin="4,-13,0,-23"
-            Loaded="OuterGrid_Loaded">
-            <!--Unloaded="OuterGrid_Unloaded"-->
-
    
             <!--This is full external size as displayed--> 
-            <Grid x:Name="InnerGrid"
+            <Grid x:Name="OuterGrid"
                   Background="Transparent"
  			MouseEnter="RectBtn_MouseEnter"
 			MouseLeave="RectBtn_MouseLeave"
 		      MouseLeftButtonDown="OnClick"
-		      Panel.ZIndex="0" Margin="4,30,4,26" RenderTransformOrigin="0.5,0.5">
+		      Panel.ZIndex="0" Margin="4,12,4,5" 
+                  RenderTransformOrigin="0.5,0.5">
                   <Grid.ToolTip >
                         <TextBlock
                               Text="This control offers a really Huge number of configuration options, See the documentation for more information, or Press F1 when mouse is over the control"
@@ -110,15 +95,15 @@
                   <StackPanel x:Name="DisplayStackpanel"
                               Orientation="Horizontal"
                                HorizontalAlignment="Left"    
-                               Height="{Binding ActualHeight, ElementName=InnerGrid}" 
-                              Width="{Binding ActualWidth, ElementName=InnerGrid}"
+                               Height="{Binding ActualHeight, ElementName=OuterGrid, FallbackValue=35}" 
+                              Width="{Binding ActualWidth, ElementName=OuterGrid, FallbackValue=150}"
                                Panel.ZIndex="1"
                               VerticalAlignment="Top" Margin="-5,0,-1,0" 
                                     >
                         <Border x:Name="ImgBorder" 
                                 Background="Transparent"
                                 BorderBrush="Black" BorderThickness="1"
-                                Height="{Binding Width, RelativeSource={RelativeSource Self}}" 
+                                Height="{Binding Width, ElementName=DisplayStackpanel}" 
                                 Width="{Binding ImgWidth, ElementName=Imgbutton, Converter={StaticResource AddOffset}}"
                                 Visibility="visible"
                                 Panel.ZIndex="8">
@@ -160,12 +145,14 @@
                              Panel.ZIndex="3"  >
 
                               <TextBlock x:Name="BtnTextBlock"
-  					      TextWrapping="{Binding TextWrap, ElementName=Imgbutton}"
+                                   Height="{Binding ActualHeight, ElementName=TextBorder}" 
+                                    Width="{Binding TextWidth, ElementName=Imgbutton, Converter={StaticResource reduceTextWidth}}"
+ 					      TextWrapping="{Binding TextWrap, ElementName=Imgbutton}"
 					      Text="{Binding BtnText, ElementName=Imgbutton}"
-					      FontSize="{Binding TextSize, ElementName=Imgbutton, FallbackValue=16}"
+					      FontSize="{Binding TextSize, ElementName=Imgbutton, FallbackValue=12}"
 					      FontStyle="{Binding FontDecoration, ElementName=Imgbutton}"
 					      Foreground="{Binding BtnTextColor, ElementName=Imgbutton, FallbackValue=Black}"
-					      TextAlignment="Left"
+					      TextAlignment="Center"
                                     HorizontalAlignment="Right"
             			      VerticalAlignment="Center"
 					      UseLayoutRounding="True"
@@ -174,9 +161,7 @@
 					      Panel.ZIndex="10"
                                     Loaded="BtnTextBlock_Loaded"
 					      Opacity="1"
-                                    Height="{Binding ActualHeight, ElementName=TextblockBorder}" 
-                                    Width="{Binding TextWidth, ElementName=Imgbutton, Converter={StaticResource reduceTextWidth}}"
-                                    Margin="2,2,0,-2" 
+                                      Margin="2,2,0,-2" 
                                           >
                                     <!--Width="{Binding Width, Converter={StaticResource resetTextWidth}, ConverterParameter=35}"-->
                                     <TextBlock.RenderTransform>
@@ -202,5 +187,5 @@
                         </Border>
                   </StackPanel>
               </Grid>
-      </Grid>
+      <!--</Grid>-->
 </UserControl>

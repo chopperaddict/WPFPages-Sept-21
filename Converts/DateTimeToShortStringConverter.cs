@@ -5,8 +5,8 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
-	// ALL CONVERTERS ARE ACTUALLY WORKING 10/7/21
-	public class DateTimeToShortStringConverter : IValueConverter
+        // ALL CONVERTERS ARE ACTUALLY WORKING 10/7/21
+        public class DateTimeToShortStringConverter : IValueConverter
 	{
 		public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
@@ -19,10 +19,10 @@ namespace WPFPages . Converts
 			string [ ] dateonly = date . Split ( ch [ 0 ] );
 			return ( string ) dateonly [ 0 ];
 		}
+
 		public object ConvertBack ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
 			return null as object;
 		}
 	}
-
 }

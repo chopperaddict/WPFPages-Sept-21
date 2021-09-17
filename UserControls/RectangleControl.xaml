@@ -10,8 +10,11 @@
 		 x:Name="RectangularButton"
 		 DataContext="RectangleControl"
 		 IsHitTestVisible="True"
-		 Height="80"
-		 Width="120">
+             Height="50" Width="250"
+             d:DesignHeight ="50"
+             d:DesignWidth="250"
+             >
+      
 
 	<UserControl.Resources>
 
@@ -214,41 +217,58 @@
 	</UserControl.Resources>
 
 	<Grid   x:Name="Frame"
-		Height="{Binding Height, ElementName=RectangularButton}"
-		Width="{Binding Width, ElementName=RectangularButton}"
 		Background="Transparent"
 		Panel.ZIndex="1"
 		MouseEnter="RectBtn_MouseEnter"
 		MouseLeave="RectBtn_MouseLeave"
 		UseLayoutRounding="True"		    
-		Margin="3,4,1,2" >
+		Margin="9,3,2,0"  >
+            <Grid.Effect>
+                  <DropShadowEffect 						
+				Color="{Binding ShadowBlurColor, ElementName=RectangularButton}"
+				Direction="{Binding ShadowDirection, ElementName=RectangularButton}"
+                        Opacity="{Binding ShadowOpacity, ElementName=RectangularButton}"
+				ShadowDepth="{Binding ShadowDepth, ElementName=RectangularButton}"
+				BlurRadius="{Binding ShadowBlurRadius, ElementName=RectangularButton}"
+				RenderingBias="Quality"	/>
+            </Grid.Effect>
 
-		<Grid x:Name="ContainerGrid"
-			MouseEnter="RectBtn_MouseEnter"
+            <Grid x:Name="ContainerGrid"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  MouseEnter="RectBtn_MouseEnter"
 			MouseLeave="RectBtn_MouseLeave"
-			Margin="9,7,11,6"
-					>
+			Margin="-4,-2,3,2">
+                  
+                  <Grid.Effect>
+                        <DropShadowEffect 						
+						Color="{Binding ShadowBlurColor, ElementName=RectangularButton}"
+						Opacity="{Binding ShadowOpacity, ElementName=RectangularButton}"
+						ShadowDepth="{Binding ShadowBlurSize, ElementName=RectangularButton}"
+						BlurRadius="{Binding ShadowBlurRadius, ElementName=RectangularButton}"
+						RenderingBias="Quality"						
+						Direction="49"/>
+                  </Grid.Effect>
 
-			<!--MouseLeftButtonDown="RectBtn_MouseLeftButtonDown"-->
-			<!--Fill="{Binding Path=FillTop, ElementName=RectangularButton}"-->
-			<!--Fill="{StaticResource Green5}"-->
-			<Rectangle x:Name="RectBtn"					     
-				Fill="{Binding FillTop, ElementName=RectangularButton}"
+   			<Rectangle x:Name="RectBtn"					     
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Fill="{Binding Background, ElementName=RectangularButton}"
 				Loaded="RectBtn_Loaded"
 				IsHitTestVisible="True"
 				OverridesDefaultStyle="True"
 			      MouseEnter="RectBtn_MouseEnter"
 			      MouseLeave="RectBtn_MouseLeave"
-				Panel.ZIndex="4"  
-				RadiusX="10"
-				RadiusY="10"
-				Stroke="{Binding BtnBorder, ElementName=RectangularButton}"
-				StrokeThickness="{Binding BorderWidth, ElementName=RectangularButton}"
+				Panel.ZIndex="1"  
+				RadiusX="{Binding CornerRadius, ElementName=RectangularButton}"
+				RadiusY="{Binding CornerRadius, ElementName=RectangularButton}"
+				Stroke="{Binding BorderBrush , ElementName=RectangularButton}"
+				StrokeThickness="{Binding BorderThickness, ElementName=RectangularButton}"
 				RenderTransformOrigin="0.5,0.5" 
-				Margin="0,4,11,5" 
-				Visibility="Visible"
-							>
-				<Rectangle.RenderTransform>
+				Margin="-5,2,2,1" 
+				Visibility="Visible">                       
+                        
+                        <Rectangle.RenderTransform>
 					<TransformGroup>
 						<ScaleTransform ScaleX="1" ScaleY="1"/>
 						<SkewTransform/>
@@ -256,31 +276,20 @@
 						<TranslateTransform X="0" Y="0"/>
 					</TransformGroup>
 				</Rectangle.RenderTransform>
-				<Rectangle.Effect>
-					<!--// This uses ALL options-->
-					<DropShadowEffect 						
-						Color="{Binding ShadowBlurColor, ElementName=RectangularButton}"
-						Opacity="{Binding ShadowOpacity, ElementName=RectangularButton}"
-						ShadowDepth="{Binding ShadowBlurSize, ElementName=RectangularButton}"
-						BlurRadius="{Binding ShadowBlurRadius, ElementName=RectangularButton}"
-						RenderingBias="Quality"						
-						Direction="49"/>
-				</Rectangle.Effect>
-				</Rectangle>
+			</Rectangle>
 
-			<TextBlock x:Name="ButtonText"
+                  <TextBlock x:Name="ButtonText"
+                        Margin="0 0 10 0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
 				Panel.ZIndex="5"
-				FontSize="{Binding TextSize, ElementName=RectangularButton}" 
+				FontSize="{Binding FontSize, ElementName=RectangularButton}" 
 				FontStyle="{Binding FontDecoration, ElementName=RectangularButton}"
-				Foreground="{Binding BtnTextColor, ElementName=RectangularButton}"
-				Height="{Binding Height, ElementName=RectButton}" 
+				Foreground="{Binding Foreground, ElementName=RectangularButton}"
 				OverridesDefaultStyle="True"
-				Width="{Binding TextWidth, ElementName=RectangularButton, FallbackValue=100, Converter={StaticResource ReduceTextwidthConverter}}" 
-				VerticalAlignment="Center"
-				HorizontalAlignment="Center"
 				TextAlignment="Center"    
 				TextWrapping="Wrap"
-				Text="{Binding BtnText, ElementName=RectangularButton}"				
+				Text="{Binding Text, ElementName=RectangularButton}"				
 			      MouseEnter="RectBtn_MouseEnter"
 			      MouseLeave="RectBtn_MouseLeave"
 				>

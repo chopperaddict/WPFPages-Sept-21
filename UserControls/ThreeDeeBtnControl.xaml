@@ -8,8 +8,8 @@
 		 Loaded="ThreeDBttn_Loaded"
 		 mc:Ignorable="d"
 
-		 Height="80"
-		 Width="120"
+            d:DesignHeight ="80"
+             d:DesignWidth="120"
 		 x:Name="ThreeDBttn">
 
 	<UserControl.Resources>
@@ -281,7 +281,7 @@
 							   IsHitTestVisible="True"
 								Fill="{Binding Path=FillSide}"
 								Height="{TemplateBinding Height}"
-								Margin="0,10,0,4"
+								Margin="0,5,0,0"
 								Panel.ZIndex="3"
 								Stroke="Green"
 								StrokeThickness="0"

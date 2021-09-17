@@ -159,6 +159,9 @@
     <Compile Include="UserControls\SharedGrid.xaml.cs">
       <DependentUpon>SharedGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\NewImageButton.xaml.cs">
+      <DependentUpon>NewImageButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\TreeviewDataModel.cs" />
     <Compile Include="Views\AnimationTest.xaml.cs">
@@ -166,6 +169,9 @@
     </Compile>
     <Compile Include="Views\BackgroundDesigner.xaml.cs">
       <DependentUpon>BackgroundDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ButtonTesting.xaml.cs">
+      <DependentUpon>ButtonTesting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ColorsSelector.xaml.cs">
       <DependentUpon>ColorsSelector.xaml</DependentUpon>
@@ -310,6 +316,7 @@
     <Compile Include="Views\Triggers.xaml.cs">
       <DependentUpon>Triggers.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WpfUtils.cs" />
     <Page Include="Dicts\AppButtonsDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -390,6 +397,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\NewImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AnimationTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -403,6 +414,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Views\BankDbView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ButtonTesting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -697,7 +712,9 @@
     <Resource Include="Icons\new-text-message.png" />
     <Resource Include="Icons\new-text-message2.png" />
     <Resource Include="Icons\phone-lock.png" />
-    <Resource Include="Icons\phone-wifi.png" />
+    <Resource Include="Icons\phone-wifi.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Icons\phone-wifi2.png" />
     <Resource Include="Icons\receive-text-message.png" />
     <Resource Include="Icons\received-calls.png" />

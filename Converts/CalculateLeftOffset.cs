@@ -6,16 +6,16 @@ using WPFPages . UserControls;
 
 namespace WPFPages . Converts
 {
-	public class CalculateLeftOffset : IValueConverter
+        public class CalculateLeftOffset : IValueConverter
 	{
 		public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
-//			double val = ( double ) value;
-//			double par = ( double ) parameter;
+			//			double val = ( double ) value;
+			//			double par = ( double ) parameter;
 			//				targetType.GetValue(
 			ImgButton ic = new ImgButton ( );
-//			double dp = System . Convert . ToDouble ( ic. ImgName . ActualWidth );
-//			double result = val;
+			//			double dp = System . Convert . ToDouble ( ic. ImgName . ActualWidth );
+			//			double result = val;
 			return ( object ) value;
 		}
 
@@ -23,7 +23,5 @@ namespace WPFPages . Converts
 		{
 			return ( object ) null;
 		}
-
 	}
 }
-

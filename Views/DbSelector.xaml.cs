@@ -1538,5 +1538,11 @@ namespace WPFPages . Views
 //				tdbc . Show ( );
 			//e . Handled = true;
 		}
-	}
+
+                private void ButtonTesting_Click ( object sender, RoutedEventArgs e )
+                {
+                        ButtonTesting btest = new ButtonTesting ( );
+                        btest . Show ( );
+                }
+        }
 }

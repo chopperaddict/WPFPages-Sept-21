@@ -20,7 +20,7 @@ namespace WPFPages . Converts
                 {
                        // return value;
                         double currentvalue = (double)value;
-                        currentvalue -= 30;
+                        currentvalue -=10;
                         return (object)currentvalue;
                 }
 

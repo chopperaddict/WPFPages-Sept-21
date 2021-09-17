@@ -678,27 +678,25 @@ namespace WPFPages . Views
                                 s = ( Storyboard ) TryFindResource ( "SlideStackPanelRight" );
                                 var uri = new Uri ( "/Icons/left-arrow.png", UriKind . Relative );
                                 var bitmap = new BitmapImage ( uri );
-                                this . OpenCloseButton . Source = bitmap;
-                                this . myimage . Visibility = Visibility . Visible;
-                                this . OpenCloseButton . Visibility = Visibility . Hidden;
-                                this . myimage2 . Visibility = Visibility . Visible;
-                                this . OpenButton . Visibility = Visibility . Visible;
-                                counter++;
+                                this . OpenButton . Source = bitmap;
+                                OpenButton.ToolTip="Click to open 3DButton Control Menu";
+//                                this . myimage . Visibility = Visibility . Visible;
+                                 this . myimage2 . Visibility = Visibility . Visible;
+                                s . Begin ( );
+                               counter ++;
                         }
                         else
                         {
                                 //Show menu
-                                s = ( Storyboard ) TryFindResource ( "SlideStackPanelLeft" );
-                                var uri = new Uri ( "/Icons/right-arrow.png", UriKind . Relative );
+                                 var uri = new Uri ( "/Icons/right-arrow.png", UriKind . Relative );
                                 var bitmap = new BitmapImage ( uri );
-                                this . OpenCloseButton . Source = bitmap;
-                                this . myimage . Visibility = Visibility . Hidden;
-                                this . OpenCloseButton . Visibility = Visibility . Visible;
-                                this . myimage2 . Visibility = Visibility . Hidden;
-                                this . OpenButton . Visibility = Visibility . Hidden;
-                                //				//				RectbuttonStackPanel . RenderTransform = mySliderLeft;
-                                //				mySliderLeft . Begin ( this, true );
-                                //				s = ( Storyboard ) TryFindResource ( "mySliderLeft" );
+                                this . OpenButton . Source = bitmap;
+                                OpenButton . ToolTip = "Click to close 3DButton Control Menu";
+   //                             this . myimage . Visibility = Visibility . Visible;
+                                this . myimage2 . Visibility = Visibility . Visible;
+                                this . RectbuttonStackPanel . Visibility = Visibility . Visible;
+                                s = ( Storyboard ) TryFindResource ( "SlideStackPanelLeft" );
+                                s . Begin ( );
                                 counter = 0;
                         }
                         try
@@ -1333,5 +1331,9 @@ namespace WPFPages . Views
 
                 #endregion
 
+                private void Exit_Window ( object sender, MouseButtonEventArgs e )
+                {
+                        this . Close ( );
+                }
         }
 }

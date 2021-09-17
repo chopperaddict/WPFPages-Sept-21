@@ -172,50 +172,36 @@ namespace WPFPages . Views
                 //#############################
 
                 #region BtnTextColor
-
-                /// <summary>
-                /// Color pf the text with button at rest
-                /// </summary>
-                public Brush BtnTextColor
+               public Brush BtnTextColor
                 {
                         get
                         {
                                 return ( Brush ) GetValue ( BtnTextColorProperty );
                         }
-
-                        set
+                       set
                         {
                                 SetValue ( BtnTextColorProperty, value );
-                                ThreeDBtn . Refresh ( );
-                        }
-                        //set{}
+                          }
                 }
 
                 public static readonly DependencyProperty BtnTextColorProperty =
                         DependencyProperty . Register ( "BtnTextColor",
                         typeof ( Brush ),
                         typeof ( ThreeDeeBtnControl ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . Gray ) ) );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . Black ) ) );
 
                 #endregion BtnTextColor
 
                 #region ControlHeight
-
-                /// <summary>
-                /// Storage value for use elsewhere
-                /// </summary>
-                public int ControlHeight
+                 public int ControlHeight
                 {
                         get
                         {
                                 return ( int ) GetValue ( ControlHeightProperty );
                         }
-
-                        //set { }
-                        set
+                       set
                         {
                                 SetValue ( ControlHeightProperty, value );
-                                this . Refresh ( );
                         }
                 }
 
@@ -227,30 +213,21 @@ namespace WPFPages . Views
 
                 private static void OnControlHeightChanged ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
-                        ThreeDeeBtnControl td = d as ThreeDeeBtnControl;
-                        int height = ( int ) e . NewValue;
-                }
+                 }
 
                 #endregion ControlHeight
 
                 #region ControlWidth
-
-                /// <summary>
-                /// Storage value for use elsewhere
-                /// </summary>
-                public int ControlWidth
+            public int ControlWidth
                 {
                         get
                         {
                                 return ( int ) GetValue ( ControlWidthProperty );
                         }
-
-                        //set { }
-                        set
+                       set
                         {
                                 SetValue ( ControlWidthProperty, value );
-                                this . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty ControlWidthProperty =
@@ -267,19 +244,15 @@ namespace WPFPages . Views
                 #endregion ControlWidth
 
                 #region FillSide
-
-                //NOT USED
-                public Brush FillSide
+             public Brush FillSide
                 {
                         get
                         {
                                 return ( Brush ) GetValue ( FillSideProperty );
                         }
-
                         set
                         {
                                 SetValue ( FillSideProperty, value );
-                                Buttonside . Refresh ( );
                         }
                         //set{}
                 }
@@ -288,90 +261,76 @@ namespace WPFPages . Views
                         DependencyProperty . Register ( "FillSide",
                         typeof ( Brush ),
                         typeof ( ThreeDeeBtnControl ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . Transparent ) ), OnFillSideChangedCallBack );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . Green) ), OnFillSideChangedCallBack );
 
                 private static bool OnFillSideChangedCallBack ( object value )
                 {
-                        //			Console . WriteLine ( $"FillSide Property changed to [{ value}]" );
-                        return value != null ? true : false;
+                         return true;
                 }
 
                 #endregion FillSide
 
                 #region FillHole
-
                 public Brush FillHole
                 {
                         get
                         {
                                 return ( Brush ) GetValue ( FillHoleProperty );
                         }
-
-                        set
+                  set
                         {
                                 SetValue ( FillHoleProperty, value );
-                                H3 . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty FillHoleProperty =
                         DependencyProperty . Register ( "FillHole",
                         typeof ( Brush ),
                         typeof ( ThreeDeeBtnControl ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . Transparent ) ), OnFillHoleChangedCallBack );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . Black ) ), OnFillHoleChangedCallBack );
 
                 private static bool OnFillHoleChangedCallBack ( object value )
                 {
-                        //			Console . WriteLine ( $"FillHoleProperty changed to [{ value}]" );
-                        return value != null ? true : false;
+                        return true ;
                 }
 
                 #endregion FillHole
 
                 #region FillTop
-
                 public Brush FillTop
                 {
                         get
                         {
-                                this . Refresh ( );
                                 return ( Brush ) GetValue ( FillTopProperty );
                         }
-
                         set
                         {
                                 SetValue ( FillTopProperty, value );
-                                Pressed . Refresh ( );
-                        }
+                          }
                 }
 
                 public static readonly DependencyProperty FillTopProperty =
                         DependencyProperty . Register ( "FillTop",
                         typeof ( Brush ),
                         typeof ( ThreeDeeBtnControl ),
-                        new PropertyMetadata ( new SolidColorBrush ( Colors . Gray ), OnFillTopChangedCallBack ) );
+                        new PropertyMetadata ( new SolidColorBrush ( Colors . Lime ), OnFillTopChangedCallBack ) );
 
                 private static void OnFillTopChangedCallBack ( DependencyObject d, DependencyPropertyChangedEventArgs e )
                 {
-                        RectangleControl tc = d as RectangleControl;
-                }
+               }
 
                 #endregion FillTop
 
                 #region FillShadow
-
                 public Brush FillShadow
                 {
                         get
                         {
                                 return ( Brush ) GetValue ( FillShadowProperty );
                         }
-
                         set
                         {
-                                //value . Opacity = 250;
                                 SetValue ( FillShadowProperty, value );
-                                Buttonside . Refresh ( );
                         }
                 }
 
@@ -390,19 +349,15 @@ namespace WPFPages . Views
                 #endregion FillShadow
 
                 #region PressedHoleHeight
-
                 public int PressedHoleHeight
                 {
                         get
                         {
                                 return ( int ) GetValue ( PressedHoleHeightProperty );
                         }
-
-                        //set { }
-                        set
+                         set
                         {
                                 SetValue ( PressedHoleHeightProperty, value );
-                                this . Refresh ( );
                         }
                 }
 
@@ -423,6 +378,32 @@ namespace WPFPages . Views
                 }
 
                 #endregion PressedHoleHeight
+
+                #region RotateAngle
+                public double RotateAngle
+                {
+                        get
+                        {
+                                return ( double ) GetValue ( RotateAngleProperty );
+                        }
+                        set
+                        {
+                                SetValue ( RotateAngleProperty, value );
+                        }
+                }
+
+                public static readonly DependencyProperty RotateAngleProperty =
+                        DependencyProperty . Register ( "RotateAngle",
+                        typeof ( double ),
+                        typeof ( ThreeDeeBtnControl ),
+                        new PropertyMetadata ( ( double ) 0 ), OnRotateAngleChanged );
+
+                private static bool OnRotateAngleChanged ( object value )
+                {
+                        return true;
+                }
+
+                #endregion RotateAngle
 
                 #region SkewX
                 public double SkewX
@@ -461,24 +442,16 @@ namespace WPFPages . Views
                     DependencyProperty . Register ( "SkewY", typeof ( double ), typeof ( ThreeDeeBtnControl ), new PropertyMetadata ( 0.0 ) );
                 #endregion
 
-
                 #region TextHeight
-
-                ///// <summary>
-                ///// Size of the button text
-                ///// </summary>
-                public int TextHeight
+                 public int TextHeight
                 {
                         get
                         {
                                 return ( int ) GetValue ( TextHeightProperty );
                         }
-
-                        //set { }
-                        set
+                         set
                         {
                                 SetValue ( TextHeightProperty, value );
-                                this . Refresh ( );
                         }
                 }
 
@@ -496,61 +469,18 @@ namespace WPFPages . Views
                 }
 
                 #endregion TextHeight
-
-                #region RotateAngle
-
-                /// <summary>
-                /// Set the angle of the text across the button 0 - 359
-                /// </summary>
-                public double RotateAngle
-                {
-                        get
-                        {
-                                return ( double ) GetValue ( RotateAngleProperty );
-                        }
-
-                        //set { }
-                        set
-                        {
-                                SetValue ( RotateAngleProperty, value );
-                                InvalidateVisual ( );
-                                this . Refresh ( );
-                        }
-                }
-
-                public static readonly DependencyProperty RotateAngleProperty =
-                        DependencyProperty . Register ( "RotateAngle",
-                        typeof ( double ),
-                        typeof ( ThreeDeeBtnControl ),
-                        new PropertyMetadata ( ( double ) 0 ), OnRotateAngleChanged );
-
-                private static bool OnRotateAngleChanged ( object value )
-                {
-                        return true;
-                }
-
-                #endregion RotateAngle
-
+  
                 #region TextWidthScale
-
-                /// <summary>
-                /// Set to a value of  -x to +x to shrink or stretch text on a button
-                /// normally range is between 0 & 1
-                /// </summary>
-                public double TextWidthScale
+                 public double TextWidthScale
                 {
                         get
                         {
                                 return ( double ) GetValue ( TextWidthScaleProperty );
                         }
-
-                        //set { }
-                        set
+                       set
                         {
                                 SetValue ( TextWidthScaleProperty, value );
-                                InvalidateVisual ( );
-                                this . Refresh ( );
-                        }
+                         }
                 }
 
                 public static readonly DependencyProperty TextWidthScaleProperty =
@@ -561,32 +491,21 @@ namespace WPFPages . Views
 
                 private static bool OnTextWidthScalePropertyChanged ( object value )
                 {
-                        //			Console . WriteLine ( $"TextWidthScaleProperty   = {value}" );
-
-                        return true;
+                         return true;
                 }
 
                 #endregion TextWidthScale
 
                 #region TextHeightScale
-
-                /// <summary>
-                /// Set to a value of  -x to +x to shrink or stretch text on a button
-                /// normally range is between 0 & 1
-                /// </summary>
-                public double TextHeightScale
+               public double TextHeightScale
                 {
                         get
                         {
                                 return ( double ) GetValue ( TextHeightScaleProperty );
                         }
-
-                        //set { }
                         set
                         {
                                 SetValue ( TextHeightScaleProperty, value );
-                                InvalidateVisual ( );
-                                this . Refresh ( );
                         }
                 }
 
@@ -606,24 +525,18 @@ namespace WPFPages . Views
                 #endregion TextHeightScale
 
                 #region TextWidth
-
-                /// <summary>
-                /// Size of the button text we store for use elsewhere
-                /// </summary>
-                public int TextWidth
+            public int TextWidth
                 {
                         get
                         {
                                 return ( int ) GetValue ( TextWidthProperty );
                         }
-
                         set
                         {
                                 SetValue ( TextWidthProperty, value );
                                 this . Refresh ( );
                         }
-                        //set{}
-                }
+                 }
 
                 public static readonly DependencyProperty TextWidthProperty =
                         DependencyProperty . Register ( "TextWidth",
@@ -633,48 +546,34 @@ namespace WPFPages . Views
 
                 private static bool OnTextWidthChanged ( object value )
                 {
-                        //			Console . WriteLine ( $"TextWidth DP = {value}" );
-                        return true;
+                         return true;
                 }
 
                 #endregion TextWidth
 
                 #region BtnText
-
-                /// <summary>
-                /// The Text to be displayed on the button at rest (See Button Down option below)
-                /// </summary>
-                public string BtnText
+             public string BtnText
                 {
                         get
                         {
                                 return ( string ) GetValue ( BtnTextProperty );
                         }
-
                         set
                         {
                                 SetValue ( BtnTextProperty, value );
                                 this . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty BtnTextProperty =
                         DependencyProperty . Register ( "BtnText",
                         typeof ( string ),
                         typeof ( ThreeDeeBtnControl ),
-                        new FrameworkPropertyMetadata ( "", new PropertyChangedCallback ( OnBtnTextChangedCallBack ) ) );
+                        new FrameworkPropertyMetadata ( "BtnText", new PropertyChangedCallback ( OnBtnTextChangedCallBack ) ) );
 
                 private static void OnBtnTextChangedCallBack ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
                 {
-                        // Save width of our text to DP TextWidth
-                        ThreeDeeBtnControl tc = sender as ThreeDeeBtnControl;
-                        string s = e . NewValue . ToString ( );
-                        tc . TextWidth = s . Length;
-
-                        //			Console . WriteLine ( $"3DBtn BtnText changed - Width changed to [{ s . Length}]" );
-                        //			Console . WriteLine ( $"BtnText DP changed - Width changed to [{ s . Length}]" );
-                }
+                 }
 
                 private DependencyPropertyDescriptor BtnTextLength = DependencyPropertyDescriptor .
                             FromProperty ( ThreeDeeBtnControl . BtnTextProperty, typeof ( ThreeDeeBtnControl ) );
@@ -714,24 +613,18 @@ namespace WPFPages . Views
                 #endregion FontType (Unused)
 
                 #region BtnTextDown
-
-                /// <summary>
-                /// Text for button when it has  the Mouse over it
-                /// </summary>
                 public string BtnTextDown
                 {
                         get
                         {
                                 return ( string ) GetValue ( BtnTextDownProperty );
                         }
-
-                        set
+                       set
                         {
                                 SetValue ( BtnTextColorProperty, value );
                                 this . Refresh ( );
                         }
-                        //set{}
-                }
+                 }
 
                 public static readonly DependencyProperty BtnTextDownProperty =
                         DependencyProperty . Register ( "BtnTextDown",
@@ -742,23 +635,16 @@ namespace WPFPages . Views
                 #endregion BtnTextDown
 
                 #region BtnBorder
-
-                /// <summary>
-                /// Color of the border around the top surface of the button
-                /// </summary>
-                public Brush BtnBorder
+               public Brush BtnBorder
                 {
                         get
                         {
                                 return ( Brush ) GetValue ( BtnBorderProperty );
                         }
-
-                        set
+                       set
                         {
                                 SetValue ( BtnTextColorProperty, value );
-                                this . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty BtnBorderProperty =
@@ -770,23 +656,16 @@ namespace WPFPages . Views
                 #endregion BtnBorder
 
                 #region BorderWidth
-
-                /// <summary>
-                /// Width of the border line around the top of the button
-                /// </summary>
-                public double BorderWidth
+               public double BorderWidth
                 {
                         get
                         {
                                 return ( double ) GetValue ( BorderWidthProperty );
                         }
-
-                        set
+                      set
                         {
                                 SetValue ( BorderWidthProperty, value );
-                                this . Refresh ( );
-                        }
-                        //set { }
+                         }
                 }
 
                 public static readonly DependencyProperty BorderWidthProperty =
@@ -797,54 +676,22 @@ namespace WPFPages . Views
 
                 private static bool OnBorderWidthChanged ( object value )
                 {
-                        //			Console . WriteLine ( $"BorderWidth DP changed - Width =[{value}]" );
                         return true;
                 }
 
                 #endregion BorderWidth
 
-                #region BtnTextColor
-
-                /// <summary>
-                /// Color pf the text with button at rest
-                /// </summary>
-                //public Brush BtnTextColor
-                //{
-                //        get
-                //        {
-                //                return ( Brush ) GetValue ( BtnTextColorProperty );
-                //        }
-                //        set
-                //        {
-                //                SetValue ( BtnTextColorProperty, value );
-                //                this . Refresh ( );
-                //        }
-                //        //set{}
-                //}
-                //public static readonly DependencyProperty BtnTextColorProperty =
-                //        DependencyProperty . Register ( "BtnTextColor",
-                //        typeof ( Brush ),
-                //        typeof ( ThreeDeeBtnControl ),
-                //        new PropertyMetadata ( new SolidColorBrush ( Colors . Black ) ) );
-                //#endregion
-
-                //#region BtnTextColorDown
-                /// <summary>
-                /// Color of the button Text when it is depressed
-                /// </summary>
+                 #region BtnTextColorDown
                 public Brush BtnTextColorDown
                 {
                         get
                         {
                                 return ( Brush ) GetValue ( BtnTextColorDownProperty );
                         }
-
-                        set
+                      set
                         {
                                 SetValue ( BtnTextColorProperty, value );
-                                this . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty BtnTextColorDownProperty =
@@ -856,23 +703,17 @@ namespace WPFPages . Views
                 #endregion BtnTextColor
 
                 #region FontDecoration
-
-                ///// <summary>
-                ///// Font Styling option - Typically Normal, Italic, Oblique
-                ///// </summary>
-                public string FontDecoration
+             public string FontDecoration
                 {
                         get
                         {
                                 return ( string ) GetValue ( FontDecorationProperty );
                         }
-
                         set
                         {
                                 SetValue ( FontDecorationProperty, value );
                                 this . Refresh ( );
                         }
-                        //set{}
                 }
 
                 public static readonly DependencyProperty FontDecorationProperty =
@@ -883,10 +724,6 @@ namespace WPFPages . Views
 
                 private static void OnFontDecorationChangedCallBack ( DependencyObject sender, DependencyPropertyChangedEventArgs e )
                 {
-                        //			Console . WriteLine ( $"FontDecoration Property changed to [{ value}]" );
-                        ThreeDeeBtnControl tc = sender as ThreeDeeBtnControl;
-                        //FontWeight fw = ( FontWeight)e . NewValue ;
-                        //tc . FontWeight = fw;
                 }
 
                 //#endregion

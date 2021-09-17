@@ -5,7 +5,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Title="DbViewer"
-	Width="600"
+	Width="706.592"
 	Height="335"
 	MinWidth="695"
 	MinHeight="350"
@@ -346,9 +346,9 @@
 			HorizontalAlignment="Left"
 			HorizontalContentAlignment="Stretch"
 			Background="Transparent" 
-			Grid.ColumnSpan="4" 
-			Grid.Column="1">
-			
+			Grid.ColumnSpan="2" 
+			Grid.Column="1" Width="682">
+
 			<!--Menu ONE Drag Client-->
 			<MenuItem  Header="Drag Client"
 				     Name ="menu1"
@@ -471,7 +471,7 @@
 						Background="{StaticResource Red0}"
 						Foreground="{StaticResource White0}"/>-->
 
-				
+
 				<MenuItem  Header="Test Details System"
 						Click="TestDet_Click"
 						Margin="2"
@@ -566,6 +566,12 @@
 					Foreground="{StaticResource White0}"/>-->
 			<MenuItem Header="  Animation" 
 				    Click="Animate_Click" 						
+					FontWeight="DemiBold"
+					Background="Transparent"
+					Foreground="{StaticResource White0}"/>
+
+			<MenuItem Header="  BtnTest" 
+				    Click="ButtonTesting_Click" 						
 					FontWeight="DemiBold"
 					Background="Transparent"
 					Foreground="{StaticResource White0}"/>
@@ -879,7 +885,7 @@
 				Style="{StaticResource _ListBoxItemStyle2}" />
 
 		</ListBox>
-		
+
 		<Canvas x:Name="ExecuteFile"
 			Background="{StaticResource Red2}"
 			  Grid.Row="1"

@@ -4,7 +4,7 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
-	public class ApplyLeftOffset : IValueConverter
+        public class ApplyLeftOffset : IValueConverter
 	{
 		/// <summary>
 		/// Adds a dependency value received an XPath Converter parameter to move a textbolock downwrds to fit correctly
@@ -34,5 +34,4 @@ namespace WPFPages . Converts
 			return value;
 		}
 	}
-
 }

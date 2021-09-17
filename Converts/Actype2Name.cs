@@ -5,11 +5,11 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
-	public class Actype2Name : IValueConverter
+        public class Actype2Name : IValueConverter
 	{
 		public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
-			// Receives an int value 1-4 
+			// Receives an int value 1-4
 			// Returns the AC type as a word "Checking A/c"
 			if ( value == DependencyProperty . UnsetValue )
 				return DependencyProperty . UnsetValue;
@@ -32,13 +32,12 @@ namespace WPFPages . Converts
 			catch ( Exception ex )
 			{
 				return ( object ) null;
-
 			}
 		}
+
 		public object ConvertBack ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
 			return null as object;
 		}
 	}
-
 }
