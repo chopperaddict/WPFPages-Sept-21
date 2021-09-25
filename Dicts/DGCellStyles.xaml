@@ -7,8 +7,10 @@
 	<dateconv:DateTimeToShortStringConverter x:Key="DateConvert"/>
 	<dateconv:NumericString2ShortDateConverter x:Key="NumberToDateConvert"/>
 	<dateconv:Date2UTCConverter x:Key="Date2UTCConvert"/>
-	<dateconv:UniversalValueConverter x:Key="UniversalConvert"/>
-	<dateconv:ResourceToBrushConverter x:Key="Resource2BrushConvert"/>
+      <dateconv:UniversalValueConverter x:Key="UniversalConvert"/>
+      <dateconv:StringtoBrushConverter x:Key="string2brushConvert"/>
+      <dateconv:StringtoColorConverter x:Key="StringtoColorConv"/>
+      <dateconv:ResourceToBrushConverter x:Key="Resource2BrushConvert"/>
 
 	<!--// NB This style is for the Details Db Datagrids only - it works just fine in all viewers - so far at least-->
 	<!--#region Details DataGrid Style-->
@@ -46,8 +48,6 @@
 						<Setter Property="Margin" Value="0,0,0,0"/>
 					</MultiDataTrigger.Setters>
 				</MultiDataTrigger>
-
-
 
 
 				<!--#### ACTYPE = 1 ####-->
@@ -100,7 +100,7 @@
 					</MultiDataTrigger.Conditions>
 					<MultiDataTrigger.Setters>
 						<!--<Setter Property="Background" Value="{StaticResource Red1}" />-->
-						<Setter Property="Background" Value="{Binding Converter={StaticResource UniversalConvert}, ConverterParameter=Cyan3}"/>
+                              <Setter Property="Background" Value="{Binding Converter={StaticResource string2brushConvert}, ConverterParameter=Cyan3}"/>
 						<Setter Property="Foreground" Value="{StaticResource White0}" />
 					</MultiDataTrigger.Setters>
 				</MultiDataTrigger>
@@ -117,8 +117,12 @@
 					</MultiDataTrigger.Conditions>
 					<MultiDataTrigger.Setters>
 						<!--<Setter Property="Background" Value="{StaticResource Red1}" />-->
-						<Setter Property="Background" Value="{Binding Converter={StaticResource UniversalConvert}, ConverterParameter=Blue3}" />
-						<Setter Property="Foreground" Value="{StaticResource White2}" />
+                              <!--<Setter Property="Background" Value="{StaticResource Blue3}, Converter={StaticResource string2brushConvert}, ConverterParameter=Blue3}" />-->
+                              <Setter Property="Background" Value="{Binding Converter={StaticResource UniversalConvert}, ConverterParameter=Blue3}" />
+
+                              <Setter Property="Foreground" Value="{Binding Converter={StaticResource StringtoColorConv}, ConverterParameter=White0}" />
+
+                              <!--<Setter Property="Foreground" Value="{StaticResource White2}" />-->
 					<Setter Property="FontWeight" Value="Bold"/>
 				</MultiDataTrigger.Setters>
 				</MultiDataTrigger>

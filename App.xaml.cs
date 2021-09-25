@@ -1,4 +1,5 @@
 ﻿using System . Windows;
+using System . Windows . Controls;
 
 namespace WPFPages
 {
@@ -32,22 +33,22 @@ namespace WPFPages
                         e . Handled = true;
                 }
 
-                //public static void OnDataContextChanged ( DependencyObject d, DependencyPropertyChangedEventArgs e )
-                //{
-                //	DataGrid grid = d as DataGrid;
-                //	if ( grid != null )
-                //	{
-                //		foreach ( DataGridColumn col in grid . Columns )
-                //		{
-                //			col . SetValue ( FrameworkElement . DataContextProperty, e . NewValue );
-                //			var header = col . Header as FrameworkElement;
-                //			if ( header != null )
-                //			{
-                //				header . SetValue ( FrameworkElement . DataContextProperty, e . NewValue );
-                //			}
-                //		}
-                //	}
-                //}
+                public static void OnDataContextChanged ( DependencyObject d, DependencyPropertyChangedEventArgs e )
+                {
+                        DataGrid grid = d as DataGrid;
+                        if ( grid != null )
+                        {
+                                foreach ( DataGridColumn col in grid . Columns )
+                                {
+                                        col . SetValue ( FrameworkElement . DataContextProperty, e . NewValue );
+                                        var header = col . Header as FrameworkElement;
+                                        if ( header != null )
+                                        {
+                                                header . SetValue ( FrameworkElement . DataContextProperty, e . NewValue );
+                                        }
+                                }
+                        }
+                }
 
                 #region MVVM STUFF
 
@@ -59,20 +60,21 @@ namespace WPFPages
 
                 #endregion MVVM STUFF
 
-                // These are used to try to force Textbox's to always select
+                //These are used to try to force Textbox's to always select
                 // all the content in the field, rahter than the default
-                // // of putting the cursor at end of the current content
-                //protected override void OnStartup(StartupEventArgs e) {
-                //	EventManager.RegisterClassHandler(typeof(TextBox),
-                //	    TextBox.GotFocusEvent,
-                //	    new RoutedEventHandler(TextBox_GotFocus));
+                 // of putting the cursor at end of the current content
+                //protected override void OnStartup ( StartupEventArgs e )
+                //{
+                //        EventManager . RegisterClassHandler ( typeof ( TextBox ),
+                //            TextBox . GotFocusEvent,
+                //            new RoutedEventHandler ( TextBox_GotFocus ) );
 
-                //	FrameworkElement.LanguageProperty.OverrideMetadata(
-                //	 typeof(FrameworkElement),
-                //	 new FrameworkPropertyMetadata(
-                //	 System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture.IetfLanguageTag)));
+                //        FrameworkElement . LanguageProperty . OverrideMetadata (
+                //         typeof ( FrameworkElement ),
+                //         new FrameworkPropertyMetadata (
+                //         System . Windows . Markup . XmlLanguage . GetLanguage ( CultureInfo . CurrentUICulture . IetfLanguageTag ) ) );
 
-                //	base.OnStartup(e);
+                //        base . OnStartup ( e );
                 //}
         }
 }

@@ -14,6 +14,7 @@ using System . Windows . Input;
 using System . Windows . Media;
 using System . Windows . Media . Effects;
 using System . Windows . Media . Imaging;
+using System . Windows . Media . Media3D;
 using System . Windows . Navigation;
 using System . Windows . Shapes;
 using System . Xml . Linq;
@@ -33,27 +34,28 @@ namespace WPFPages . UserControls
                 {
                         InitializeComponent ( );
                 }
+ 
                 private void Testbutton_Loaded ( object sender, RoutedEventArgs e )
                 {
                         // These demonstrate how to acess DP's' in various ways
 
-                        GetParentSize ( _border, out double dpHeight, out double dpWidth, out string parentname );
+                        MousoverHandlers. GetParentSize ( _border, out double dpHeight, out double dpWidth, out string parentname );
                         Console . WriteLine ( $"GETPARENTSIZE: Parent of \"_border\" is '{parentname}', Size of {parentname} is H/W {dpHeight} / {dpWidth}" );
-                        GetParentObjects ( txtblock, out List<string> name, 4 );
-                        Console . WriteLine ( $"GETPARENTOBJECTS : Tree of parents upwards from {name [ 0 ]} is :" );
-                        for ( int x = 1 ; x < name . Count - 1 ; x++ )
-                                Console . WriteLine ( $"{name [ x ]}" );
+                        MousoverHandlers.GetParentObjects ( txtblock,4 );
+                        Console . WriteLine ( $"GETPARENTOBJECTS : Tree of parents upwards from {HitControl._Hitcontrol  . names [ 0 ]} is :" );
+                        for ( int x = 1 ; x < HitControl._Hitcontrol  . names . Count - 1 ; x++ )
+                                Console . WriteLine ( $"{HitControl._Hitcontrol  . names [ x ]}" );
                         Console . WriteLine ( "\n" );
-  
-                        GetParentObjects ( BtnImage, out List<string> name2, 6 );
+
+                        MousoverHandlers . GetParentObjects ( BtnImage, 6 );
                         Console . WriteLine ( $"GETPARENTOBJECTS : Tree of BtnImage's parents upwards :" );
-                        for ( int x = 1 ; x < name2 . Count - 1 ; x++ )
-                                Console . WriteLine ( $"{name2 [ x ]}" );
+                        for ( int x = 1 ; x < HitControl._Hitcontrol  . names . Count - 1 ; x++ )
+                                Console . WriteLine ( $"{HitControl._Hitcontrol  . names [ x ]}" );
 
 
-                        GetObjectSize ( Testbutton, out double pdpHeight, out double pdpWidth );
+                        MousoverHandlers . GetObjectSize ( Testbutton, out double pdpHeight, out double pdpWidth );
                         Console . WriteLine ( $"GETOBJECTSIZE :  NORMAL Height/Width of 'Testbutton' is H/W {dpHeight} / {dpWidth}" );
-                        GetObjectActualSize ( Testbutton, out double pdpHeight2, out double pdpWidth2 );
+                        MousoverHandlers . GetObjectActualSize ( Testbutton, out double pdpHeight2, out double pdpWidth2 );
                         Console . WriteLine ( $"GETOBJECTSIZE :  ActualHeight/ActualWidth of 'Testbutton' is H/W {pdpHeight2} / {pdpWidth2}" );
                 }
 
@@ -206,7 +208,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for PushDistance.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty PushDistanceProperty =
-                    DependencyProperty . Register ( "PushDistance", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 2 ) );
+                    DependencyProperty . Register ( "PushDistance", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 1 ) );
 
                 #endregion
 
@@ -649,25 +651,111 @@ namespace WPFPages . UserControls
                         this . Height = Height;
                         this . Width = Width;
                 }
-
+                public void CalcShadowPosition ( double angle, out double x, out double y )
+                {
+                        // This fiddles the values ot make the button move in the correct
+                        // direction (towards its own shadow area)
+                        x = 0;
+                        y = 0;
+                        //angle = 10;
+                        double newangle = 0;
+                        newangle = ( angle / 100 );
+                        x = newangle;
+                        y = newangle;
+                        // 45 = .45
+                        if ( angle >= 0 && angle <= 45 )
+                        {
+                                x = ( x + PushDistance ) * 2.2;
+                                y = 0.1;//( y / 10 ) ;
+                        }
+                        else if ( angle >= 45 && angle <= 90 )
+                        {
+                                x = 0.1;//( x + PushDistance );
+                                y = ( y / 10 ) ;
+                        }
+                        else if ( angle >= 90 && angle <= 135 )
+                        {
+                                x = ( x + PushDistance ) * -2.5;
+                                y = ( ( y / 10 ) + PushDistance ) * -1.3;
+                        }
+                        else if ( angle >= 135 && angle <= 180 )
+                        {
+                                x = ( x + PushDistance ) * -1.5;
+                                y = ( y / 10 ) ;
+                        }
+                        else if ( angle >= 180 && angle <= 225 )
+                        {
+                                x = ( x + PushDistance ) * -2.3;
+                                y = 0.4;//( y / 10 );
+                        }
+                        else if ( angle >= 225 && angle <= 270 )
+                        {
+                                x = -2.3;
+                                y = -5.4;//( y / 10 );
+                        }
+                        else if ( angle >= 270 && angle <= 315 )
+                        {
+                                x = 1.7;
+                                y = -7.4;//( y / 10 );
+                        }
+                        else if ( angle >= 315 && angle <= 360 )
+                        {
+                                x = 6.7;
+                                y = -7.4;//( y / 10 );
+                        }
+                }
                 private void Control_MouseEnter ( object sender, MouseEventArgs e )
                 {
                         // Move button & Text Right and Down
                         TranslateTransform translateTransform = new TranslateTransform ( );
-                        translateTransform . X += PushDistance + 2;
-                        translateTransform . Y -= PushDistance + 1;
-                        this . RenderTransform = translateTransform;
-                        this . SkewX = SkewX;
-                        this . SkewY = SkewY;
-                        this . SkewPadding = SkewPadding;
+                        double angle = ShadowDirection;
+                        //double x = ( x / 100 );
+                        //double y = ( y / 100 );
+                        if ( RotateAngle == 0 )
+                        {
+                                CalcShadowPosition ( angle, out double x, out double y );
+                                if ( x != 0 && y != 0 )
+                                {
+                                        translateTransform . X += x;
+                                        translateTransform . Y -= y;
+                                }
+                                else
+                                {
+                                        translateTransform . X += PushDistance + 2;
+                                        translateTransform . Y -= PushDistance + 1;
+                                }
+                                this . RenderTransform = translateTransform;
+                        }
+                        else
+                        {
+
+                                translateTransform . X += PushDistance + 2;
+                                translateTransform . Y -= PushDistance + 1;
+                                RotateTransform rotatetransform = new RotateTransform ( );
+                                rotatetransform . Angle -= RotateAngle * 3;
+                                this . RenderTransform = translateTransform;
+                                this . RenderTransform = rotatetransform;
+                               // Point relativePoint = _border . TransformToAncestor ( TestWin2 ) . Transform ( new Point ( 50, 50 ) );
+                                
+                        }
+                        //translateTransform . X += PushDistance + 2;
+                        //translateTransform . Y -= PushDistance + 1;
+
+                        //this . SkewX = SkewX;
+                        //this . SkewY = SkewY;
+                        //this . SkewPadding = SkewPadding;
 
                         // Move Shadow to match above
                         DropShadowEffect dropShadowEffect = new DropShadowEffect ( );
                         dropShadowEffect . BlurRadius = ShadowBlurRadius;
-                        dropShadowEffect . Color = TextShadowColor;
-                        dropShadowEffect . Direction = 235;
+                        dropShadowEffect . Color = ShadowColor;
+                        
+                        if( ShadowDirection > 180)
+                                dropShadowEffect . Direction = ShadowDirection -180;
+                        else
+                                dropShadowEffect . Direction = ShadowDirection + 180;
                         dropShadowEffect . Opacity = ShadowOpacity;
-                        dropShadowEffect . ShadowDepth = ShadowDepth;
+                        dropShadowEffect . ShadowDepth = ShadowDepth / 2;
 
                         this . PART_Main . Effect = dropShadowEffect;
                         this . PART_Main . Refresh ( );
@@ -679,15 +767,21 @@ namespace WPFPages . UserControls
                         TranslateTransform translateTransform = new TranslateTransform ( );
                         translateTransform . X -= PushDistance + 2;
                         translateTransform . Y += PushDistance + 1;
+
+                        RotateTransform rotatetransform = new RotateTransform ( );
+                        //rotatetransform . Angle += RotateAngle;
                         this . RenderTransform = translateTransform;
+                        rotatetransform . Angle -= RotateAngle * 3;
+                        this . RenderTransform = rotatetransform;
 
                         DropShadowEffect dropShadowEffect = new DropShadowEffect ( );
                         dropShadowEffect . BlurRadius = ShadowBlurRadius;
-                        dropShadowEffect . Color = TextShadowColor;
-                        dropShadowEffect . Direction = 49;
+                        dropShadowEffect . Color = ShadowColor;
+                        dropShadowEffect . Direction = ShadowDirection;
                         dropShadowEffect . Opacity = ShadowOpacity;
                         dropShadowEffect . ShadowDepth = ShadowDepth;
                         this . PART_Main . Effect = dropShadowEffect;
+                       //RotateAngle = RotateAngle * -1;
                         this . PART_Main . Refresh ( );
                         return;
                 }
@@ -697,131 +791,5 @@ namespace WPFPages . UserControls
 
                 }
 
-                #region Wpf Utility methods
-                /// <summary>
-                /// Returns the PARENT Dependency Object of whatever object is received
-                /// plus it's name as a string in the  'out' parameter
-                /// </summary>
-                /// <param name="dp"></param>
-                /// <param name="name"></param>
-                /// <returns></returns>
-                public static DependencyObject GetParentObjects ( FrameworkElement dp, out List<string> names, int levels = 1 )
-                {
-                        // How to get the parent 's Name and the object of any object received
-                        // Expects the dp t be the parent DP
-                        FrameworkElement dps = null;
-                        string clientname = "";
-                        names = new List<string> ( );
-                        int lvl = 0;
-                        FrameworkElement dpo = ( FrameworkElement ) dp . Parent;
-                        if ( dpo == null )
-                                return null;
-
-                        clientname = ( string ) dp . GetValue ( NameProperty );
-                        names . Add ( clientname );
-                        for ( int x = 0 ; x < levels ; x++ )
-                        {
-                                dps = ( FrameworkElement ) dpo . Parent;
-                                if ( dps == null )
-                                {
-                                        dpo = dps;
-                                        break;
-                                }
-                                else
-                                {
-                                        names . Add ( ( string ) dps . GetValue ( NameProperty ) );
-                                        dpo = dps;
-                                        if ( names [ lvl ] == "" )
-                                        {
-                                                names [ lvl ] = "No further Parents";
-                                                break;
-                                        }
-                                        lvl++;
-                                }
-                        }
-                        //if ( lvl < levels )
-                        //        Console . WriteLine ( $"GETPARENTSOBJECT : Levels requested up from {clientname} exceed {levels} requested: Top Level Name up {lvl - 1} / {levels} levels & is \"{names [ lvl - 1 ]}\"" );
-                        //else
-                        //        Console . WriteLine ( $"GETPARENTSOBJECT : Parent Name up {levels} levels from {clientname} is {dp . GetValue ( NameProperty )} is {names [ lvl ]}" );
-                        return dpo;
-                }
-                /// <summary>
-                /// Returns the Height/Width of the received objects PARENT Dependency Object 
-                /// </summary>
-                /// <param name="dp"></param>
-                /// <param name="dpHeight"></param>
-                /// <param name="dpWidth"></param>
-                public static void GetParentSize ( FrameworkElement dp, out double dpHeight, out double dpWidth, out string parentname )
-                {
-                        // How to get the size of any "Parent" object
-                        // Expects the dp t be the parent DP
-                        dpHeight = 0;
-                        dpWidth = 0;
-                        parentname = "";
-                        if ( dp == null )
-                        {
-                                dpHeight = 0;
-                                dpWidth = 0;
-                                return;
-                        }
-                        DependencyObject dpo = dp . Parent;
-                        if ( dpo == null )
-                        {
-                                dpHeight = 0;
-                                dpWidth = 0;
-                                return;
-                        }
-                        parentname = ( string ) dpo . GetValue ( NameProperty );
-                        dpHeight = ( double ) dpo . GetValue ( ActualHeightProperty );
-                        dpWidth = ( double ) dpo . GetValue ( ActualWidthProperty );
-                        if ( dpHeight == 0 || dpWidth == 0 )
-                        {
-                                dpHeight = ( double ) dp . GetValue ( HeightProperty );
-                                dpWidth = ( double ) dp . GetValue ( WidthProperty );
-                        }
-                 }
-                /// <summary>
-                /// Returns the Height/Width of the received object's Dependency Object 
-                /// </summary>
-                /// <param name="obj"></param>
-                /// <param name="dpHeight"></param>
-                /// <param name="dpWidth"></param>
-                public static void GetObjectSize ( DependencyObject obj, out double dpHeight, out double dpWidth )
-                {
-                        // How to get the STANDARD Height/Width of any object from its DP settings
-                        // Expects the dp to be the object Name 
-                        dpHeight = 0;
-                        dpWidth = 0;
-                        if ( obj == null )
-                        {
-                                dpHeight = 0;
-                                dpWidth = 0;
-                                return;
-                        }
-                        dpHeight = ( double ) obj . GetValue ( HeightProperty );
-                        dpWidth = ( double ) obj . GetValue ( WidthProperty );
-                 }
-                /// <summary>
-                /// Returns the Height/Width of the received object's Dependency Object 
-                /// </summary>
-                /// <param name="obj"></param>
-                /// <param name="dpHeight"></param>
-                /// <param name="dpWidth"></param>
-                public static void GetObjectActualSize ( DependencyObject obj, out double dpHeight, out double dpWidth )
-                {
-                        // How to get the ACTUAL size of any "Parent" object from its DP settings
-                        // Expects the dp to be the object Name
-                        dpHeight = 0;
-                        dpWidth = 0;
-                        if ( obj == null )
-                        {
-                                dpHeight = 0;
-                                dpWidth = 0;
-                                return;
-                        }
-                        dpHeight = ( double ) obj . GetValue ( ActualHeightProperty );
-                        dpWidth = ( double ) obj . GetValue ( ActualWidthProperty );
-                   }
-                #endregion
-        }
+            }
 }

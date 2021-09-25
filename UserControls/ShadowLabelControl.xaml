@@ -9,6 +9,8 @@
 		 Loaded="RectBtn_Loaded"
              d:DesignHeight ="50"
              d:DesignWidth="250"
+             Background="Transparent"
+
             >
 
       <UserControl.Resources>
@@ -114,7 +116,7 @@
                                                 Width="500"
                                                 Background="{StaticResource Yellow4}"
                                                 Foreground="Black"
-                                                Text="There are many properties that can be set to adjust the width height,  left +top offsets, and it can be 'Scaled' both Horizontally and vertically.  See Documentation for further information. To see an example, right click and hold on this control to see the left offset change"/>
+                                                Text="There are many properties that can be set to adjust the width height,  left +top offsets, and it can be 'Scaled' both Horizontally and vertically.  See Documentation for further information. To see an example, right click and hold on this control to see the Text Width/Top scales change"/>
                                     </Border>
                               </TextBlock.ToolTip>
 

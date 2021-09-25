@@ -4059,7 +4059,6 @@ namespace WPFPages
 		#region REFRESH FUNCTIONALITY
 		private void Refresh_Click ( object sender, RoutedEventArgs e )
 		{
-			int currsel = 0;
 			Mouse . OverrideCursor = Cursors . Wait;
 			RefreshInProgress = true;
 			if ( CurrentDb == "BANKACCOUNT" )
@@ -6603,7 +6602,7 @@ namespace WPFPages
 			MessageBox . Show ( $"The data from this Database has been saved\nfor you in 'Json' format successfully ...\n\nFile is : {path}", "Data Persistence System" );
 		}
 
-		private void ContextEdit_Click ( object sender, RoutedEventArgs e )
+		private async void ContextEdit_Click ( object sender, RoutedEventArgs e )
 		{
 			//============================================//
 			//MENU ITEM 'Edit currently Selected Account'
@@ -6663,7 +6662,7 @@ namespace WPFPages
 					// Save our reserve collection
 					CustReserved = null;
 					Flags . SqlCustActive  = true;
-					CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+                                        await CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 					this . CustomerGrid . ItemsSource = SqlCustcollection;
 				}
 				else if ( CurrentDb == "DETAILS" )
@@ -6672,7 +6671,7 @@ namespace WPFPages
 					// Save our reserve collection
 					BankReserved = null;
 					Flags . SqlDetActive  = true;
-					DetailCollection . LoadDet ("DETAILS",1, true );
+					await DetailCollection . LoadDet ("DETAILS",1, true );
 					//this . DetailsGrid . ItemsSource = SqlDetcollection;
 				}
 				StatusBar . Text = "Current Record Updated Successfully...";

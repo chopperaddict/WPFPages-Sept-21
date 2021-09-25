@@ -23,7 +23,7 @@ namespace WPFPages . UserControls
                         DoSetup ( );
                 }
 
-                public void DoSetup ( )
+                   public void DoSetup ( )
                 {
                         this . Background = Brushes . DarkGray;
                         this . BtnTextColor = Brushes . Black;
@@ -54,16 +54,6 @@ namespace WPFPages . UserControls
                 public static Ellipse H2;
                 public static Ellipse H3;
 
-                //		private bool IsMouseOver = false;
-                public Rectangle BtnRectangle
-                {
-                        get; set;
-                }
-
-                public Thickness RectThickness
-                {
-                        get; set;
-                }
 
                 public int GradientStyle
                 {
@@ -835,6 +825,27 @@ namespace WPFPages . UserControls
 
                 #endregion TextShadowColor
 
+                #region TextShadowColorDown
+                public Color TextShadowColorDown
+                {
+                        get
+                        {
+                                return ( Color ) GetValue ( TextShadowColorDownProperty );
+                        }
+                        set
+                        {
+                                SetValue ( TextShadowColorDownProperty, value );
+                        }
+                }
+
+                public static readonly DependencyProperty TextShadowColorDownProperty =
+                        DependencyProperty . Register ( "TextShadowColorDown",
+                        typeof ( Color ),
+                        typeof ( ShadowLabelControl ),
+                        new PropertyMetadata ( Colors . Black ) );
+               
+                #endregion
+
                 #region TextShadowOpacity
                 public double TextShadowOpacity
                 {
@@ -1012,7 +1023,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "TextSize",
                         typeof ( int ),
                         typeof ( ShadowLabelControl ),
-                        new PropertyMetadata ( 12 ), OnTextSizeChanged );
+                        new PropertyMetadata ( 18 ), OnTextSizeChanged );
 
                 private static bool OnTextSizeChanged ( object value )
                 {
@@ -1172,67 +1183,7 @@ namespace WPFPages . UserControls
 
                 #endregion TextShadowDepth (UNUSED)
 
-                #region TextShadowDirection (UNUSED)
-
-                //              public double TextShadowDirection
-                //              {
-                //	get
-                //	{
-                //		return ( double ) GetValue ( TextShadowDirectionProperty );
-                //	}
-                //	//set { }
-                //	set
-                //	{
-                //		SetValue ( TextShadowDirectionProperty, value );
-                //		ButtonText . Refresh ( );
-                //	}
-
-                //}
-                //public static readonly DependencyProperty TextShadowDirectionProperty =
-                //	DependencyProperty . Register ( "TextShadowDirection",
-                //	typeof ( double ),
-                //	typeof ( ShadowLabelControl ),
-                //	new PropertyMetadata ( ( double ) 0 ), OnTextShadowDirectionChanged );
-
-                //private static bool OnTextShadowDirectionChanged ( object value )
-                //{
-                //	//			Console . WriteLine ( $"TextSize DP = {value}" );
-                //	//RectangleControl . Refresh();
-                //	return true;
-                //}
-                //              #endregion
-
-                //              #region TextShadowOpacity
-                //              public double TextShadowOpacity
-                //              {
-                //	get
-                //	{
-                //		return ( double ) GetValue ( TextShadowOpacityProperty );
-                //	}
-                //	//set { }
-                //	set
-                //	{
-                //		SetValue ( TextShadowOpacityProperty, value );
-                //		ButtonText . Refresh ( );
-                //	}
-
-                //}
-                //public static readonly DependencyProperty TextShadowOpacityProperty =
-                //	DependencyProperty . Register ( "TextShadowOpacity",
-                //	typeof ( double ),
-                //	typeof ( ShadowLabelControl ),
-                //	new PropertyMetadata ( ( double ) 1.0 ), OnTextShadowOpacityProperty );
-
-                //private static bool OnTextShadowOpacityProperty ( object value )
-                //{
-                //	//			Console . WriteLine ( $"ShadowOpacityProperty   = {value}" );
-
-                //	return true;
-                //}
-
-                #endregion TextShadowDirection (UNUSED)
-
-                #region ShadowBlur (unused)
+                   #region ShadowBlur (unused)
 
                 //public double ShadowBlur
                 //{
@@ -1322,7 +1273,7 @@ namespace WPFPages . UserControls
                 /// <param name="e"></param>
                 private void RectBtn_MouseEnter ( object sender, MouseEventArgs e )
                 {
-                        this . dropshadow . Color = this . ShadowDownColor;
+                        this . dropshadow . Color = this . TextShadowColorDown;
                         this . ButtonText . Foreground = this . BtnTextColorDown;
                         if ( !this . UseStandardBackground && this . LinearFill . Fill != ( LinearGradientBrush ) null )
                         {
@@ -1357,7 +1308,7 @@ namespace WPFPages . UserControls
 
                         if ( Template != null )
                         {
-                                var v = this . GetTemplateChild ( "RectBtn" );
+                                var v = this . GetTemplateChild ( "LinearFill" );
                                 //				Console . WriteLine ( $"v = {v}" );
                         }
                         return;
@@ -1384,19 +1335,20 @@ namespace WPFPages . UserControls
 
                 private void border_loaded ( object sender, RoutedEventArgs e )
                 {
-                        if ( this . LinearFill . Fill == ( LinearGradientBrush ) null )
-                                this . LinearFill . Visibility = Visibility . Hidden;
-                        else
-                                this . border . Background = Brushes . Transparent;
+                        //if ( this . LinearFill . Fill == ( LinearGradientBrush ) null )
+                        //        this . LinearFill . Visibility = Visibility . Hidden;
+                        //else
+                        //        this . border . Background = Brushes . Transparent;
                 }
 
                 private void border_PreviewMouseRightButtonDown ( object sender, MouseButtonEventArgs e )
                 {
                         try
                         {
-                                this.TextTopOffset += 5;
+                                this . TextWidth += 5;
+                                this . TextTop += 5;
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                                 Console . WriteLine ($"Error= {ex.Message}, {ex.Data}, {ex.GetType()}, {ex.Source}");
                         }
@@ -1404,10 +1356,11 @@ namespace WPFPages . UserControls
 
                 private void border_PreviewMouseRightButtonUp ( object sender, MouseButtonEventArgs e )
                 {
-                        this.TextTopOffset -= 5;
+                        this.TextWidth-= 5;
+                        this . TextTop -= 5;
                 }
 
-                    // How to allow a click event from Usercontrol  to get back to  "Click" in client app
+                // How to allow a click event from Usercontrol  to get back to  "Click" in client app
                 //public event RoutedEventHandler MouseLeftButtonDown;
                 //void OnMouseLeftButtonDown ( object sender, RoutedEventArgs e )
                 //{

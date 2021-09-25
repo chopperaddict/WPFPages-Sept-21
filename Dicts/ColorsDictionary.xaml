@@ -9,7 +9,16 @@
       <Color x:Key="ClrYellow2">#AFFDFF00</Color>
       <Color x:Key="ClrYellow3">#96C8C900</Color>
       <Color x:Key="ClrYellow4">#6BFDFF00</Color>
-      
+
+      <Color x:Key="ClrBlack0">#FE000000</Color>
+      <Color x:Key="ClrBlack1">#FE282A2A</Color>
+      <Color x:Key="ClrBlack2">#FE4C4D4F</Color>
+      <Color x:Key="ClrBlack3">#FE707174</Color>
+      <Color x:Key="ClrBlack4">#FE959695</Color>
+      <Color x:Key="ClrBlack5">#FEAEAEAF</Color>
+      <Color x:Key="ClrBlack6">#FECFCED2</Color>
+      <Color x:Key="ClrBlack7">#BDE3E6E8</Color>
+
       <Color x:Key="ClrWhite0">#FFFFFFFF</Color>
       <Color x:Key="ClrWhite1">#FFE3E4E4</Color>
       <Color x:Key="ClrWhite2">#FFD6D7D6</Color>
@@ -18,7 +27,7 @@
       <Color x:Key="ClrWhite5">#FFA7A7A7</Color>
       <Color x:Key="ClrWhite6">#FF969596</Color>
       <Color x:Key="ClrWhite7">#FF8584B3</Color>
-      
+
       <Color x:Key="ClrOrange0">#FFFE7808</Color>
       <Color x:Key="ClrOrange1">#FFFE8808</Color>
       <Color x:Key="ClrOrange2">#FFFE9208</Color>
@@ -27,16 +36,24 @@
       <Color x:Key="ClrOrange5">#FFFEAE07</Color>
       <Color x:Key="ClrOrange6">#FFFEBA07</Color>
       <Color x:Key="ClrOrange7">#FFFEC807</Color>
-      
-      <Color x:Key="ClrCyan0">#FFFFFFFF</Color>
-      <Color x:Key="ClrCyan1">#FFE3E4E4</Color>
-      <Color x:Key="ClrCyan2">#FFD6D7D6</Color>
-      <Color x:Key="ClrCyan3">#FFC8C9C9</Color>
-      <Color x:Key="ClrCyan4">#FFBAB9B9</Color>
-      <Color x:Key="ClrCyan5">#FFA7A7A7</Color>
-      <Color x:Key="ClrCyan6">#FF969596</Color>
-      <Color x:Key="ClrCyan7">#FF8584B3</Color>
-      
+
+      <Color x:Key="ClrCyan0">#FD00FFFF</Color>
+      <Color x:Key="ClrCyan1">#D000FFFF</Color>
+      <Color x:Key="ClrCyan2">#D000FFFF</Color>
+      <Color x:Key="ClrCyan3">#8900FFFF</Color>
+      <Color x:Key="ClrCyan4">#FE00C6A2</Color>
+      <Color x:Key="ClrCyan5">#FE00AA90</Color>
+      <Color x:Key="ClrCyan6">#FE008C73</Color>
+      <Color x:Key="ClrCyan7">#FE007E56</Color>
+
+      <Color x:Key="ClrBlue0">#C70000FF</Color>
+      <Color x:Key="ClrBlue1">#C70000CA</Color>
+      <Color x:Key="ClrBlue2">#C700009A</Color>
+      <Color x:Key="ClrBlue3">#680000D6</Color>
+      <Color x:Key="ClrBlue4">#680000D6</Color>
+      <Color x:Key="ClrBlue5">#310000FF</Color>
+      <Color x:Key="ClrBlue6">#180000FF</Color>
+       
       <Color x:Key="ClrRed0">#FF600303</Color>
       <Color x:Key="ClrRed1">#FF710303</Color>
       <Color x:Key="ClrRed2">#FF7F0303</Color>
@@ -107,12 +124,13 @@
 	<SolidColorBrush x:Key="Orange5" Color="#FFFEAE07" />
 	<SolidColorBrush x:Key="Orange6" Color="#FFFEBA07" />
 	<SolidColorBrush x:Key="Orange7" Color="#FFFEC807" />
-  
-      <SolidColorBrush x:Key="Yellow0" Color="#FFFDBC11" />
-      <SolidColorBrush x:Key="Yellow1" Color="#FEFDFF00" />
-      <SolidColorBrush x:Key="Yellow2" Color="#AFFDFF00" />
-      <SolidColorBrush x:Key="Yellow3" Color="#96C8C900" />
-      <SolidColorBrush x:Key="Yellow4" Color="#6BFDFF00" />
+
+      <SolidColorBrush x:Key="Yellow0" Color="#FFFFFF00" />
+      <SolidColorBrush x:Key="Yellow1" Color="#BCFFFF00" />
+      <SolidColorBrush x:Key="Yellow2" Color="#9CFFFF00" />
+      <SolidColorBrush x:Key="Yellow3" Color="#84FFFF00" />
+      <SolidColorBrush x:Key="Yellow4" Color="#50FFFF00" />
+      <SolidColorBrush x:Key="Yellow5" Color="#28FFFF00" />
 
       <SolidColorBrush x:Key="Green0" Color="#FF05560A" />
 	<SolidColorBrush x:Key="Green1" Color="#FF055F0A" />
@@ -339,6 +357,8 @@
 		<GradientStop Offset="0.546" Color="#ff4f2225" />
 	</LinearGradientBrush>
 
+      
+      
 	<Style x:Key="HGradientBtn">
 		<Setter Property="Control.Background" Value="{StaticResource HeaderBrushBlue}" />
 		<Setter Property="Control.Foreground" Value="White" />

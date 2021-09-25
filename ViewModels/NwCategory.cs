@@ -10,9 +10,11 @@ using System . Linq;
 using System . Text;
 using System . Threading . Tasks;
 using System . Windows . Controls;
+using WPFPages . Commands;
 
 using System . Windows;
 using System . IO;
+using System . Windows . Input;
 
 namespace WPFPages . Views
 {
@@ -114,8 +116,8 @@ namespace WPFPages . Views
 			return this;
 		}
 
-	}
-	public class nwcategory : System . ComponentModel.INotifyPropertyChanged
+         }
+        public class nwcategory : System . ComponentModel.INotifyPropertyChanged
 	{
 		public nwcategory ( )
 		{

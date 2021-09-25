@@ -14,6 +14,17 @@ namespace WPFPages . Views
         /// </summary>
         public partial class ThreeDeeBtnControl : UserControl
         {
+                /// How to pass a click event thru to end user of any UserControl
+                // Must declare the event
+                public event RoutedEventHandler Click;
+
+                private void OnClick ( object sender, MouseButtonEventArgs e )
+                {
+                        if ( this . Click != null )
+                        {
+                                this . Click ( this, e );
+                        }
+                }
                 public LinearGradientBrush lgb
                 {
                         get; set;
@@ -962,17 +973,7 @@ namespace WPFPages . Views
                         ControlWidth = ( int ) b . ActualWidth;
                 }
 
-                // How to allow a click event from Usercontrol  to get back to  "Click" in client app
-                public event RoutedEventHandler Click;
-
-                private void OnButtonClick ( object sender, RoutedEventArgs e )
-                {
-                        if ( this . Click != null )
-                        {
-                                this . Click ( this, e );
-                        }
-                }
-
+  
                 private void Btn6Content_Loaded ( object sender, RoutedEventArgs e )
                 {
                         this . DataContext = this;
@@ -1003,6 +1004,11 @@ namespace WPFPages . Views
                 {
                         var element = sender as Border;
                         ControlWidth = ( int ) element . Width;
+                }
+
+                private void OnButtonClick ( object sender, RoutedEventArgs e )
+                {
+
                 }
 
                 #endregion Dependencies

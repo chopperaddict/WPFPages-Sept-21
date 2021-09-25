@@ -570,13 +570,30 @@
 					Background="Transparent"
 					Foreground="{StaticResource White0}"/>
 
-			<MenuItem Header="  BtnTest" 
-				    Click="ButtonTesting_Click" 						
+                  <MenuItem Header="  Testing" 				    
 					FontWeight="DemiBold"
 					Background="Transparent"
-					Foreground="{StaticResource White0}"/>
+					Foreground="{StaticResource White0}" Click="MenuItem_Click">
 
-		</Menu>
+                        <MenuItem Header="  BtnTest" 
+				    Click="ButtonTesting_Click" 						
+					FontWeight="DemiBold"
+					Background="Lime"
+					Foreground="{StaticResource Black0}"/>
+
+                        <MenuItem Header="  MoreTesting" 
+				    Click="MoreTesting_Click" 						
+					FontWeight="DemiBold"
+					Background="Lime"
+					Foreground="{StaticResource Black0}"/>
+
+                        <MenuItem Header="  StoryBoards" 
+				    Click="StoryBoard_Click" 						
+					FontWeight="DemiBold"
+					Background="Lime"
+					Foreground="{StaticResource Black0}"/>
+                  </MenuItem>
+            </Menu>
 
 		<!--#region Execute program-->
 

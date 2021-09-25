@@ -4,7 +4,6 @@ using System . Diagnostics;
 using System . Windows;
 using System . Windows . Controls;
 using System . Windows . Input;
-
 using WPFPages . ViewModels;
 
 namespace WPFPages . Views
@@ -1543,6 +1542,24 @@ namespace WPFPages . Views
                 {
                         ButtonTesting btest = new ButtonTesting ( );
                         btest . Show ( );
+                }
+
+                private void MoreTesting_Click ( object sender, RoutedEventArgs e )
+                {
+                        MoreTesting test = new MoreTesting ( );
+                        test . Show ( );
+                }
+
+                private void MenuItem_Click ( object sender, RoutedEventArgs e )
+                {
+
+                }
+
+                private void StoryBoard_Click ( object sender, RoutedEventArgs e )
+                {
+                        Storyboards test = new Storyboards ( );
+                        test . Show ( );
+
                 }
         }
 }

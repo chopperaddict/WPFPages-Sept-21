@@ -153,7 +153,7 @@ namespace WPFPages . Views
 		{
 			InitializeComponent ( );
 			nwc = new ObservableCollection<nwcustomer> ( );
-			nwc = NwCust . Loadcustomers ( );
+			nwc = NwCust . GetNwCustomers ( );
 			CustomersGrid . ItemsSource = nwc;
 			NwCust . CustomersTotal = CustomersGrid . Items . Count;
 			CustomersTot . Text = CustomersGrid.Items.Count.ToString ( );

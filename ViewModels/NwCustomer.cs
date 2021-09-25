@@ -10,19 +10,6 @@ namespace WPFPages . Views
 {
         public class nwcustomer : System . ComponentModel . INotifyPropertyChanged
         {
-                //		public nwcustomer NwCustomer = new nwcustomer ( );
-                //		public ObservableCollection<nwcustomer> nwCustCollection;
-
-                //public event PropertyChangedEventHandler PropertyChanged;
-
-                //protected virtual void OnPropertyChanged ( String propertyName )
-                //{
-                //	if ( ( this . PropertyChanged != null ) )
-                //	{
-                //		this . PropertyChanged ( this, new PropertyChangedEventArgs ( propertyName ) );
-                //	}
-                //}
-
                 #region PropertyChanged
 
                 public event PropertyChangedEventHandler PropertyChanged;
@@ -436,7 +423,11 @@ namespace WPFPages . Views
                         LoadSpecificCustomers ( arg );
                 }
 
-                public ObservableCollection<nwcustomer> Loadcustomers ( )
+                public  ObservableCollection<nwcustomer> GetNwCustomers ( )
+                {
+                        return LoadSpecificCustomers ( "");
+                }
+                public  ObservableCollection<nwcustomer> NwCustomers ( )
                 {
                         DataTable dt = new DataTable ( "Customers" );
                         string ConString = ( string ) Properties . Settings . Default [ "NorthwindConnectionString" ];

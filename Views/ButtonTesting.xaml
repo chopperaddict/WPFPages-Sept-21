@@ -6,21 +6,20 @@
         xmlns:local="clr-namespace:WPFPages.Views"
         xmlns:userctrl="clr-namespace:WPFPages.UserControls"
         xmlns:conv="clr-namespace:WPFPages.Converts"
+        xmlns:cmd="clr-namespace:WPFPages.Commands"
          mc:Ignorable="d"
         IsHitTestVisible="True"
         Title="ButtonTesting"
-        Height="500" Width="900"
-      WindowStyle="ThreeDBorderWindow"       
+        Name="buttontest"
+        Height="569" Width="971"
+      DataContext="buttontest"
+      KeyDown="lockOutput_Checked"
+        WindowStyle="ThreeDBorderWindow"       
       WindowStartupLocation="Manual"
         
        >
 
       <Window.Resources>
-
-            <userctrl:ImgButton x:Key="imagebutton"/>
-            <userctrl:ShadowLabelControl x:Key="shadowbutton"/>
-            <userctrl:NewImageButton x:Key="testbutton"/>
-            <local:ThreeDeeBtnControl x:Key="ThreeDbutton"/>
 
             <!--// Brushes used on my 3D buttons-->
             <!--#region two color gradients-->
@@ -46,7 +45,7 @@
             </LinearGradientBrush>
             <!--#endregion-->
             <!--#region multilevel gradients-->
-            <!--======================================================================================-->
+            <!--======================================================================================--><!--
             <LinearGradientBrush x:Key="MultiBlue" StartPoint="0.5,0" EndPoint="0.5,1">
                   <GradientStop Offset="1.0" Color="#FF70CADA" />
                   <GradientStop Offset="0.9" Color="#D270B2D8" />
@@ -61,7 +60,7 @@
                   <GradientStop Offset="1" Color="#FF0AEAFA" />
             </LinearGradientBrush>
 
-            <!--Good example of a dummy "Dome" button-->
+            --><!--Good example of a dummy "Dome" button--><!--
             <RadialGradientBrush x:Key="MultiBlueRadial" GradientOrigin="0.1,0.3" Center="0.5,0.5" RadiusX="0.8" RadiusY="0.8">
                   <GradientStop Offset="0.0" Color="#FF70CADA" />
                   <GradientStop Offset="0.3" Color="#FC494BFB" />
@@ -71,7 +70,7 @@
                   <GradientStop Offset="1.0" Color="#FF70CADA" />
             </RadialGradientBrush>
 
-            <!--======================================================================================-->
+            --><!--======================================================================================--><!--
 
             <LinearGradientBrush x:Key="MultiRed" StartPoint="0.5,0" EndPoint="0.5,1">
                   <GradientStop Offset="1.0" Color="#FBD0D1D2" />
@@ -88,7 +87,7 @@
                   <GradientStop Offset="1" Color="#FFdb6069" />
             </LinearGradientBrush>
 
-            <!--Good example of a dummy "Dome" button-->
+            --><!--Good example of a dummy "Dome" button--><!--
             <RadialGradientBrush x:Key="MultiRedRadial" GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.8" RadiusY="0.8">
                   <GradientStop Offset="0.0" Color="#FCFFD4D3" />
                   <GradientStop Offset="0.2" Color="#FDD40000" />
@@ -98,7 +97,7 @@
                   <GradientStop Offset="0.9" Color="#FCFFD4D3" />
             </RadialGradientBrush>
 
-            <!--======================================================================================-->
+            --><!--======================================================================================--><!--
 
             <LinearGradientBrush x:Key="MultiYellow" StartPoint="0.1,0" EndPoint="0.5,1">
                   <GradientStop Offset="1.0" Color="#FEFBFF00" />
@@ -115,7 +114,7 @@
                   <GradientStop Offset="0.5" Color="#F5d816" />
             </LinearGradientBrush>
 
-            <!--Good example of a dummy "Dome" button-->
+            --><!--Good example of a dummy "Dome" button--><!--
             <RadialGradientBrush x:Key="MultiYellowRadial" GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.8" RadiusY=".8">
                   <GradientStop Offset="0.0" Color="#FDFFFFD3" />
                   <GradientStop Offset="0.2" Color="#FDFEFF00" />
@@ -125,7 +124,7 @@
                   <GradientStop Offset="0.9" Color="#FDA2A21A" />
             </RadialGradientBrush>
 
-            <!--======================================================================================-->
+            --><!--======================================================================================--><!--
 
             <LinearGradientBrush x:Key="MultiGreen" StartPoint="0.5,0" EndPoint="0.5,1">
                   <GradientStop Offset="1.0" Color="#FCE1FFE3" />
@@ -141,7 +140,7 @@
                   <GradientStop Offset="1" Color="#FF00FF00" />
             </LinearGradientBrush>
 
-            <!--Good example of a dummy "Dome" button-->
+            --><!--Good example of a dummy "Dome" button--><!--
             <RadialGradientBrush x:Key="MultiGreenRadial" GradientOrigin="0.1,0.3" Center="0.5,0.5" RadiusX="0.8" RadiusY="0.8">
                   <GradientStop Offset="0.0" Color="#FE00FC00" />
                   <GradientStop Offset="0.2" Color="#FE00AF00" />
@@ -151,7 +150,7 @@
                   <GradientStop Offset="0.9" Color="#FC3E6C3F" />
             </RadialGradientBrush>
 
-            <!--======================================================================================-->
+            --><!--======================================================================================--><!--
 
             <LinearGradientBrush x:Key="MultiGray" StartPoint="0.5,0" EndPoint="0.5,1">
                   <GradientStop Offset="1.0" Color="#FBD0D1D2" />
@@ -175,7 +174,7 @@
                   <GradientStop Offset="0.5" Color="#FBB4B3B5" />
                   <GradientStop Offset="0.2" Color="#FBB4B3B5" />
                   <GradientStop Offset="0.0" Color="#FBD0D1D2" />
-            </RadialGradientBrush>
+            </RadialGradientBrush>-->
             <Storyboard x:Key="Storyboard1">
                   <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="newImageButton">
                         <EasingDoubleKeyFrame KeyTime="0:0:1" Value="677"/>
@@ -197,78 +196,258 @@
                         <EasingPointKeyFrame KeyTime="0:0:2" Value="1.192,0.242"/>
                   </PointAnimationUsingKeyFrames>
             </Storyboard>
+            <!--#endregion-->
 
+            <userctrl:ImgButton x:Key="imagebutton"/>
+            <userctrl:ShadowLabelControl x:Key="shadowbutton"/>
+            <userctrl:NewImageButton x:Key="testbutton"/>
+            <local:ThreeDeeBtnControl x:Key="ThreeDbutton"/>
+            <cmd:BreakCommand x:Key="mynewcommand"/>
       </Window.Resources>
+
+      <Window.CommandBindings>
+            <CommandBinding Command="{StaticResource mynewcommand}" />
+      </Window.CommandBindings>
+
       <Window.Triggers>
-            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <!--<EventTrigger RoutedEvent="FrameworkElement.Loaded">
                   <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
-            </EventTrigger>
+            </EventTrigger>-->
       </Window.Triggers>
 
-      <Grid Background="LightBlue" Margin="4,0,-4,-2"
->
+      <Window.InputBindings>
+            <KeyBinding Key="F8" Modifiers="Ctrl" Command="{Binding Path=MynewCommand, ElementName=buttontest}"/>
+
+      </Window.InputBindings>
+
+      <!--***********************************-->
+      <!--*** START OF WINDOW CODE ITSELF ****-->
+      <!--***********************************-->
+      <Grid x:Name="TestWin2"
+            Background="LightBlue" 
+            Margin="0,-9,-3,0"
+ >
+            <Border x:Name="Border1"
+                  VerticalAlignment="Center"
+                  Height="302" Margin="480,8,2,237"
+                  Background="Cyan">
+
+                  <ListBox x:Name="currentpoint" 
+                        Background="Black" 
+                        Foreground="White" 
+                        VerticalAlignment="Bottom"
+                        Margin="8,0,4,8" 
+                        RenderTransformOrigin="0.5,0.5" 
+                        Height="289" />
+            </Border>
+
+            <Canvas x:Name="Canvas1"
+                  Margin="484,332,6,13" Background="LightGray">
+
+                  <!--============================================================================-->
+                  <!--// Is Hit Active option-->
+                  <CheckBox x:Name="CheckForHits" 
+                  Content="Is Hit Active"
+                  Background="Lime" 
+                  Foreground="Black"
+                  FontWeight="Bold"
+                  IsChecked="false"
+                  VerticalAlignment="Top"
+                  Click="CheckForHits_Checked" Canvas.Left="10" Canvas.Top="17" Height="24" Width="96"/>
+
+                  <TextBox  x:Name="HitsName" 
+                  Background="{StaticResource White5}"
+                  Foreground="DarkGreen"
+                  FontSize="20"
+                  Text="{Binding Hitcontrol.ActiveHitName, ElementName=buttontest, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  TextAlignment="Center"
+                  KeyDown="HitsName_KeyDown" 
+                  MouseMove="dummyMove"
+                  Width="211" 
+                  Height="33" 
+                  TextChanged="HitsName_TextChanged" Canvas.Left="177" Canvas.Top="7"/>
+
+                  <!--============================================================================-->
+                  <!--// Get Object members-->
+                  <CheckBox x:Name="ObjMembers" 
+                  Content="Get Object members"
+                  Background="Coral" 
+                  Foreground="Black" 
+                  FontWeight="Bold"
+                  IsChecked="false"
+                  VerticalAlignment="Top"
+                  Click="ObjMembers_Checked" Height="26" Canvas.Left="10" Canvas.Top="52" Width="146"/>
+
+                  <TextBox  x:Name="objmembersname" 
+                  Background="{StaticResource White5}"
+                  Foreground="Coral"
+                  FontSize="20"
+                  Text="{Binding Hitcontrol.ObjectStats ,ElementName=buttontest, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  TextAlignment="Center"                      
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  KeyDown="objectmembersname_KeyDown" 
+                  MouseMove="dummyMove"
+                  Width="211" 
+                  Height="33" Canvas.Left="177" Canvas.Top="46"/>
+                  <!--<Menu x:Name="MenuTesting"/>-->
+
+                  <!--============================================================================-->
+                  <!--// Get object statistics-->
+                  <CheckBox x:Name="GetObjectStats"
+                  Content="Identify Object by type"
+                  Background="Magenta" 
+                  Foreground="Black" 
+                  FontWeight="Bold"
+                  IsChecked="false"
+                  VerticalAlignment="Top"
+                  Click="ObjStats_Checked" Height="22" Canvas.Left="10" Canvas.Top="90" Width="154"/>
+
+                  <TextBox  x:Name="ObjectStatsName" 
+                  Background="{StaticResource White5}"
+                  Foreground="Magenta"
+                  FontSize="20"
+                  Text="{Binding Hitcontrol.ObjectMembersName, ElementName=buttontest, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  TextAlignment="Center"                      
+                  HorizontalAlignment="Center"
+                  MouseMove="dummyMove"
+                  VerticalAlignment="Center"
+                  KeyDown="objectstatsname_KeyDown" 
+                  Width="211" 
+                  Height="36" Canvas.Left="177" Canvas.Top="85" />
+                  <!--============================================================================-->
+
+                  <!--// Show everything !!-->
+                  <CheckBox x:Name="ShowAll" 
+                  Content="Show all items"
+                  Background="Cyan" 
+                  Foreground="Black" 
+                  FontWeight="Bold"
+                  IsChecked="true"
+                  VerticalAlignment="Top"
+                  Click="ShowAll_Checked" Height="23" Canvas.Left="10" Canvas.Top="125" Width="110" 
+                  />
+
+                  <TextBlock x:Name="lockOutput" 
+                        Text="Press F2 to LOCK Output Window"
+                        Background="Red" 
+                        Foreground="White" 
+                        FontWeight="Bold"
+                        VerticalAlignment="Top"
+                             TextAlignment="Center"
+                         Height="22" Canvas.Left="10" Canvas.Top="160" Width="450" 
+                  />
+
+            </Canvas>
+
+
+            <Button x:Name="Mybutton" Margin="274,21,550,441"
+                    DataContext="{Binding ElementName=buttontest}"              
+                    Background="Blue"
+                    Foreground="White"
+                    BorderBrush="Violet"
+                    BorderThickness="2"
+                    Command="{StaticResource mynewcommand}"
+                    CommandParameter="{Binding Path=commandtest, ElementName=buttontest}">
+                  <Button.Content>
+                        <TextBlock Text="Click or Hit Ctrl+F8 for Command + debug BREAK..."
+                                   TextWrapping="Wrap" 
+                                   Width="118"
+                                   TextAlignment="Center" 
+                                   Height="51"/>
+                  </Button.Content>
+            </Button>
+            <!--Command="{Binding MynewCommand}"-->
+
 
             <userctrl:NewImageButton x:Name="newImageButton" 
                                      Background="Red" 
-                                     Margin="14,17,709,330"
+                                     Margin="-7,13,729,398"
                                      Foreground="White"
                                      FontSize="25"
+   
+                                    ShadowDirection="33"
+                                     ShadowColor="Coral"
+                                     ShadowDepth="5"
+                                     ShadowBlurRadius="15"
+                                     ShadowOpacity="1"
+
                                      SkewX="12"
                                      SkewY="12"
-                                     SkewPadding="22" RenderTransformOrigin="0.5,0.5">
+                                     SkewPadding="22" RenderTransformOrigin="0.5,0.5"/>
+
+            <userctrl:NewImageButton x:Name="callsrecord"                  
+                                     Background="Green" 
+                                     Source="/icons/calls-record.png"
+                                     ImgWidth="45"
+                                    Height="Auto" 
+                                     Width="Auto" 
+                                     Foreground="White"
+                                     FontSize="12"
+                                     SkewPadding="23"
+                                     SkewX="-65"
+                                     SkewY="20"
+                                     CornerRadius="35"
+                                     
+                                     ShadowDirection="33"
+                                     ShadowColor="White"
+                                     ShadowDepth="25"
+                                     ShadowBlurRadius="15"
+                                     ShadowOpacity="1"
+                                    IsHitTestVisible="True"
+                                      RotateAngle="10"
+                                     Text="A nice slanted button !"
+                                     PushDistance="1" 
+                                     RenderTransformOrigin="0.5,0.5" 
+                                     Margin="17,308,711,127" >
                   <userctrl:NewImageButton.RenderTransform>
                         <TransformGroup>
                               <ScaleTransform/>
                               <SkewTransform/>
-                              <RotateTransform/>
+                              <RotateTransform Angle="-30.117"/>
                               <TranslateTransform/>
                         </TransformGroup>
                   </userctrl:NewImageButton.RenderTransform>
             </userctrl:NewImageButton>
-            <userctrl:NewImageButton Margin="560,320,85,16"
-                                     Background="Green" 
-                                     Source="/icons/calls-record.png"
-                                     ImgWidth="45"
-                                    Height="Auto" Width="Auto" 
-                                     Foreground="White"
-                                     FontSize="25"
-                                     SkewPadding="3"
-                                     SkewX="-15"
-                                     SkewY="-40"
-                                      RotateAngle="39"
-                                     PushDistance="3" RenderTransformOrigin="0.5,0.5">
-                  <userctrl:NewImageButton.RenderTransform>
-                        <TransformGroup>
-                              <ScaleTransform/>
-                              <SkewTransform/>
-                              <RotateTransform/>
-                              <TranslateTransform X="0" Y="-25"/>
-                        </TransformGroup>
-                  </userctrl:NewImageButton.RenderTransform>
-            </userctrl:NewImageButton>
 
-            <userctrl:NewImageButton Margin="40,510,602,-234"
+            <userctrl:NewImageButton x:Name="Phonewifi"
+                  Margin="14,120,751,266"
                                     Source="/icons/phone-wifi.png"
                                     Background="Yellow" 
-                                    Height="Auto" Width="250" 
+                                    Height="Auto" Width="Auto" 
                                     ImgWidth="35"
-                                    SkewX="5"
-                                    SkewY="22"
-                                    SkewPadding="34" RenderTransformOrigin="0.5,0.5"
+                                     PushDistance="1"
                                     
-                                     >
-                  <userctrl:NewImageButton.RenderTransform>
-                        <TransformGroup>
-                              <ScaleTransform/>
-                              <SkewTransform/>
-                              <RotateTransform/>
-                              <TranslateTransform X="-45" Y="-340"/>
-                        </TransformGroup>
-                  </userctrl:NewImageButton.RenderTransform>
-            </userctrl:NewImageButton>
-            <userctrl:ShadowLabelControl Margin="72,0,0,41" HorizontalAlignment="Left" Height="58" VerticalAlignment="Bottom" Width="148"/>
+                                    ShadowDirection="335"
+                                     ShadowColor="Orange"
+                                     ShadowDepth="15"
+                                     ShadowBlurRadius="15"
+                                     ShadowOpacity="1"                                     
+                                     
+                                     SkewX="5"
+                                    SkewY="22"
+                                    SkewPadding="34" 
+                                     RenderTransformOrigin="0.5,0.5"/>
 
-            <local:ThreeDeeBtnControl Margin="290,350,400,34" d:LayoutOverrides="HorizontalAlignment"/>
+
+            <userctrl:ShadowLabelControl x:Name="tester2"
+                  Margin="72,0,0,41" 
+                                         FontWeight="Black"
+                                         HorizontalAlignment="Left" 
+                                         Height="58" 
+                                         VerticalAlignment="Bottom" 
+                                         Width="148"/>
+            <local:ThreeDeeBtnControl x:Name="ThreeDButton"
+                  Margin="276,378,540,92" RenderTransformOrigin="0.72,1.455"/>
+
+            <!--<TextBlock x:Name="currentpoint1" 
+                        Background="Black" Foreground="White" 
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                        Text="12345" RenderTransformOrigin="4.297,-8.312" 
+                             Margin="758,441,17,6" Height="31"  />-->
 
       </Grid>
 </Window>

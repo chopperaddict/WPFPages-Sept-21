@@ -20,7 +20,7 @@ namespace WPFPages . UserControls
                         this . DataContext = this;
                         InitializeComponent ( );
                  }
-
+   
                 public LinearGradientBrush lgb
                 {
                         get; set;

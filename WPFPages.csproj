@@ -95,6 +95,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Commands\BreakCommand.cs" />
     <Compile Include="Converts\Actype2Name.cs" />
     <Compile Include="Converts\Addoffset.cs" />
     <Compile Include="Converts\ApplyLeftOffset.cs" />
@@ -121,6 +123,8 @@
     <Compile Include="Converts\ResetTextWidth.cs" />
     <Compile Include="Converts\Resource2BrushConverter.cs" />
     <Compile Include="Converts\SetTextTopOffset.cs" />
+    <Compile Include="Converts\StringtoBrushConverter.cs" />
+    <Compile Include="Converts\StringtoColorConverter.cs" />
     <Compile Include="Converts\TextLeftPositionConverter.cs" />
     <Compile Include="Converts\TextToUpperConverter.cs" />
     <Compile Include="Converts\TextWidthMinus10Percent.cs" />
@@ -128,11 +132,18 @@
     <Compile Include="Converts\TextVerticalPositionConverter.cs" />
     <Compile Include="Converts\ToggleBoolConverter.cs" />
     <Compile Include="Converts\UniversalValueConverter.cs" />
+    <Compile Include="getposition.cs" />
     <Compile Include="TestUserCtrl.xaml.cs">
       <DependentUpon>TestUserCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ImgButton.xaml.cs">
       <DependentUpon>ImgButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ListVviewControl.xaml.cs">
+      <DependentUpon>ListVviewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ListBoxControl.xaml.cs">
+      <DependentUpon>ListBoxControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\RectangleControl.xaml.cs">
       <DependentUpon>RectangleControl.xaml</DependentUpon>
@@ -162,6 +173,8 @@
     <Compile Include="UserControls\NewImageButton.xaml.cs">
       <DependentUpon>NewImageButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\NwOrderCollection.cs" />
+    <Compile Include="ViewModels\NwOrderDesignCollection.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="ViewModels\TreeviewDataModel.cs" />
     <Compile Include="Views\AnimationTest.xaml.cs">
@@ -186,6 +199,7 @@
     <Compile Include="Views\GradientDisplay.xaml.cs">
       <DependentUpon>GradientDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HitControl.cs" />
     <Compile Include="Views\MenuItem.cs" />
     <Compile Include="ListBoxScroll.cs" />
     <Compile Include="Observable.cs" />
@@ -223,6 +237,10 @@
     <Compile Include="Views\IDropable.cs" />
     <Compile Include="Views\ImportDbData.cs" />
     <Compile Include="Views\JsonSupport.cs" />
+    <Compile Include="Views\MoreTesting.xaml.cs">
+      <DependentUpon>MoreTesting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MousoverHandlers.cs" />
     <Compile Include="Views\new_DetCollection.cs" />
     <Compile Include="Converts\DateOnlyConverter.cs" />
     <Compile Include="Converts\SalaryConvertor.cs" />
@@ -267,6 +285,9 @@
       <DependentUpon>Setup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SQLHandlers.cs" />
+    <Compile Include="Views\Storyboards.xaml.cs">
+      <DependentUpon>Storyboards.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SupportMethods.cs" />
     <Compile Include="Views\SysColors.xaml.cs">
       <DependentUpon>SysColors.xaml</DependentUpon>
@@ -354,6 +375,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dicts\Menus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ListVviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ListBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -461,6 +494,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MoreTesting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MultiViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -541,6 +578,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Storyboards.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SysColors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -584,27 +625,73 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Resource Include="Icons\loading againCapture.PNG" />
-    <Resource Include="Views\1-Convert Specs.txt" />
-    <Resource Include="Views\1-useful notes.txt" />
-    <Resource Include="Icons\left-arrow.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Icons\right-arrow.png" />
+    <Resource Include="Icons\calls-record.png" />
+    <Resource Include="Icons\cloud.png" />
     <Resource Include="Icons\cursor-arrow.png" />
-    <Resource Include="Icons\icons8-wrench-24.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Icons\delete-text-message.png" />
+    <Resource Include="Icons\delete-text-message2.png" />
+    <Resource Include="Icons\document-delete_48x48.png" />
+    <Resource Include="Icons\download-to-laptop.png" />
+    <Resource Include="Icons\exhibitor_30px.png" />
+    <Resource Include="Icons\fax.png" />
+    <Resource Include="Icons\folder.gif" />
+    <Resource Include="Icons\icons8-wrench-24.png" />
+    <Resource Include="Icons\laptop-wifi.png" />
+    <Resource Include="Icons\left-arrow.png" />
+    <Resource Include="Icons\loading againCapture.PNG" />
     <Resource Include="Icons\magnify minus.png" />
     <Resource Include="Icons\magnify plus.png" />
-    <Resource Include="Icons\red magnify.png" />
-    <Resource Include="Views\red magnify.png" />
-    <Resource Include="Icons\folder.gif" />
+    <Resource Include="Icons\mailbox-receive-message.png" />
+    <Resource Include="Icons\mailbox-receive-message2.png" />
+    <Resource Include="Icons\mailbox.png" />
+    <Resource Include="Icons\message.png" />
     <Resource Include="Icons\minusnode.gif" />
+    <Resource Include="Icons\new-text-message.png" />
+    <Resource Include="Icons\new-text-message2.png" />
     <Resource Include="Icons\openfolder.gif" />
+    <Resource Include="Icons\phone-lock.png" />
+    <Resource Include="Icons\phone-wifi.png" />
+    <Resource Include="Icons\phone-wifi2.png" />
     <Resource Include="Icons\plusnode.gif" />
     <Resource Include="Icons\python.gif" />
+    <Resource Include="Icons\receive-text-message.png" />
+    <Resource Include="Icons\received-calls.png" />
+    <Resource Include="Icons\red magnify.png" />
+    <Resource Include="Icons\right-arrow.png" />
     <Resource Include="Icons\rss.png" />
+    <Resource Include="Icons\send-message.png" />
+    <Resource Include="Icons\send-message2.png" />
+    <Resource Include="Icons\send-text-message.png" />
+    <Resource Include="Icons\sent-calls.png" />
+    <Resource Include="Icons\show-text-message.png" />
+    <Resource Include="Icons\SMS.png" />
+    <Resource Include="Icons\SMS2.png" />
+    <Resource Include="Icons\SMS3.png" />
+    <Resource Include="Icons\symlink_directory_30px.png" />
+    <Resource Include="Icons\text-message.png" />
+    <Resource Include="Icons\wifi.png" />
+    <Resource Include="Icons\wifi2.png" />
+    <Resource Include="ViewModels\Icons\loading againCapture.PNG" />
+    <Resource Include="Views\1-Convert Specs.txt" />
+    <Resource Include="Views\1-useful notes.txt" />
+    <Resource Include="ViewModels\Icons\left-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ViewModels\Icons\right-arrow.png" />
+    <Resource Include="ViewModels\Icons\cursor-arrow.png" />
+    <Resource Include="ViewModels\Icons\icons8-wrench-24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ViewModels\Icons\magnify minus.png" />
+    <Resource Include="ViewModels\Icons\magnify plus.png" />
+    <Resource Include="ViewModels\Icons\red magnify.png" />
+    <Resource Include="Views\red magnify.png" />
+    <Resource Include="ViewModels\Icons\folder.gif" />
+    <Resource Include="ViewModels\Icons\minusnode.gif" />
+    <Resource Include="ViewModels\Icons\openfolder.gif" />
+    <Resource Include="ViewModels\Icons\plusnode.gif" />
+    <Resource Include="ViewModels\Icons\python.gif" />
+    <Resource Include="ViewModels\Icons\rss.png" />
     <Resource Include="Views\wifi.png" />
     <Resource Include="Views\SMS3.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -630,37 +717,38 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
     <None Include="Design\projectGuides.guides" />
-    <None Include="Icons\calls-record.icns" />
-    <None Include="Icons\cloud.icns" />
-    <None Include="Icons\delete-text-message.icns" />
-    <None Include="Icons\delete-text-message2.icns" />
-    <None Include="Icons\download-to-laptop.icns" />
-    <None Include="Icons\fax.icns" />
     <None Include="Icons\idle.icns" />
-    <None Include="Icons\laptop-wifi.icns" />
-    <None Include="Icons\mailbox-receive-message.icns" />
-    <None Include="Icons\mailbox-receive-message2.icns" />
-    <None Include="Icons\mailbox.icns" />
-    <None Include="Icons\message.icns" />
-    <None Include="Icons\new-text-message.icns" />
-    <None Include="Icons\new-text-message2.icns" />
-    <None Include="Icons\phone-lock.icns" />
-    <None Include="Icons\phone-wifi.icns" />
-    <None Include="Icons\phone-wifi2.icns" />
-    <None Include="Icons\receive-text-message.icns" />
-    <None Include="Icons\received-calls.icns" />
-    <None Include="Icons\rss.icns" />
-    <None Include="Icons\send-message.icns" />
-    <None Include="Icons\send-message2.icns" />
-    <None Include="Icons\send-text-message.icns" />
-    <None Include="Icons\sent-calls.icns" />
-    <None Include="Icons\show-text-message.icns" />
-    <None Include="Icons\SMS.icns" />
-    <None Include="Icons\SMS2.icns" />
-    <None Include="Icons\SMS3.icns" />
-    <None Include="Icons\text-message.icns" />
-    <None Include="Icons\wifi.icns" />
-    <None Include="Icons\wifi2.icns" />
+    <None Include="ViewModels\Icons\calls-record.icns" />
+    <None Include="ViewModels\Icons\cloud.icns" />
+    <None Include="ViewModels\Icons\delete-text-message.icns" />
+    <None Include="ViewModels\Icons\delete-text-message2.icns" />
+    <None Include="ViewModels\Icons\download-to-laptop.icns" />
+    <None Include="ViewModels\Icons\fax.icns" />
+    <None Include="ViewModels\Icons\idle.icns" />
+    <None Include="ViewModels\Icons\laptop-wifi.icns" />
+    <None Include="ViewModels\Icons\mailbox-receive-message.icns" />
+    <None Include="ViewModels\Icons\mailbox-receive-message2.icns" />
+    <None Include="ViewModels\Icons\mailbox.icns" />
+    <None Include="ViewModels\Icons\message.icns" />
+    <None Include="ViewModels\Icons\new-text-message.icns" />
+    <None Include="ViewModels\Icons\new-text-message2.icns" />
+    <None Include="ViewModels\Icons\phone-lock.icns" />
+    <None Include="ViewModels\Icons\phone-wifi.icns" />
+    <None Include="ViewModels\Icons\phone-wifi2.icns" />
+    <None Include="ViewModels\Icons\receive-text-message.icns" />
+    <None Include="ViewModels\Icons\received-calls.icns" />
+    <None Include="ViewModels\Icons\rss.icns" />
+    <None Include="ViewModels\Icons\send-message.icns" />
+    <None Include="ViewModels\Icons\send-message2.icns" />
+    <None Include="ViewModels\Icons\send-text-message.icns" />
+    <None Include="ViewModels\Icons\sent-calls.icns" />
+    <None Include="ViewModels\Icons\show-text-message.icns" />
+    <None Include="ViewModels\Icons\SMS.icns" />
+    <None Include="ViewModels\Icons\SMS2.icns" />
+    <None Include="ViewModels\Icons\SMS3.icns" />
+    <None Include="ViewModels\Icons\text-message.icns" />
+    <None Include="ViewModels\Icons\wifi.icns" />
+    <None Include="ViewModels\Icons\wifi2.icns" />
     <None Include="NorthWind.xsc">
       <DependentUpon>NorthWind.xsd</DependentUpon>
     </None>
@@ -695,41 +783,41 @@
       <DependentUpon>ian1.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Icons\document-delete_48x48.png" />
-    <Resource Include="Icons\calls-record.png" />
-    <Resource Include="Icons\cloud.png">
+    <Resource Include="ViewModels\Icons\document-delete_48x48.png" />
+    <Resource Include="ViewModels\Icons\calls-record.png" />
+    <Resource Include="ViewModels\Icons\cloud.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\delete-text-message.png" />
-    <Resource Include="Icons\delete-text-message2.png" />
-    <Resource Include="Icons\download-to-laptop.png" />
-    <Resource Include="Icons\fax.png" />
-    <Resource Include="Icons\laptop-wifi.png" />
-    <Resource Include="Icons\mailbox-receive-message.png" />
-    <Resource Include="Icons\mailbox-receive-message2.png" />
-    <Resource Include="Icons\mailbox.png" />
-    <Resource Include="Icons\message.png" />
-    <Resource Include="Icons\new-text-message.png" />
-    <Resource Include="Icons\new-text-message2.png" />
-    <Resource Include="Icons\phone-lock.png" />
-    <Resource Include="Icons\phone-wifi.png">
+    <Resource Include="ViewModels\Icons\delete-text-message.png" />
+    <Resource Include="ViewModels\Icons\delete-text-message2.png" />
+    <Resource Include="ViewModels\Icons\download-to-laptop.png" />
+    <Resource Include="ViewModels\Icons\fax.png" />
+    <Resource Include="ViewModels\Icons\laptop-wifi.png" />
+    <Resource Include="ViewModels\Icons\mailbox-receive-message.png" />
+    <Resource Include="ViewModels\Icons\mailbox-receive-message2.png" />
+    <Resource Include="ViewModels\Icons\mailbox.png" />
+    <Resource Include="ViewModels\Icons\message.png" />
+    <Resource Include="ViewModels\Icons\new-text-message.png" />
+    <Resource Include="ViewModels\Icons\new-text-message2.png" />
+    <Resource Include="ViewModels\Icons\phone-lock.png" />
+    <Resource Include="ViewModels\Icons\phone-wifi.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\phone-wifi2.png" />
-    <Resource Include="Icons\receive-text-message.png" />
-    <Resource Include="Icons\received-calls.png" />
+    <Resource Include="ViewModels\Icons\phone-wifi2.png" />
+    <Resource Include="ViewModels\Icons\receive-text-message.png" />
+    <Resource Include="ViewModels\Icons\received-calls.png" />
     <Resource Include="Views\rss.png" />
-    <Resource Include="Icons\send-message.png" />
-    <Resource Include="Icons\send-message2.png" />
-    <Resource Include="Icons\send-text-message.png" />
-    <Resource Include="Icons\sent-calls.png" />
-    <Resource Include="Icons\show-text-message.png" />
-    <Resource Include="Icons\SMS.png" />
-    <Resource Include="Icons\SMS2.png" />
-    <Resource Include="Icons\SMS3.png" />
-    <Resource Include="Icons\text-message.png" />
-    <Resource Include="Icons\wifi.png" />
-    <Resource Include="Icons\wifi2.png" />
+    <Resource Include="ViewModels\Icons\send-message.png" />
+    <Resource Include="ViewModels\Icons\send-message2.png" />
+    <Resource Include="ViewModels\Icons\send-text-message.png" />
+    <Resource Include="ViewModels\Icons\sent-calls.png" />
+    <Resource Include="ViewModels\Icons\show-text-message.png" />
+    <Resource Include="ViewModels\Icons\SMS.png" />
+    <Resource Include="ViewModels\Icons\SMS2.png" />
+    <Resource Include="ViewModels\Icons\SMS3.png" />
+    <Resource Include="ViewModels\Icons\text-message.png" />
+    <Resource Include="ViewModels\Icons\wifi.png" />
+    <Resource Include="ViewModels\Icons\wifi2.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

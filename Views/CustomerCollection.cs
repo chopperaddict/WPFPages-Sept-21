@@ -15,7 +15,7 @@ namespace WPFPages . Views
 		}
 		public CustomerCollection  GetCustCollection( )
 		{
-			return customerptr . Loadcustomers ( ) as CustomerCollection;
+			return customerptr . GetNwCustomers ( ) as CustomerCollection;
 		}
 	}
 }

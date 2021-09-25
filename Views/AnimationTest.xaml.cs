@@ -29,7 +29,6 @@ namespace WPFPages . Views
                 private static int counter = 0;
                 private Point MousePosition = new Point ( 0, 0 );
                 private bool MouseDn = false;
-                private int defaultMenuheight = 0;
                 private int CurrentIndex = 0;
                 private bool ComboChangeinProcess = false;
                 public static List<string> treedata = new List<string> ( );
@@ -1253,42 +1252,12 @@ namespace WPFPages . Views
                         //lbi = ( ListBoxItem ) ( lb . ItemContainerGenerator . ContainerFromIndex ( CurrentIndex) );
                         //if ( lbi == null )
                         //        return;
-                        //SolidColorBrush sb = new SolidColorBrush ( );
-                        //sb = ( SolidColorBrush ) FindResource ( "Black0" );
-                        //lbi . Foreground = sb;
-                        //lbi . FontWeight = FontWeights . Normal;
-                        //lbi . FontStretch = FontStretches .Normal;
-                        //lbi . FontStyle = FontStyles .Normal;
-                        //// Size does NOT work
-                        //lbi . FontSize = 18;
-
-                        ////Now update current selection
-                        //lbi = ( ListBoxItem )( lb . ItemContainerGenerator . ContainerFromIndex ( lb.SelectedIndex ) );
-                        //if ( lbi == null )
-                        //        return;
-                        //sb = new SolidColorBrush ( );
-                        //sb = ( SolidColorBrush ) FindResource ( "Red3" );
-                        //lbi . Foreground = ( SolidColorBrush ) FindResource ( "Red5" );
-                        //lbi . FontWeight = FontWeights.Bold;
-                        //lbi . FontStretch = FontStretches . SemiExpanded;
-                        //lbi . FontStyle = FontStyles . Italic;
-                        //// Size does NOT work
-                        //lbi . FontSize = 24;
-
+  
                         ComboChangeinProcess = true;
                         cb1 . SelectedIndex = lb . SelectedIndex;
                         cb2 . SelectedIndex = lb . SelectedIndex;
                         CurrentIndex = lb . SelectedIndex;
-                        //        if ( lbi != null )
-                        //        {
-                        //                //                                lv1.Items.B
-                        //                Console . WriteLine ( $"lv1 Selected : lbi={lbi}, IsSelected = {lbi . IsSelected}, Index = {lv1 . SelectedIndex}" );
-                        //                lbi . Background = ( Brush ) FindResource ( "Blue0" );
-                        //                lbi . Foreground = ( Brush ) FindResource ( "White0" );
-                        //                lbi . IsSelected = true;
-                        //                lv1 . Refresh ( );
-                        //        }
-                }
+                  }
 
                 private void cb2_Selected ( object sender, RoutedEventArgs e )
                 {

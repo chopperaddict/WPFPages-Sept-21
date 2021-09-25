@@ -76,9 +76,7 @@
 	<!--ScrollViewer for a MenuItem-->
 	<MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter" />
 
-	<Style x:Key="MenuScrollViewer"
-       TargetType="{x:Type ScrollViewer}"
-       BasedOn="{x:Null}">
+	<Style x:Key="MenuScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{x:Null}">
 		<Setter Property="HorizontalScrollBarVisibility"
           Value="Hidden" />
 		<Setter Property="VerticalScrollBarVisibility"

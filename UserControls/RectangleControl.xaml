@@ -13,6 +13,8 @@
              Height="50" Width="250"
              d:DesignHeight ="50"
              d:DesignWidth="250"
+             Background="Transparent"
+             
              >
       
 

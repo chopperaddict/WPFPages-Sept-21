@@ -1228,8 +1228,33 @@ namespace WPFPages
 			}
 			return parent as parentItem;
 		}
-
-		public static T FindChild<T> ( DependencyObject parent, string childName )
+                public static T FindVisualChildByName<T> ( DependencyObject parent, string name ) where T : DependencyObject
+                {
+                        for ( int i = 0 ; i < VisualTreeHelper . GetChildrenCount ( parent ) ; i++ )
+                        {
+                                var child = VisualTreeHelper . GetChild ( parent, i );
+                                string controlName = child . GetValue ( Control . NameProperty ) as string;
+                                if ( controlName == name )
+                                {
+                                        return child as T;
+                                }
+                                else
+                                {
+                                        T result = FindVisualChildByName<T> ( child, name );
+                                        if ( result != null )
+                                                return result;
+                                }
+                        }
+                        return null;
+                }
+                /// <summary>
+                /// a different version of FindChild - find by child NAME (string)
+                /// </summary>
+                /// <typeparam name="T"></typeparam>
+                /// <param name="parent"></param>
+                /// <param name="childName"></param>
+                /// <returns></returns>
+                public static T FindChild<T> ( DependencyObject parent, string childName )
 			where T : DependencyObject
 		{
 			// Confirm parent and childName are valid. 
@@ -1271,7 +1296,37 @@ namespace WPFPages
 			return foundChild;
 		}
 
-		public static string GetPrettyGridStatistics ( DataGrid Grid, int current )
+               /// <summary>
+               /// a different version of FindChild - find by object TYPE
+               /// </summary>
+               /// <param name="o"></param>
+               /// <param name="childType"></param>
+               /// <returns></returns>
+               public static DependencyObject FindChild ( DependencyObject o, Type childType )
+                {
+                        DependencyObject foundChild = null;
+                        if ( o != null )
+                        {
+                                int childrenCount = VisualTreeHelper . GetChildrenCount ( o );
+                                for ( int i = 0 ; i < childrenCount ; i++ )
+                                {
+                                        var child = VisualTreeHelper . GetChild ( o, i );
+                                        if ( child . GetType ( ) != childType )
+                                        {
+                                                foundChild = FindChild ( child, childType );
+                                                //if(foundChild == null)
+                                                //        FindChild ( child, childType );
+                                        }
+                                        else
+                                        {
+                                                foundChild = child;
+                                                break;
+                                        }
+                                }
+                        }
+                        return foundChild;
+                }
+                public static string GetPrettyGridStatistics ( DataGrid Grid, int current )
 		{
 			string output = "";
 			if ( current != -1 )
@@ -1324,12 +1379,13 @@ namespace WPFPages
 			bitmap . Render ( visual );
 			return bitmap;
 		}
-		// Utilities to support converters
-		#region UTILITIES
-		//public class ConverterUtils
-		//{
+  
+                // Utilities to support converters
+                #region UTILITIES
+                //public class ConverterUtils
+                //{
 
-		public static Brush GetBrushFromInt ( int value )
+                public static Brush GetBrushFromInt ( int value )
 		{
 			switch ( value )
 			{
@@ -1397,5 +1453,7 @@ namespace WPFPages
 
 		//}
 		#endregion UTILITIES
+
+
 	}
 }

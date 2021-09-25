@@ -45,6 +45,9 @@
 		<dateconv:Date2UTCConverter x:Key="Date2UTCConvert"/>
 		<dateconv:UniversalValueConverter x:Key="UniversalConvert"/>
 
+            <Style x:Key="CotextMenuItem1" TargetType="MenuItem">
+                  
+            </Style>
 		<ContextMenu x:Key="ContextMenu1">
 			<MenuItem 
 				Name ="linq1" Header="Linq Queries"  

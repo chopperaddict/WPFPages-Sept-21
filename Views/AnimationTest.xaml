@@ -1009,7 +1009,7 @@
 					  Height="{Binding Height, ElementName=InnerGrid}"
 					  Width="{Binding Width, ElementName=InnerGrid}"
 					UseLayoutRounding="True"
-					Visibility="Visible">
+					Visibility="Hidden">
 
                         <Canvas x:Name="Panel1Canvas"
 						Background="{StaticResource Gray3}"
@@ -1736,7 +1736,7 @@
                   <Grid x:Name="TabControlPanel"
 					  Height="{Binding Height, ElementName=InnerGrid}"
 					  Width="{Binding Width, ElementName=InnerGrid}"
-					 Visibility="Hidden">
+					 Visibility="Visible">
 
                         <Canvas x:Name="TabControlCanvas"
 						Background="{StaticResource Gray3}"
@@ -1967,7 +1967,8 @@
 				HorizontalAlignment="Left"
 				Width="211" Margin="0,0,-11,0"
 				Panel.ZIndex="10"
-				Visibility="Visible" Grid.Column="1">
+				Visibility="Hidden" Grid.Column="1">
+                        
                         <StackPanel.RenderTransform>
                               <TransformGroup>
                                     <ScaleTransform />

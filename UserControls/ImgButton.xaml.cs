@@ -36,6 +36,7 @@ namespace WPFPages . UserControls
                         this . OuterGrid . Refresh ( );
                         this . Refresh ( );
                 }
+
                 private void Imgbutton_Loaded ( object sender, RoutedEventArgs e )
                 {
                      
