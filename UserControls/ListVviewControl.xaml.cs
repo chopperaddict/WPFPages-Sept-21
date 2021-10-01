@@ -18,9 +18,6 @@ using WPFPages . Views;
 
 namespace WPFPages . UserControls
 {
-        /// <summary>
-        /// Interaction logic for LbGridControl.xaml
-        /// </summary>
         public partial class ListViewControl : UserControl
         {
                 public ListViewControl ( )
@@ -131,54 +128,6 @@ namespace WPFPages . UserControls
                 }
                 #endregion
 
-                #region GroupedDataTemplate
-                public DataTemplate GroupedDataTemplate
-                {
-                        get
-                        {
-                                return ( DataTemplate ) GetValue ( GroupedDataTemplateProperty );
-                        }
-                        set
-                        {
-                                SetValue ( GroupedDataTemplateProperty, value );
-                        }
-                }
-                public static readonly DependencyProperty GroupedDataTemplateProperty =
-                       DependencyProperty . Register ( "GroupedDataTemplate",
-                       typeof ( DataTemplate ),
-                       typeof ( ListViewControl ),
-                       new PropertyMetadata ( ( DataTemplate ) default ), OnGroupedDataTemplatePropertyChanged );
-                private static bool OnGroupedDataTemplatePropertyChanged ( object value )
-                {
-                        Console . WriteLine ( $"GroupedDataTemplateProperty Changed:=  {value}" );
-                        return true;
-                }
-                #endregion
-
-                #region GroupedItemsSource
-                public CollectionViewSource GroupedItemsSource
-                {
-                        get
-                        {
-                                return ( CollectionViewSource ) GetValue ( GroupedItemsSourceProperty );
-                        }
-                        set
-                        {
-                                SetValue ( GroupedItemsSourceProperty, value );
-                        }
-                }
-                public static readonly DependencyProperty GroupedItemsSourceProperty =
-                       DependencyProperty . Register ( "GroupedItemsSource",
-                       typeof ( CollectionViewSource ),
-                       typeof ( ListViewControl ),
-                       new PropertyMetadata ( ( CollectionViewSource ) null ), OnGroupedItemsSourcePropertyChanged );
-                private static bool OnGroupedItemsSourcePropertyChanged ( object value )
-                {
-                        Console . WriteLine ( $"GroupedDataTemplateProperty Changed:=  {value}" );
-                        return true;
-                }
-                #endregion
-
                 #region ItemHeight
                 public double ItemHeight
                 {
@@ -203,6 +152,55 @@ namespace WPFPages . UserControls
                 }
                 #endregion
 
+                #region ItemsSource
+                public CollectionViewSource ItemsSource
+                {
+                        get
+                        {
+                                return ( CollectionViewSource ) GetValue ( ItemsSourceProperty );
+                        }
+                        set
+                        {
+                                SetValue ( ItemsSourceProperty, value );
+                        }
+                }
+                public static readonly DependencyProperty ItemsSourceProperty =
+                       DependencyProperty . Register ( "ItemsSource",
+                       typeof ( CollectionViewSource ),
+                       typeof ( ListViewControl ),
+                       new PropertyMetadata ( ( CollectionViewSource ) null ), OnItemsSourceChanged );
+                private static bool OnItemsSourceChanged ( object value )
+                {
+                        Console . WriteLine ( $"ListView ItemsSource Changed:=  {value}" );
+                        return true;
+                }
+                #endregion
+
+                #region ItemTemplate
+                public DataTemplate ItemTemplate
+                {
+                        get
+                        {
+                                return ( DataTemplate ) GetValue ( ItemTemplateProperty );
+                        }
+                        set
+                        {
+                                 SetValue ( ItemTemplateProperty, value );
+                         }
+                }
+                public static readonly DependencyProperty ItemTemplateProperty =
+                       DependencyProperty . Register ( "ItemTemplate",
+                       typeof ( DataTemplate ),
+                       typeof ( ListViewControl ),
+                       new PropertyMetadata ( ( DataTemplate ) default ), OnItemTemplatePropertyChanged );
+                private static bool OnItemTemplatePropertyChanged ( object value )
+                {
+                           if (value != null)
+                                Console . WriteLine ( $"ItemTemplate Changed:= {value}" );
+                        return true;
+                }
+                #endregion
+
                 #region SelectionBackground
                 public Brush SelectionBackground
                 {
@@ -219,7 +217,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "SelectionBackground",
                         typeof ( Brush ),
                         typeof ( ListViewControl ),
-                        new PropertyMetadata ( ( Brush ) Brushes . White ), OnSelectionBackgroundProperty );
+                        new PropertyMetadata ( ( Brush ) Brushes . Black ), OnSelectionBackgroundProperty );
                 private static bool OnSelectionBackgroundProperty ( object value )
                 {
                         Console . WriteLine ( $"SelectionBackgroundProperty  :=  {value}" );
@@ -267,7 +265,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "MouseoverForeground",
                         typeof ( Brush ),
                         typeof ( ListViewControl ),
-                        new PropertyMetadata ( ( Brush ) Brushes . Blue ), OnMouseoverForegroundProperty );
+                        new PropertyMetadata ( ( Brush ) Brushes . White ), OnMouseoverForegroundProperty );
                 private static bool OnMouseoverForegroundProperty ( object value )
                 {
                         Console . WriteLine ( $"MouseoverForegroundProperty := {value}" );
@@ -291,7 +289,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "MouseoverBackground",
                         typeof ( Brush ),
                         typeof ( ListViewControl ),
-                        new PropertyMetadata ( ( Brush ) Brushes . LightGray ), OnMouseoverBackgroundProperty );
+                        new PropertyMetadata ( ( Brush ) Brushes . DarkGray ), OnMouseoverBackgroundProperty );
                 private static bool OnMouseoverBackgroundProperty ( object value )
                 {
                         Console . WriteLine ( $"MouseoverBackgroundProperty:= {value}" );
@@ -315,7 +313,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "MouseoverSelectedForeground",
                         typeof ( Brush ),
                         typeof ( ListViewControl ),
-                        new PropertyMetadata ( ( Brush ) Brushes . Yellow ), OnMouseoverSelectedForegroundProperty );
+                        new PropertyMetadata ( ( Brush ) Brushes . White ), OnMouseoverSelectedForegroundProperty );
                 private static bool OnMouseoverSelectedForegroundProperty ( object value )
                 {
                         Console . WriteLine ( $"MouseoverSelectedForegroundProperty := {value}" );
@@ -339,7 +337,7 @@ namespace WPFPages . UserControls
                         DependencyProperty . Register ( "MouseoverSelectedBackground",
                         typeof ( Brush ),
                         typeof ( ListViewControl ),
-                        new PropertyMetadata ( ( Brush ) Brushes . LightGray ), OnMouseoverSelectedBackgroundProperty );
+                        new PropertyMetadata ( ( Brush ) Brushes . Red), OnMouseoverSelectedBackgroundProperty );
                 private static bool OnMouseoverSelectedBackgroundProperty ( object value )
                 {
                         Console . WriteLine ( $"MouseoverSelectedBackgroundProperty:= {value}" );
@@ -347,30 +345,30 @@ namespace WPFPages . UserControls
                 }
                 #endregion MouseoverSelectedBackground
 
-                //Not used right now
-                #region GroupedDataTemplate
-                //public Template GroupedDataTemplate
+                //#region SelectionChangedEventHandler
+                //public SelectionChangedEventHandler SelectionChangedEventHandler
                 //{
                 //        get
                 //        {
-                //                return ( DataTemplate ) GetValue ( GroupedDataTemplateProperty );
+                //                return ( SelectionChangedEventHandler ) GetValue ( SelectionChangedEventHandlerProperty );
                 //        }
                 //        set
                 //        {
-                //                SetValue ( GroupedDataTemplateProperty, value );
+                //                SetValue ( SelectionChangedEventHandlerProperty, value );
                 //        }
                 //}
-                //public static readonly DependencyProperty GroupedDataTemplateProperty =
-                //       DependencyProperty . Register ( "GroupedDataTemplate",
-                //       typeof ( DataTemplate ),
-                //       typeof ( LbGridControl ),
-                //       new PropertyMetadata ( ( DataTemplate ) default ), OnGroupedDataTemplatePropertyChanged );
-                //private static bool OnGroupedDataTemplatePropertyChanged ( object value )
+                //public static readonly DependencyProperty SelectionChangedEventHandlerProperty =
+                //       DependencyProperty . Register ( "SelectionChangedEventHandler",
+                //       typeof ( SelectionChangedEventHandler ),
+                //       typeof ( ListViewControl ),
+                //       new PropertyMetadata ( ( SelectionChangedEventHandler ) null ), OnSelectionChangedEventHandlerProperty );
+                //private static bool OnSelectionChangedEventHandlerProperty ( object value )
                 //{
-                //        Console . WriteLine ( $"GroupedDataTemplateProperty Changed:=  {value}" );
+                //        if ( value != null )
+                //                Console . WriteLine ( $"ItemTemplate Changed:= {value}" );
                 //        return true;
                 //}
-                #endregion
+                //#endregion
 
                 #endregion Dependency Properties
                 private void ListviewControl_Loaded ( object sender, RoutedEventArgs e )

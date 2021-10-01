@@ -20,19 +20,25 @@ namespace WPFPages . UserControls
 {
         /// <summary>
         /// Interaction logic for ListBoxControl.xaml
+        /// This is a "Wrapped" ListBox that handles significant control over colors in the listbox for most modes
+        /// such as NO Mouseover/Selected/Unselected, Mouseover/Selected/Unselected etc by setting the DP's
+        /// provide by thsi control
         /// </summary>
         public partial class ListBoxControl : UserControl
         {
                 #region Data Handling
-                public NwOrderDesignCollection NwOrders = new NwOrderDesignCollection ( );
-                public nworder nwOrder = new nworder ( );
+                //public NwOrderDesignCollection NwOrders = new NwOrderDesignCollection ( );
+                //public nworder nwOrder = new nworder ( );
 
                 #endregion
                 public ListBoxControl ( )
                 {
                         InitializeComponent ( );
                 }
-                #region Dependency Properties
+
+
+                #region Dependency Properties (for  this wrapped Listbox)
+                // These can all be called from any of the windows hosting one of these Usecontrol's
 
                 #region FontSize
                 new public double FontSize
@@ -130,56 +136,56 @@ namespace WPFPages . UserControls
                 }
                 #endregion
 
-                #region GroupedDataTemplate
-                public DataTemplate GroupedDataTemplate
-                {
-                        get
-                        {
-                                return ( DataTemplate ) GetValue ( GroupedDataTemplateProperty );
-                        }
-                        set
-                        {
-                                SetValue ( GroupedDataTemplateProperty, value );
-                        }
-                }
-                public static readonly DependencyProperty GroupedDataTemplateProperty =
-                       DependencyProperty . Register ( "GroupedDataTemplate",
-                       typeof ( DataTemplate ),
-                       typeof ( ListBoxControl ),
-                       new PropertyMetadata ( ( DataTemplate ) default ), OnGroupedDataTemplatePropertyChanged );
-                private static bool OnGroupedDataTemplatePropertyChanged ( object value )
-                {
-                        Console . WriteLine ( $"GroupedDataTemplateProperty Changed:=  {value}" );
-                        return true;
-                }
+                #region GroupedDataTemplate (UNUSED)
+                //public DataTemplate GroupedDataTemplate
+                //{
+                //        get
+                //        {
+                //                return ( DataTemplate ) GetValue ( GroupedDataTemplateProperty );
+                //        }
+                //        set
+                //        {
+                //                SetValue ( GroupedDataTemplateProperty, value );
+                //        }
+                //}
+                //public static readonly DependencyProperty GroupedDataTemplateProperty =
+                //       DependencyProperty . Register ( "GroupedDataTemplate",
+                //       typeof ( DataTemplate ),
+                //       typeof ( ListBoxControl ),
+                //       new PropertyMetadata ( ( DataTemplate ) default ), OnGroupedDataTemplatePropertyChanged );
+                //private static bool OnGroupedDataTemplatePropertyChanged ( object value )
+                //{
+                //        Console . WriteLine ( $"GroupedDataTemplateProperty Changed:=  {value}" );
+                //        return true;
+                //}
                 #endregion
 
-                #region GroupedItemsSource
-                public CollectionViewSource GroupedItemsSource
+                #region ItemsSource
+                public CollectionViewSource ItemsSource
                 {
                         get
                         {
-                                return ( CollectionViewSource ) GetValue ( GroupedItemsSourceProperty );
+                                return ( CollectionViewSource ) GetValue ( ItemsSourceProperty );
                         }
                         set
                         {
-                                SetValue ( GroupedItemsSourceProperty, value );
+                                SetValue ( ItemsSourceProperty, value );
                         }
                 }
-                public static readonly DependencyProperty GroupedItemsSourceProperty =
-                       DependencyProperty . Register ( "GroupedItemsSource",
+                public static readonly DependencyProperty ItemsSourceProperty =
+                       DependencyProperty . Register ( "ItemsSource",
                        typeof ( CollectionViewSource ),
                        typeof ( ListBoxControl ),
-                       new PropertyMetadata ( ( CollectionViewSource ) null), OnGroupedItemsSourcePropertyChanged );
-                private static bool OnGroupedItemsSourcePropertyChanged ( object value )
+                       new PropertyMetadata ( ( CollectionViewSource ) null ), OnItemsSourcePropertyChanged );
+                private static bool OnItemsSourcePropertyChanged ( object value )
                 {
-                        Console . WriteLine ( $"GroupedDataTemplateProperty Changed:=  {value}" );
+                        Console . WriteLine ( $"ListBox ItemsSource Changed:=  {value}" );
                         return true;
                 }
                 #endregion
 
                 #region ItemHeight
-                 public double ItemHeight
+                public double ItemHeight
                 {
                         get
                         {
@@ -198,6 +204,31 @@ namespace WPFPages . UserControls
                 private static bool OnItemHeightPropertyChangedProperty ( object value )
                 {
                         Console . WriteLine ( $"ItemHeight Changed to :  {value}" );
+                        return true;
+                }
+                #endregion
+
+                #region ItemTemplate
+                public DataTemplate ItemTemplate
+                {
+                        get
+                        {
+                                return ( DataTemplate ) GetValue ( ItemTemplateProperty );
+                        }
+                        set
+                        {
+                                SetValue ( ItemTemplateProperty, value );
+                        }
+                }
+                public static readonly DependencyProperty ItemTemplateProperty =
+                       DependencyProperty . Register ( "ItemTemplate",
+                       typeof ( DataTemplate ),
+                       typeof ( ListBoxControl ),
+                       new PropertyMetadata ( ( DataTemplate ) default ), OnItemTemplatePropertyChanged );
+                private static bool OnItemTemplatePropertyChanged ( object value )
+                {
+                        if ( value != null )
+                                Console . WriteLine ( $"ItemTemplate Changed:= {value}" );
                         return true;
                 }
                 #endregion
@@ -346,49 +377,52 @@ namespace WPFPages . UserControls
                 }
                 #endregion MouseoverSelectedBackground
 
-                //Not used right now
-                #region GroupedDataTemplate
-                //public Template GroupedDataTemplate
-                //{
-                //        get
-                //        {
-                //                return ( DataTemplate ) GetValue ( GroupedDataTemplateProperty );
-                //        }
-                //        set
-                //        {
-                //                SetValue ( GroupedDataTemplateProperty, value );
-                //        }
-                //}
-                //public static readonly DependencyProperty GroupedDataTemplateProperty =
-                //       DependencyProperty . Register ( "GroupedDataTemplate",
-                //       typeof ( DataTemplate ),
-                //       typeof ( ListBoxControl ),
-                //       new PropertyMetadata ( ( DataTemplate ) default ), OnGroupedDataTemplatePropertyChanged );
-                //private static bool OnGroupedDataTemplatePropertyChanged ( object value )
-                //{
-                //        Console . WriteLine ( $"GroupedDataTemplateProperty Changed:=  {value}" );
-                //        return true;
-                //}
+                #region SelectionChanged
+                public SelectionChangedEventHandler SelectionChanged
+                {
+                        get
+                        {
+                                return ( SelectionChangedEventHandler ) GetValue ( SelectionChangedProperty );
+                        }
+                        set
+                        {
+                                SetValue ( SelectionChangedProperty, value );
+                        }
+                }
+                public static readonly DependencyProperty SelectionChangedProperty =
+                       DependencyProperty . Register ( "SelectionChanged",
+                       typeof ( SelectionChangedEventHandler ),
+                       typeof ( ListBoxControl ),
+                       new PropertyMetadata ( ( SelectionChangedEventHandler ) default ), OnSelectionChangedEvent );
+                private static bool OnSelectionChangedEvent( object value )
+                {
+                        if ( value != null )
+                                Console . WriteLine ( $"SelectionChanged:= {value}" );
+                        return true;
+                }
                 #endregion
 
-                #endregion Dependency Properties
-                private void ListBoxControl_Loaded ( object sender, RoutedEventArgs e )
-                {
-                        if ( DesignerProperties . GetIsInDesignMode ( this ) == true )
-                        {
-                                NwOrders . Clear ( );
-                                ListboxControl . Items . Clear ( );
-                                NwOrders . StdLoadOrders ( "" );
-                                ListboxControl . ItemsSource = NwOrders;
-                                DataContext = nwOrder;
-                                ListboxControl . UpdateLayout ( );
-                                CollectionView view = ( CollectionView ) CollectionViewSource . GetDefaultView ( ListboxControl . ItemsSource );
-                                view . SortDescriptions . Add ( new SortDescription ( "OrderId", ListSortDirection . Ascending ) );
-                                nwOrder = view . CurrentItem as nworder;
-                                nwOrder = ListboxControl . SelectedItem as nworder;
-                        }
-                        //SetBinding ( FontWeightProperty, "Black" );
 
-                }
+                #endregion Dependency Properties
+                //private void ListBoxControl_Loaded ( object sender, RoutedEventArgs e )
+                //{
+                //        if ( DesignerProperties . GetIsInDesignMode ( this ) == true )
+                //        {
+                //                ListboxControl . ItemsSource = null;
+                //                NwOrders . Clear ( );
+                //                ListboxControl . Items . Clear ( );
+                //                NwOrders . StdLoadOrders ( "" );
+                //                ListboxControl . ItemsSource = NwOrders;
+                //                DataContext = nwOrder;
+                //                ListboxControl . UpdateLayout ( );
+                //                CollectionView view = ( CollectionView ) CollectionViewSource . GetDefaultView ( ListboxControl . ItemsSource );
+                //                view . SortDescriptions . Add ( new SortDescription ( "OrderId", ListSortDirection . Ascending ) );
+                //                nwOrder = view . CurrentItem as nworder;
+                //                nwOrder = ListboxControl . SelectedItem as nworder;                               
+                //        }
+                //        //SetBinding ( FontWeightProperty, "Black" );
+  
+                //}
+
         }
 }

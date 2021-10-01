@@ -592,6 +592,12 @@
 					FontWeight="DemiBold"
 					Background="Lime"
 					Foreground="{StaticResource Black0}"/>
+
+                        <MenuItem Header="  Attached Properties" 
+				    Click="Attached_Click" 						
+					FontWeight="DemiBold"
+					Background="Lime"
+					Foreground="{StaticResource Black0}"/>
                   </MenuItem>
             </Menu>
 

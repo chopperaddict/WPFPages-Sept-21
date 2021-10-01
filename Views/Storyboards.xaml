@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:WPFPages.Views"
         xmlns:ctrl="clr-namespace:WPFPages.UserControls"
         xmlns:cmd="clr-namespace:WPFPages.Commands"
+        xmlns:models="clr-namespace:WPFPages.ViewModels"
         x:Name="storyboard"
         Background="Cyan"
         Loaded="storyboard_Loaded"
@@ -16,23 +17,39 @@
 
       <Window.Resources>
 
+            <!--================================== GENERAL DEFINITIONS ========================================-->
+            <!--// Control /Command definitons-->
+            <ctrl:ListBoxControl x:Key="lbcontrol"/>
+            <!--<cmd:BreakCommand x:Key="breakcommand2"/>-->
+
+            <!--// Data definitions-->
+            <local:NwOrderCollection x:Key="nwdata"/>
+            <local:nwcustomer x:Key="nwcust"/>
+
+            <!--===========================================================================================-->
+
+            <CollectionViewSource Source="{Binding}" x:Key="nwcustomerView">
+                  <CollectionViewSource.GroupDescriptions>
+                        <PropertyGroupDescription PropertyName="City" />
+                  </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
 
             <LinearGradientBrush x:Key="Greenbackground" StartPoint="0.5,1" EndPoint="0.5,0">
                   <GradientStop Offset="0" Color="#FF00FF00" />
                   <GradientStop Offset="1" Color="#99006000" />
             </LinearGradientBrush>
 
-            <!--// Template for Storyboard demo-->
+            <!--// Template for Storyboard demo panel only -->
             <ControlTemplate x:Key="MyControlTemplate" 
                   TargetType="{x:Type ContentControl}">
-                  <Border 
-                          Margin="{TemplateBinding Padding}"
+                  <Border x:Name="outborder"
+                          Margin="0,0,0,-4"
                           BorderBrush="{TemplateBinding BorderBrush}"
                           BorderThickness="{TemplateBinding BorderThickness}"
                           Background="{TemplateBinding Background}">
                         <Border Name="innerBorder" Padding="10">
                               <Border.Background>
-                                    <SolidColorBrush x:Name="innerBorderBackgroundBrush" Color="White" />
+                                    <SolidColorBrush x:Name="outborderBackgroundBrush" Color="White" />
                               </Border.Background>
                               <Grid Name="contentPanel">
                                     <Grid.Background>
@@ -51,11 +68,11 @@
                   <ControlTemplate.Triggers>
 
                         <!--Event Trigger Example-->
-                        <EventTrigger RoutedEvent="Border.MouseEnter" SourceName="innerBorder">
+                        <EventTrigger RoutedEvent="Border.MouseEnter" SourceName="outborder">
                               <BeginStoryboard>
                                     <Storyboard>
                                           <ColorAnimation
-                                                    Storyboard.TargetName="innerBorderBackgroundBrush"
+                                                    Storyboard.TargetName="outborderBackgroundBrush"
                                                     Storyboard.TargetProperty="Color"
                                                     From="Black" To="{StaticResource ClrWhite0}"
                                                     Duration="0:0:7" AutoReverse="True" />
@@ -94,127 +111,6 @@
 
             </ControlTemplate>
 
-            <!--============================= WRAPPED LISTBOX DATA TEMPLATES ================================-->
-
-            <!--Blue Listbox-->
-            <DataTemplate x:Key="NwordersDataTemplate1">
-                  <Border x:Name="NwOrdersDataTemplateBorder1" Height="{Binding ItemHeight}">
-                        <StackPanel Orientation="Horizontal" >
-                              <TextBlock Text="{Binding OrderId}" Width="45" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding CustomerId}" Width="60" Height="{Binding ItemHeight}" Padding="1"/>
-                              <TextBlock Text="{Binding ShipCountry}" Width="55" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding ShipVia}" Width="30" Height="{Binding ItemHeight}" Padding="1"  />
-                              <TextBlock Text="{Binding ShipName}" Width="200" Height="{Binding ItemHeight}" Padding="1"  />
-                              <TextBlock Text="{Binding ShipAddress}" Width="175" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding RequiredDate, Converter={StaticResource DateConvert}}" Width="95" Height="{Binding ItemHeight}" Padding="1"  />
-                        </StackPanel>
-                  </Border>
-            </DataTemplate>
-
-            <!--Orange listbox-->
-            <DataTemplate x:Key="NwordersDataTemplate2">
-                  <Border x:Name="NwOrdersDataTemplateBorder2" Height="{Binding ItemHeight}">
-                        <StackPanel Orientation="Horizontal" >
-                              <TextBlock Text="{Binding OrderId}" Width="55" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding CustomerId}" Width="65" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding ShipCountry}" Width="75" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding ShipVia}" Width="30" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding ShipName}" Width="215" Height="{Binding ItemHeight}" Padding="1"  />
-                              <TextBlock Text="{Binding ShipAddress}" Width="180" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding RequiredDate, Converter={StaticResource DateConvert}}" Width="95" Height="{Binding ItemHeight}" Padding="1"  />
-                        </StackPanel>
-                  </Border>
-            </DataTemplate>
-
-            <DataTemplate x:Key="NwordersDataTemplate4">
-                  <Border x:Name="NwOrdersDataTemplateBorder4" Height="{Binding ItemHeight}">
-                        <StackPanel Orientation="Horizontal" >
-                              <TextBlock Text="{Binding OrderId}" Width="40" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding CustomerId}" Width="45" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding ShipCountry}" Width="55" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding ShipVia}" Width="20" Height="{Binding ItemHeight}" Padding="1"  />
-                              <TextBlock Text="{Binding ShipName}" Width="175" Height="{Binding ItemHeight}" Padding="1"  />
-                              <TextBlock Text="{Binding ShipAddress}" Width="125" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding RequiredDate, Converter={StaticResource DateConvert}}" Width="95" Height="{Binding ItemHeight}" Padding="1"   />
-                        </StackPanel>
-                  </Border>
-            </DataTemplate>
-
-
-            <DataTemplate x:Key="NwOrdersDataGridTemplate1">
-                  <Border x:Name="NwOrdersDataGridTemplate1Border1" Height="{Binding ItemHeight}">
-                        <StackPanel Orientation="Horizontal" >
-                              <TextBlock Text="{Binding OrderId}" Width="70" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding CustomerId}" Width="95" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding ShipCountry}" Width="115" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding ShipVia}" Width="40" Height="{Binding ItemHeight}" Padding="1"  />
-                              <TextBlock Text="{Binding ShipName}" Width="250" Height="{Binding ItemHeight}" Padding="1"  />
-                              <TextBlock Text="{Binding ShipAddress}" Width="255" Height="{Binding ItemHeight}" Padding="1" />
-                              <TextBlock Text="{Binding RequiredDate, Converter={StaticResource DateConvert}}" Width="135" Height="{Binding ItemHeight}" Padding="1"   />
-                        </StackPanel>
-                  </Border>
-            </DataTemplate>
-
-            <DataTemplate x:Key="NwCustomersDataTemplate1">
-                  <Border x:Name="NwCustomerDataTemplateBorder1" Height="{Binding ItemHeight}">
-                        <StackPanel Orientation="Horizontal" >
-                              <TextBlock Text="{Binding CustomerId}" Width="50" Height="{Binding ItemHeight}"  Padding="1" x:Name="CustomerId"/>
-                              <TextBlock Text="{Binding CompanyName}" Width="165" Height="{Binding ItemHeight}" Padding="1" x:Name="CompanyName"/>
-                              <TextBlock Text="{Binding ContactName}" Width="135" Height="{Binding ItemHeight}" Padding="1" x:Name="ContactName"/>
-                              <TextBlock Text="{Binding ContactTitle}" Width="40" Height="{Binding ItemHeight}" Padding="1"  x:Name="ContactTitle"/>
-                              <TextBlock Text="{Binding Address}" Width="150" Height="{Binding ItemHeight}" Padding="1"  x:Name="Address"/>
-                              <TextBlock Text="{Binding City }" Width="80" Height="{Binding ItemHeight}" Padding="1"  x:Name="City"/>
-                              <TextBlock Text="{Binding PostalCode}" Width="75" Height="{Binding ItemHeight}" Padding="1"  x:Name="PostalCode"/>
-                              <TextBlock Text="{Binding Country}" Width="75" Height="{Binding ItemHeight}" Padding="1"  x:Name="Country"/>
-                              <TextBlock Text="{Binding Phone}" Width="95" Height="{Binding ItemHeight}" Padding="1"  x:Name="Phone"/>
-                              <TextBlock Text="{Binding Fax}" Width="95" Height="{Binding ItemHeight}" Padding="1"  x:Name="Fax"/>
-                        </StackPanel>
-                  </Border>
-            </DataTemplate>
-
-            <!--Red Listbox-->
-            <DataTemplate x:Key="NwCustomersDataTemplate3">
-                  <Border x:Name="NwCustomerDataTemplateBorder3" Height="{Binding ItemHeight}">
-                        <StackPanel Orientation="Horizontal" >
-                              <TextBlock Text="{Binding CustomerId}" Width="50" Height="{Binding ItemHeight}"  Padding="1" x:Name="CustomerId"/>
-                              <TextBlock Text="{Binding CompanyName}" Width="165" Height="{Binding ItemHeight}" Padding="1" x:Name="CompanyName"/>
-                              <TextBlock Text="{Binding ContactName}" Width="135" Height="{Binding ItemHeight}" Padding="1" x:Name="ContactName"/>
-                              <TextBlock Text="{Binding ContactTitle}" Width="40" Height="{Binding ItemHeight}" Padding="1"  x:Name="ContactTitle"/>
-                              <TextBlock Text="{Binding Address}" Width="150" Height="{Binding ItemHeight}" Padding="1"  x:Name="Address"/>
-                              <TextBlock Text="{Binding City }" Width="70" Height="{Binding ItemHeight}" Padding="1"  x:Name="City"/>
-                              <TextBlock Text="{Binding PostalCode}" Width="75" Height="{Binding ItemHeight}" Padding="1"  x:Name="PostalCode"/>
-                              <TextBlock Text="{Binding Country}" Width="65" Height="{Binding ItemHeight}" Padding="1"  x:Name="Country"/>
-                              <TextBlock Text="{Binding Phone}" Width="85" Height="{Binding ItemHeight}" Padding="1"  x:Name="Phone"/>
-                              <TextBlock Text="{Binding Fax}" Width="85" Height="{Binding ItemHeight}" Padding="1"  x:Name="Fax"/>
-                        </StackPanel>
-                  </Border>
-            </DataTemplate>
-            <!--Magenta Window-->
-            <DataTemplate x:Key="NwCustomersDataTemplate5">
-                  <Border x:Name="NwCustomerDataTemplateBorder" Height="{Binding ItemHeight}">
-                        <StackPanel Orientation="Horizontal" >
-                              <TextBlock Text="{Binding CustomerId}" Width="60" Height="{Binding ItemHeight}"  Padding="1" x:Name="CustomerId"/>
-                              <TextBlock Text="{Binding CompanyName}" Width="195" Height="{Binding ItemHeight}" Padding="1" x:Name="CompanyName"/>
-                              <TextBlock Text="{Binding ContactName}" Width="145" Height="{Binding ItemHeight}" Padding="1" x:Name="ContactName"/>
-                              <TextBlock Text="{Binding ContactTitle}" Width="50" Height="{Binding ItemHeight}" Padding="1"  x:Name="ContactTitle"/>
-                              <TextBlock Text="{Binding Address}" Width="170" Height="{Binding ItemHeight}" Padding="1"  x:Name="Address"/>
-                              <TextBlock Text="{Binding City }" Width="90" Height="{Binding ItemHeight}" Padding="1"  x:Name="City"/>
-                              <TextBlock Text="{Binding PostalCode}" Width="90" Height="{Binding ItemHeight}" Padding="1"  x:Name="PostalCode"/>
-                              <TextBlock Text="{Binding Country}" Width="75" Height="{Binding ItemHeight}" Padding="1"  x:Name="Country"/>
-                              <TextBlock Text="{Binding Phone}" Width="115" Height="{Binding ItemHeight}" Padding="1"  x:Name="Phone"/>
-                              <TextBlock Text="{Binding Fax}" Width="115" Height="{Binding ItemHeight}" Padding="1"  x:Name="Fax"/>
-                        </StackPanel>
-                  </Border>
-            </DataTemplate>
-            <!--================================== GENERAL DEFINITIONS ========================================-->
-            <!--// Control /Command definitons-->
-            <ctrl:ListBoxControl x:Key="lbcontrol"/>
-            <!--<cmd:BreakCommand x:Key="breakcommand2"/>-->
-
-            <!--// Data definitions-->
-            <local:NwOrderCollection x:Key="nwdata"/>
-            <local:nwcustomer x:Key="nwcust"/>
-            <!--===========================================================================================-->
 
       </Window.Resources>
 
@@ -227,92 +123,43 @@
       </Window.InputBindings>-->
 
 
-      <Grid x:Name="Maingrid" Margin="0,6,89,19">
+      <Grid x:Name="Maingrid" Margin="0,12,7,7">
             <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="555"/>
-                  <ColumnDefinition Width="*"  />
-                  <ColumnDefinition Width="*"  />
+                  <ColumnDefinition SharedSizeGroup="A"/>
+                  <ColumnDefinition SharedSizeGroup="A" />
+                  <ColumnDefinition SharedSizeGroup="A" />
             </Grid.ColumnDefinitions>
 
 
             <!--// Demonstrates a ColorAnimation that is up in the ControlTemplate-->
             <!--#region Simple Storyboard on border demo-->
-            <Border Grid.Column="0"
-
-                        HorizontalAlignment="Left" 
-                        Width="516" 
-                        Margin="0,0,0,750" 
-                    Background="HotPink"
-                        BorderThickness="1"
-                        BorderBrush="{StaticResource Black0}">
-                  <StackPanel Margin="5,5,0,5" 
-                                    HorizontalAlignment="Center" 
-                                    MinWidth="300" 
-                                    Width="424">
+            <Border x:Name="outerborder"
+                  Grid.Column="0"
+                  HorizontalAlignment="Left" 
+                  Width="516" 
+                  Margin="0,0,0,750" 
+                  Background="HotPink"
+                  BorderThickness="1"
+                  BorderBrush="{StaticResource Black0}">
+                  <StackPanel x:Name="spanel1"
+                        Margin="-1,0,-1,-154"
+                               Width="{Binding ActualWidth, ElementName=outerborder}"
+                              HorizontalAlignment="Center" 
+                              Background="Transparent"
+                              MinWidth="300" 
+                             >
                         <ContentControl Template="{StaticResource MyControlTemplate}"
-                               Content="Hello, World" Height="60" Margin="0,0,2,0" />
+                               Height="59"
+                               Content="This demonstrates my 'Wrapped' ListView/ListBox controls" FontSize="15"  Margin="31,0,54,0" />
                   </StackPanel>
             </Border>
-            <!--#endregion-->
-
-
-            <!--// HOW TO ACCESS A DATA TEMPLATE TO STYLE THE CONTENT OF THE LISTVIEW
-                  // IT USES THE DATATEMPLATE DEFINED IN RESOURCE SECTON-->
-
-            <!--#region ListtBox with StoryBoards-->
-
-
-            <!--// These trigger WORK too, but it is on the entire Listbox-->
-            <!--#region Triggers-->
-
-            <!--<ListBox.Triggers>
-                        <EventTrigger RoutedEvent="ListBox.MouseEnter">
-                              <BeginStoryboard>
-                                    <Storyboard>
-                                          <DoubleAnimation 
-                                                          Storyboard.TargetName="Lv1" 
-                                                          Storyboard.TargetProperty="(Border.Opacity)"
-                                                                   To="0.4" Duration="0:0:0.3"/>
-                                    </Storyboard>
-                              </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="ListBox.MouseLeave">
-                              <BeginStoryboard>
-                                    <Storyboard>
-                                          <DoubleAnimation 
-                                                          Storyboard.TargetName="Lv1" 
-                                                          Storyboard.TargetProperty="(Border.Opacity)"
-                                                                   To="1.0" Duration="0:0:0.3"/>
-                                    </Storyboard>
-                              </BeginStoryboard>
-                        </EventTrigger>
-                  </ListBox.Triggers>-->
-            <!--#endregion-->
-
-            <!--#endregion-->
-
-            <!--#region lower Listview with GridView inside-->
-
-            <!--<ListView x:Name="Listview"
-                        Grid.Column="0"
-                        ItemTemplate="{StaticResource lbItemTemplate}"
-                        ItemContainerStyle="{StaticResource ListBoxItemStyle1}"
-                      Background="Coral"
-                        Margin="19,376,30,17">
-                  <ListView.Triggers>
-
-                  </ListView.Triggers>
-                  <GridView x:Name="ListGrid">
-
-                  </GridView>
-            </ListView>-->
             <!--#endregion-->
 
             <!--#region Mouseover StoryBoard example-->
 
             <!--Simple  Border that demonstrates Mousevoer storyboard-->
             <Border x:Name="_border" 
-                        Grid.Column="2" Background="Lime" Margin="0,33,32,744" 
+                        Grid.Column="2" Background="Lime" Margin="0,5,32,766" 
                         RenderTransformOrigin="0.5,0.5"
                         BorderBrush="Black"
                         BorderThickness="2"
@@ -324,7 +171,7 @@
                                    HorizontalAlignment="Right"
                                    TextWrapping="Wrap"
                                    TextAlignment="Center"
-                                   FontSize="24" Margin="0,13,5,12" Width="413" Height="30">
+                                   FontSize="24" Margin="0,0,5,-9" Width="413" Height="38">
                   </TextBlock>
                   <Border.Triggers>
                         <!--// These Actuall WORK !!!
@@ -370,6 +217,7 @@
             </Border>
             <!--#endregion-->
 
+            <!--#region general stuff-->
             <ctrl:ShadowLabelControl Margin="3,20,358,732" Grid.Column="1"/>
 
             <ctrl:ShadowLabelControl Margin="154,21,207,731" Grid.Column="1"
@@ -378,237 +226,157 @@
                                      BorderShadowBlurSize="15"
                                      TextShadowSize="2"
                                      TextShadowColorDown="Black"
+                                     PreviewMouseDoubleClick="ShadowLabelControl_PreviewMouseDoubleClick"
                                      BtnTextColorDown="{StaticResource White0}"
                                      BtnTextDown="Mouse over"
                                      />
 
-            <local:ThreeDeeBtnControl Margin="324,15,7,716" Grid.Column="1"
-                                      FillTop="{StaticResource HeaderBrushGreen}"
-                                      FillSide="{StaticResource Green9}"
-                                      PressedHoleHeight="8"
-                                      BtnTextColorDown="White"
-                                      BtnTextColor="{StaticResource White0}"/>
+            <local:ThreeDeeBtnControl x:Name="Threedbtn"
+                  Margin="369,15,7,716" Grid.Column="1"
+                  FillTop="{StaticResource HeaderBrushGreen}"
+                  FillSide="{StaticResource Green9}"
+                  BtnText="Sort Gray List"
+                  PressedHoleHeight="8"
+                  BtnTextColorDown="White"
+                  Click="Threedbtn_Click"
+                  BtnTextColor="{StaticResource White0}"/>
+
+            <!--#endregion-->
+
             <!--./ This is ALL that is required to display my Wrapped Listbox Usercontrol-->
             <!--// Plus you define a DATATEMPLATE in Resources that is passed to the "GroupedDataTemplate" 
                   Dependency property, which then uses it as the ListBoxItem Template-->
             <!--// Plus you set the "GroupedItemsSource" DP  to the relevant Itemsource-->
             <!--// See the "Loaded" methods for how to load the relevant data-->
-            <TextBlock Foreground="Red" Text="NwOrdersDataTemplate1 : Sort : ShipName" 
-                       FontWeight="Bold"
-                       TextAlignment="Center"
-
-                       Margin="180,80,65,696" HorizontalAlignment="Center" Width="310" Height="34"/>
             <!--BLUE BACKGROUND-->
-            <ctrl:ListBoxControl x:Name="UserListbox" 
+            <ListBox x:Name="LView1" 
                         Grid.Column="0" 
                         Width="530"
-                        Loaded="UserListbox_Loaded" 
-                        Margin="10,115,15,517"
-                        Foreground="{StaticResource White0}"
-                        Background="{StaticResource Blue0}"
-                                 
-                        MouseoverForeground="{StaticResource Black0}"
-                        MouseoverBackground="{StaticResource Cyan5}"
-                        
-                        SelectionForeground="{StaticResource White0}"
-                        SelectionBackground="{StaticResource Cyan0}"                                 
-                                 
+                        Loaded="LView1_Loaded" 
+                        Margin="12,84,17,510"
+                        ItemContainerStyle="{StaticResource ListBoxColorControlTemplate}"
+                        AllowDrop="True"                               
+
+                        models:ListboxColorCtrlAP.ItemHeight="18"                         
                         FontSize="14"
-                        ItemHeight="20"
                         FontWeight="Normal"
-                        FontWeightSelected="DemiBold"
-                        FontWeightSelectedMouseover="Bold"
-                        
+                        models:ListboxColorCtrlAP.FontWeightSelected="DemiBold" 
                         FontStyle="Italic"
-                        MouseoverSelectedForeground="{StaticResource Red5}"
-                        MouseoverSelectedBackground="{StaticResource Yellow0}"
-                        GroupedDataTemplate="{StaticResource NwordersDataTemplate1}"               
-                       GroupedItemsSource="{Binding nwdata}"/>
-
-            <!--FontWeightSelected="Bold"
-                        FontWeightSelectedMouseover="Black"-->
-
-            <TextBlock Foreground="Red" Text="NwOrdersDataTemplate2 : Sort : Country" 
-                  FontWeight="Bold"
-                  TextAlignment="Center"                 
-                       Margin="176,314,79,456" HorizontalAlignment="Center" Width="300" Height="40"/>
-            <!--ORANGE LISTBOX-->
-            <ctrl:ListBoxControl x:Name="UserListbox2"
-                        Grid.Column="1"
-                        Margin="9,454,17,19" 
-                          Loaded="UserListbox_Loaded2"
-                        BorderThickness="2"
-                        BorderBrush="{StaticResource Blue0}"
- 
-
-                        Foreground="{StaticResource Black0}"
-                        Background="{StaticResource Orange5}"
-
-                        MouseoverForeground="{StaticResource White0}"
-                        MouseoverBackground="{StaticResource Green0}"
-
-                        SelectionForeground="{StaticResource White0}"
-                        SelectionBackground="{StaticResource Red5}"
-
-                        FontWeight="Normal"
-                        FontSize="17"
-                        ItemHeight="28"
-                        
-                        MouseoverSelectedForeground="Black"
-                        MouseoverSelectedBackground="Yellow"
-                        GroupedDataTemplate="{StaticResource NwordersDataTemplate2}"
-                        GroupedItemsSource="{Binding nwdata}"/>
-
-
-
-            <!--./ This is ALL that is required to display my Wrapped Listbox Usercontrol-->
-            <!--// Plus you define a DATATEMPLATE in Resources that is passed to the "GroupedDataTemplate" 
-                  Dependency property, which then uses it as the ListBoxItem Template-->
-            <!--// Plus you set the "GroupedItemsSource" DP  to the relevant Itemsource-->
-            <!--// See the "Loaded" methods for how to load the relevant data-->
-
-            <TextBlock Foreground="Red" Text="NwCustomersDataTemplate3 : Sort : CompanyName"  
-                  FontWeight="Bold"
-                  TextAlignment="Center"
-
-                       Margin="131,98,59,676" HorizontalAlignment="Center" Width="330" Grid.Column="1" RenderTransformOrigin="0.531,0.724"/>
-            <!--RED BACKGROUND-->
-            <ctrl:ListBoxControl x:Name="UserListbox3"
-                         Loaded="UserListbox_Loaded3" 
-                         Margin="9,133,15,423"
-                        Foreground="{StaticResource White0}"
-                        Background="{StaticResource Red5}"
-                        
-                        MouseoverForeground="{StaticResource White0}"
-                        MouseoverBackground="{StaticResource Green4}"
-                        
-                        SelectionForeground="{StaticResource Black0}"
-                        SelectionBackground="{StaticResource Yellow0}"
-                        
-                        FontWeight="Light"
-                        FontWeightSelected="DemiBold"
-                        FontWeightSelectedMouseover="Heavy"
                                  
-                        FontSize="14"
-                        FontStyle="Italic"
-                        ItemHeight="21"
-                                 
-                        MouseoverSelectedForeground="{StaticResource Yellow0}"
-                        MouseoverSelectedBackground="{StaticResource Black0}"
-                                 
-                        GroupedDataTemplate="{StaticResource NwCustomersDataTemplate3}"
-                        GroupedItemsSource="{Binding nwcust}" 
-                        Grid.Column="1"/>
+                        models:ListboxColorCtrlAP.Foreground="{StaticResource Black0}"
+                        models:ListboxColorCtrlAP.Background="{StaticResource Blue5}"
+                        models:ListboxColorCtrlAP.MouseoverForeground="{StaticResource Black0}"
+                        models:ListboxColorCtrlAP.MouseoverBackground="{StaticResource Cyan5}"                        
+                        models:ListboxColorCtrlAP.SelectionForeground="{StaticResource White0}"
+                        models:ListboxColorCtrlAP.SelectionBackground="{StaticResource Cyan0}"                                 
+                        models:ListboxColorCtrlAP.MouseoverSelectedForeground="{StaticResource White0}"                        
+                        models:ListboxColorCtrlAP.MouseoverSelectedBackground="{StaticResource Red5}"
+                        ItemTemplate="{StaticResource NwordersDataTemplate1}"               
+                        ItemsSource="{Binding nwdata}">
 
+                        <ListBox.Effect>
+                              <!--<BlurEffect Radius="0" />-->
+                              <DropShadowEffect ShadowDepth="15" Color="{StaticResource ClrBlue3}" BlurRadius="50"/>
+                        </ListBox.Effect>
+            </ListBox>
 
-            <TextBlock Foreground="Red" Text="NwOrdersDataTemplate4 : Sort : CustomerId"  
-                  FontWeight="Bold"
-                  TextAlignment="Center"
-
-                       Margin="139,412,104,370" HorizontalAlignment="Center" Width="277" Grid.Column="1"/>
             <!--YELLOW BACKGROUND-->
-            <ctrl:ListBoxControl x:Name="UserListbox4"
-                        Loaded="UserListbox_Loaded4" 
-                        Margin="9,353,23,250"
-                        Foreground="{StaticResource Black0}"
-                        Background="{StaticResource Yellow2}"
-                        
-                        MouseoverForeground="{StaticResource Black0}"
-                        MouseoverBackground="{StaticResource Orange2}"
-                       
-                        SelectionForeground="{StaticResource White0}"
-                        SelectionBackground="{StaticResource Red5}"
-                        FontWeight="Normal"
-                        ItemHeight="20"
-                        FontSize="13"
-                      
-                        MouseoverSelectedForeground="Yellow"
-                        MouseoverSelectedBackground="Black" RenderTransformOrigin="0.5,0.5"
+            <ListBox x:Name="LView2"
+                 ItemContainerStyle="{StaticResource ListBoxColorControlTemplate}"
+                  Loaded="LView2_Loaded" 
+                  Margin="9,338,23,265"
+                  models:ListboxColorCtrlAP.BorderBrush="Red"
+                  models:ListboxColorCtrlAP.BorderThickness="2"
+                  AllowDrop="True"                               
+                  models:ListboxColorCtrlAP.Foreground="{StaticResource Black0}"
+                  models:ListboxColorCtrlAP.Background="{StaticResource Magenta6}"                        
+                  models:ListboxColorCtrlAP.MouseoverForeground="{StaticResource Black0}"
+                  models:ListboxColorCtrlAP.MouseoverBackground="{StaticResource Orange2}"                       
+                  models:ListboxColorCtrlAP.MouseoverSelectedForeground="Yellow"
+                  models:ListboxColorCtrlAP.MouseoverSelectedBackground="Black"   
+                  models:ListboxColorCtrlAP.SelectionBackground="Blue"
+                  models:ListboxColorCtrlAP.SelectionForeground="White"
                                  
-                        GroupedDataTemplate="{StaticResource NwordersDataTemplate4}"
-                        GroupedItemsSource="{Binding nwdata}"/>
+                  FontWeight="Normal"
+                  models:ListboxColorCtrlAP.ItemHeight="20"
+                  FontSize="13"
+                                                        
+                  ItemTemplate="{StaticResource NwordersDataTemplate4}"
+                  ItemsSource="{Binding nwdata}">
+                  <ListBox.Effect>
+                        <!--<BlurEffect Radius="0" />-->
+                        <DropShadowEffect ShadowDepth="15" Color="{StaticResource ClrMagenta2}" BlurRadius="20"/>
+                  </ListBox.Effect>
 
-            <TextBlock Foreground="Red" Text="NwCustomersDataTemplate5 : Sort : Country"  
-                  FontWeight="Bold"
-                  TextAlignment="Center"
-
-                       Margin="165,584,88,190" HorizontalAlignment="Center" Width="302"/>
-
+            </ListBox>
 
             <!--MAGENTA BACKGROUND-->
-            <ctrl:ListBoxControl x:Name="UserListbox5"
-                        Margin="12,623,21,2" 
-                        Loaded="UserListbox_Loaded5"
-                        BorderThickness="1"
-                        BorderBrush="{StaticResource Blue0}"
- 
+            <ListBox x:Name="LView3"
+                       ItemContainerStyle="{StaticResource ListBoxColorControlTemplate}"
+                        Margin="12,579,11,11" 
+                        Loaded="LView3_Loaded"
+                       models:ListboxColorCtrlAP.BorderThickness="1"
+                        models:ListboxColorCtrlAP.BorderBrush="{StaticResource Blue0}"
+                        AllowDrop="True"                               
+
                         FontWeight="Normal"
-                        ItemHeight="20"
-                        FontSize="16"
+                        models:ListboxColorCtrlAP.ItemHeight="20"
+                        FontSize="14"
                                   
-                        Foreground="{StaticResource White0}"
-                        Background="{StaticResource Magenta0}"
+                        models:ListboxColorCtrlAP.Foreground="{StaticResource White0}"
+                        models:ListboxColorCtrlAP.Background="{StaticResource Green4}"
 
-                        MouseoverForeground="{StaticResource Black0}"
-                        MouseoverBackground="{StaticResource Magenta8}"
+                        models:ListboxColorCtrlAP.MouseoverForeground="{StaticResource Black0}"
+                        models:ListboxColorCtrlAP.MouseoverBackground="{StaticResource Magenta8}"
 
-                        SelectionForeground="{StaticResource White0}"
-                        SelectionBackground="{StaticResource Cyan0}"
+                        models:ListboxColorCtrlAP.SelectionForeground="{StaticResource White0}"
+                        models:ListboxColorCtrlAP.SelectionBackground="{StaticResource Cyan0}"
                          
-                        MouseoverSelectedForeground="Black"
-                        MouseoverSelectedBackground="Yellow"
-                        GroupedDataTemplate="{StaticResource NwCustomersDataTemplate5}"                     
-                        GroupedItemsSource="{Binding  nwcust}"/>
+                        models:ListboxColorCtrlAP.MouseoverSelectedForeground="Black"
+                        models:ListboxColorCtrlAP.MouseoverSelectedBackground="Yellow"
+                        ItemTemplate="{StaticResource NwCustomersDataTemplate5}"                     
+                        ItemsSource="{Binding  nwcust}">
+                  <ListBox.Effect>
+                        <!--<BlurEffect Radius="0" />-->
+                        <DropShadowEffect ShadowDepth="15" Color="{StaticResource ClrGreen2}" BlurRadius="50"/>
+                  </ListBox.Effect>
 
-            <ctrl:ListViewControl  x:Name="GridListbox1" 
-                        Grid.Column="2" 
-                        Margin="10,96,-68,394" 
-                        Loaded="GridListbox1_Loaded"
-                        RenderTransformOrigin="0.5,0.5"
-                        Background="black" 
-                        Foreground="White"
-                        MouseoverForeground="{StaticResource Black0}"
-                        MouseoverBackground="{StaticResource Magenta8}"
-
-                        SelectionForeground="{StaticResource White0}"
-                        SelectionBackground="{StaticResource Cyan0}"
-  
-                        FontWeight="Normal"
-                        ItemHeight="26"
-                        FontSize="18"
-                         
-                        MouseoverSelectedForeground="Black"
-                        MouseoverSelectedBackground="Yellow"
-                        GroupedDataTemplate="{StaticResource NwOrdersDataGridTemplate1}"
-                        GroupedItemsSource="{Binding  nwdata}">
-                  <!--<GridView x:Name="LvGrid">
-                        <GridViewColumn  Header="Order Id" DisplayMemberBinding="{Binding OrderId}" />
-                        <GridViewColumn  Header="Order Id" DisplayMemberBinding="{Binding EmployeeId}" />
-                        <GridViewColumn  Header="Order Id" DisplayMemberBinding="{Binding OrderDate}" />
-                        <GridViewColumn  Header="Order Id" DisplayMemberBinding="{Binding RequiredDate}" />
-                        <GridViewColumn  Header="Order Id" DisplayMemberBinding="{Binding ShippedDate}"/>
-                        <GridViewColumn  Header="Order Id" DisplayMemberBinding="{Binding ShipVia}" />
-                        <GridViewColumn  Header="Order Id" DisplayMemberBinding="{Binding Freight}" />
-                        <GridViewColumn  Header="Order Id" >
-                              <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                          <TextBlock Text="{Binding ShipName}" Height="25" Width="40" Background="{StaticResource Red5}" Foreground="{StaticResource White0}"/>
-                                    </DataTemplate>
-                              </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn >
-                              <GridViewColumn.Header >
-                                    <TextBlock Text="{Binding ShipCity}" Height="25" Width="40" Background="{StaticResource Red5}" Foreground="{StaticResource White0}"/>
-                              </GridViewColumn.Header>
-                        </GridViewColumn>
-
-                        <GridViewColumn  Header="Order Id" DisplayMemberBinding="{Binding City}" />
-
-                  </GridView>-->
-            </ctrl:ListViewControl>
-            <!--GroupedDataTemplate="{StaticResource NwCustomersGridTemplate1}"-->
+            </ListBox>
 
 
+   
+            <ListView  x:Name="LView4"  Margin="12,105,29,491" Grid.Column="1" 
+                       ItemContainerStyle="{StaticResource ListBoxColorControlTemplate}"
+                        Loaded="LView4_Loaded"     
+                       models:ListboxColorCtrlAP.BorderBrush="Red"
+                       models:ListboxColorCtrlAP.BorderThickness="5"
+                        ItemsSource="{Binding  Source={StaticResource nwcustomerView}}"
+                        ItemTemplate="{StaticResource NwCustomersDataTemplate5}"
+                        models:ListboxColorCtrlAP.SelectionForeground="{StaticResource White0}"
+                        models:ListboxColorCtrlAP.SelectionBackground="{StaticResource Cyan0}" 
+                       AllowDrop="True"
+          
+                                   >
+
+                  <ListView.Effect>
+                        <!--<BlurEffect Radius="0" />-->
+                        <DropShadowEffect ShadowDepth="45" Color="Red" BlurRadius="40"/>
+                  </ListView.Effect>
+            </ListView>
+
+            <!--// Standard Listview -->
+
+            <!--this works fine!!-->
+            <!--<ctrl:APTestingControl 
+                  Background="Violet"                 
+                  Margin="9,607,18,13" 
+                  Grid.Column="1" 
+                  Height="196"
+                  Loaded="APTestingControl_Loaded" 
+                  models:AP.MouseoverForeground="{StaticResource Black0}"
+                  models:AP.MouseoverBackground="{StaticResource Magenta8}"
+                  models:AP.SelectionBackground="{StaticResource Cyan0}" 
+                  models:AP.SelectionForeground="{StaticResource White0}"
+                  />-->
       </Grid>
 </Window>

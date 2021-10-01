@@ -165,7 +165,7 @@
             <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#3D26A0DA"/>
             <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF26A0DA"/>
 
-            <SolidColorBrush x:Key="fground" Color="Black"/>
+            <!--<SolidColorBrush x:Key="fground" Color="Black"/>-->
 
             <!--//Default style for ListViewItems-->
             <Style x:Key="lvItemStyle1" TargetType="{x:Type ListViewItem}">
@@ -225,12 +225,12 @@
                                                 <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource White0}"/>
                                           </MultiTrigger>
 
-                                          <Trigger Property="IsMouseOver" Value="true"  SourceName="Bd">
+                                          <!--<Trigger Property="IsMouseOver" Value="true"  SourceName="Bd">
                                                 <Trigger.EnterActions>
                                                       <BeginStoryboard x:Name="SelectedStoryboardin">
                                                             <Storyboard >
                                                                   <ColorAnimation Duration="0:0:0.5" 
-                                                                                   Storyboard.TargetName="fground" 
+                                                                                   Storyboard.TargetName="{StaticResource Red0}" 
                                                                                    Storyboard.TargetProperty="Color" 
                                                                                    To="Red"/>
                                                             </Storyboard>
@@ -240,13 +240,13 @@
                                                       <BeginStoryboard x:Name="SelectedStoryboardout">
                                                             <Storyboard >
                                                                   <ColorAnimation Duration="0:0:0.5" 
-                                                                                   Storyboard.TargetName="fground" 
+                                                                                   Storyboard.TargetName="{StaticResource Green0}" 
                                                                                    Storyboard.TargetProperty="Color" 
                                                                                    To="Black"/>
                                                             </Storyboard>
                                                       </BeginStoryboard>
                                                 </Trigger.ExitActions>
-                                          </Trigger>
+                                          </Trigger>-->
                                               <Trigger Property="IsEnabled" Value="False">
                                                 <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                                           </Trigger>

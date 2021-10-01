@@ -51,7 +51,7 @@ namespace WPFPages . Views
 		private  void  LoadNorthWindData ( )
 		{
 			nwc2 = new ObservableCollection<nwcustomer> ( );
-			nwc2 =  NwCustomer . LoadSpecificCustomers ( argument );
+			nwc2 =  NwCustomer . LoadSpecificCustomers ( argument, nwc2 );
 			CustomersGrid . ItemsSource = nwc2;
 			CustomersGrid . DataContext = NwCustomer;
 			EventControl . NwCustomerSelected += EventControl_NwCustomerSelected;
@@ -62,7 +62,7 @@ namespace WPFPages . Views
 		{
 			argument = arg;
 			nwc2 = new ObservableCollection<nwcustomer> ( );
-			nwc2 = NwCustomer . LoadSpecificCustomers ( arg );
+			nwc2 = NwCustomer . LoadSpecificCustomers ( arg , nwc2);
 			CustomersGrid . ItemsSource = null;
 			CustomersGrid . Items . Clear ( );
 			CustomersGrid . ItemsSource = nwc2;

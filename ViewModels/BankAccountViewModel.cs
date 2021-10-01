@@ -71,9 +71,6 @@ namespace WPFPages . ViewModels
 
 		#region CONSTRUCTORS
 
-		// CONSTRUCTOR
-		//**************************************************************************************************************************************************************//
-
 		public BankAccountViewModel ( )
 		{
 		}

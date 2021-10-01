@@ -8,45 +8,45 @@
              d:DesignHeight="250" d:DesignWidth="400">
 	<Grid IsSharedSizeScope="True">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" SharedSizeGroup="Row0" />
-			<RowDefinition Height="Auto" SharedSizeGroup="Row1"/>
-			<RowDefinition Height="Auto" SharedSizeGroup="Row2"/>
+			<RowDefinition Height="Auto"  />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="210" SharedSizeGroup="Col0"/>
-                  <ColumnDefinition Width="Auto" SharedSizeGroup="Col1"/>
-                  <ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
+			<ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Grid  Grid.Row="0"
                   Grid.Column="0">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
-					<ColumnDefinition Width="20" SharedSizeGroup="Col1"/>
-                              <ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
+                              <ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="20"/>
+                              <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0"
                               Grid.Column="0"
-                              Text="12345 67890"
+                              Text="12345 67890 67890"
                               Background="{StaticResource Red7}"
                               Foreground="{StaticResource White0}"/>
 
                         <ListBox Grid.Column="2" 
                               Background="{StaticResource Yellow3}"
-                              Foreground="{StaticResource White0}">
+                              Foreground="{StaticResource Black0}">
 					<ListBoxItem>This is item 1</ListBoxItem>
-					<ListBoxItem>This is item 2</ListBoxItem>
+					<ListBoxItem Width="191">This is item 2</ListBoxItem>
 					<ListBoxItem>This is item 3</ListBoxItem>
 					<ListBoxItem>This is item 4</ListBoxItem>
 				</ListBox>
 			</Grid>
             
                   <Grid Grid.Row="1"
-                        Grid.Column="0">
+                        Grid.Column="0"
+                        Grid.IsSharedSizeScope="True">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
-						<ColumnDefinition Width="20" SharedSizeGroup="Col1"/>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="Auto" />
                               </Grid.ColumnDefinitions>
 					<TextBlock Grid.Column="0"
                                     Text="12345 67890 abcdefghij"
@@ -56,10 +56,10 @@
 					</TextBlock>
 					<ListBox Grid.Column="2" 
                                     Background="{StaticResource Yellow3}"
-                                    Foreground="{StaticResource White0}"
+                                    Foreground="{StaticResource Black0}" Margin="0,0,152,0"
                                           >
 						<ListBoxItem>This is item 1</ListBoxItem>
-						<ListBoxItem>This is item 2</ListBoxItem>
+						<ListBoxItem Width="236">This is item 2</ListBoxItem>
 						<ListBoxItem>This is item 3</ListBoxItem>
 						<ListBoxItem>This is item 4</ListBoxItem>
 					</ListBox>
@@ -72,9 +72,9 @@
 						<RowDefinition Height="*"/>
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
-						<ColumnDefinition Width="20" SharedSizeGroup="Col1"/>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="Auto" />
                               </Grid.ColumnDefinitions>
 
                       <TextBlock Grid.Column="0"
@@ -84,7 +84,7 @@
                         </TextBlock>
                         <ListBox Grid.Column="2" 
                                     Background="{StaticResource Yellow3}"
-                                    Foreground="{StaticResource White0}"  
+                                    Foreground="{StaticResource Black0}" Margin="0,0,-162,0"  
                                           >
 						<ListBoxItem>This is item 1</ListBoxItem>
 						<ListBoxItem>This is item 2</ListBoxItem>

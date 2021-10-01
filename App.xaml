@@ -13,8 +13,9 @@
 		-->
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="Dicts\ButtonMainTemplate.xaml" />
-				<ResourceDictionary Source="Dicts\DataTemplates.xaml" />
+                        
+                        <ResourceDictionary Source="Dicts\ButtonMainTemplate.xaml" />
+                        <ResourceDictionary Source="Dicts\DataTemplates.xaml" />
 				<ResourceDictionary Source="Dicts\Menus.xaml" />
 				<ResourceDictionary Source="Dicts\StylesDict.xaml" />
 				<ResourceDictionary Source="Dicts\ColorsDictionary.xaml" />
@@ -30,8 +31,10 @@
 				<ResourceDictionary Source="Dicts\BaseDictionary.xaml" />
 				<ResourceDictionary Source="Dicts\BtnsDict.xaml" />
 				<ResourceDictionary Source="Dicts\DGCellStyles.xaml" />
-                        <!--<ResourceDictionary Source="Views\MenuStyles.xaml" />-->
-			</ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="Dicts\ListBoxControlTemplates.xaml" />
+                        <ResourceDictionary Source="Dicts\BankDataTemplates.xaml" />
+                        <ResourceDictionary Source="Dicts\NWDataTemplates.xaml" />
+                  </ResourceDictionary.MergedDictionaries>
 
 			<!--These are Application wide Overrides for that annpoying
 			Focus Rectangle that appears by default on many controls-->

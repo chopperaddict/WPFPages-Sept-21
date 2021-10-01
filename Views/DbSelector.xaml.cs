@@ -1558,8 +1558,14 @@ namespace WPFPages . Views
                 private void StoryBoard_Click ( object sender, RoutedEventArgs e )
                 {
                         Storyboards test = new Storyboards ( );
-                        test . Show ( );
+                        test. Show ( );
 
+                }
+
+                private void Attached_Click ( object sender, RoutedEventArgs e )
+                {
+                        ListBoxWindow lbw = new ListBoxWindow ( );
+                        lbw . Show ( );
                 }
         }
 }

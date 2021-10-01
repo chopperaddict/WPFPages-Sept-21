@@ -7,11 +7,11 @@
              xmlns:data="clr-namespace:WPFPages.ViewModels"
              xmlns:views="clr-namespace:WPFPages.Views"
              mc:Ignorable="d" 
-               
              d:DesignHeight="450" d:DesignWidth="800"
              MinHeight="200" MinWidth="400"
              d:DataContext="NwOrderDesignCollection"
              x:Name="listboxcontrol">
+            <!--Loaded="ListBoxControl_Loaded"-->
 
       <UserControl.Resources>
 
@@ -23,71 +23,13 @@
 
             <!--// HOW TO DEFINE A LAYOUT FOR A LISTxxxx ITEM-->
             <DataTemplate x:Key="lbItemTemplate" >
-                  <!--<DataTemplate.Triggers>
-                        --><!--NOT Selected, NO mouse--><!--
-                        <MultiTrigger>
-                              <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="false"/>
-                                    <Condition Property="ListBox.IsSelected" Value="false"/>
-                              </MultiTrigger.Conditions>
-                              <MultiTrigger.Setters>
-                                    --><!--<Setter Property="Height" Value="{Binding ItemHeight}"/>-->
-                                    <!--<Setter Property="ListBoxItem.FontStyle" Value="Normal"/>-->
-                                    <!--<Setter Property="ListBoxItem.FontWeight" Value="{Binding FontWeight}"/>--><!--
-                              </MultiTrigger.Setters>
-                        </MultiTrigger>
-
-                        --><!--IS Selected, NO mouse--><!--
-                        <MultiTrigger>
-                              <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="false"/>
-                                    <Condition Property="ListBox.IsSelected" Value="true"/>
-                              </MultiTrigger.Conditions>
-                              <MultiTrigger.Setters>
-                                    --><!--<Setter Property="Height" Value="{Binding ItemHeight}"/>-->
-                                    <!--<Setter Property="ListBoxItem.Foreground" Value="{Binding Path=SelectionForeground, ElementName=listboxcontrol}"/>-->
-                                    <!--<Setter Property="ListBoxItem.FontWeight" Value="{Binding FontWeightSelected}"/>-->
-                                    <!--<Setter Property="ListBoxItem.FontStyle" Value="Italic"/>--><!--
-                              </MultiTrigger.Setters>
-                        </MultiTrigger>
-
-                        --><!--IS Selected, mouse OVER --><!--
-                        <MultiTrigger>
-                              <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="true"/>
-                                    <Condition Property="ListBox.IsSelected" Value="true"/>
-                              </MultiTrigger.Conditions>
-                              <MultiTrigger.Setters>
-                                    --><!--<Setter Property="Height" Value="{Binding ItemHeight}"/>-->
-                                    <!--<Setter Property="ListBoxItem.FontStyle" Value="Normal"/>-->
-                                    <!--<Setter Property="ListBoxItem.Foreground" Value="{Binding Path=MouseoverSelectedForeground, ElementName=listboxcontrol}"/>-->
-                                    <!--<Setter Property="ListBoxItem.FontWeight" Value="{Binding FontWeightSelectedMouseover}"/>--><!--
-                              </MultiTrigger.Setters>
-                        </MultiTrigger>
-
-                        --><!--NOT Selected, mouse OVER --><!--
-                        <MultiTrigger>
-                              <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="true"/>
-                                    <Condition Property="ListBox.IsSelected" Value="false"/>
-                              </MultiTrigger.Conditions>
-                              <MultiTrigger.Setters>
-                                    --><!--<Setter Property="Height" Value="{Binding ItemHeight}"/>-->
-                                    <!--<Setter Property="ListBoxItem.FontStyle" Value="Normal"/>-->
-                                    <!--<Setter Property="ListBoxItem.Foreground" Value="{Binding Path=MouseoverForeground, ElementName=listboxcontrol}"/>-->
-                                    <!--<Setter Property="ListBoxItem.FontWeight" Value="{Binding FontWeight}"/>--><!--
-                              </MultiTrigger.Setters>
-                        </MultiTrigger>
-                  </DataTemplate.Triggers>-->
-                  <StackPanel x:Name="itemstackpanel" 
+                    <StackPanel x:Name="itemstackpanel" 
                               Orientation="Horizontal"    
                               Margin="0" >
-                        <!--Height="{Binding Height, ElementName=listboxcontrol}"-->
                         <StackPanel.Resources>
                               <Style TargetType="StackPanel">
                                     <Style.Triggers>
                                           <!--// Handle the Background Color  here-->
-
 
                                           <!--IS Selected, mouse OVER -->
                                           <MultiTrigger>
@@ -97,26 +39,13 @@
                                                 </MultiTrigger.Conditions>
                                                 <MultiTrigger.Setters>
                                                       <Setter Property="TextElement.Foreground" Value="{Binding MouseoverSelectedForeground, ElementName=listboxcontrol}"/>
-                                                      <!--<Setter Property="TextElement.FontWeight" Value="Bold"/>-->
-                                                      <!--<Setter Property="StackPanel.Background" Value="{Binding SelectionBackground, ElementName=listboxcontrol}"/>-->
-                                                </MultiTrigger.Setters>
+                                                   </MultiTrigger.Setters>
                                           </MultiTrigger>
 
                                     </Style.Triggers>
                               </Style>
                         </StackPanel.Resources>
-
-                        <TextBlock Text="{Binding OrderId}" Width="40" Height="20"  Padding="1" />
-                        <TextBlock Text="{Binding CustomerId}" Width="45" Height="20" Padding="1"/>
-                        <TextBlock Text="{Binding ShipCountry}" Width="55" Height="20" Padding="1"/>
-                        <TextBlock Text="{Binding ShipVia}" Width="20" Height="20" Padding="1" />
-                        <TextBlock Text="{Binding ShipName}" Width="175" Height="20" Padding="1" />
-                        <TextBlock Text="{Binding ShipAddress}" Width="125" Height="20" Padding="1" />
-                        <TextBlock Text="{Binding RequiredDate, Converter={StaticResource DateConvert}}" 
-                                   Width="95" Height="20" Padding="1"  >
-                        </TextBlock>
-
-                  </StackPanel>
+                </StackPanel>
             </DataTemplate>
 
             <!--// Style  for A list Box/View ITEM control-->
@@ -130,8 +59,7 @@
                   <Setter Property="BorderThickness" Value="{Binding BorderThickness}"/>
                   <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
                   <Setter Property="FontSize" Value="{Binding FontSize}"/>
-                  <!--<Setter Property="Height" Value="{Binding Path=ItemHeight, ElementName=listboxcontrol}"/>-->
-                  <!--<Setter Property="Height" Value="{DynamicResource ItemHeight}"/>-->
+
                   <Setter Property="Template">
                         <Setter.Value>
                               <ControlTemplate TargetType="{x:Type ListBoxItem}" x:Name="ListboxitemControltemplate">
@@ -145,8 +73,7 @@
                                                 <SolidColorBrush x:Name="borderbckgrnd" Color="{TemplateBinding Background}" />
                                           </Border.Background>
                                           <ContentPresenter x:Name="contentpresenter"                                                            
-                                                Height="{Binding ActualHeight, ElementName=Bd}"
-                                                
+                                                Height="{Binding ActualHeight, ElementName=Bd}"                                                
                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"   
                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"   
                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
@@ -155,6 +82,7 @@
                                     <ControlTemplate.Triggers>
 
                                           <!--The TextelEment.Foreground is the magic line to get the text color under control-->
+                                          <!--// These only work on TextBlocks, and NOT on TextBoxes for some reason-->
 
                                           <!--NOT Selected, No Mouse-->
                                           <MultiTrigger>
@@ -206,8 +134,8 @@
                                                 <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding Path=MouseoverSelectedBackground, ElementName=listboxcontrol}"/>
                                                 <Setter Property="TextElement.Foreground" Value="{Binding Path=MouseoverSelectedForeground, ElementName=listboxcontrol}"/>
                                                 <Setter Property="TextElement.FontWeight" Value="{Binding Path=FontWeightSelectedMouseover, ElementName=listboxcontrol}"/>
-                                                                                          <Setter Property="TextElement.FontSize" Value="{Binding Path=FontSize, ElementName=listboxcontrol}"/>
-</MultiTrigger>
+                                                 <Setter Property="TextElement.FontSize" Value="{Binding Path=FontSize, ElementName=listboxcontrol}"/>
+                                         </MultiTrigger>
 
                                           <Trigger Property="IsEnabled" Value="False">
                                                 <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
@@ -243,7 +171,7 @@
       </UserControl.Resources>
       
       
-      <Grid>
+      <Grid> 
 
             <!--// HOW TO ACCESS A DATA TEMPLATE TO STYLE THE CONTENT OF THE LISTVIEW
                   // IT USES THE DATATEMPLATE DEFINED IN RESOURCE SECTON-->
@@ -252,15 +180,19 @@
                   Grid.Column="0"
                   SelectedItem="0"     
                   Background="{Binding Background}"   
-                  Loaded="ListBoxControl_Loaded"
                   Foreground="{Binding Foreground}"   
                   FontSize="{Binding FontSize}"
-                  ItemTemplate="{Binding GroupedDataTemplate}"
+                  ItemTemplate="{Binding ItemTemplate, RelativeSource={RelativeSource AncestorType=UserControl}}"    
+                  ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"    
+                  IsSynchronizedWithCurrentItem ="true"
                   ItemContainerStyle="{StaticResource ListBoxItemStyle1}"
-                  ItemsSource="{Binding GroupedItemsSource}"
                    VerticalAlignment="Top" >
                   <ListBoxItem Height="{Binding ItemHeight}"/>
            </ListBox>
+            <!--Loaded="ListBoxControl_Loaded"-->
+            <!--SelectionChanged="{Binding SelectionChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"-->
+            <!--ItemsSource="{Binding GroupedItemsSource}"-->
+            <!--ItemTemplate="{Binding GroupedDataTemplate}"-->
             <!--FontWeight="{Binding FontWeight}"-->
             <!--FontWeightSelected="{Binding FontWeightSelected}"
                   FontWeightSelectedMouseover="{Binding FontWeightSelectedMouseover}"-->

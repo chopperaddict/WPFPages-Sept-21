@@ -39,8 +39,9 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>2</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>CS1520;CS0246;CS0103</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,9 +60,6 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DependsLib">
-      <HintPath>..\DependsLib\bin\Debug\DependsLib.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Win32.SystemEvents, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Win32.SystemEvents.5.0.0\lib\net461\Microsoft.Win32.SystemEvents.dll</HintPath>
     </Reference>
@@ -69,6 +67,10 @@
       <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="SharedSizeCtrl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SharedSizeCtrl.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <HintPath>..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
     </Reference>
@@ -104,7 +106,6 @@
     <Compile Include="Converts\CalculateLeftOffset.cs" />
     <Compile Include="Converts\Color2Hex.cs" />
     <Compile Include="Converts\Date2UTCConverter.cs" />
-    <Compile Include="Converts\dateconvertor.cs" />
     <Compile Include="Converts\DateTime2ShortDateConvertor.cs" />
     <Compile Include="Converts\DateTimeToShortStringConverter.cs" />
     <Compile Include="Converts\GeneralConverters.cs" />
@@ -135,6 +136,9 @@
     <Compile Include="getposition.cs" />
     <Compile Include="TestUserCtrl.xaml.cs">
       <DependentUpon>TestUserCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\APTestingControl.xaml.cs">
+      <DependentUpon>APTestingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ImgButton.xaml.cs">
       <DependentUpon>ImgButton.xaml</DependentUpon>
@@ -173,6 +177,11 @@
     <Compile Include="UserControls\NewImageButton.xaml.cs">
       <DependentUpon>NewImageButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ListboxColorCtrlAP.cs" />
+    <Compile Include="ViewModels\Ex.cs" />
+    <Compile Include="ViewModels\ListBoxWindow.xaml.cs">
+      <DependentUpon>ListBoxWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\NwOrderCollection.cs" />
     <Compile Include="ViewModels\NwOrderDesignCollection.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
@@ -201,7 +210,6 @@
     </Compile>
     <Compile Include="Views\HitControl.cs" />
     <Compile Include="Views\MenuItem.cs" />
-    <Compile Include="ListBoxScroll.cs" />
     <Compile Include="Observable.cs" />
     <Compile Include="Page0.xaml.cs" />
     <Compile Include="Page1.xaml.cs" />
@@ -268,6 +276,7 @@
     <Compile Include="ViewModels\NwOrder.cs" />
     <Compile Include="ViewModels\NwOrderDetails.cs" />
     <Compile Include="ViewModels\NwProduct.cs" />
+    <Compile Include="Views\NwOrder_Compare.cs" />
     <Compile Include="Views\Progressbar.xaml.cs">
       <DependentUpon>Progressbar.xaml</DependentUpon>
     </Compile>
@@ -342,6 +351,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dicts\BankDataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dicts\BaseDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -370,6 +383,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dicts\ListBoxControlTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dicts\MainMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -378,11 +395,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dicts\NWDataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\APTestingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\ListVviewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ListBoxControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewModels\ListBoxWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -625,6 +654,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="SharedSizeCtrl.dll" />
     <Resource Include="Icons\calls-record.png" />
     <Resource Include="Icons\cloud.png" />
     <Resource Include="Icons\cursor-arrow.png" />
@@ -770,6 +800,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dependencies\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <ItemGroup>

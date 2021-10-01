@@ -2,9 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
-	
 
-	<SolidColorBrush x:Key="ListBorder" Color="#828790"/>
+  
+
+
+      <SolidColorBrush x:Key="ListBorder" Color="#828790"/>
 	
 	<Style x:Key="TreeViewStyle2" TargetType="{x:Type TreeView}">
 		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>

@@ -9,94 +9,122 @@ using System . Threading . Tasks;
 using System . Windows . Controls;
 using System . ComponentModel;
 using System . Windows . Media;
+using System . Collections;
 
 namespace WPFPages . Views
 {
 
-        public class nworder //: INotifyPropertyChanged
-	{
-		#region PropertyChanged
+        public class nworder : IComparable
+        {
+                #region PropertyChanged
 
-		public event PropertyChangedEventHandler PropertyChanged;
+                public event PropertyChangedEventHandler PropertyChanged;
 
-		private void OnPropertyChanged ( string propertyName )
-		{
-			//PropertyChanged?.Invoke ( this, new PropertyChangedEventArgs ( propertyName ) );
-//			this . VerifyPropertyName ( propertyName );
+                private void OnPropertyChanged ( string propertyName )
+                {
+                        //PropertyChanged?.Invoke ( this, new PropertyChangedEventArgs ( propertyName ) );
+                        //			this . VerifyPropertyName ( propertyName );
 
-			if ( this . PropertyChanged != null )
-			{
-				var e = new PropertyChangedEventArgs ( propertyName );
-				this . PropertyChanged ( this, e );
-			}
-		}
-		/// <summary>
-		/// Warns the developer if this object does not have
-		/// a public property with the specified name. This
-		/// method does not exist in a Release build.
-		/// </summary>
-		[Conditional ( "DEBUG" )]
-		[DebuggerStepThrough]
-		public virtual void VerifyPropertyName ( string propertyName )
-		{
-			// Verify that the property name matches a real,
-			// public, instance property on this object.
-			if ( TypeDescriptor . GetProperties ( this ) [ propertyName ] == null )
-			{
-				string msg = "Invalid property name: " + propertyName;
+                        if ( this . PropertyChanged != null )
+                        {
+                                var e = new PropertyChangedEventArgs ( propertyName );
+                                this . PropertyChanged ( this, e );
+                        }
+                }
 
-				if ( this . ThrowOnInvalidPropertyName )
-					throw new Exception ( msg );
-				else
-					Debug . Fail ( msg );
-			}
-		}
+                #endregion PropertyChanged
 
-		/// <summary>
-		/// Returns whether an exception is thrown, or if a Debug.Fail() is used
-		/// when an invalid property name is passed to the VerifyPropertyName method.
-		/// The default value is false, but subclasses used by unit tests might
-		/// override this property's getter to return true.
-		/// </summary>
-		protected virtual bool ThrowOnInvalidPropertyName
-		{
-			get; private set;
-		}
+                #region IComparable implementation
+                //implement IComparable for the class = (Calls other comparer classes )
+                int IComparable.CompareTo ( object obj )
+                {
+                        nworder nwo1 = ( nworder ) obj;
+                        return String . Compare ( this . OrderId.ToString(), nwo1 . OrderId.ToString() );
+                }
+ 
+                public static IComparer SortOrderIdAscending ( )
+                {
+                        return ( IComparer ) new SortOrderIdsAscending ( );
+                }
+                public static IComparer SortOrderIddescending ( )
+                {
+                        return ( IComparer ) new SortOrderIdsdescending ( );
+                }
+                #endregion
 
-		#endregion PropertyChanged
+                #region IComparer classes
 
-		#region declarations
-		//private int identity;
-		private int orderId;
+                public   class SortOrderIdsAscending : IComparer<nworder>
+                {
+  
+                        public int Compare ( nworder x, nworder y )
+                        {
+                                if ( x. OrderId > y. OrderId )
+                                        return 1;
+                                else if (x. OrderId < y. OrderId )
+                                        return -1;
+                                else
+                                        return 0;
+                        }
+                }
+                public   class SortOrderIdsdescending : IComparer<nworder>
+                {
+                        public int Compare ( nworder x, nworder y )
+                        {
+                                if ( x . OrderId < y . OrderId )
+                                        return 1;
+                                else if (x. OrderId > y . OrderId )
+                                        return -1;
+                                else
+                                        return 0;
+                        }
+                 }
+                #endregion
 
-		private string customerId;
-		private int employeeId;
-		private DateTime dateTime;
-		private DateTime requiredDate;
-		private DateTime shippedDate;
-		private int shipVia;
-		private decimal freight;
-		private string shipName;
-		private string shipAddress;
-		private string shipCity;
-		private string shipRegion;
-		private string shipPostalCode;
-		private string shipCountry;
-		private nworder selectedItem;
+                /// <summary>
+                /// Returns whether an exception is thrown, or if a Debug.Fail() is used
+                /// when an invalid property name is passed to the VerifyPropertyName method.
+                /// The default value is false, but subclasses used by unit tests might
+                /// override this property's getter to return true.
+                /// </summary>
+                protected virtual bool ThrowOnInvalidPropertyName
+                {
+                        get; private set;
+                }
+   
+                #region declarations
+
+                //private int identity;
+                private int orderId;
+
+                private string customerId;
+                private int employeeId;
+                private DateTime dateTime;
+                private DateTime requiredDate;
+                private DateTime shippedDate;
+                private int shipVia;
+                private decimal freight;
+                private string shipName;
+                private string shipAddress;
+                private string shipCity;
+                private string shipRegion;
+                private string shipPostalCode;
+                private string shipCountry;
+                private nworder selectedItem;
                 private int selectedIndex;
                 private int orderDetailsTotal;
                 public int OrderDetailsTotal
-		{
-			get
-			{
-				return orderDetailsTotal;
-			}
-			set
-			{
-				orderDetailsTotal = value;
-				OnPropertyChanged ( "OrderDetailsTotal" );
-			}
-		}
+                {
+                        get
+                        {
+                                return orderDetailsTotal;
+                        }
+                        set
+                        {
+                                orderDetailsTotal = value;
+                                OnPropertyChanged ( "OrderDetailsTotal" );
+                        }
+                }
                 public int SelectedIndex
                 {
                         get
@@ -110,237 +138,199 @@ namespace WPFPages . Views
                 }
 
                 public nworder SelectedItem
-		{
-			get
-			{
-				return selectedItem;
-			}
-			set
-			{
+                {
+                        get
+                        {
+                                return selectedItem;
+                        }
+                        set
+                        {
                                 selectedItem = value;
-				OnPropertyChanged ( "SelectedItem" );
-			}
-		}
-		public int OrderId
-		{
-			get
-			{
-				return orderId;
-			}
-			set
-			{
-				orderId = value;
-				OnPropertyChanged ( "OrderId" );
-			}
-		}
+                                OnPropertyChanged ( "SelectedItem" );
+                        }
+                }
+                public int OrderId
+                {
+                        get
+                        {
+                                return orderId;
+                        }
+                        set
+                        {
+                                orderId = value;
+                                OnPropertyChanged ( "OrderId" );
+                        }
+                }
 
-		public string CustomerId
-		{
-			get
-			{
-				return customerId;
-			}
-			set
-			{
-				customerId = value;
-				OnPropertyChanged ( "CustomerId" );
-			}
-		}
+                public string CustomerId
+                {
+                        get
+                        {
+                                return customerId;
+                        }
+                        set
+                        {
+                                customerId = value;
+                                OnPropertyChanged ( "CustomerId" );
+                        }
+                }
 
-		public int EmployeeId
-		{
-			get
-			{
-				return employeeId;
-			}
-			set
-			{
-				employeeId = value;
-				OnPropertyChanged ( "EmployeeId" );
-			}
-		}
+                public int EmployeeId
+                {
+                        get
+                        {
+                                return employeeId;
+                        }
+                        set
+                        {
+                                employeeId = value;
+                                OnPropertyChanged ( "EmployeeId" );
+                        }
+                }
 
-		public DateTime OrderDate
-		{
-			get
-			{
-				return dateTime;
-			}
-			set
-			{
-				dateTime = value;
-				OnPropertyChanged ( "OrderDate" );
-			}
-		}
+ 
+                public DateTime OrderDate
+                {
+                        get
+                        {
+                                return dateTime;
+                        }
+                        set
+                        {
+                                dateTime = value;
+                                OnPropertyChanged ( "OrderDate" );
+                        }
+                }
 
-		public DateTime RequiredDate
-		{
-			get
-			{
-				return requiredDate;
-			}
-			set
-			{
-				requiredDate = value;
-				OnPropertyChanged ( "RequiredDate" );
-			}
-		}
+                public DateTime RequiredDate
+                {
+                        get
+                        {
+                                return requiredDate;
+                        }
+                        set
+                        {
+                                requiredDate = value;
+                                OnPropertyChanged ( "RequiredDate" );
+                        }
+                }
 
-		public DateTime ShippedDate
-		{
-			get
-			{
-				return shippedDate;
-			}
-			set
-			{
-				shippedDate = value;
-				OnPropertyChanged ( "ShippedDate" );
-			}
-		}
+                public DateTime ShippedDate
+                {
+                        get
+                        {
+                                return shippedDate;
+                        }
+                        set
+                        {
+                                shippedDate = value;
+                                OnPropertyChanged ( "ShippedDate" );
+                        }
+                }
 
-		public int ShipVia
-		{
-			get
-			{
-				return shipVia;
-			}
-			set
-			{
-				shipVia = value;
-				OnPropertyChanged ( "ShipVia" );
-			}
-		}
+                public int ShipVia
+                {
+                        get
+                        {
+                                return shipVia;
+                        }
+                        set
+                        {
+                                shipVia = value;
+                                OnPropertyChanged ( "ShipVia" );
+                        }
+                }
 
-		public decimal Freight
-		{
-			get
-			{
-				return freight;
-			}
-			set
-			{
-				freight = value;
-				OnPropertyChanged ( "Freight" );
-			}
-		}
+                public decimal Freight
+                {
+                        get
+                        {
+                                return freight;
+                        }
+                        set
+                        {
+                                freight = value;
+                                OnPropertyChanged ( "Freight" );
+                        }
+                }
 
-		public string ShipName
-		{
-			get
-			{
-				return shipName;
-			}
-			set
-			{
-				shipName = value;
-				OnPropertyChanged ( "ShipName" );
-			}
-		}
+                public string ShipName
+                {
+                        get
+                        {
+                                return shipName;
+                        }
+                        set
+                        {
+                                shipName = value;
+                                OnPropertyChanged ( "ShipName" );
+                        }
+                }
 
-		public string ShipAddress
-		{
-			get
-			{
-				return shipAddress;
-			}
-			set
-			{
-				shipAddress = value;
-				OnPropertyChanged ( "ShipAddress" );
-			}
-		}
+                public string ShipAddress
+                {
+                        get
+                        {
+                                return shipAddress;
+                        }
+                        set
+                        {
+                                shipAddress = value;
+                                OnPropertyChanged ( "ShipAddress" );
+                        }
+                }
 
-		public string ShipCity
-		{
-			get
-			{
-				return shipCity;
-			}
-			set
-			{
-				shipCity = value;
-				OnPropertyChanged ( "ShipCity" );
-			}
-		}
+                public string ShipCity
+                {
+                        get
+                        {
+                                return shipCity;
+                        }
+                        set
+                        {
+                                shipCity = value;
+                                OnPropertyChanged ( "ShipCity" );
+                        }
+                }
 
-		public string ShipRegion
-		{
-			get
-			{
-				return shipRegion;
-			}
-			set
-			{
-				shipRegion = value;
-				OnPropertyChanged ( "ShipRegion" );
-			}
-		}
+                public string ShipRegion
+                {
+                        get
+                        {
+                                return shipRegion;
+                        }
+                        set
+                        {
+                                shipRegion = value;
+                                OnPropertyChanged ( "ShipRegion" );
+                        }
+                }
 
-		public string ShipPostalCode
-		{
-			get
-			{
-				return shipPostalCode;
-			}
-			set
-			{
-				shipPostalCode = value;
-				OnPropertyChanged ( "ShipPostalCode" );
-			}
-		}
+                public string ShipPostalCode
+                {
+                        get
+                        {
+                                return shipPostalCode;
+                        }
+                        set
+                        {
+                                shipPostalCode = value;
+                                OnPropertyChanged ( "ShipPostalCode" );
+                        }
+                }
 
-		public string ShipCountry
-		{
-			get
-			{
-				return shipCountry;
-			}
-			set
-			{
-				shipCountry = value;
-				OnPropertyChanged ( "ShipCountry" );
-			}
-		}
-		#endregion declarations
-
-		//public static DataTable FillOrdersGrid ( DataGrid OrdersGrid, string custid )
-		//{
-		//	DataTable dt = new DataTable ( "SelectedOrders" );
-		//	string ConString = ( string ) Properties . Settings . Default [ "NorthwindConnectionString" ];
-
-		//	string CmdString = string . Empty;
-		//	using ( SqlConnection con = new SqlConnection ( ConString ) )
-		//	{
-		//		if ( custid != "" )
-		//			CmdString = $"SELECT *  FROM Orders where CustomerId = '{custid}'";
-		//		else
-		//			CmdString = $"SELECT *  FROM Orders";
-		//		SqlCommand cmd = new SqlCommand ( CmdString, con );
-		//		SqlDataAdapter sda = new SqlDataAdapter ( cmd );
-		//		try
-		//		{
-		//			sda . Fill ( dt );
-		//		}
-		//		catch ( Exception ex )
-		//		{
-		//			Debug . WriteLine ( $"Data={ex . Data}, {ex . Message}\n[{CmdString}]" );
-		//		}
-		//		OrdersGrid . ItemsSource = null;
-		//		OrdersGrid . ItemsSource = dt . DefaultView;
-		//		OrdersGrid . SelectedIndex = 0;
-		//		OrdersGrid . Refresh ( );
-
-		//		//// This gets us  the first row and key field in [0]
-		//		//NwOrder nwOrders = OrdersGrid . Items [ 0 ] as NwOrder;
-		//		//DataRow dr = dt . Rows [ 0 ] as DataRow;
-		//		//Debug . WriteLine ( $"Orders Index after Load = {OrdersGrid . SelectedIndex}\n{dr [ 0 ]}" );
-		//		////We use it to load the next grid - Orders based on the ID[0]
-		//		//string index = dr [ 0 ] . ToString ( );
-		//		//nwProducts . FillProductDetails ( ProductsGrid, index );
-
-		//	}
-		//	return dt;
-		//}
-	}
+                public string ShipCountry
+                {
+                        get
+                        {
+                                return shipCountry;
+                        }
+                        set
+                        {
+                                shipCountry = value;
+                                OnPropertyChanged ( "ShipCountry" );
+                        }
+                }
+                #endregion declarations
+        }
 }

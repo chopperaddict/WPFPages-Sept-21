@@ -1,0 +1,99 @@
+﻿<Window x:Class="WPFPages.ViewModels.ListBoxWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFPages.Views"
+        xmlns:ctrl="clr-namespace:WPFPages.UserControls"
+        xmlns:models="clr-namespace:WPFPages.ViewModels"
+        xmlns:dicts="clr-naespace:WPFPages.Dicts"
+         mc:Ignorable="d"
+        Loaded="listboxwindow_Loaded"
+        x:Name="listboxwindow"
+        Title="ListBoxWindow" Height="750.5" Width="800">
+
+      <Window.Resources>
+            <!--<attch:test x:Key="attached"/>-->
+
+            <!--<models:Ex x:Key="attprops"/>-->
+
+            <!--#endregion-->
+
+      </Window.Resources>
+
+      <!--<Window.DataContext>
+            <ObjectDataProvider
+                  ObjectType="{x:Type local:LoadData}"
+                  MethodName="LoadData" />
+      </Window.DataContext>-->
+
+      <Grid>
+            <Grid.RowDefinitions>
+                  <RowDefinition Height="*"/>
+                  <RowDefinition Height="*"/>
+                  <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <ListBox x:Name="listboxclass"
+                  Grid.Row="0"
+                  ItemContainerStyle="{StaticResource ListBoxColorControlTemplate}"
+                  ItemTemplate="{StaticResource NwCustomersDataTemplate5}"
+                  VerticalAlignment="Top"
+                  BorderThickness="2"
+                  BorderBrush="{StaticResource Blue0}"
+                     SelectionChanged="listboxclass_SelectionChanged"
+                  models:ListboxColorCtrlAP.ItemHeight="20"
+                  models:ListboxColorCtrlAP.Foreground="{StaticResource Blue0}"
+                  models:ListboxColorCtrlAP.Background="{StaticResource Cyan5}"
+                  models:ListboxColorCtrlAP.FontSize="13"
+                  models:ListboxColorCtrlAP.FontWeight="Normal"
+                  models:ListboxColorCtrlAP.MouseoverForeground="{StaticResource White0}"
+                  models:ListboxColorCtrlAP.MouseoverBackground="{StaticResource Blue3}"
+                  models:ListboxColorCtrlAP.SelectionForeground="{StaticResource White0}"
+                  models:ListboxColorCtrlAP.SelectionBackground="{StaticResource Red5}"
+                  models:ListboxColorCtrlAP.MouseoverSelectedForeground="Yellow"
+                  models:ListboxColorCtrlAP.MouseoverSelectedBackground="Black" 
+                  models:ListboxColorCtrlAP.test="21"
+                  models:ListboxColorCtrlAP.dummyAPstring="here we go ONE"
+                  models:ListboxColorCtrlAP.test2="5471"
+                  models:ListboxColorCtrlAP.dblvalue="142763"
+                     FontWeight="Normal"
+                  FontSize="13"
+                  Margin="10,5,10,5" Height="225">
+                  <ListBoxItem                       
+                                RenderTransformOrigin="0.5,0.5" Margin="0,0,0,271"
+                              Height="35"
+                              BorderBrush="Red"
+                              models:ListboxColorCtrlAP.test="21"/>
+            </ListBox>
+
+            <ListView x:Name="listviewclass"
+                     Grid.Row="1"
+                  VerticalAlignment="Top"
+                  ItemContainerStyle="{DynamicResource ListBoxColorControlTemplate}"
+                  ItemTemplate="{StaticResource NwCustomersDataTemplate5}"
+                  BorderThickness="2"
+                  BorderBrush="{StaticResource Blue0}"
+                  FontWeight="Normal"
+                  FontSize="13"
+                  Margin="10,5,10,5" 
+                  models:ListboxColorCtrlAP.test="99"
+                  models:ListboxColorCtrlAP.test2="8251"
+                  models:ListboxColorCtrlAP.dummyAPstring="here we go TWO"
+                  models:ListboxColorCtrlAP.dblvalue="8382"
+                  Height="237">
+
+                  <ListBoxItem                       
+                                RenderTransformOrigin="0.5,0.5" Margin="0,0,0,271"
+                              Height="35"
+                              BorderBrush="Red"
+                              models:ListboxColorCtrlAP.test="21"/>
+            </ListView>
+            <ctrl:APTestingControl 
+                  Grid.Row="2"
+                  Background="Violet"                                   
+                  Height="Auto" Loaded="APTestingControl_Loaded">
+            </ctrl:APTestingControl>
+      </Grid>
+</Window>

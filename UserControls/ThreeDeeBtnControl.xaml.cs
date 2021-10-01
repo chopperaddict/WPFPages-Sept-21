@@ -25,6 +25,15 @@ namespace WPFPages . Views
                                 this . Click ( this, e );
                         }
                 }
+                
+                // This passes the Click event (from ThreeDeeBtnControl) on to user windows
+                private void OnButtonClick ( object sender, RoutedEventArgs e )
+                {
+                        if ( this . Click != null )
+                        {
+                                this . Click ( this, e );
+                        }
+                }
                 public LinearGradientBrush lgb
                 {
                         get; set;
@@ -118,7 +127,8 @@ namespace WPFPages . Views
                         InitializeComponent ( );
                         //DoErrorBeep ( 280, 100, 3 );
                 }
-
+                
+                #region startup
                 private void ThreeDBttn_Loaded ( object sender, RoutedEventArgs e )
                 {
                         this . DataContext = this;
@@ -175,15 +185,15 @@ namespace WPFPages . Views
                         ThreeDBttn . Height = Height;
                         ThreeDBttn . Width = Width;
                 }
+                #endregion
 
-                //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$//
-
+  
                 #region Dependencies
 
                 //#############################
 
                 #region BtnTextColor
-               public Brush BtnTextColor
+                public Brush BtnTextColor
                 {
                         get
                         {
@@ -1006,11 +1016,7 @@ namespace WPFPages . Views
                         ControlWidth = ( int ) element . Width;
                 }
 
-                private void OnButtonClick ( object sender, RoutedEventArgs e )
-                {
-
-                }
-
+  
                 #endregion Dependencies
 
                 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$//

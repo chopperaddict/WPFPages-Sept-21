@@ -411,7 +411,7 @@ namespace WPFPages . Views
 
                 #endregion declarations
 
-                public ObservableCollection<nwcustomer> nwc = new ObservableCollection<nwcustomer> ( );
+  //              public ObservableCollection<nwcustomer> nwc = new ObservableCollection<nwcustomer> ( );
 
                 public nwcustomer ( )
                 {
@@ -419,13 +419,14 @@ namespace WPFPages . Views
 
                 public nwcustomer ( string arg )
                 {
-                        nwc = new ObservableCollection<nwcustomer> ( );
-                        LoadSpecificCustomers ( arg );
+                        ObservableCollection<nwcustomer> nwc = new ObservableCollection<nwcustomer> ( );
+                        LoadSpecificCustomers ( arg , nwc);
                 }
 
                 public  ObservableCollection<nwcustomer> GetNwCustomers ( )
                 {
-                        return LoadSpecificCustomers ( "");
+                        ObservableCollection<nwcustomer> nwc = new ObservableCollection<nwcustomer> ( );
+                        return LoadSpecificCustomers ( "", nwc);
                 }
                 public  ObservableCollection<nwcustomer> NwCustomers ( )
                 {
@@ -447,11 +448,12 @@ namespace WPFPages . Views
                         {
                                 Debug . WriteLine ( $"Data={ex . Data}, {ex . Message}\n[{CmdString}]" );
                         }
-                        CreateCustCollection ( dt );
+                        ObservableCollection<nwcustomer> nwc = new ObservableCollection<nwcustomer> ( );
+                        CreateCustCollection ( dt, nwc );
                         return nwc;
                 }
 
-                public ObservableCollection<nwcustomer> LoadSpecificCustomers ( string arg )
+                public ObservableCollection<nwcustomer> LoadSpecificCustomers ( string arg, ObservableCollection<nwcustomer> nwc )
                 {
                         DataTable dt = new DataTable ( "Customers" );
                         string ConString = ( string ) Properties . Settings . Default [ "NorthwindConnectionString" ];
@@ -475,11 +477,11 @@ namespace WPFPages . Views
                                 Debug . WriteLine ( $"Data={ex . Data}, {ex . Message}\n[{CmdString}]" );
                         }
                         nwc = new ObservableCollection<nwcustomer> ( );
-                        CreateCustCollection ( dt );
+                        CreateCustCollection ( dt, nwc );
                         return nwc;
                 }
 
-                public bool CreateCustCollection ( DataTable dt )
+                public bool CreateCustCollection ( DataTable dt , ObservableCollection<nwcustomer> nwc)
                 {
                         int count = 0;
                         try

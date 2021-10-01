@@ -1,3 +1,50 @@
+how to use my GLOBAL color control styles (in ListBoxColorAP.CS) and NWOrder/NWCustomer Db DataTemplates (in NWDataTemplates) with
+any ListBox/ListView in the system
+
+ Set these 2 properties in the LISTBOX section of the cntrol declaration
+
+ItemContainerStyle="{DynamicResource ListBoxColorControlTemplate}"
+ItemTemplate="{StaticResource NwCustomersDataTemplate1}"
+Then the AP defines the following color control properties as AP's
+
+ Brush Background
+ Brush BackgroundColor 
+ double FontSize
+ double FontWeight
+ Brush Foreground 
+ double ItemHeight
+ Brush MouseoverBackground
+ Brush MouseoverForeground 
+ Brush MouseoverSelectedBackground
+ Brush MouseoverSelectedForeground
+ Brush SelectionBackground
+ Brush SelectionForeground
+ 
+=================================================
+There are various generic DataTemplates in NWDataTemplates.xaml
+
+These are all For NorthWest Database
+Currently only Orders and Customers are defined.
+
+=================================================
+how to access Attached properties
+
+Where AP is a seperate file located in the viewModels Folder (declared as "models" in the xaml file, 
+and is containing various Attached Properties suxch as 'test' used here.
+
+Method 1 :
+Text="{Binding (models:AP.test), RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"           
+
+Method 2 :
+Text="{Binding (local:AP.test), RelativeSource={RelativeSource TemplatedParent}}"
+
+=================================================
+
+And also how to set the AP value's from code Where AP is a seperate file 
+located in the viewModels Folder (declared as "models" in the xaml file, 
+               
+               models:AP.MouseoverForeground="{StaticResource Black0}"
+
 =================================================
 
 // how to control listbox/view/datagrid etc
@@ -261,3 +308,83 @@ can be used most anywhere in XAML code
 			</StackPanel>
 		</Grid>
 	</Grid>
+
+=================================================
+
+How to Sort data on multiple fields using the Linq
+
+                // This creates a Dictionary containing ONLY the fields specified in the 1st section
+            var Customers = NwCustomers6 . AsEnumerable ( ) . GroupBy ( d => new
+            {
+                    d . Country,
+                    d.City
+            } )
+            . Select ( gg => new
+            {
+                    Country = gg . Key . Country,
+                    _City = gg.Key.City,
+                    //pcode = gg.Key.PostalCode
+            })
+            . ToList ( );
+
+
+            // By here, I have a list of countries + Cities alone in no particular order
+            //so organise theentire Db into ordered sequence by Countries and then Cities
+
+            //Create new List<objects> for our sorted output
+            ObservableCollection<nwcustomer> NwCust = new ObservableCollection<nwcustomer> ( );
+
+            foreach ( var country in Customers )
+            {
+                    foreach ( var item in NwCustomers6 )
+                    {
+                            if ( item . Country == country . Country )
+                            {
+                                    foreach ( var city in item.Country)
+                                    {
+                                                        NwCust . Add ( item );
+                                                    //Console . WriteLine ( $"{item . Country}, {item . City}, {item . CompanyName}" );
+                                    }
+                                }
+                    }
+            }
+                        
+            // We now have a list arranged by City's inside Country's
+
+=================================================
+
+How   to bind items in c#
+
+                private void SetUpListbox ( )
+                {
+                        this.Background = new SolidColorBrush (Colors.LightGray);
+                        Binding binding = new Binding ( "Background" );
+                        binding . Source = lbcontrol.Background;
+                        lbcontrol . SetBinding ( BackgroundProperty, binding );
+
+                        this . Foreground = new SolidColorBrush ( Colors . Black );
+                        Binding binding2 = new Binding ( "Foreground" );
+                        binding2 . Source = lbcontrol . Foreground;
+                        lbcontrol . SetBinding ( ForegroundProperty, binding2 );
+                        
+                        Binding binding3 = new Binding ( "ItemTemplate" );
+                        binding3 . Source = lbcontrol . ItemTemplate;
+                        lbcontrol . SetBinding ( ItemTemplateProperty, binding3 );
+
+                        this.ItemsSource = null;
+                        Binding binding4 = new Binding ( "ItemsSource" );                        
+                        binding4 . Source = lbcontrol . ItemsSource;
+                        lbcontrol . SetBinding ( lbcontrol . ItemsSourceProperty, binding4 );
+
+                        //Binding binding5 = new Binding ( "ItemContainerStyle" );
+                        //binding5 . Source = ItemContainerStyle;
+                        //lbcontrol . SetBinding ( ListBox . ItemsSourceProperty, binding5 );
+
+                        //Binding binding6 = new Binding ( "" );
+                        //binding6 . Source = ;
+                        //lbcontrol . SetBinding ( ListBox . Property, binding6 );
+
+                }
+=================================================
+
+
