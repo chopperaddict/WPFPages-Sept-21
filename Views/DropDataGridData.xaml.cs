@@ -49,7 +49,7 @@ namespace WPFPages . Views
 			this . Topmost = true;
 		}
 		//-WORKING WELL 13 / 6 / 21
-		private DragviewModel bv = new DragviewModel ( );
+		private BankDragviewModel bv = new BankDragviewModel ( );
 		private List<BankAccountViewModel> bvm = new List<BankAccountViewModel> ( );
 		public bool addCr
 		{
@@ -256,7 +256,7 @@ this . DragMove ( );
 					bvm . Clear ( );
 					while ( true )
 					{
-						DragviewModel bv = new DragviewModel ( );
+						BankDragviewModel bv = new BankDragviewModel ( );
 						if ( index >= data . Length - 1 )
 							break;
 						bv . RecordType = data [ index++ ];
@@ -340,8 +340,8 @@ this . DragMove ( );
 
 		private void DataGrid_ColumnReordered ( object sender, DataGridColumnEventArgs e )
 		{
-			DragviewModel dvm = new DragviewModel ( );
-			dvm = dataGrid . SelectedItem as DragviewModel;
+			BankDragviewModel dvm = new BankDragviewModel ( );
+			dvm = dataGrid . SelectedItem as BankDragviewModel;
 string custno = dvm . CustNo;
 			string bankno = dvm . BankNo;
 			int indx = Utils . FindMatchingRecord ( custno, bankno, dataGrid );
@@ -526,10 +526,10 @@ string custno = dvm . CustNo;
 			using ( StreamReader reader = File . OpenText ( path1 ) )
 			{
 				JToken o = JToken . ReadFrom ( new JsonTextReader ( reader ) );
-				var array = o . ToObject<DragviewModel [ ]> ( );
+				var array = o . ToObject<BankDragviewModel [ ]> ( );
 				foreach ( var item in array )
 				{
-					bv = item as DragviewModel;
+					bv = item as BankDragviewModel;
 					bvm . Add ( bv );
 				}
 				dataGrid . ItemsSource = bvm;
@@ -610,7 +610,7 @@ string custno = dvm . CustNo;
 			{
 				DetailsViewModel dvm = new DetailsViewModel ( );
 				dvm = ( DetailsViewModel ) e . Data . GetData ( "DETAILS" );
-				DragviewModel ddc = new DragviewModel ( );
+				BankDragviewModel ddc = new BankDragviewModel ( );
 				// Massage data from Details record to Drag record
 				ddc . RecordType = "DETAILS";
 				ddc . CustNo = dvm . CustNo;

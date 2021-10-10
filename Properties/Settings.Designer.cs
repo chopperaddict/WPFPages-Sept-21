@@ -58,18 +58,6 @@ namespace WPFPages.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"Data Source=DINO-PC; Initial Catalog = 'C:\USERS\IANCH\APPDATA\LOCAL\MICROSOFT\MICROSOFT SQL SERVER LOCAL DB\INSTANCES\MSSQLLOCALDB\IAN1.MDF';  Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")]
-        public string Previousconnstring {
-            get {
-                return ((string)(this["Previousconnstring"]));
-            }
-            set {
-                this["Previousconnstring"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public string DetailsDbView_dindex {
             get {
@@ -258,19 +246,6 @@ namespace WPFPages.Properties {
         public string LocalDataConnectionString {
             get {
                 return ((string)(this["LocalDataConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=\"C:\\USERS\\IANCH\\APPDATA\\LOCAL\\" +
-            "MICROSOFT\\MICROSOFT SQL SERVER LOCAL DB\\INSTANCES\\MSSQLLOCALDB\\IAN1.MDF\";Integra" +
-            "ted Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False")]
-        public string C__USERS_IANCH_APPDATA_LOCAL_MICROSOFT_MICROSOFT_SQL_SERVER_LOCAL_DB_INSTANCES_MSSQLLOCALDB_IAN1_MDFConnectionString {
-            get {
-                return ((string)(this["C__USERS_IANCH_APPDATA_LOCAL_MICROSOFT_MICROSOFT_SQL_SERVER_LOCAL_DB_INSTANCES_MS" +
-                    "SQLLOCALDB_IAN1_MDFConnectionString"]));
             }
         }
         

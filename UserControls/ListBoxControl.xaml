@@ -189,16 +189,5 @@
                    VerticalAlignment="Top" >
                   <ListBoxItem Height="{Binding ItemHeight}"/>
            </ListBox>
-            <!--Loaded="ListBoxControl_Loaded"-->
-            <!--SelectionChanged="{Binding SelectionChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"-->
-            <!--ItemsSource="{Binding GroupedItemsSource}"-->
-            <!--ItemTemplate="{Binding GroupedDataTemplate}"-->
-            <!--FontWeight="{Binding FontWeight}"-->
-            <!--FontWeightSelected="{Binding FontWeightSelected}"
-                  FontWeightSelectedMouseover="{Binding FontWeightSelectedMouseover}"-->
-            <!--ItemTemplate="{Binding GroupedDataTemplate}"-->
-            <!--ItemTemplate="{StaticResource lbItemTemplate}"-->
-
-            <!--#endregion-->
-      </Grid>
+       </Grid>
 </UserControl>

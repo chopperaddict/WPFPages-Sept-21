@@ -8,17 +8,22 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
-	[ValueConversion ( typeof ( string ), typeof ( int ) )]
 	public class ValueToTextConverter : IValueConverter
 	{
 		public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
-				return value.ToString() ;
+                        string input = "";
+                        input = value . ToString ( );
+                        return input ;
 		}
 
 		public object ConvertBack ( object value, Type targetType, object parameter, CultureInfo culture )
 		{
-			return System . Convert.ToInt32 ( value );
+                        string input = value . ToString ( );
+                        if(input.Contains("."))
+                                return (object)System . Convert . ToDouble( value );
+                        else
+                                return ( object ) System . Convert.ToInt32 ( value );
 		}
 	}
 

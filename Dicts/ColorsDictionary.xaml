@@ -277,7 +277,18 @@
 	<!--#region Test of downloaded Datagrid column header Style
 		Gives a really nice top to bottom gradient with 
 		darkest color in horizontal center bar-->
-	<LinearGradientBrush x:Key="HeaderBrushBlue" StartPoint="0.5,0" EndPoint="0.5,1">
+
+    <LinearGradientBrush x:Key="HorizontalBlueGradent" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="AliceBlue" />
+        <GradientStop Offset="1" Color="#FF2C50A9" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="VerticalBlueGradient" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="AliceBlue" />
+        <GradientStop Offset="1" Color="#FF2C50A9" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HeaderBrushBlue" StartPoint="0.5,0" EndPoint="0.5,1">
 		<GradientStop Offset="0" Color="#FF6B8E95" />
 		<GradientStop Offset="1" Color="#FF14A7C1" />
 		<GradientStop Offset="0.509" Color="#FF1E424E" />
@@ -285,27 +296,55 @@
 		<GradientStop Offset="0.542" Color="#FF1D4855" />
 		<GradientStop Offset="0.526" Color="#FF193A44" />
 	</LinearGradientBrush>
-	<LinearGradientBrush x:Key="HeaderBorderBrushBlue" StartPoint="0.5,0" EndPoint="0.5,1">
-		<GradientStop Offset="0.514" Color="#FF1D4855" />
-		<GradientStop Offset="0.753" Color="#FF007F96" />
-		<GradientStop Offset="1" Color="#FF0AEAFA" />
-	</LinearGradientBrush>
+    
+	<LinearGradientBrush x:Key="HeaderBorderBrushBlue" StartPoint="0.2,0" EndPoint="0.2,1">
+        <GradientStop Offset="0" Color="#FF6B8E95" />
+        <GradientStop Offset="0.2" Color="#FF14A7C1" />
+        <GradientStop Offset="0.4" Color="#FF2C50A9" />
+        <GradientStop Offset="0.6" Color="#FF2C4183" />
+        <GradientStop Offset="0.8" Color="#FF1D4855" />
+        <GradientStop Offset="1" Color="#FF193A44" />
+    </LinearGradientBrush>
 
-	<LinearGradientBrush x:Key="HeaderBrushYellow" StartPoint="0.5,0" EndPoint="0.5,1">
-		<GradientStop Offset="0" Color="#FF7a6f2d" />
-		<GradientStop Offset="1" Color="#FFf5d816" />
-		<GradientStop Offset="0.509" Color="#FF7d7015" />
-		<GradientStop Offset="0.542" Color="#FF5e562a" />
-		<GradientStop Offset="0.542" Color="#FF595013" />
-		<GradientStop Offset="0.526" Color="#FF38320c" />
-	</LinearGradientBrush>
-	<LinearGradientBrush x:Key="HeaderBorderBrushYellow" StartPoint="0.5,0" EndPoint="0.5,1">
-		<GradientStop Offset="0.114" Color="#FF595013" />
-		<GradientStop Offset="0.853" Color="#FF7d7015" />
-		<GradientStop Offset="0.5" Color="#F5d816" />
-	</LinearGradientBrush>
+    <LinearGradientBrush x:Key="HorizontalYellowGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="AliceBlue" />
+        <GradientStop Offset="1" Color="Orange" />
+    </LinearGradientBrush>
 
-	<LinearGradientBrush x:Key="HeaderBrushGreen" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="VerticalYellowGradient" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="AliceBlue" />
+        <GradientStop Offset="1" Color="#FFF5BC00" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HeaderBrushYellow" StartPoint="0.0,0" EndPoint="0.0,1">
+		<GradientStop Offset="0" Color="#FFFFFF00" />
+		<GradientStop Offset="0.2" Color="#FFf5d816" />
+        <GradientStop Offset="0.409" Color="#FFE79500" />
+        <GradientStop Offset="0.642" Color="#FFF5BC00" />
+        <GradientStop Offset="0.842" Color="#FFAF7800" />
+		<GradientStop Offset="1" Color="#FF38320c" />
+	</LinearGradientBrush>
+    
+	<LinearGradientBrush x:Key="HeaderBorderBrushYellow" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="1" Color="#FFf5d816" />
+        <GradientStop Offset="0.8" Color="#FFf5d816" />
+        <GradientStop Offset="0.6" Color="#FFF5BC00" />
+        <GradientStop Offset="0.4" Color="#FFE79500" />
+        <GradientStop Offset="0.2" Color="#FFAF7800" />
+        <GradientStop Offset="0" Color="#FF38320c" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalGreenGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="AliceBlue" />
+        <GradientStop Offset="1" Color="#FF107F03" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="VerticalGreenGradient" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="AliceBlue" />
+        <GradientStop Offset="1" Color="#A1005100" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HeaderBrushGreen" StartPoint="0.5,0" EndPoint="0.5,1">
 		<GradientStop Offset="0" Color="#FF75DD75" />
 		<GradientStop Offset="1" Color="#FF00FF00" />
             <GradientStop Offset="0.509" Color="#A1005100" />
@@ -343,7 +382,18 @@
 		<GradientStop Offset="0.526" Color="#282829" />
 	</LinearGradientBrush>
 
-	<LinearGradientBrush x:Key="HeaderBorderBrushRed" StartPoint="0.5,0" EndPoint="0.5,1">
+
+    <LinearGradientBrush x:Key="HorizontalRedGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="AliceBlue" />
+        <GradientStop Offset="1" Color="#FFdb6069" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="VerticalRedGradient" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="AliceBlue" />
+        <GradientStop Offset="1" Color="#FFdb6069" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HeaderBorderBrushRed" StartPoint="0.5,0" EndPoint="0.5,1">
 		<GradientStop Offset="0.314" Color="#ff4f2225" />
 		<GradientStop Offset="0.553" Color="#FF9c2129" />
 		<GradientStop Offset="1" Color="#FFdb6069" />

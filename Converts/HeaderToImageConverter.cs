@@ -1,5 +1,6 @@
 ﻿using System;
 using System . Globalization;
+using System . Linq;
 using System . Windows . Data;
 using System . Windows . Media . Imaging;
 
@@ -46,34 +47,34 @@ namespace WPFPages . Converts
 				source = new BitmapImage ( uri );
 				return source;
 			}
-			else if ( ( value as string ) . Contains ( @"\" ) )
+                        else if ( ( value as string ) . Contains ( @":\" ) && (( value as string ) . Contains ( ".") == false))
+                        {
+                                //Folder
+                                uri = new Uri
+                                ( "pack://application:,,,/Icons/openfolder.gif" );
+                                source = new BitmapImage ( uri );
+                                return source;
+                        }
+                        else if ( ( value as string ) . Contains ( @":\" ) )
+                        {
+                                //Drive
+                                uri = new Uri
+                                ( "pack://application:,,,/Icons/Harddrive.png" );
+                                source = new BitmapImage ( uri );
+                                return source;
+                        }
+                        else if ( ( value as string ) . Contains ( "." ) )
 			{
-				//Drive
+				// file
 				uri = new Uri
-				( "pack://application:,,,/Icons/folder1.png" );
+				( $"pack://application:,,,{value as string}" );
 				source = new BitmapImage ( uri );
 				return source;
 			}
-			else if ( ( value as string ) . Contains ( "." ) )
-			{
-				// Sub folder
-				uri = new Uri
-				( $"pack://application:,,{value as string}" );
-				source = new BitmapImage ( uri );
-				return source;
-			}
-			//                      File alone
-
+			//                    Default
 			uri = new Uri ( $"pack://applicaiton:,,,/icons/cloud.png" );
 			source = new BitmapImage ( uri );
 			return source;
-
-			//string s = value as string;
-			//if ( s . Contains ( ".." ))
-			//        s = s . Substring ( 2 );
-			//uri = new Uri ( $"pack://application:,,,{s}" );
-			//source = new BitmapImage ( uri );
-			//return source;
 		}
 
 		public object ConvertBack ( object value, Type targetType,

@@ -208,11 +208,7 @@ namespace WPFPages . ViewModels
 		}
 		#endregion STANDARD CLASS PROPERTIES SETUP
 
-		#region SETUP/DECLARATIONS
 
-
-
-		#endregion SETUP/DECLARATIONS
 	}
 }
 

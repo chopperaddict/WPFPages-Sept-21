@@ -842,7 +842,8 @@
 		</Grid>
 		<!--#endregion  buttonbar-->
 
-		<Grid
+		<!--#region WaitMessage-->
+            <Grid
 			Grid.Column="1"
 			Grid.Row="5"
 			Grid.ColumnSpan="3"
@@ -871,8 +872,11 @@
 
 
 		</Grid>
-
-		<Grid Grid.Row="4"
+            <!--#endregion WaitMessage-->
+            
+            <!--#region BankAccount Grid-->
+            
+            <Grid Grid.Row="4"
 			Grid.Column="1"
 			Grid.ColumnSpan="3"
 			Grid.RowSpan="2">
@@ -918,12 +922,10 @@
 					VerticalGridLinesBrush="{StaticResource Blue9}"
 					VirtualizingPanel.ScrollUnit="Pixel"
 					Visibility="Collapsed" 
-					CellStyle="{StaticResource BankGridStyle}">
+					CellStyle="{StaticResource BankAccountGridStyle}">
 
 				<!--This makes the selected row visible when window looses focus - works on any grid-->
 				<DataGrid.Resources>
-					<!--<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Magenta" />
-					<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Blue"/>-->
 
 				</DataGrid.Resources>
 
@@ -1029,9 +1031,10 @@
 			<!--#endregion BankAccount data Grid-->
 		</Grid>
 
+            <!--#endregion BankAccount Grid-->
 
-
-		<Grid Grid.Row="4"
+            <!--#region Customers Grid-->
+            <Grid Grid.Row="4"
 			Grid.Column="1"
 			Grid.ColumnSpan="3"
 			Grid.RowSpan="2">
@@ -1155,9 +1158,11 @@
 			</DataGrid>
 			<!--#endregion Customers data Grid-->
 		</Grid>
+            <!--#endregion Customers Grid-->
 
+            <!--#region Details Grid-->
 
-		<Grid Grid.Row="4"
+            <Grid Grid.Row="4"
 			Grid.Column="1"
 			Grid.ColumnSpan="3"
 			Grid.RowSpan="2">
@@ -1258,7 +1263,9 @@
 	<!--#endregion DetailsViewModel data Grid-->
 			
 		</Grid>
-		<Grid
+            <!--#endregion Details Grid-->
+            
+            <Grid
 			Grid.Row="6"
 			Grid.Column="0"
 			Grid.ColumnSpan="4"

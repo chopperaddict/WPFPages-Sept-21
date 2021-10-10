@@ -4,6 +4,10 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
+        /// <summary>
+        /// This is the MAIN Date converter I use (but ee also Date2UTCConverter )
+        /// Returns a date in DD/MM/YYY format
+        /// </summary>
         public class DateOnlyConverter : IValueConverter
 	{
 		public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )

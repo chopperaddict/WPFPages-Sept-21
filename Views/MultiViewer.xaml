@@ -870,7 +870,7 @@
 				VerticalContentAlignment="Center"
 				VerticalGridLinesBrush="{StaticResource Blue2}"	   
 				Visibility="Collapsed"
-				CellStyle="{StaticResource BankGridStyle}">
+				CellStyle="{StaticResource BankAccountGridStyle}">
 
 			<DataGrid.Resources>
 				<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#CCFAFB"/>

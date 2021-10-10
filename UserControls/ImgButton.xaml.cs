@@ -13,9 +13,6 @@ using WPFPages . Views;
 
 using XamlGeneratedNamespace;
 
-#pragma warning (disable :0103)
-#pragma warning (disable :CS0103)
-
 namespace WPFPages . UserControls
 {
         /// <summary>

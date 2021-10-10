@@ -200,7 +200,7 @@
 
             <userctrl:ImgButton x:Key="imagebutton"/>
             <userctrl:ShadowLabelControl x:Key="shadowbutton"/>
-            <userctrl:NewImageButton x:Key="testbutton"/>
+            <userctrl:ImageButton x:Key="testbutton"/>
             <local:ThreeDeeBtnControl x:Key="ThreeDbutton"/>
             <cmd:BreakCommand x:Key="mynewcommand"/>
       </Window.Resources>
@@ -362,7 +362,7 @@
             <!--Command="{Binding MynewCommand}"-->
 
 
-            <userctrl:NewImageButton x:Name="newImageButton" 
+            <userctrl:ImageButton x:Name="newImageButton" 
                                      Background="Red" 
                                      Margin="-7,13,729,398"
                                      Foreground="White"
@@ -378,7 +378,7 @@
                                      SkewY="12"
                                      SkewPadding="22" RenderTransformOrigin="0.5,0.5"/>
 
-            <userctrl:NewImageButton x:Name="callsrecord"                  
+            <userctrl:ImageButton x:Name="callsrecord"                  
                                      Background="Green" 
                                      Source="/icons/calls-record.png"
                                      ImgWidth="45"
@@ -402,17 +402,17 @@
                                      PushDistance="1" 
                                      RenderTransformOrigin="0.5,0.5" 
                                      Margin="17,308,711,127" >
-                  <userctrl:NewImageButton.RenderTransform>
+                  <userctrl:ImageButton.RenderTransform>
                         <TransformGroup>
                               <ScaleTransform/>
                               <SkewTransform/>
                               <RotateTransform Angle="-30.117"/>
                               <TranslateTransform/>
                         </TransformGroup>
-                  </userctrl:NewImageButton.RenderTransform>
-            </userctrl:NewImageButton>
+                  </userctrl:ImageButton.RenderTransform>
+            </userctrl:ImageButton>
 
-            <userctrl:NewImageButton x:Name="Phonewifi"
+            <userctrl:ImageButton x:Name="Phonewifi"
                   Margin="14,120,751,266"
                                     Source="/icons/phone-wifi.png"
                                     Background="Yellow" 

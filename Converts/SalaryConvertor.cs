@@ -8,7 +8,10 @@ using System.Windows.Data;
 
 namespace WPFPages . Converts
 {
-	public class SalaryConvertor : IValueConverter
+	/// <summary>
+        /// Receives a currency value and returns a formatted string £ x,xxx,xxx,xxx.00
+        /// </summary>
+        public class SalaryConvertor : IValueConverter
 	{
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -29,7 +32,7 @@ namespace WPFPages . Converts
 				return s;
 			}
 			else
-				return v.ToString("£ #,###,###"); ;
+				return v.ToString("£ #,###,###");
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

@@ -5,6 +5,10 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
+        /// <summary>
+        /// A date converter 2 (see also DateOnlyConverter)
+        /// that returns the date in std UNC YYYY/MM/DD format
+        /// </summary>
         public class Date2UTCConverter : IValueConverter
 	{
 		public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )

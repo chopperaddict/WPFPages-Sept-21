@@ -91,12 +91,20 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFLibrary2021, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\ianch\repos\latest WpfPages\May17WPFPages-vs2022-1\bin\Debug\WPFLibrary2021.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AnalogClockHost.xaml.cs">
+      <DependentUpon>AnalogClockHost.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commands\Commands.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\BreakCommand.cs" />
     <Compile Include="Converts\Actype2Name.cs" />
@@ -108,7 +116,6 @@
     <Compile Include="Converts\Date2UTCConverter.cs" />
     <Compile Include="Converts\DateTime2ShortDateConvertor.cs" />
     <Compile Include="Converts\DateTimeToShortStringConverter.cs" />
-    <Compile Include="Converts\GeneralConverters.cs" />
     <Compile Include="Converts\GetImageConverter.cs" />
     <Compile Include="Converts\HexConvert.cs" />
     <Compile Include="Converts\IMulltiValueConverter.cs" />
@@ -133,21 +140,15 @@
     <Compile Include="Converts\TextVerticalPositionConverter.cs" />
     <Compile Include="Converts\ToggleBoolConverter.cs" />
     <Compile Include="Converts\UniversalValueConverter.cs" />
-    <Compile Include="getposition.cs" />
-    <Compile Include="TestUserCtrl.xaml.cs">
-      <DependentUpon>TestUserCtrl.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="CustomControls\AnalogClock.cs" />
+    <Compile Include="DataTemplates\BankDataStyleTemplateSelector.cs" />
+    <Compile Include="DataTemplates\BankDataTemplateSelector.cs" />
+    <Compile Include="DataTemplates\CustomerDataTemplateSelector.cs" />
     <Compile Include="UserControls\APTestingControl.xaml.cs">
       <DependentUpon>APTestingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ImgButton.xaml.cs">
       <DependentUpon>ImgButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ListVviewControl.xaml.cs">
-      <DependentUpon>ListVviewControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ListBoxControl.xaml.cs">
-      <DependentUpon>ListBoxControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\RectangleControl.xaml.cs">
       <DependentUpon>RectangleControl.xaml</DependentUpon>
@@ -177,8 +178,18 @@
     <Compile Include="UserControls\NewImageButton.xaml.cs">
       <DependentUpon>NewImageButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ListboxColorCtrlAP.cs" />
-    <Compile Include="ViewModels\Ex.cs" />
+    <Compile Include="Views\AboutBox.xaml.cs">
+      <DependentUpon>AboutBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AttachedProperties\DataGridColorCtrlAp.cs" />
+    <Compile Include="AttachedProperties\DataGridColumnsColorAP.cs" />
+    <Compile Include="Views\Bankaccount.xaml.cs">
+      <DependentUpon>Bankaccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataGridUtilities.cs" />
+    <Compile Include="Views\ExpandedState.cs" />
+    <Compile Include="AttachedProperties\ListboxColorCtrlAP.cs" />
+    <Compile Include="AttachedProperties\Ex.cs" />
     <Compile Include="ViewModels\ListBoxWindow.xaml.cs">
       <DependentUpon>ListBoxWindow.xaml</DependentUpon>
     </Compile>
@@ -209,11 +220,11 @@
       <DependentUpon>GradientDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HitControl.cs" />
+    <Compile Include="ViewModels\MenuAttachedProperties.cs" />
     <Compile Include="Views\MenuItem.cs" />
     <Compile Include="Observable.cs" />
     <Compile Include="Page0.xaml.cs" />
     <Compile Include="Page1.xaml.cs" />
-    <Compile Include="ViewModels\DetailsViewModel.Internalclass.cs" />
     <Compile Include="ViewModels\LinqSupport.cs" />
     <Compile Include="Views\AllEventArgs.cs" />
     <Compile Include="Views\BankCollection.cs" />
@@ -249,7 +260,7 @@
       <DependentUpon>MoreTesting.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MousoverHandlers.cs" />
-    <Compile Include="Views\new_DetCollection.cs" />
+    <Compile Include="Views\DetCollection.cs" />
     <Compile Include="Converts\DateOnlyConverter.cs" />
     <Compile Include="Converts\SalaryConvertor.cs" />
     <Compile Include="Views\EventControl.cs" />
@@ -277,6 +288,7 @@
     <Compile Include="ViewModels\NwOrderDetails.cs" />
     <Compile Include="ViewModels\NwProduct.cs" />
     <Compile Include="Views\NwOrder_Compare.cs" />
+    <Compile Include="Views\CustomersDbDataTemplateSelector.cs" />
     <Compile Include="Views\Progressbar.xaml.cs">
       <DependentUpon>Progressbar.xaml</DependentUpon>
     </Compile>
@@ -305,7 +317,6 @@
     <Compile Include="Views\TestBankDbView.xaml.cs">
       <DependentUpon>TestBankDbView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TestClass.cs" />
     <Compile Include="Views\TestDetailsCollection.cs" />
     <Compile Include="Views\TestDetailsDbView.xaml.cs">
       <DependentUpon>TestDetailsDbView.xaml</DependentUpon>
@@ -313,12 +324,11 @@
     <Compile Include="UserControls\ThreeDeeBtnControl.xaml.cs">
       <DependentUpon>ThreeDeeBtnControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TextToUpperConverter.cs" />
     <Compile Include="Views\TreeView1.xaml.cs">
       <DependentUpon>TreeView1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserListBoxViewer.xaml.cs">
-      <DependentUpon>UserListBoxViewer.xaml</DependentUpon>
+    <Compile Include="Views\MultiviewListBoxViewers.xaml.cs">
+      <DependentUpon>MultiviewListBoxViewers.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewEditdb.cs" />
     <Compile Include="Views\ViewModelBase.cs" />
@@ -346,12 +356,31 @@
     <Compile Include="Views\Triggers.xaml.cs">
       <DependentUpon>Triggers.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WpfUtils.cs" />
+    <Page Include="AnalogClockHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\AnalogClockStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataGridStyles\CustomerDatagridStyleTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\CustomersDataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dicts\AppButtonsDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dicts\BankDataTemplates.xaml">
+    <Page Include="Dicts\BankDataGridColumns.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\BankDataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -359,15 +388,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dicts\ButtonMainTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dicts\ButtonsMaster.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dicts\DataTemplates.xaml">
+    <Page Include="DataGridStyles\BankDatagridStyleTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -383,7 +408,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dicts\ListBoxControlTemplates.xaml">
+    <Page Include="DataGridStyles\NWStyleTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -395,7 +420,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dicts\NWDataTemplates.xaml">
+    <Page Include="DataTemplates\NWDataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -403,19 +428,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\ListVviewControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\ListBoxControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ViewModels\ListBoxWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MenuStyles.xaml">
+    <Page Include="Views\AboutBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewModels\MenuStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -438,10 +459,6 @@
     <Page Include="Page2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestUserCtrl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ImgButton.xaml">
       <SubType>Designer</SubType>
@@ -474,6 +491,10 @@
     <Page Include="UserControls\CloseReturnButton.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\Bankaccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BankDbView.xaml">
       <SubType>Designer</SubType>
@@ -575,10 +596,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dicts\ControlTemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Dicts\YTButtonStackPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -611,6 +628,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ViewModels\StyledDatagridTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SysColors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -635,7 +656,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserListBoxViewer.xaml">
+    <Page Include="Views\MultiviewListBoxViewers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -654,18 +675,24 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="SharedSizeCtrl.dll" />
+    <Resource Include="Icons\harddrive.png" />
+    <Resource Include="Icons\Networkdrive.png" />
+    <Resource Include="Icons\blue_download_alt_folder_12391.png" />
+    <Resource Include="Icons\files.png" />
+    <Resource Include="Icons\Documents1.png" />
+    <Resource Include="Icons\folder3.png" />
+    <Resource Include="Icons\folder2.png" />
     <Resource Include="Icons\calls-record.png" />
     <Resource Include="Icons\cloud.png" />
     <Resource Include="Icons\cursor-arrow.png" />
     <Resource Include="Icons\delete-text-message.png" />
     <Resource Include="Icons\delete-text-message2.png" />
-    <Resource Include="Icons\document-delete_48x48.png" />
+    <Resource Include="Icons\Documents2.png" />
     <Resource Include="Icons\download-to-laptop.png" />
     <Resource Include="Icons\exhibitor_30px.png" />
     <Resource Include="Icons\fax.png" />
     <Resource Include="Icons\folder.gif" />
-    <Resource Include="Icons\icons8-wrench-24.png" />
+    <Resource Include="Icons\Wrench.png" />
     <Resource Include="Icons\laptop-wifi.png" />
     <Resource Include="Icons\left-arrow.png" />
     <Resource Include="Icons\loading againCapture.PNG" />
@@ -747,7 +774,6 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
     <None Include="Design\projectGuides.guides" />
-    <None Include="Icons\idle.icns" />
     <None Include="ViewModels\Icons\calls-record.icns" />
     <None Include="ViewModels\Icons\cloud.icns" />
     <None Include="ViewModels\Icons\delete-text-message.icns" />
@@ -864,6 +890,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\ianch\source\repos\MyAnalogClock\MyAnalogClock.csproj">
+      <Project>{3100abc3-387b-45d0-961c-cd434f252d85}</Project>
+      <Name>MyAnalogClock</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

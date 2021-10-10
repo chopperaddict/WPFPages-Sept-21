@@ -776,7 +776,7 @@ namespace WPFPages . Views
 					else
 						datastring += "'" + odate + "',";
 					if ( UseShortDate )
-						datastring += "'" + cdate + "'";
+						datastring += "'" + cdate + "',";
 					else
 						datastring += "'" + cdate + "'" ;
 				}
@@ -799,34 +799,56 @@ namespace WPFPages . Views
 					datastring += cvm . Id . ToString ( ) . Trim ( ) + ",";
 				datastring += cvm . CustNo . ToString ( ) . Trim ( ) + ",";
 				datastring += cvm . BankNo . ToString ( ) . Trim ( ) + ",";
-				datastring += cvm . AcType . ToString ( ) . Trim ( ) + ",";
-				odate = Utils . ConvertInputDate (cvm . ODate . ToString ( ) . Trim ( ) );
-				cdate = Utils . ConvertInputDate ( cvm . CDate . ToString ( ) . Trim ( ) );
+                                datastring += cvm . AcType . ToString ( ) . Trim ( ) + ",";
+                                datastring += cvm . FName . ToString ( ) . Trim ( ) + ",";
+
+                                datastring += cvm . LName . ToString ( ) . Trim ( ) + ",";
+                                datastring += cvm . Addr1. ToString ( ) . Trim ( ) + ",";
+                                datastring += cvm . Addr2 . ToString ( ) . Trim ( ) + ",";
+                                datastring += cvm . Town . ToString ( ) . Trim ( ) + ",";
+                                datastring += cvm . County . ToString ( ) . Trim ( ) + ",";
+                                datastring += cvm . PCode . ToString ( ) . Trim ( ) + ",";
+                                datastring += cvm . Phone . ToString ( ) . Trim ( ) + ",";
+                                datastring += cvm . Mobile . ToString ( ) . Trim ( ) + ",";
+
+                                odate = Utils . ConvertInputDate ( cvm . Dob. ToString ( ) . Trim ( ) );
+                                odate = Utils . ConvertInputDate ( cvm . ODate . ToString ( ) . Trim ( ) );
+                                cdate = Utils . ConvertInputDate ( cvm . CDate . ToString ( ) . Trim ( ) );
 				if ( includeDateQuotemarks )
 				{
 					if ( UseShortDate )
-						datastring += "'" + odate + "',";
+						datastring += "'" + cvm.Dob . ToShortDateString ( ) + "',";
 					else
 						datastring += "'" + odate + "',";
-					if ( UseShortDate )
-						datastring += "'" + dvm . CDate . ToShortDateString ( ) + "'";
-					else
-						datastring += "'" + cdate + "'";
-				}
-				else
+                                        if ( UseShortDate )
+                                                datastring += "'" + cvm . ODate. ToShortDateString ( ) + "',";
+                                        else
+                                                datastring += "'" + cdate + "'";
+                                        if ( UseShortDate )
+                                                datastring += "'" + cvm . CDate . ToShortDateString ( ) + "'";
+                                        else
+                                                datastring += "'" + cdate + "'";
+                                }
+                                else
 				{// Nonquotemarks
 					if ( UseShortDate )
-						datastring += odate + ",";
+						datastring += cvm . Dob. ToShortDateString ( ) + ",";
 					else
 						datastring += odate + ",";
-					if ( UseShortDate )
-						datastring += cdate;
-					else
-						datastring += cdate;
-				}
-			}
+                                        if ( UseShortDate )
+                                                datastring += cvm . ODate . ToShortDateString ( ) + ",";
+                                        else
+                                                datastring += cdate + ",";
+                                        if ( UseShortDate )
+                                                datastring += cvm . CDate . ToShortDateString ( );
+                                        else
+                                                datastring += cdate;
+                                }
+                        }
 			return datastring;
 		}
+
+
 		/// <summary>
 		/// Creates a BankAccountViewModel record from a DetailsViewModel record directly
 		/// </summary>

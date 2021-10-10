@@ -345,7 +345,7 @@ namespace WPFPages . Views
 					} );
 					count = i;
 				}
-				Debug . WriteLine ( $"BANK : SQL Unlocking BankCollection Load in BankCollection (347) load function " );
+				Debug . WriteLine ( $"BANK : BankCollection Load completed in BankCollection (347) load function " );
 				//				}
 			}
 			catch ( Exception ex )

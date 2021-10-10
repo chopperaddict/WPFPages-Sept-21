@@ -28,9 +28,9 @@ namespace WPFPages . UserControls
         /// <summary>
         /// Interaction logic for testbutton.xaml
         /// </summary>
-        public partial class NewImageButton : UserControl
+        public partial class ImageButton : UserControl
         {
-                public NewImageButton ( )
+                public ImageButton ( )
                 {
                         InitializeComponent ( );
                 }
@@ -39,7 +39,8 @@ namespace WPFPages . UserControls
                 {
                         // These demonstrate how to acess DP's' in various ways
 
-                        MousoverHandlers. GetParentSize ( _border, out double dpHeight, out double dpWidth, out string parentname );
+                       MousoverHandlers . GetParentSize ( _border, out double dpHeight, out double dpWidth, out string parentname );
+                       // MousoverHandlers . GetParentSize ( Testbutton, out double dpHeight, out double dpWidth, out string parentname );
                         Console . WriteLine ( $"GETPARENTSIZE: Parent of \"_border\" is '{parentname}', Size of {parentname} is H/W {dpHeight} / {dpWidth}" );
                         MousoverHandlers.GetParentObjects ( txtblock,4 );
                         Console . WriteLine ( $"GETPARENTOBJECTS : Tree of parents upwards from {HitControl._Hitcontrol  . names [ 0 ]} is :" );
@@ -58,7 +59,7 @@ namespace WPFPages . UserControls
                         MousoverHandlers . GetObjectActualSize ( Testbutton, out double pdpHeight2, out double pdpWidth2 );
                         Console . WriteLine ( $"GETOBJECTSIZE :  ActualHeight/ActualWidth of 'Testbutton' is H/W {pdpHeight2} / {pdpWidth2}" );
                 }
-
+   
                 #region Dependency Properties
 
                 #region Background
@@ -76,7 +77,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for Background.  This enables animation, styling, binding, etc...
                 new public static readonly DependencyProperty BackgroundProperty =
-                        DependencyProperty . Register ( "Background", typeof ( Brush ), typeof ( NewImageButton ), new PropertyMetadata ( Brushes . DarkGray ) );
+                        DependencyProperty . Register ( "Background", typeof ( Brush ), typeof ( ImageButton ), new PropertyMetadata ( Brushes . DarkGray ) );
                 #endregion
 
                 #region BorderThickness
@@ -93,7 +94,7 @@ namespace WPFPages . UserControls
                 }
 
                 // Using a DependencyProperty as the backing store for Thickness BorderThickness.  This enables animation, styling, binding, etc...
-                new public static readonly DependencyProperty BorderThicknessProperty = DependencyProperty . Register ( "BorderThickness", typeof ( Thickness ), typeof ( NewImageButton ), new PropertyMetadata ( default ) );
+                new public static readonly DependencyProperty BorderThicknessProperty = DependencyProperty . Register ( "BorderThickness", typeof ( Thickness ), typeof ( ImageButton ), new PropertyMetadata ( default ) );
 
                 #endregion
 
@@ -112,7 +113,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for BorderBrush.  This enables animation, styling, binding, etc...
                 new public static readonly DependencyProperty BorderBrushProperty =
-                    DependencyProperty . Register ( "BorderBrush", typeof ( Brush ), typeof ( NewImageButton ), new PropertyMetadata ( default ) );
+                    DependencyProperty . Register ( "BorderBrush", typeof ( Brush ), typeof ( ImageButton ), new PropertyMetadata ( default ) );
 
                 #endregion
 
@@ -132,7 +133,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for CornerRadius.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty CornerRadiusProperty =
-                        DependencyProperty . Register ( "CornerRadius", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 0 ) );
+                        DependencyProperty . Register ( "CornerRadius", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( ( double ) 0 ) );
 
                 #endregion
 
@@ -151,7 +152,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for FontSize.  This enables animation, styling, binding, etc...
                 new public static readonly DependencyProperty FontSizeProperty =
-                    DependencyProperty . Register ( "FontSize", typeof ( int ), typeof ( NewImageButton ), new PropertyMetadata ( ( int ) 18 ) );
+                    DependencyProperty . Register ( "FontSize", typeof ( int ), typeof ( ImageButton ), new PropertyMetadata ( ( int ) 18 ) );
 
                 #endregion
 
@@ -189,7 +190,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for ImgWidth.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty ImgWidthProperty =
-                    DependencyProperty . Register ( "ImgWidth", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( default ) );
+                    DependencyProperty . Register ( "ImgWidth", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( default ) );
 
                 #endregion
 
@@ -208,7 +209,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for PushDistance.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty PushDistanceProperty =
-                    DependencyProperty . Register ( "PushDistance", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 1 ) );
+                    DependencyProperty . Register ( "PushDistance", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( ( double ) 1 ) );
 
                 #endregion
 
@@ -227,7 +228,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for RotateAngle.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty RotateAngleProperty =
-                    DependencyProperty . Register ( "RotateAngle", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 0 ) );
+                    DependencyProperty . Register ( "RotateAngle", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( ( double ) 0 ) );
 
 
                 #endregion
@@ -248,7 +249,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty ShadowDirectionProperty =
                         DependencyProperty . Register ( "ShadowDirection",
                         typeof ( double ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( ( double ) 30 ), OnShadowDirectionPropertyProperty );
 
                 private static bool OnShadowDirectionPropertyProperty ( object value )
@@ -274,7 +275,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty ShadowOpacityProperty =
                         DependencyProperty . Register ( "ShadowOpacity",
                         typeof ( double ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( ( double ) 1 ), OnShadowOpacityProperty );
 
                 private static bool OnShadowOpacityProperty ( object value )
@@ -300,7 +301,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty ShadowDepthProperty =
                         DependencyProperty . Register ( "ShadowDepth",
                         typeof ( double ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( ( double ) 0 ), OnShadowDepthProperty );
 
                 private static bool OnShadowDepthProperty ( object value )
@@ -325,7 +326,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty ShadowBlurRadiusProperty =
                         DependencyProperty . Register ( "ShadowBlurRadius",
                         typeof ( double ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( ( double ) 0 ), OnShadowBlurRadiusProperty );
 
                 private static bool OnShadowBlurRadiusProperty ( object value )
@@ -350,7 +351,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty ShadowColorProperty =
                         DependencyProperty . Register ( "ShadowColor",
                         typeof ( Color ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( Colors . Transparent ) );
 
                 #endregion ShadowBlurColor
@@ -370,7 +371,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for SkewTransform.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty SkewXProperty =
-            DependencyProperty . Register ( "SkewX", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 0 ) );
+            DependencyProperty . Register ( "SkewX", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( ( double ) 0 ) );
                 #endregion
 
                 #region SkewY
@@ -388,7 +389,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for SkewY.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty SkewYProperty =
-                    DependencyProperty . Register ( "SkewY", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 0 ) );
+                    DependencyProperty . Register ( "SkewY", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( ( double ) 0 ) );
                 #endregion
 
                 #region SkewPadding
@@ -406,7 +407,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for SkewPadding.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty SkewPaddingProperty =
-                    DependencyProperty . Register ( "SkewPadding", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 5 ) );
+                    DependencyProperty . Register ( "SkewPadding", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( ( double ) 5 ) );
 
                 #endregion
 
@@ -425,7 +426,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
                 new public static readonly DependencyProperty SourceProperty =
-                    DependencyProperty . Register ( "Source", typeof ( string ), typeof ( NewImageButton ), new PropertyMetadata ( default ) );
+                    DependencyProperty . Register ( "Source", typeof ( string ), typeof ( ImageButton ), new PropertyMetadata ( default ) );
 
 
                 #endregion
@@ -445,7 +446,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for BtnText.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty TextProperty =
-                        DependencyProperty . Register ( "Text", typeof ( string ), typeof ( NewImageButton ), new PropertyMetadata ( "Text here ..." ) );
+                        DependencyProperty . Register ( "Text", typeof ( string ), typeof ( ImageButton ), new PropertyMetadata ( "Text here ..." ) );
                 #endregion
 
                 #region TextPadLeft
@@ -463,7 +464,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for TextPadLeft.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty TextPadLeftProperty =
-                        DependencyProperty . Register ( "TextPadLeft", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 0 ) );
+                        DependencyProperty . Register ( "TextPadLeft", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( ( double ) 0 ) );
                 #endregion
 
                 #region TextPadTop
@@ -481,7 +482,7 @@ namespace WPFPages . UserControls
 
                 // Using a DependencyProperty as the backing store for TextTop.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty TextPadTopProperty =
-                        DependencyProperty . Register ( "TextPadTop", typeof ( double ), typeof ( NewImageButton ), new PropertyMetadata ( ( double ) 0 ) );
+                        DependencyProperty . Register ( "TextPadTop", typeof ( double ), typeof ( ImageButton ), new PropertyMetadata ( ( double ) 0 ) );
 
 
                 #endregion
@@ -502,7 +503,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty TextShadowOpacitProperty =
                         DependencyProperty . Register ( "TextShadowOpacity",
                         typeof ( double ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( ( double ) 1.0 ), OnTextShadowOpacityProperty );
 
                 private static bool OnTextShadowOpacityProperty ( object value )
@@ -529,7 +530,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty TextShadowSizeProperty =
                         DependencyProperty . Register ( "TextShadowSize",
                         typeof ( double ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( ( double ) 1 ), OnTextShadowSizePropertyProperty );
 
                 private static bool OnTextShadowSizePropertyProperty ( object value )
@@ -556,7 +557,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty TextShadowRadiusProperty =
                         DependencyProperty . Register ( "TextShadowRadius",
                         typeof ( double ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( ( double ) 2 ), OnTextShadowRadiusProperty );
 
                 private static bool OnTextShadowRadiusProperty ( object value )
@@ -583,7 +584,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty TextShadowDirectionProperty =
                         DependencyProperty . Register ( "TextShadowDirection",
                         typeof ( double ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( ( double ) 30 ), OnTextShadowDirectionPropertyProperty );
 
                 private static bool OnTextShadowDirectionPropertyProperty ( object value )
@@ -610,7 +611,7 @@ namespace WPFPages . UserControls
                 public static readonly DependencyProperty TextShadowColorProperty =
                         DependencyProperty . Register ( "TextShadowColor",
                         typeof ( Color ),
-                        typeof ( NewImageButton ),
+                        typeof ( ImageButton ),
                         new PropertyMetadata ( Colors . Red ) );
 
                 #endregion TextShadowColor

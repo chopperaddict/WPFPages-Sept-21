@@ -4,6 +4,9 @@ using System . Diagnostics;
 using System . Windows;
 using System . Windows . Controls;
 using System . Windows . Input;
+using System .Windows .Media;
+
+using WPFPages;
 using WPFPages . ViewModels;
 
 namespace WPFPages . Views
@@ -111,9 +114,30 @@ namespace WPFPages . Views
 		public static ListBox listbox;
 		public static int selected;
 		public static string Command;
-		//		public static  object  MyDispatcher;
+            //		public static  object  MyDispatcher;
 
-		public void SetFocusToExistingViewer ( Guid guid )
+            private Brush itemBkground;
+
+            public Brush ItemBkground
+            {
+                  get { return itemBkground; }
+                  set { itemBkground = value; }
+            }
+
+            #region DP's
+
+            public Brush  SelectedBackground
+            {
+                  get { return ( Brush  ) GetValue ( SelectedBackgroundProperty ); }
+                  set { SetValue ( SelectedBackgroundProperty , value ); }
+            }
+
+            // Using a DependencyProperty as the backing store for SelectedBackground.  This enables animation, styling, binding, etc...
+            public static readonly DependencyProperty SelectedBackgroundProperty =
+    DependencyProperty.Register("SelectedBackground", typeof(Brush ), typeof(DbSelector), new PropertyMetadata(default));
+
+            #endregion DP's
+            public void SetFocusToExistingViewer ( Guid guid )
 		{
 			for ( int x = 0 ; x < MainWindow . gv . MaxViewers ; x++ )
 			{
@@ -621,8 +645,6 @@ namespace WPFPages . Views
 			}
 			return retval;
 		}
-
-		//*****************************************************//
 
 		// Variable to hold string content for ListBox items in ViewerList of DbSelector.
 		private string _listBoxItemText;
@@ -1419,7 +1441,7 @@ namespace WPFPages . Views
 
 		private void Exec_Click ( object sender, RoutedEventArgs e )
 		{
-			SupportMethods . ProcessExecuteRequest ( this, null, null, execName . Text );
+//			SupportMethods . ProcessExecuteRequest ( this, null, null, execName . Text );
 		}
 
 		private void scratch_Click ( object sender, RoutedEventArgs e )
@@ -1478,7 +1500,7 @@ namespace WPFPages . Views
 
 		private void UserListbox_Click ( object sender, RoutedEventArgs e )
 		{
-			UserListBoxViewer dblw = new UserListBoxViewer ( );
+			MultiviewListBoxViewers dblw = new MultiviewListBoxViewers( );
 			dblw . Show ( );
 		}
 
@@ -1567,5 +1589,28 @@ namespace WPFPages . Views
                         ListBoxWindow lbw = new ListBoxWindow ( );
                         lbw . Show ( );
                 }
-        }
+
+            private void Styled_Click ( object sender , RoutedEventArgs e )
+            {
+    
+            }
+
+		private void CustomMsgbox_Click ( object sender , RoutedEventArgs e )
+		{
+			AboutBox cm = new AboutBox ();
+			cm .Show ( );
+		}
+
+		private void Bankaccount_Click ( object sender , RoutedEventArgs e )
+		{
+			Bankaccount ba = new Bankaccount();
+			ba .Show ( );
+		}
+
+		private void Clock_Click ( object sender , RoutedEventArgs e )
+		{
+			AnalogClockHost ah = new AnalogClockHost();
+			ah .Show ( );
+		}
+	}
 }

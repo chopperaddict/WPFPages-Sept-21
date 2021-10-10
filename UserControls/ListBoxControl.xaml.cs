@@ -1,5 +1,6 @@
 ﻿using System;
 using System . Collections . Generic;
+using System . Collections . ObjectModel;
 using System . ComponentModel;
 using System . Linq;
 using System . Text;
@@ -27,9 +28,7 @@ namespace WPFPages . UserControls
         public partial class ListBoxControl : UserControl
         {
                 #region Data Handling
-                //public NwOrderDesignCollection NwOrders = new NwOrderDesignCollection ( );
-                //public nworder nwOrder = new nworder ( );
-
+  
                 #endregion
                 public ListBoxControl ( )
                 {
@@ -39,6 +38,23 @@ namespace WPFPages . UserControls
 
                 #region Dependency Properties (for  this wrapped Listbox)
                 // These can all be called from any of the windows hosting one of these Usecontrol's
+
+
+                #region DatabaseType - expects a string like "NWORDER" "NWCUSTOMER", "BANKACCOUNT", "CUSTOMER"  ETC
+                public string DatabaseType
+                {
+                        get
+                        {
+                                return ( string ) GetValue ( DatabaseTypeProperty );
+                        }
+                        set
+                        {
+                                SetValue ( DatabaseTypeProperty, value );
+                        }
+                }
+               public static readonly DependencyProperty DatabaseTypeProperty =
+                    DependencyProperty . Register ( "DatabaseType", typeof ( string ), typeof ( ListBoxControl ), new PropertyMetadata ( (string)"NULL" ) );
+                #endregion DatabaseType
 
                 #region FontSize
                 new public double FontSize
@@ -404,25 +420,68 @@ namespace WPFPages . UserControls
 
 
                 #endregion Dependency Properties
-                //private void ListBoxControl_Loaded ( object sender, RoutedEventArgs e )
-                //{
-                //        if ( DesignerProperties . GetIsInDesignMode ( this ) == true )
-                //        {
-                //                ListboxControl . ItemsSource = null;
-                //                NwOrders . Clear ( );
-                //                ListboxControl . Items . Clear ( );
-                //                NwOrders . StdLoadOrders ( "" );
-                //                ListboxControl . ItemsSource = NwOrders;
-                //                DataContext = nwOrder;
-                //                ListboxControl . UpdateLayout ( );
-                //                CollectionView view = ( CollectionView ) CollectionViewSource . GetDefaultView ( ListboxControl . ItemsSource );
-                //                view . SortDescriptions . Add ( new SortDescription ( "OrderId", ListSortDirection . Ascending ) );
-                //                nwOrder = view . CurrentItem as nworder;
-                //                nwOrder = ListboxControl . SelectedItem as nworder;                               
-                //        }
-                //        //SetBinding ( FontWeightProperty, "Black" );
-  
-                //}
+                private  async void ListBoxControl_Loaded ( object sender, RoutedEventArgs e )
+                {
+                        string dtype = "";
+                        if ( DesignerProperties . GetIsInDesignMode ( this ) == true )
+                        {
+                                dtype = GetValue ( DatabaseTypeProperty ) . ToString ( );
+                                if ( dtype == "NULL" )
+                                        return;
+                                if ( dtype . Contains ( "NWORDER" ) )
+                                {
+                                        ListboxControl . ItemsSource = null;
+                                        NwOrderCollection NwOrders = new NwOrderCollection ( );
+                                        NwOrders . Clear ( );
+                                        ListboxControl . Items . Clear ( );
+                                        // Load NorthWind Order database
+                                        NwOrders . StdLoadOrders ( "" );
+                                        ListboxControl . ItemsSource = NwOrders;
+                                        DataContext = NwOrders;
+                                        ListboxControl . UpdateLayout ( );
+                                        //CollectionView view = ( CollectionView ) CollectionViewSource . GetDefaultView ( ListboxControl . ItemsSource );
+                                        //view . SortDescriptions . Add ( new SortDescription ( "OrderId", ListSortDirection . Ascending ) );
+                                }
+                                if ( dtype . Contains ( "NWCUST" ) )
+                                {
+                                        ListboxControl . ItemsSource = null;
+                                        ObservableCollection<nwcustomer> NwCust= new ObservableCollection<nwcustomer> ( );
+                                        NwCust . Clear ( );
+                                        ListboxControl . Items . Clear ( );
+                                        // Load NorthWind Order database
+                                        nwcustomer nwcust = new nwcustomer ( );
+                                       NwCust = nwcust . GetNwCustomers ( );
+                                        ListboxControl . ItemsSource = NwCust;
+                                        DataContext = NwCust;
+                                        ListboxControl . UpdateLayout ( );
+                                }
+                                if ( dtype . Contains ( "BANKACCOUNT" ) )
+                                {
+                                        ListboxControl . ItemsSource = null;
+                                        BankCollection bc = new BankCollection ( );
+                                        bc =  BankCollection . LoadBank ( bc, "" );        
+                                        ListboxControl . Items . Clear ( );
+                                        // Load NorthWind Order database
+                                        ListboxControl . ItemsSource = bc;
+                                        DataContext = bc;
+                                        ListboxControl . UpdateLayout ( );
+                                }
+                                if ( dtype . Contains ( "CUSTOMER" ) )
+                                {
+                                        ListboxControl . ItemsSource = null;
+                                        CustCollection CustViewcollection = new CustCollection ( );
+                                        CustViewcollection = await CustCollection . LoadCust ( CustViewcollection, "CUSTDBVIEW", 3, true );
+                                        ListboxControl . Items . Clear ( );
+                                        // Load NorthWind Order database
+                                        ListboxControl . ItemsSource = CustViewcollection;
+                                        DataContext = CustViewcollection;
+                                        ListboxControl . UpdateLayout ( );
+                                        //CollectionView view = ( CollectionView ) CollectionViewSource . GetDefaultView ( ListboxControl . ItemsSource );
+                                        //view . SortDescriptions . Add ( new SortDescription ( "OrderId", ListSortDirection . Ascending ) );
+                                }
+                        }
+
+                }
 
         }
 }

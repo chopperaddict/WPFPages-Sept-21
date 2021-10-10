@@ -13,7 +13,17 @@
 		<local:ThreeDeeBtnControl x:Key="ThreeDBtn"/>
 		<conv:TextWidthMultiConverter x:Key="WidthMultiConverter"/>
 
-	</Window.Resources>
+            <RadialGradientBrush x:Key="MultiYellowRadial" GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.8" RadiusY=".8">
+                  <GradientStop Offset="0.0" Color="#FDFFFFD3" />
+                  <GradientStop Offset="0.2" Color="#FDFEFF00" />
+                  <GradientStop Offset="0.5" Color="#FDE7E71A" />
+                  <GradientStop Offset="0.4" Color="#FDC4B700" />
+                  <GradientStop Offset="0.7" Color="#FDA28B1A" />
+                  <GradientStop Offset="0.9" Color="#FDA2A21A" />
+            </RadialGradientBrush>
+
+
+      </Window.Resources>
 	<Grid    		
 			ToolTip ="Changes made in the Background Designer will be shown here automatically"
 		>

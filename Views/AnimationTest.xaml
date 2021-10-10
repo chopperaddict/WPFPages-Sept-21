@@ -1119,7 +1119,7 @@
   						RenderTransformOrigin="0.5,0.5" 
                                     
                                         />
-                              <userctrl:NewImageButton Canvas.Left="133" Canvas.Top="318"
+                              <userctrl:ImageButton Canvas.Left="133" Canvas.Top="318"
                                     Background="{StaticResource Green8}"
                                     ShadowDirection="40"
                                     ShadowColor="DarkGray"
@@ -1127,7 +1127,7 @@
                                     ShadowDepth="4"
                                     ShadowOpacity="1"
                                     
-                                    Source="/Icons/cloud.png"  
+                                    Source="/icons/Cloud.png"  
 						ImgWidth="57"
                                     
                                     Text="Yah boo sucks, jumps around but does not display correctly most of the time either..."
@@ -1816,23 +1816,7 @@
                                                             ItemTemplate="{DynamicResource DataTemplate1}" 
                                                             ItemContainerStyle="{DynamicResource ListViewItemStyle1}">
 
-                                                            <!--<ListView.ItemTemplate>
-                                                                  <DataTemplate>
-                                                                        <StackPanel Orientation="Horizontal">
-                                                                              <Label Content="{Binding Name}" Foreground="Red" />
-                                                                              <Label Content="{Binding Age}" />
-                                                                        </StackPanel>
-                                                                  </DataTemplate>
-                                                                  -->
-                                                            <!--<DataTemplate>
-												<StackPanel Orientation="Horizontal">
-												<TextBlock x:Name="Tb1" Text="{Binding BankNo, FallbackValue=123456}" />
-												<TextBlock x:Name="Tb2" Text="{Binding CustNo, FallbackValue=567321}" />
-												</StackPanel>
-											</DataTemplate>-->
-                                                            <!--
-                                                            </ListView.ItemTemplate>-->
-                                                      </ListView>
+                                                              </ListView>
                                                 </Canvas>
                                           </StackPanel>
                                     </TabItem>

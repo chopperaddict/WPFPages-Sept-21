@@ -33,5 +33,7 @@ namespace WPFPages . Views
 			result = true;
 			return result;
 		}
+
+		
 	}
 }

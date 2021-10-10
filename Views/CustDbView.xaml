@@ -4,8 +4,10 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:dateconv="clr-namespace:WPFPages.Converts"
+	xmlns:Bankdbview="clr-namespace:WPFPages.Converts"
 	xmlns:local="clr-namespace:WPFPages.Views"
-	  mc:Ignorable="d"
+     xmlns:cmd="clr-namespace:WPFPages.Commands"
+        mc:Ignorable="d"
 	Closing="Window_Closing"
 	DataContext="CustviewerView"
 	Height="450"
@@ -16,6 +18,7 @@
 	PreviewKeyDown="Window_PreviewKeyDown" 
 	PreviewKeyUp="Window_PreviewKeyUp"
   	Title="Customer Account Editor"
+     x:Name="custdbview"
 	Width="800" 
 >
 	<!--d:DataContext="{d:DesignInstance Type=local:SqlCustCollection}"-->
@@ -105,7 +108,47 @@
 			</Style.Triggers>
 		</Style>
 	</Window.Resources>
-	<Grid>
+
+    <Window.CommandBindings>
+        <!--These are NEEDED for the Commands in the ContextMenu to work-->
+        <!--<CommandBinding Command="ApplicationCommands.New" 
+		    Executed="Command_New"
+		    CanExecute="CommandNew_CanExecute" />
+        <CommandBinding Command="ApplicationCommands.Cut" 
+		    Executed="Command_Cut"
+		    CanExecute="CommandCut_CanExecute" />
+        <CommandBinding Command="ApplicationCommands.Copy" 
+		    Executed="Command_Copy"
+		    CanExecute="CommandCopy_CanExecute" />
+        <CommandBinding Command="ApplicationCommands.Paste" 
+		    Executed="Command_Paste"
+		    CanExecute="CommandPaste_CanExecute" />-->
+
+        <!--custom command-->
+        <CommandBinding Command="cmd:MyCommands.Exit" 		    
+			CanExecute="CommandExit_CanExecute"
+		    Executed="Command_Exit"
+                        />
+        
+        <CommandBinding Command="cmd:MyCommands.ShowMessage" 
+		    CanExecute="ShowMessage_CanExecute"
+		    Executed="Show_Message"/>
+        <CommandBinding Command="cmd:MyCommands.CloseWin" 
+		    CanExecute="Close_CanExecute"
+		    Executed="CloseWin"/>
+        <!--Now we have to add CommandBindings for the Hot key version-->
+        <CommandBinding Command="cmd:MyCommands.Hello" 
+			CanExecute="Hello_CanExecute"                         
+			Executed="Hello_Executed"/>
+        <!--Executed="{Binding (self:Commandclass.Hello_Executed)}"/>-->
+        <CommandBinding Command="cmd:MyCommands.Bye" 
+			CanExecute="Bye_CanExecute" 
+			Executed="Bye_Executed"/>
+        <!--Executed="{Binding (Views:BankDbView.Hello_Executed), RelativeSource={RelativeSource AncestorType={x:Type Application}}}"/>-->
+
+    </Window.CommandBindings>
+
+    <Grid>
 
 		<!--#region grid setup-->
 
@@ -138,47 +181,59 @@
 			Grid.Column="1"
 			Width="440"
 			Height="50"
-			IsTabStop="False"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Stretch"
+            local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource HeaderBrushYellow}"
+            local:MenuAttachedProperties.MenuItemBackground="{StaticResource HeaderBorderBrushYellow}"
+            local:MenuAttachedProperties.MenuItemForeground="{StaticResource Black0}"
+            local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource White0}"
+            local:MenuAttachedProperties.MenuFontSize="14"
+            local:MenuAttachedProperties.MenuFontWeight="DemiBold"
+            local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
+            local:MenuAttachedProperties.MenuItemBorderThickness="1"
+            local:MenuAttachedProperties.MenuItemHeight ="30"
+            local:MenuAttachedProperties.MenuItemMargin="2"
 			Background="Transparent" Grid.ColumnSpan="2">
 
 			<MenuItem  Header="_Linq Queries" 
 					Width="80" 
 				    Foreground="{StaticResource White1}">
 				<MenuItem Header="A/c Type 1 Only"
-					    Background="#35F6FB" 
 					    Click="Linq1_Click"
-					    Foreground="Black"
-					    IsCheckable="false"/>
-				<MenuItem Header="A/c Type 2 Only"
-					Background="#35F6FB" 
+					    IsCheckable="false"
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem Header="A/c Type 2 Only"
 					Click="Linq2_Click"
-					Foreground="Black"
-					IsCheckable="False"/>
-				<MenuItem Header="A/c Type 3 Only"
-					Background="#35F6FB" 
+					IsCheckable="False"
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem Header="A/c Type 3 Only"
 					Click="Linq3_Click"
-					Foreground="Black"
-					IsCheckable="False"/>
-				<MenuItem Header="A/c Type 4 Only"
-					Background="#35F6FB" 
+					IsCheckable="False"
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+                    <MenuItem Header="A/c Type 4 Only"
 					Click="Linq4_Click"
-					Foreground="Black"
-					IsCheckable="False"/>
-				<MenuItem Header="Multi A/C Holders"
-					Background="#35F6FB" 
+					IsCheckable="False"
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+                    <MenuItem Header="Multi A/C Holders"
 					Click="Linq5_Click"
 					IsCheckable="False"
-					Foreground="Black"/>
-				<Separator />
-				<MenuItem Header="All Records"
+                       Template="{StaticResource MenuItemTemplate1}"/>
+                
+                <Separator Height="7"
+                            Style="{StaticResource Menu_Separator}"/>
+                
+                <MenuItem Header="All Records"
 						Background="#35F6FB"
 						Click="Linq6_Click"
 						Foreground="Black"						
-						IsCheckable="False" />
-				<Separator />
-			</MenuItem>
+						IsCheckable="False" 
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+  			</MenuItem>
 
 			<MenuItem  Header="Filtering" 
 				    Click="Filter_Click"
@@ -197,7 +252,92 @@
 				    Foreground="{StaticResource White2}">
 			</MenuItem>
 
-			<MenuItem Header ="Larger Font"
+            <MenuItem
+				Width="Auto"
+				Foreground="{StaticResource White1}"
+				Header="Commands">
+                <MenuItem
+					Command="ApplicationCommands.New"
+					CommandParameter="Selectedindex"
+						Header="Show current Index" 
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem
+					Command="ApplicationCommands.Cut"
+					CommandParameter="Selectedindex"
+					Header="Show current CustNo" 
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+
+                <!--//===========================================-->
+                
+                <MenuItem
+					Command="cmd:MyCommands.Exit"                    
+                    CommandParameter="Parameter = Window is about to be closed"
+					Header="Exit with parameter" 
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+
+                <!--Command="{Binding local:BankDbView.Hello_Executed,
+                    RelativeSource={RelativeSource AncestorType={x:Type local:BankDbView}}}"-->
+                <MenuItem Name="HelloItem"
+					Command="cmd:MyCommands.Hello"
+                    CommandParameter="This  a parameter ! !"
+  					InputGestureText="Ctrl+H"
+					Header="Hello with Parameter" 
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+
+                <Separator Style="{StaticResource Menu_Separator}"/>
+
+                <MenuItem
+					Command="cmd:MyCommands.ShowMessage"
+					Foreground="{StaticResource Red0}"
+					Header="Show MessageBox"                       Template="{StaticResource MenuItemTemplate1}"/>
+
+
+	<!--region std app commands-->
+			<!--STANDARD APPLICATION LEVEL COMMANDS-->
+                
+                <MenuItem
+					Command="ApplicationCommands.Copy"
+                    CommandParameter="This is text to be copied"
+	                    Template="{StaticResource MenuItemTemplate1}"/>
+
+              <MenuItem
+					Command="ApplicationCommands.Paste"
+                    CommandParameter="This is text to be copied"
+	                   Template="{StaticResource MenuItemTemplate1}"/>
+
+                <!--endregion std app commands-->
+
+                <MenuItem
+					Command="cmd:MyCommands.CloseWin"
+					Foreground="{StaticResource Red0}"
+					Header="Close Window" 
+                       Template="{StaticResource MenuItemTemplate1}"/>
+
+            </MenuItem>
+
+            <MenuItem Header ="Larger Font"
+				    x:Name="SizeChangeMenuItem2" 
+				    Width="130"
+				    Click="changesize_Click2">
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Larger xxxx" 
+								     VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+                <MenuItem.Icon >
+                    <Image x:Name="FontsizeIcon2" 
+						 Source="/icons/Magnify plus.png" Width="20" Height="25" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Header ="Larger Font"
 				    x:Name="SizeChangeMenuItem3" 
 				    Width="130"
 				    Click="changesize_Click3">
@@ -212,7 +352,7 @@
 				</MenuItem.ItemTemplate>
 				<MenuItem.Icon >
 					<Image x:Name="FontsizeIcon3" 
-						 Source="Magnify plus.png" Width="20" Height="25" />
+						 Source="/icons/Magnify plus.png" Width="20" Height="25" />
 				</MenuItem.Icon>
 			</MenuItem>
 

@@ -1,3 +1,139 @@
+//How to access template contents from C#
+// You can read values to store them in local variables using this method
+
+              public override void OnApplyTemplate ( )
+                {
+                        base . OnApplyTemplate ( );
+
+                        if ( Template != null )
+                        {
+                                var v = this . GetTemplateChild ( "RectBtn" );
+                        }
+
+				 UpdateStates(false); // Not sure what this does ?
+                        return;
+                }
+
+		    // HOW to Select a template - Maybe (not tried)
+
+			CustomersDbDataTemplateSelector cdb = new CustomersDbDataTemplateSelector();
+			cdb.SelectTemplate(object o, Dependencyobject dp)
+
+			M$$ Example is :
+
+			public class TaskListDataTemplateSelector : DataTemplateSelector
+			{
+				public override DataTemplate SelectTemplate(object item, DependencyObject container)
+				{
+					FrameworkElement element = container as FrameworkElement;
+
+					// Task is the particular value to let you select the requiired Template element 
+					if (element != null && item != null && item is Task)
+					{
+					    Task taskitem = item as Task;
+
+					    if (taskitem.Priority == 1)
+						  return
+							element.FindResource("importantTaskTemplate") as DataTemplate;
+					    else
+						  return
+							element.FindResource("myTaskTemplate") as DataTemplate;
+					}
+
+					return null;
+				  }
+		    }
+
+		    To use this 
+		    We can then declare the TaskListDataTemplateSelector as a resource:
+
+			<Window.Resources>
+			<local:TaskListDataTemplateSelector x:Key="myDataTemplateSelector"/>
+			</Window.Resources>
+
+			and then in our xaml :
+
+			<ListBox Width="400" Margin="10"
+					ItemsSource="{Binding Source={StaticResource myTodoList}}"
+					ItemTemplateSelector="{StaticResource myDataTemplateSelector}">
+			</ListBox>
+
+=================================================
+
+// How to add standard Edit menu options to any menu
+
+             <MenuItem
+					Command="ApplicationCommands.Copy"
+                    CommandParameter="This is text to be copied"
+	                    Template="{StaticResource MenuItemTemplate1}"/>
+
+              <MenuItem
+					Command="ApplicationCommands.Paste"
+                    CommandParameter="This is text to be copied"
+	                   Template="{StaticResource MenuItemTemplate1}"/>
+
+					   etc..........
+
+=================================================
+// How to make a call using Dispatcher class ( This is for Menu commands as an example)
+// it calls a special STATIC class that holds ALL the actual functionality for all menu Commands
+
+			Dispatcher.Invoke( () => {
+				MenuCommands .Hello_Executed ( e .Parameter );
+					});
+=================================================
+
+//Bankaccount/Customer Db DATAGRID CUSTOMISATION
+//styles etc are in "DataGridControlTemplates.xaml""
+
+//These provide a standard set of row colors for mouseover = no and mouseover = yes
+//for these type of datagrids
+
+//use this in datagrid properties :
+CellStyle="{StaticResource xxxtypeGridStyle}">
+
+=================================================
+
+// MENU CUSTOMISATON
+//How to use the Menu Attached Propertes in "MenuAttachedProperties.cs"
+
+//Other styles are in Menus.xaml
+<--        
+		Green5      - MenuBackground is normal menu item color
+        Orange4    - MenuItemSelectedBackground is the background when moiuse is over an item
+        White0       - MenuItemForeground handles Foreground when mouse s NOT over the menu item
+        Black0       - MenuSelectedForeground handles Foreground when mouse is OVER the menu item
+        Blue2         - MenuItemBorderColor is  the border color of EACH menu item
+        25              - MenuItemHeight controls the height of ALL MenuItems
+        x                 - MenuItemBorderThickness controls gap between menuitems
+-->
+       <Menu
+			Height="30"
+			HorizontalAlignment="Left"
+			HorizontalContentAlignment="Stretch"
+            local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource Orange4}"
+            local:MenuAttachedProperties.MenuItemBackground="{StaticResource Red0}"
+            local:MenuAttachedProperties.MenuItemForeground="{StaticResource White0}"
+            local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource Black0}"
+            local:MenuAttachedProperties.MenuFontSize="12"
+            local:MenuAttachedProperties.MenuFontWeight="Normal"
+            local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
+            local:MenuAttachedProperties.MenuItemBorderThickness="1"
+            local:MenuAttachedProperties.MenuItemHeight ="30"
+            local:MenuAttachedProperties.MenuItemMargin="2"
+            Background="Transparent"
+			Grid.Column="1" 
+            BorderThickness="3"
+            BorderBrush="{StaticResource Black1}"
+            Width="810">
+
+			//Add this the link to  the ControlTemplate (in "\Dicts\Menus.xaml") to each menuItems you want to be handled. 
+			Template="{StaticResource MenuItemTemplate1}"/>
+
+=================================================
+
+LISTBOX/LISTVIEW CUSTOMISATON - GLOBAL STYLE/TEMPLATE
+
 how to use my GLOBAL color control styles (in ListBoxColorAP.CS) and NWOrder/NWCustomer Db DataTemplates (in NWDataTemplates) with
 any ListBox/ListView in the system
 
@@ -30,7 +166,7 @@ Currently only Orders and Customers are defined.
 how to access Attached properties
 
 Where AP is a seperate file located in the viewModels Folder (declared as "models" in the xaml file, 
-and is containing various Attached Properties suxch as 'test' used here.
+and is containing various Attached Properties such as 'test' used here.
 
 Method 1 :
 Text="{Binding (models:AP.test), RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"           
@@ -355,36 +491,18 @@ How to Sort data on multiple fields using the Linq
 
 How   to bind items in c#
 
-                private void SetUpListbox ( )
-                {
-                        this.Background = new SolidColorBrush (Colors.LightGray);
-                        Binding binding = new Binding ( "Background" );
-                        binding . Source = lbcontrol.Background;
-                        lbcontrol . SetBinding ( BackgroundProperty, binding );
+        private void SetUpListbox ( )
+        {
+                this.Background = new SolidColorBrush (Colors.LightGray);
+                Binding binding = new Binding ( "Background" );
+                binding . Source = lbcontrol.Background;
+                lbcontrol . SetBinding ( BackgroundProperty, binding );
 
-                        this . Foreground = new SolidColorBrush ( Colors . Black );
-                        Binding binding2 = new Binding ( "Foreground" );
-                        binding2 . Source = lbcontrol . Foreground;
-                        lbcontrol . SetBinding ( ForegroundProperty, binding2 );
-                        
-                        Binding binding3 = new Binding ( "ItemTemplate" );
-                        binding3 . Source = lbcontrol . ItemTemplate;
-                        lbcontrol . SetBinding ( ItemTemplateProperty, binding3 );
-
-                        this.ItemsSource = null;
-                        Binding binding4 = new Binding ( "ItemsSource" );                        
-                        binding4 . Source = lbcontrol . ItemsSource;
-                        lbcontrol . SetBinding ( lbcontrol . ItemsSourceProperty, binding4 );
-
-                        //Binding binding5 = new Binding ( "ItemContainerStyle" );
-                        //binding5 . Source = ItemContainerStyle;
-                        //lbcontrol . SetBinding ( ListBox . ItemsSourceProperty, binding5 );
-
-                        //Binding binding6 = new Binding ( "" );
-                        //binding6 . Source = ;
-                        //lbcontrol . SetBinding ( ListBox . Property, binding6 );
-
-                }
+                this . Foreground = new SolidColorBrush ( Colors . Black );
+                Binding binding2 = new Binding ( "Foreground" );
+                binding2 . Source = lbcontrol . Foreground;
+                lbcontrol . SetBinding ( ForegroundProperty, binding2 );
+        }
 =================================================
 
 

@@ -5,7 +5,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace WpfUI
 {
-	public class Person :INotifyPropertyChanged
+	public class Person :INotifyPropertyChanged, ICommand
 	{
 		/// <summary>
 		/// Person Class 
@@ -20,9 +20,8 @@ namespace WpfUI
 		public enum SexType
 		{
 			Male,
-			Female
+			Female 
 		}
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		private string _employeeFirstName;
 		private string _employeeLastName;
@@ -61,8 +60,9 @@ namespace WpfUI
 			set { _userPic = value; OnPropertyChanged("UserPic");}
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
 
-private void OnPropertyChanged(string propertyName) {
+		private void OnPropertyChanged(string propertyName) {
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 

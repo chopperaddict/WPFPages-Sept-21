@@ -13,7 +13,6 @@ namespace WPFPages . Converts
 		public object Convert ( object value, Type targetType,
 		    object parameter, CultureInfo culture )
 		{
-			string arg = parameter as string;
 			//File alone
 			Uri uri = new Uri ( $"pack://application:,,,{value as string}" );
 			BitmapImage source = new BitmapImage ( uri );

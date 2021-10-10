@@ -327,7 +327,7 @@ namespace WPFPages . ViewModels
 
                 private void listboxclass_SelectionChanged ( object sender, SelectionChangedEventArgs e )
                 {
-                        ListboxColorCtrlAP . Setdblvalue (this, sw.ElapsedMilliseconds );
+    //                    ListboxColorCtrlAP . Setdblvalue (this, sw.ElapsedMilliseconds );
                 }
         }
 

@@ -185,6 +185,16 @@
 			HorizontalAlignment="Left"
 			VerticalAlignment="Stretch"
 			Background="Transparent" 
+          local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource HeaderBrushGreen}"
+            local:MenuAttachedProperties.MenuItemBackground="{StaticResource HeaderBorderBrushGreen}"
+            local:MenuAttachedProperties.MenuItemForeground="{StaticResource White0}"
+            local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource Red2}"
+            local:MenuAttachedProperties.MenuFontSize="14"
+            local:MenuAttachedProperties.MenuFontWeight="DemiBold"
+            local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
+            local:MenuAttachedProperties.MenuItemBorderThickness="1"
+            local:MenuAttachedProperties.MenuItemHeight ="30"
+            local:MenuAttachedProperties.MenuItemMargin="2"
 			Grid.ColumnSpan="2">
 
 			<MenuItem
@@ -192,42 +202,44 @@
 				Foreground="{StaticResource Black1}"
 				Header="_Linq Queries">
 				<MenuItem
-					Background="#35F6FB"
 					Click="Linq1_Click"
-					Foreground="Black"
 					Header="A/c Type 1 Only"
-					IsCheckable="false" />
-				<MenuItem
+					IsCheckable="false"  
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem
 					Background="#35F6FB"
 					Click="Linq2_Click"
 					Foreground="Black"
 					Header="A/c Type 2 Only"
-					IsCheckable="False" />
-				<MenuItem
-					Background="#35F6FB"
+					IsCheckable="False"  
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem
 					Click="Linq3_Click"
-					Foreground="Black"
 					Header="A/c Type 3 Only"
-					IsCheckable="False" />
-				<MenuItem
-					Background="#35F6FB"
+					IsCheckable="False"   
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem
 					Click="Linq4_Click"
-					Foreground="Black"
 					Header="A/c Type 4 Only"
-					IsCheckable="False" />
-				<MenuItem
-					Background="#35F6FB"
+					IsCheckable="False"   
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem
 					Click="Linq5_Click"
-					Foreground="Black"
 					Header="Multi A/C Holders"
-					IsCheckable="False" />
-				<Separator />
+					IsCheckable="False"   
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <Separator />
 				<MenuItem Header="All Records"
-						Background="#35F6FB"
 						Click="Linq6_Click"
-						Foreground="Black"						
-						IsCheckable="False" />
-				<Separator />
+						IsCheckable="False"   
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <Separator />
 			</MenuItem>
 
 			<MenuItem
@@ -235,23 +247,15 @@
 				Click="Filter_Click"
 				Foreground="{StaticResource Black1}"
 				Header="Filtering">
+                
 				<MenuItem
 					x:Name="FilterReset"
-					Background="#35F6FB"
-					Click="Filterx_Click"
-					Foreground="Black"
-					Header="Reset to ALL Ac's"
-					IsCheckable="false" >
+						Click="Filterx_Click"
+						Header="Reset to ALL Ac's"
+					IsCheckable="false"   
+                    Template="{StaticResource MenuItemTemplate1}">
 
-					<MenuItem.ItemTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal" >
-								<!--<TextBlock Text="Reset to ALL Ac's" 
-								     VerticalAlignment="Center"/>-->
-							</StackPanel>
-						</DataTemplate>
-					</MenuItem.ItemTemplate>
-					<MenuItem.Icon >
+                <MenuItem.Icon >
 						<Image x:Name="FontsizeIcon" 
 						 Source="Magnify plus.png" Width="20" Height="25" />
 					</MenuItem.Icon>
@@ -259,33 +263,33 @@
 				
 				<MenuItem
 					x:Name="Filter1"
-					Background="#35F6FB"
 					Click="Filterx_Click"
-					Foreground="Black"
 					Header="A/c Type = 1"
-					IsCheckable="false" />
-				<MenuItem
+					IsCheckable="false"   
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem
 					x:Name="Filter2"
-					Background="#35F6FB"
 					Click="Filterx_Click"
-					Foreground="Black"
 					Header="A/c Type = 2"
-					IsCheckable="false" />
-				<MenuItem
+					IsCheckable="false"   
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem
 					x:Name="Filter3"
-					Background="#35F6FB"
 					Click="Filterx_Click"
-					Foreground="Black"
 					Header="A/c Type = 3"
-					IsCheckable="false" />
-				<MenuItem
+					IsCheckable="false"   
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+                <MenuItem
 					x:Name="Filter4"
-					Background="#35F6FB"
 					Click="Filterx_Click"
-					Foreground="Black"
 					Header="A/c Type = 4"
-					IsCheckable="false" />
-			</MenuItem>
+					IsCheckable="false"   
+                    Template="{StaticResource MenuItemTemplate1}"/>
+
+            </MenuItem>
 
 			<MenuItem
 				Width="50"

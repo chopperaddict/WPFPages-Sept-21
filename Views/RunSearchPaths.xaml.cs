@@ -89,8 +89,10 @@ namespace WPFPages . Views
 		{
 			SearchPaths . Clear ( );
 			string path = ( string ) Properties . Settings . Default [ "SearchPathFile" ];
-//			path = path + @"\SearchPaths.dat";
-			string input = File . ReadAllText ( path );
+                        //			path = path + @"\SearchPaths.dat";
+                        if ( File . Exists ( path ) == false )
+                                return SearchPaths;
+                        string input = File . ReadAllText ( path );
 			string [ ] lines1 = input . Split ( '\n' );
 //			int indx = 0;
 			try

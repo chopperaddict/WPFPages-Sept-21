@@ -1049,7 +1049,6 @@ namespace WPFPages . UserControls
                         if ( Template != null )
                         {
                                 var v = this . GetTemplateChild ( "RectBtn" );
-                                //				Console . WriteLine ( $"v = {v}" );
                         }
                         return;
                 }

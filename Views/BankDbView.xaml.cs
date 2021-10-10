@@ -14,7 +14,7 @@ using System . Windows . Data;
 using System . Windows . Input;
 using System . Windows . Media;
 using System . Windows . Media . Imaging;
-
+using WPFPages .Commands;
 using Newtonsoft . Json;
 
 using WPFPages . ViewModels;
@@ -82,6 +82,7 @@ namespace WPFPages . Views
 		private RowData bvmCurrent = null;
 		#endregion Declarations
 
+
 		public BankDbView ( )
 		{
 			Startup = true;
@@ -91,6 +92,7 @@ namespace WPFPages . Views
 			this . Tag = ( Guid ) Guid . NewGuid ( );
 			this . Refresh ( );
 			this . DataContext = BankviewerView;
+
 		}
 		#region Mouse support
 		//private void DoDragMove ( )
@@ -1270,7 +1272,7 @@ namespace WPFPages . Views
 			Close ( );
 		}
 
-		private void changesize_Click2 ( object sender, RoutedEventArgs e )
+		public void changesize_Click2 ( object sender, RoutedEventArgs e )
 		{
 			Thickness t = new Thickness ( );
 
@@ -1335,6 +1337,22 @@ namespace WPFPages . Views
 		#endregion ApplicationsCommands.New Command handlers
 
 		#region ApplicationsCommands.Cut Command handlers
+
+
+		private void CommandCopy_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
+		{
+			e .CanExecute = true;
+		}
+		private void Command_Copy ( object sender , ExecutedRoutedEventArgs e )
+		{
+		}
+		private void CommandPaste_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
+		{
+			e .CanExecute = true;
+		}
+		private void Command_Paste ( object sender , ExecutedRoutedEventArgs e )
+		{
+		}
 		// This is a testing Command, implementing the Applications.Cut Built in command
 		// as a shell to let us do whatever we want to do do inside the method
 		// the e contains a CommandParameter OBJECT that can be passed by  the calling function
@@ -1378,10 +1396,12 @@ namespace WPFPages . Views
 		}
 		private void Command_Exit ( object sender, ExecutedRoutedEventArgs e )
 		{
-			MessageBox . Show ( "Custom Exit Command has been run... Yeaaaahh !!!" );
+			Window win = sender as Window;
+			win.Close ( );
+			MessageBox . Show ( "Custom Exit Command has been run by  a Command... Yeaaaahh !!!" );
 		}
 		#endregion MyCommands.ExitCommand handlers
-		//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		
+
 		#region MyCommands.ShowMessage CUSTOM Command handler
 		/// <summary>
 		/// CUSTOM Command implementation
@@ -1413,27 +1433,26 @@ namespace WPFPages . Views
 			MessageBox . Show ( "Custom Show Message() Command has been run... Yeaaaahh !!!" );
 		}
 
-		#endregion MyCommands.ShowMessage CUSTOM handlers
-		//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		#endregion MyCommands.ShowMessage CUSTOM handlers		
 
 		#region Hello-Bye Hot key test
+
 		bool mHelloSaid = true;
-		private void Hello_CanExecute ( object sender, CanExecuteRoutedEventArgs e )
+		private void Hello_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e . CanExecute = mHelloSaid;
+			e .CanExecute = true;
 		}
-		private void Hello_Executed ( object sender, ExecutedRoutedEventArgs e )
+		private void Hello_Executed ( object sender , RoutedEventArgs e )
 		{
-			//			mHelloSaid = true;
-			if ( ( string ) HelloItem . Header == "Bye..." )
+			if ( ( string ) HelloItem .Header == "Bye..." )
 			{
-				MessageBox . Show ( "Bye" );
-				HelloItem . Header = "Hello !";
+				//MessageBox .Show ( "Bye" );
+				HelloItem .Header = "Hello !";
 			}
 			else
 			{
-				MessageBox . Show ( "Hello!!" );
-				HelloItem . Header = "Bye...";
+				//MessageBox .Show ( "Hello!!" );
+				HelloItem .Header = "Bye...";
 			}
 		}
 		private void Bye_CanExecute ( object sender, CanExecuteRoutedEventArgs e )
@@ -1457,8 +1476,9 @@ namespace WPFPages . Views
 
 		private void CloseWin ( object sender, ExecutedRoutedEventArgs e )
 		{
-			MessageBox . Show ( "Custom Command is closing the current Window" );
-			this . Close ( );
+			Window uie = sender as Window;
+			MessageBox . Show ( "Custom Command is going to close the current Window" );
+			uie. Close ( );
 		}
 
 		#endregion Close menu option Command

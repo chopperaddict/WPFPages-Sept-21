@@ -4,12 +4,19 @@ using System . Windows . Data;
 
 namespace WPFPages . Converts
 {
-        public class HexConvert : IValueConverter
+       /// <summary>
+       /// Converts a Numeric value to a Hex value returned in 0X[xx] format 
+       /// where  if values have odd count of converted digits then a leading zero is inserted
+       /// </summary>
+       public class HexConvert : IValueConverter
         {
                 public object Convert ( object value, Type targetType, object parameter, CultureInfo culture )
                 {
+                        int toBase = 16;
                         int val = System . Convert . ToInt32 ( value );
-                        string s = val . ToString ( "X" );
+                         string s = String.Format ( "{0:X}", val);
+                        if ( s . Length%2 == 1 )
+                                s = "0" + s;
                         return s;
                 }
 

@@ -1114,19 +1114,17 @@ namespace WPFPages . Views
 		{
 			if ( e . Key == Key . Enter || e . Key == Key . Escape )
 			{
-				UpdateFromIncomingData ( opAll . Text );
+                                TextBox t = sender as TextBox;
+                                string str = t . Text;
+                                
+				UpdateFromIncomingData (str);
 			}
 		}
 		private void UpdateFromIncomingData (string dataString )
 		{
-			//string  b = e.ToString();
+                        bool hash = false;
 			//ColorstringFromBrush(e.Data );
-			if ( dataString . Contains ( "#" ) )
-			{
-				opAll . Text = dataString . Substring ( 3 );
-				AllDec. Text = dataString . Substring ( 3 );
-			}
-			else if ( dataString . Contains ( "\r\n" ) )
+	                 if ( dataString . Contains ( "\r\n" ) )
 			{
 				opAll . Text = dataString . Substring ( 2 );
 				AllDec. Text = dataString . Substring ( 2 );
@@ -1143,11 +1141,27 @@ namespace WPFPages . Views
 			}
 			try
 			{
-				string o = opAll . Text .Substring(0,2);
-				string r = opAll . Text .Substring(2,2);
-				string g = opAll . Text .Substring(4,2);
-				string b = opAll . Text .Substring(6,2);
-				int io= Convert.ToInt32(o,16);
+                                string o = "";
+                                string r = "";
+                                string g = "";
+                                string b = "";
+                                if ( dataString . Contains ( "#" ) )
+                                {
+                                        hash = true;
+                                        o = opAll . Text . Substring ( 1, 2 );
+                                        r = opAll . Text . Substring ( 3, 2 );
+                                        g = opAll . Text . Substring ( 5, 2 );
+                                        b = opAll . Text . Substring ( 7, 2 );
+                                }
+                                else
+                                {
+                                         o = opAll . Text . Substring ( 0, 2 );
+                                         r = opAll . Text . Substring ( 2, 2 );
+                                         g = opAll . Text . Substring ( 4, 2 );
+                                         b = opAll . Text . Substring ( 6, 2 );
+                                }
+
+                                int io= Convert.ToInt32(o,16);
 				int ir= Convert.ToInt32(r,16);
 				int ig= Convert.ToInt32(g,16);
 				int ib= Convert.ToInt32(b,16);
@@ -1171,7 +1185,12 @@ namespace WPFPages . Views
 					Output3 . Refresh ( );
 				}
 				CreateGradient ( );
-				Final . Refresh ( );
+                                if ( hash )
+                                {
+                                        opAll . Text = dataString ;
+                                        AllDec . Text = dataString;
+                                }
+                                Final . Refresh ( );
 			}
 			catch
 			{

@@ -72,7 +72,6 @@ namespace WPFPages.ViewModels
 		// CONSTRUCTOR
 		public DetailsViewModel ()
 		{
-			integervalues = new Internalclass();
 		}
 
 		#endregion CONSTRUCTORS
@@ -89,13 +88,13 @@ namespace WPFPages.ViewModels
 		private decimal intrate;
 		private DateTime odate;
 		private DateTime cdate;
-		private Internalclass integervalues;
+		//private Internalclass integervalues;
 
-		public Internalclass Integervalues
-		{
-			get { return integervalues; }
-			set { integervalues = value; OnPropertyChanged( Integervalues . ToString()); }
-		}
+		//public Internalclass Integervalues
+		//{
+		//	get { return integervalues; }
+		//	set { integervalues = value; OnPropertyChanged( Integervalues . ToString()); }
+		//}
 		public int Id
 		{
 			get { return id; }
