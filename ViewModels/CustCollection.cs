@@ -13,7 +13,7 @@ using WPFPages . Properties;
 namespace WPFPages . Views
 {
         /// <summary>
-        /// Class to hold the Customers data for the system as an Observabke collection
+        /// Class to hold the Bank System Customers data for the system as an Observable collection
         /// </summary>
         public class CustCollection : ObservableCollection<CustomerViewModel>
         {

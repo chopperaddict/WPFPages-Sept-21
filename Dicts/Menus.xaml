@@ -280,43 +280,45 @@
     <Geometry x:Key="Checkmark">F1 M 10.0,1.2 L 4.7,9.1 L 4.5,9.1 L 0,5.2 L 1.3,3.5 L 4.3,6.1L 8.3,0 L 10.0,1.2 Z</Geometry>
     <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#FF212121" />
 
-    <ControlTemplate x:Key="MenuItemTemplate1" TargetType="{x:Type MenuItem}">
 
-        <!--// Background of items when mouse is over them is set by -->
-        <!--// The border brush + Thickness work on moused over menuitems-->
+	<!--#region Menu Items CONTROLTEMPLATE-->
+	
+	<ControlTemplate x:Key="MenuItemCtrlTemplate1" TargetType="{x:Type MenuItem}">
 
-        <!--Background="{Binding (local:MenuAttachedProperties.MenuItemBackground) ,
-                        RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"-->
+		<!--// Background of items when mouse is over them is set by -->
+		<!--// The border brush + Thickness work on moused over menuitems-->
 
-        <Border x:Name="templateRoot"
+
+		<Border x:Name="templateRoot"
                     SnapsToDevicePixels="true"
                     
-                    BorderBrush="{Binding (local:MenuAttachedProperties.MenuItemBorderColor) ,
+                    BorderBrush="{Binding Path=(local:MenuAttachedProperties.MenuItemBorderColor) ,
                         RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"
                     
-                    BorderThickness="{Binding (local:MenuAttachedProperties.MenuItemBorderThickness) ,
+                    BorderThickness="{Binding Path=(local:MenuAttachedProperties.MenuItemBorderThickness) ,
                         RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"
                     
-                    Height = "{Binding (local:MenuAttachedProperties.MenuItemHeight) ,
+                    Height = "{Binding Path=(local:MenuAttachedProperties.MenuItemHeight) ,
                         RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"
                     
-                    Margin = "{Binding (local:MenuAttachedProperties.MenuItemMargin) ,
-                        RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"                    
+                    Margin = "{Binding Path=(local:MenuAttachedProperties.MenuItemMargin) ,
+                        RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"          		    
+		    
                 >
-            <!--// This doesnt do anything-->
-            <!--Background="{StaticResource Magenta0}">-->
+			<!--// This doesnt do anything-->
+			<!--Background="{StaticResource Magenta0}">-->
 
-            <Grid Margin="-1" >
-                <Grid.ColumnDefinitions>
+			<Grid Margin="-1" >
+				<Grid.ColumnDefinitions>
 
-                    <ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto"/>
-                    <ColumnDefinition Width="13"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
-                    <ColumnDefinition Width="20"/>
-                </Grid.ColumnDefinitions>
-                <ContentPresenter x:Name="Icon"
+					<ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto"/>
+					<ColumnDefinition Width="13"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="30"/>
+					<ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
+					<ColumnDefinition Width="20"/>
+				</Grid.ColumnDefinitions>
+				<ContentPresenter x:Name="Icon"
                             ContentSource="Icon"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             VerticalAlignment="Center"
@@ -324,7 +326,7 @@
                             Width="16"
                             Height="16"
                             Margin="3"/>
-                <Border x:Name="GlyphPanel"
+				<Border x:Name="GlyphPanel"
                             Visibility="Hidden"
                             Height="22"
                             Width="22"
@@ -332,126 +334,124 @@
                             HorizontalAlignment="Center"
                             ClipToBounds="False"
                             Margin="-1,0,0,0">
-                    <!--// does nothing at all-->
-                    <!--Background="{StaticResource Magenta0}"-->
+					<!--// does nothing at all-->
+					<!--Background="{StaticResource Magenta0}"-->
 
-                    <!--BorderBrush="{Binding (local:MenuAttachedProperties.MenuItemBorderColor) ,
-                                RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"
-                            BorderThickness="{Binding (local:MenuAttachedProperties.MenuItemBorderThickness) ,
-                                RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"-->
-                    <!--BorderBrush="{StaticResource MenuItem.Selected.Border}"-->
+					<!--BorderBrush="{Binding (local:MenuAttachedProperties.MenuItemBorderColor) ,
+							  RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"
+						    BorderThickness="{Binding (local:MenuAttachedProperties.MenuItemBorderThickness) ,
+							  RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"-->
+					<!--BorderBrush="{StaticResource MenuItem.Selected.Border}"-->
 
-                    <Path x:Name="Glyph"
+					<Path x:Name="Glyph"
                                 Data="{StaticResource Checkmark}"
                                 FlowDirection="LeftToRight"
                                 Height="11"
                                 Width="10"
                                 Fill="{StaticResource Menu.Static.Foreground}" />
-                </Border>
-                <ContentPresenter x:Name="menuHeaderContainer"
-                            Grid.Column="2"
+				</Border>
+				<ContentPresenter x:Name="menuHeaderContainer"
+                            Grid.Column="2"					    
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             ContentSource="Header"
-                            RecognizesAccessKey="True"
+                            RecognizesAccessKey="True"						    
                             Margin="{TemplateBinding Padding}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                <TextBlock x:Name="menuGestureText"
+				<TextBlock x:Name="menuGestureText"
                             Grid.Column="4"
                             Text="{TemplateBinding InputGestureText}"
                             Margin="{TemplateBinding Padding}"
                             VerticalAlignment="Center"
                             Opacity="0.7" />
-            </Grid>
+			</Grid>
 
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter TargetName="GlyphPanel" Property="Visibility" Value="Visible"/>
-                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed"/>
-            </Trigger>
+		</Border>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsChecked" Value="True">
+				<Setter TargetName="GlyphPanel" Property="Visibility" Value="Visible"/>
+				<Setter TargetName="Icon" Property="Visibility" Value="Collapsed"/>
+			</Trigger>
 
-            <Trigger Property="Icon" Value="{x:Null}">
-                <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+			<Trigger Property="Icon" Value="{x:Null}">
+				<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+			</Trigger>
 
-            </Trigger>
-            <!--// Mouse Over the menu item (NB Property = IsHighlighted== FALSE so Mouseover is FALSE-->
+			<!--// Mouse Over the menu item (NB Property = IsHighlighted== FALSE so Mouseover is FALSE-->
 
-                <!--// Properties for all menu items NOT being moused over-->
-                <Trigger Property="IsHighlighted" Value="false">
+			<!--// Properties for all menu items NOT being moused over-->
+			<Trigger Property="IsHighlighted" Value="false">
 
-                    <!--<Setter TargetName="menuHeaderContainer"
-                            Property="TextElement.Foreground" 
-                            Value="{Binding (local:MenuAttachedProperties.MenuForeground) ,
-                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>-->
+				<!--// Controls Font Foreground when Mouse is NOT OVER it-->
 
-                <!--// Controls Font Foreground when Mouse is NOT OVER it-->
-                <Setter TargetName="templateRoot" 
-                            Property="TextElement.Foreground" 
-                            Value="{Binding (local:MenuAttachedProperties.MenuItemForeground) ,
-                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+				<Setter TargetName="menuHeaderContainer" 				
+					Property="TextElement.Foreground" 
+					Value="{Binding Path=(local:MenuAttachedProperties.MenuItemForeground), RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
 
-                <!--<Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{StaticResource White0}" />-->
-                <Setter TargetName="templateRoot" 
-                            Property="TextElement.FontWeight" 
-                            Value="{Binding (local:MenuAttachedProperties.MenuFontWeight) ,
-                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+				<Setter TargetName="menuHeaderContainer" 
+					Property="TextElement.FontWeight" 
+					Value="{Binding Path=(local:MenuAttachedProperties.MenuFontWeight) ,
+					RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
 
-                <Setter TargetName="templateRoot" 
-                            Property="TextElement.FontSize" 
-                            Value="{Binding (local:MenuAttachedProperties.MenuFontSize) ,
-                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
- 
-                <!--// This Colors the MenuIten's Normal Background-->
-                <Setter TargetName="templateRoot" 
-                            Property="Background" 
-                            Value="{Binding (local:MenuAttachedProperties.MenuItemBackground) ,
-                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+				<Setter TargetName="menuHeaderContainer" 
+					Property="TextElement.FontSize" 
+					Value="{Binding Path=(local:MenuAttachedProperties.MenuFontSize) ,
+					RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
 
-                <!--// This does NOT seem to control any Colors -->
-                <Setter TargetName="GlyphPanel" 
-                            Property="BorderBrush" 
-                            Value="Magenta"/>
-            </Trigger>
+				<!--// This Colors the MenuIten's Normal Background-->
+				<Setter TargetName="templateRoot" 
+					Property="Background" 
+					Value="{Binding Path=(local:MenuAttachedProperties.MenuItemBackground) ,
+					RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
 
-            <!--// Mouse Over the menu item (NB Property = IsHighlighted) == TRUE so Mouseover is TRUE-->
+				<!--// This does NOT seem to control any Colors -->
+				<Setter TargetName="GlyphPanel" 
+					Property="BorderBrush" 
+					Value="Magenta"/>
+			</Trigger>
 
-            <!--// This Colors the MenuIten's Background when Mouse is over it-->
-            <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="templateRoot" 
+			<!--// Mouse Over the menu item (NB Property = IsHighlighted) == TRUE so Mouseover is TRUE-->
+
+			<!--// This Colors the MenuIten's Background when Mouse is over it-->
+			<Trigger Property="IsHighlighted" Value="True">
+				<Setter TargetName="templateRoot" 
                             Property="Background" 
                             Value="{Binding (local:MenuAttachedProperties.MenuItemSelectedBackground) ,
                             RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
-                <Setter TargetName="templateRoot"
-                            Property="TextElement.Foreground" 
-                            Value="{Binding (local:MenuAttachedProperties.MenuSelectedForeground) ,
-                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
-                <!--<Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{StaticResource White0}" />-->
-                <Setter TargetName="templateRoot" 
-                            Property="TextElement.FontSize" 
-                            Value="{Binding (local:MenuAttachedProperties.MenuFontSize) ,
-                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
-                <!--<Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{StaticResource White0}" />-->
-                <Setter TargetName="templateRoot" 
-                            Property="TextElement.FontWeight" 
-                            Value="{Binding (local:MenuAttachedProperties.MenuFontWeight) ,
-                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
-            </Trigger>
 
-            <!--Menu item is Disabled-->
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{StaticResource Menu.Disabled.Foreground}" />
-                <Setter TargetName="Glyph" Property="Fill" Value="{StaticResource Menu.Disabled.Foreground}" />
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsHighlighted" Value="True"/>
-                    <Condition Property="IsEnabled" Value="False"/>
-                </MultiTrigger.Conditions>
-                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource MenuItem.Highlight.Disabled.Background}" />
-                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource MenuItem.Highlight.Disabled.Border}" />
-            </MultiTrigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
 
+				<Setter TargetName="menuHeaderContainer"
+                            Property="TextBlock.Foreground" 
+                            Value="{Binding Path=(local:MenuAttachedProperties.MenuSelectedForeground) ,
+                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+				<Setter TargetName="menuHeaderContainer" 
+                            Property="TextBlock.FontSize" 
+                            Value="{Binding Path=(local:MenuAttachedProperties.MenuFontSize) ,
+                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+				<!--<Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{StaticResource White0}" />-->
+				<Setter TargetName="menuHeaderContainer" 
+                            Property="TextBlock.FontWeight" 
+                            Value="{Binding Path=(local:MenuAttachedProperties.MenuFontWeight) ,
+                            RelativeSource={RelativeSource AncestorType={x:Type Menu}}}"/>
+
+
+			</Trigger>
+
+			<!--Menu item is Disabled-->
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter TargetName="menuHeaderContainer" Property="TextElement.Foreground" Value="{StaticResource Menu.Disabled.Foreground}" />
+				<Setter TargetName="Glyph" Property="Fill" Value="{StaticResource Menu.Disabled.Foreground}" />
+			</Trigger>
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsHighlighted" Value="True"/>
+					<Condition Property="IsEnabled" Value="False"/>
+				</MultiTrigger.Conditions>
+				<Setter TargetName="templateRoot" Property="Background" Value="{StaticResource MenuItem.Highlight.Disabled.Background}" />
+				<Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource MenuItem.Highlight.Disabled.Border}" />
+			</MultiTrigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	<!--#endregion-->
+	
 </ResourceDictionary>

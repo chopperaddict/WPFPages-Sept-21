@@ -33,8 +33,11 @@
                 <ResourceDictionary Source="DataGridStyles\CustomerDatagridStyleTemplate.xaml" />
                 <ResourceDictionary Source="DataTemplates\BankDataTemplates.xaml" />
                 <ResourceDictionary Source="DataTemplates\CustomersDataTemplates.xaml" />
-                <ResourceDictionary Source="Dicts\BankDataGridColumns.xaml" />
-                <ResourceDictionary Source="DataTemplates\NWDataTemplates.xaml" />
+			<ResourceDictionary Source="Styles\StdMenuStyle.xaml" />
+			<ResourceDictionary Source="Dicts\BankDataGridColumns.xaml" />
+				<!--<ResourceDictionary Source="DataTemplates\BankAccountDataTemplates.xaml" />
+			<ResourceDictionary Source="DataTemplates\CustomersDataTemplates.xaml" />-->
+			<ResourceDictionary Source="DataTemplates\NWDataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--These are Application wide Overrides for that annpoying

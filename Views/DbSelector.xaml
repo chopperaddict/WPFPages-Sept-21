@@ -5,6 +5,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:WPFPages.Views"
+	xmlns:aprops="clr-namespace:WPFPages.Views"
 	Title="DbViewer"
 	Width="853.8"
 	Height="335"
@@ -19,387 +20,656 @@
     Name="Dbselector"
 	mc:Ignorable="d">
 
-    <Window.Resources>
+	<Window.Resources>
 
-        <Style x:Key="MenuStyle1" TargetType="MenuItem">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Foreground" Value="Red"/>
-                    <Setter Property="BorderBrush" Value="Red"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
- 
-        <!--#region ContextMenus-->
-        
-        <ContextMenu x:Key="ContextMenu1">
-            <MenuItem Header="View currently selected Record in JSON Format"  Click="ContextShowJson_Click" >
-                <MenuItem.Icon>
-                    <Image Source="/Icons/text-message.png"  />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="Edit currently Selected Account" Click="ContextEdit_Click">
-                <MenuItem.Icon>
-                    <Image Source="/Icons/mailbox-receive-message.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <Separator Style="{StaticResource Menu_Separator}"/>
-            <MenuItem Header="Save current Grid Db data as JSON File"  Click="ContextSave_Click" >
-                <MenuItem.Icon>
-                    <Image Source="/Icons/symlink_directory_30px.png"  />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="Create/Save and View JSON File for this Db Grid"  Click="ContextDisplayJsonData_Click" >
-                <MenuItem.Icon>
-                    <Image Source="/Icons/wifi.png"  />
-                </MenuItem.Icon>
-            </MenuItem>
-            <Separator Style="{StaticResource Menu_Separator}"/>
+		<Style x:Key="MenuStyle1" TargetType="MenuItem">
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="true">
+					<Setter Property="Foreground" Value="Red"/>
+					<Setter Property="BorderBrush" Value="Red"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
 
-            <MenuItem Header="                                 Settings" Click="ContextSettings_Click" Background="{StaticResource Blue1}" Foreground="White">
-                <MenuItem.Icon>
-                    <Image Source="/Icons/phone-lock.png"  />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="                            Exit this Viewer" Click="ContextClose_Click" Background="{StaticResource Red1}" Foreground="White">
-                <MenuItem.Icon>
-                    <Image Source="/Icons/documents1.png"  />
-                </MenuItem.Icon>
-            </MenuItem>
-        </ContextMenu>
+		<!--#region ContextMenus-->
 
-        <ContextMenu x:Key="CMenu1">
-            <MenuItem Header="Edit" Click="ContextEdit_Click">
-                <MenuItem.Icon>
-                    <Image Source="/Icons/mailbox-receive-message.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="Save as JSON File"  Click="ContextSave_Click" >
-                <MenuItem.Icon>
-                    <Image Source="/Icons/wifi.png"  />
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="Exit" Click="ContextClose_Click" Background="{StaticResource Red1}" Foreground="White">
-                <MenuItem.Icon>
-                    <Image Source="/Icons/documents2.png"  />
-                </MenuItem.Icon>
-            </MenuItem>
-        </ContextMenu>
+		<ContextMenu x:Key="ContextMenu1">
+			<MenuItem Header="View currently selected Record in JSON Format"  Click="ContextShowJson_Click" >
+				<MenuItem.Icon>
+					<Image Source="/Icons/text-message.png"  />
+				</MenuItem.Icon>
+			</MenuItem>
+			<MenuItem Header="Edit currently Selected Account" Click="ContextEdit_Click">
+				<MenuItem.Icon>
+					<Image Source="/Icons/mailbox-receive-message.png" />
+				</MenuItem.Icon>
+			</MenuItem>
+			<Separator Style="{StaticResource Menu_Separator}"/>
+			<MenuItem Header="Save current Grid Db data as JSON File"  Click="ContextSave_Click" >
+				<MenuItem.Icon>
+					<Image Source="/Icons/symlink_directory_30px.png"  />
+				</MenuItem.Icon>
+			</MenuItem>
+			<MenuItem Header="Create/Save and View JSON File for this Db Grid"  Click="ContextDisplayJsonData_Click" >
+				<MenuItem.Icon>
+					<Image Source="/Icons/wifi.png"  />
+				</MenuItem.Icon>
+			</MenuItem>
+			<Separator Style="{StaticResource Menu_Separator}"/>
 
-        <!--#endregion ContextMenus-->
+			<MenuItem Header="                                 Settings" Click="ContextSettings_Click" Background="{StaticResource Blue1}" Foreground="White">
+				<MenuItem.Icon>
+					<Image Source="/Icons/phone-lock.png"  />
+				</MenuItem.Icon>
+			</MenuItem>
+			<MenuItem Header="                            Exit this Viewer" Click="ContextClose_Click" Background="{StaticResource Red1}" Foreground="White">
+				<MenuItem.Icon>
+					<Image Source="/Icons/documents1.png"  />
+				</MenuItem.Icon>
+			</MenuItem>
+		</ContextMenu>
 
-        <!--#region various styles-->
-        
-        <SolidColorBrush x:Key="Red0" Color="Red" />
+		<ContextMenu x:Key="CMenu1">
+			<MenuItem Header="Edit" Click="ContextEdit_Click">
+				<MenuItem.Icon>
+					<Image Source="/Icons/mailbox-receive-message.png" />
+				</MenuItem.Icon>
+			</MenuItem>
+			<MenuItem Header="Save as JSON File"  Click="ContextSave_Click" >
+				<MenuItem.Icon>
+					<Image Source="/Icons/wifi.png"  />
+				</MenuItem.Icon>
+			</MenuItem>
+			<MenuItem Header="Exit" Click="ContextClose_Click" Background="{StaticResource Red1}" Foreground="White">
+				<MenuItem.Icon>
+					<Image Source="/Icons/documents2.png"  />
+				</MenuItem.Icon>
+			</MenuItem>
+		</ContextMenu>
 
-        <!--  Style for full LISTBOXes (not listboxitems) on this form  -->
-        <Style x:Key="_styletest" TargetType="ListBox">
-            <Setter Property="Control.Background" Value="{StaticResource Gray2}" />
-            <!--<Setter Property="Control.Foreground" Value="{StaticResource Gray2}" />-->
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <!--<Setter Property="Template">
+		<!--#endregion ContextMenus-->
+
+		<!--#region various styles-->
+
+		<SolidColorBrush x:Key="Red0" Color="Red" />
+
+		<!--  Style for full LISTBOXes (not listboxitems) on this form  -->
+		<Style x:Key="_styletest" TargetType="ListBox">
+			<Setter Property="Control.Background" Value="{StaticResource Gray2}" />
+			<!--<Setter Property="Control.Foreground" Value="{StaticResource Gray2}" />-->
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<Style.Triggers>
+				<MultiTrigger>
+					<MultiTrigger.Conditions>
+						<Condition Property="IsMouseOver" Value="false" />
+						<Condition Property="IsFocused" Value="true" />
+					</MultiTrigger.Conditions>
+					<MultiTrigger.Setters>
+						<Setter Property="Background" Value="{StaticResource Gray2}" />
+					</MultiTrigger.Setters>
+				</MultiTrigger>
+				<Trigger Property="IsMouseOver" Value="true">
+					<Setter Property="Control.Background" Value="{StaticResource Gray3}" />
+					<Setter Property="BorderBrush" Value="{StaticResource Black1}" />
+					<Setter Property="Control.FontWeight" Value="SemiBold" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+		<!--  Style for ListBoxItems in (Top) viewer listbox  -->
+		<Style x:Key="_ListBoxItemStyle1" TargetType="ListBoxItem">
+			<!--<Setter Property="Background" Value="{StaticResource Gray2}" />-->
+			<!--<Setter Property="Foreground" Value="{StaticResource Black0}" />-->
+			<Setter Property="FontWeight" Value="Normal" />
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<!--<Setter Property="Width" Value="{Binding Path=Width, ElementName=ViewersList}" />-->
+
+			  <!--Remove focus rectangle - IT WORKS-->  
+			<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+			<Setter Property="Template">
 				<Setter.Value>
-					<ControlTemplate TargetType="ListBox">
-						<ScrollViewer x:Name="ScrollViewer"
-								  HorizontalAlignment="Stretch">
-							<ItemsPresenter Height="35" HorizontalAlignment="Stretch" />
-						</ScrollViewer>
+					<ControlTemplate TargetType="ListBoxItem">
+						<Border
+							x:Name="_Border"
+							Padding="3"
+							HorizontalAlignment="Stretch">
+							<ContentPresenter  HorizontalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="true" />
+									<Condition Property="IsSelected" Value="False" />
+								</MultiTrigger.Conditions>
+								<MultiTrigger.Setters>
+									<Setter Property="HorizontalAlignment" Value="Stretch" />
+									<Setter Property="TextElement.Foreground" Value="{StaticResource White0}" />
+									<Setter Property="Background" Value="{StaticResource Black5}" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="FontWeight" Value="DemiBold" />
+								</MultiTrigger.Setters>
+							</MultiTrigger>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="true" />
+									<Condition Property="IsSelected" Value="true" />
+								</MultiTrigger.Conditions>
+								<MultiTrigger.Setters>
+									<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+									<Setter Property="TextElement.Foreground" Value="{StaticResource Red0}" />
+									<Setter Property="Background" Value="{StaticResource Black5}" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="FontWeight" Value="DemiBold" />
+								</MultiTrigger.Setters>
+							</MultiTrigger>
+						</ControlTemplate.Triggers>
 					</ControlTemplate>
 				</Setter.Value>
-				</Setter>-->
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <!--<Condition Property="IsMouseOver" Value="true" />-->
-                        <Condition Property="IsFocused" Value="true" />
-                    </MultiTrigger.Conditions>
-                    <MultiTrigger.Setters>
-                        <Setter Property="Background" Value="{StaticResource Gray2}" />
-                    </MultiTrigger.Setters>
-                </MultiTrigger>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Control.Background" Value="{StaticResource Gray3}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource Black1}" />
-                    <Setter Property="Control.FontWeight" Value="SemiBold" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-  
-        <!--  Style for ListBoxItems in (Top) viewer listbox  -->
-        <Style x:Key="_ListBoxItemStyle1" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="{StaticResource Gray2}" />
-            <Setter Property="Foreground" Value="{StaticResource Black0}" />
-            <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="Width" Value="650" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Width" Value="{Binding Path=Width, ElementName=ViewersList}" />
-            <!--  Remove focus rectangle - IT WORKS  -->
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border
+			</Setter>
+		</Style>
+		
+		<!--  Style for (Lower) Currently open viewers  -->
+		<!--<Style x:Key="_ListBoxItemStyle2" TargetType="ListBoxItem">
+			<Setter Property="Background" Value="{StaticResource Black5}" />
+			<Setter Property="Foreground" Value="{StaticResource Black0}" />
+			<Setter Property="FontWeight" Value="Normal" />
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="HorizontalAlignment" Value="Center" />
+			<Setter Property="Width" Value="{Binding Path=Width, ElementName=ViewersList}" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBoxItem">
+						<Border
 							Name="_Border"
 							Padding="3"
-							HorizontalAlignment="Center">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="true">
-                                <Setter TargetName="_Border" Property="Background" Value="{StaticResource Gray2}" />
-                                <Setter Property="Control.Foreground" Value="{StaticResource White0}" />
-                                <Setter Property="Control.FontWeight" Value="Normal" />
-                                <Setter Property="FontStyle" Value="Italic" />
-                                <Setter Property="FontSize" Value="14" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="_Border" Property="Control.Background" Value="{StaticResource Gray2}" />
-                                <Setter TargetName="_Border" Property="Control.Foreground" Value="{StaticResource White0}" />
-                                <Setter Property="Foreground" Value="{StaticResource White0}" />
-                                <Setter Property="Control.FontWeight" Value="Normal" />
-                                <Setter Property="FontStyle" Value="Italic" />
-                                <Setter Property="FontSize" Value="14" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="_Border" Property="Control.Foreground" Value="{StaticResource Blue0}" />
-                                <Setter Property="FontWeight" Value="SemiBold" />
-                                <!--<Setter Property="HorizontalContentAlignment" Value="Stretch" />-->
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="true" />
-                                    <Condition Property="IsSelected" Value="true" />
-                                </MultiTrigger.Conditions>
-                                <MultiTrigger.Setters>
-                                    <Setter TargetName="_Border" Property="Control.Foreground" Value="{StaticResource Red0}" />
-                                    <Setter TargetName="_Border" Property="Background" Value="{StaticResource White2}" />
-                                    <Setter Property="FontSize" Value="14" />
-                                    <Setter Property="FontWeight" Value="DemiBold" />
-                                </MultiTrigger.Setters>
-                            </MultiTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+							HorizontalAlignment="Stretch">
+							<ContentPresenter  HorizontalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="false">
+								<Setter TargetName="_Border" Property="Background" Value="{StaticResource Black5}" />
+								<Setter Property="Foreground" Value="{StaticResource White0}" />
+								<Setter Property="HorizontalAlignment" Value="Center" />
+								<Setter Property="Control.FontWeight" Value="Normal" />
+								<Setter Property="FontStyle" Value="Italic" />
+								<Setter Property="FontSize" Value="14" />
+							</Trigger>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="true" />
+									<Condition Property="IsSelected" Value="false" />
+								</MultiTrigger.Conditions>
+								<MultiTrigger.Setters>
+									<Setter TargetName="_Border" Property="Background" Value="{StaticResource Black5}" />
+									<Setter Property="HorizontalAlignment" Value="Center" />
+									<Setter Property="Foreground" Value="{StaticResource White0}" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="FontWeight" Value="DemiBold" />
+								</MultiTrigger.Setters>
+							</MultiTrigger>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="true" />
+									<Condition Property="IsSelected" Value="true" />
+								</MultiTrigger.Conditions>
+								<MultiTrigger.Setters>
+									<Setter TargetName="_Border" Property="Background" Value="{StaticResource Black5}" />
+									--><!--<Setter Property="HorizontalContentAlignment" Value="Center" />--><!--
+									<Setter Property="Foreground" Value="{StaticResource Red0}" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="FontWeight" Value="DemiBold" />
+								</MultiTrigger.Setters>
+							</MultiTrigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>-->
 
-        <!--  Style for (Lower) Currently open viewers  -->
-        <Style x:Key="_ListBoxItemStyle2" TargetType="ListBoxItem">
-            <!--  BasedOn="{StaticResource _BaseListBoxItemStyle}">  -->
-            <!--<Setter Property="Background" Value="{StaticResource Gray1}" />-->
-            <Setter Property="Background" Value="{StaticResource Gray2}" />
-            <Setter Property="Foreground" Value="{StaticResource Black0}" />
-            <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="Control.Width" Value="450" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Width" Value="{Binding Path=Width, ElementName=ViewersList}" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border
+
+<!--#region otherStyles-->
+		<!--  Button Style to handle disabled etc  -->
+		<Style x:Key="dimbutton" TargetType="Button">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border
 							Name="_Border"
 							Padding="3"
 							HorizontalAlignment="Center"
 							SnapsToDevicePixels="true">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="_Border" Property="Background" Value="{StaticResource Gray2}" />
-                                <Setter Property="Foreground" Value="{StaticResource White0}" />
-                                <Setter Property="Control.FontWeight" Value="Normal" />
-                                <Setter Property="FontStyle" Value="Italic" />
-                                <Setter Property="FontSize" Value="14" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="true">
-                                <!--<Setter TargetName="_Border" Property="Background" Value="{StaticResource Gray1}" />-->
-                                <Setter TargetName="_Border" Property="Control.Foreground" Value="{StaticResource Blue0}" />
-                                <!--<Setter TargetName="_Border" Property="Control.BorderBrush" Value="{StaticResource Blue0}" />
-								<Setter TargetName="_Border" Property="Control.BorderThickness" Value="1" />-->
-                                <Setter Property="FontWeight" Value="SemiBold" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <!--<Setter Property="FontSize" Value="14" />-->
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="_Border" Property="Background" Value="{StaticResource Gray2}" />
-                                <Setter Property="Foreground" Value="{StaticResource Black0}" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <!--<Setter  Property="Control.Background" Value="{StaticResource Gray1}" />
-								<Setter Property="Control.Foreground" Value="White" />-->
-                                <Setter TargetName="_Border" Property="Control.FontWeight" Value="Bold" />
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="true" />
-                                    <Condition Property="IsSelected" Value="true" />
-                                </MultiTrigger.Conditions>
-                                <MultiTrigger.Setters>
-                                    <Setter TargetName="_Border" Property="Background" Value="{StaticResource White2}" />
-                                    <Setter TargetName="_Border" Property="Control.Foreground" Value="{StaticResource Red0}" />
-                                    <Setter Property="FontSize" Value="14" />
-                                    <Setter Property="FontWeight" Value="DemiBold" />
-                                </MultiTrigger.Setters>
-                            </MultiTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+							<ContentPresenter />
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="true">
+								<Setter TargetName="_Border" Property="Background" Value="{StaticResource Red0}" />
+								<Setter Property="Control.Foreground" Value="{StaticResource White0}" />
+							</Trigger>
+							<Trigger Property="IsEnabled" Value="false">
+								<Setter TargetName="_Border" Property="Background" Value="{StaticResource Gray2}" />
+								<Setter TargetName="_Border" Property="Control.Foreground" Value="{StaticResource Gray3}" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		
+		<SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FF26A0DA"/>
+		<SolidColorBrush x:Key="MenuItem.Selected.Border" Color="#FF26A0DA"/>
+		
+		<ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+			<Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Height="22" SnapsToDevicePixels="true">
+				<Grid Margin="-1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto"/>
+						<ColumnDefinition Width="13"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="30"/>
+						<ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
+						<ColumnDefinition Width="20"/>
+					</Grid.ColumnDefinitions>
+					<ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
+					<Border x:Name="GlyphPanel" BorderBrush="{StaticResource MenuItem.Selected.Border}" BorderThickness="1" Background="{StaticResource MenuItem.Selected.Background}" ClipToBounds="False" HorizontalAlignment="Center" Height="22" Margin="-1,0,0,0" Visibility="Hidden" VerticalAlignment="Center" Width="22">
+						<Path x:Name="Glyph" Data="{StaticResource Checkmark}" Fill="{StaticResource Menu.Static.Foreground}" FlowDirection="LeftToRight" Height="11" Width="10"/>
+					</Border>
+					<ContentPresenter x:Name="menuHeaderContainer" Grid.Column="2" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+					<TextBlock x:Name="menuGestureText" Grid.Column="4" Margin="{TemplateBinding Padding}" Opacity="0.7" Text="{TemplateBinding InputGestureText}" VerticalAlignment="Center"/>
+				</Grid>
+			</Border>
+			<ControlTemplate.Triggers>
+				<Trigger Property="Icon" Value="{x:Null}">
+					<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+				</Trigger>
+				<Trigger Property="IsChecked" Value="True">
+					<Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+					<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+				</Trigger>
+				<Trigger Property="IsHighlighted" Value="True">
+					<Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Background}"/>
+					<Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Border}"/>
+				</Trigger>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{StaticResource Menu.Disabled.Foreground}"/>
+					<Setter Property="Fill" TargetName="Glyph" Value="{StaticResource Menu.Disabled.Foreground}"/>
+				</Trigger>
+				<MultiTrigger>
+					<MultiTrigger.Conditions>
+						<Condition Property="IsHighlighted" Value="True"/>
+						<Condition Property="IsEnabled" Value="False"/>
+					</MultiTrigger.Conditions>
+					<Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Disabled.Background}"/>
+					<Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Disabled.Border}"/>
+				</MultiTrigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+		
+		<SolidColorBrush x:Key="Menu.Static.Border" Color="#FF999999"/>
+		<SolidColorBrush x:Key="Menu.Static.Background" Color="#FFF0F0F0"/>
+		<SolidColorBrush x:Key="Menu.Static.Separator" Color="#FFD7D7D7"/>
+		<Geometry x:Key="UpArrow">M 0,4 L 3.5,0 L 7,4 Z</Geometry>
+		
+		<Style x:Key="MenuScrollButton" BasedOn="{x:Null}" TargetType="{x:Type RepeatButton}">
+			<Setter Property="ClickMode" Value="Hover"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type RepeatButton}">
+						<Border x:Name="templateRoot" BorderBrush="Transparent" BorderThickness="1" Background="Transparent" SnapsToDevicePixels="true">
+							<ContentPresenter HorizontalAlignment="Center" Margin="6" VerticalAlignment="Center"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter"/>
+		<Geometry x:Key="DownArrow">M 0,0 L 3.5,4 L 7,0 Z</Geometry>
+		
+		<Style x:Key="{ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}" BasedOn="{x:Null}" TargetType="{x:Type ScrollViewer}">
+			<Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
+			<Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ScrollViewer}">
+						<Grid SnapsToDevicePixels="true">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="*"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<Border Grid.Column="0" Grid.Row="1">
+								<ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" Margin="{TemplateBinding Padding}"/>
+							</Border>
+							<RepeatButton Grid.Column="0" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Command="{x:Static ScrollBar.LineUpCommand}" Focusable="false" Grid.Row="0" Style="{StaticResource MenuScrollButton}">
+								<RepeatButton.Visibility>
+									<MultiBinding ConverterParameter="0" Converter="{StaticResource MenuScrollingVisibilityConverter}" FallbackValue="Visibility.Collapsed">
+										<Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}"/>
+										<Binding Path="VerticalOffset" RelativeSource="{RelativeSource TemplatedParent}"/>
+										<Binding Path="ExtentHeight" RelativeSource="{RelativeSource TemplatedParent}"/>
+										<Binding Path="ViewportHeight" RelativeSource="{RelativeSource TemplatedParent}"/>
+									</MultiBinding>
+								</RepeatButton.Visibility>
+								<Path Data="{StaticResource UpArrow}" Fill="{StaticResource Menu.Static.Foreground}"/>
+							</RepeatButton>
+							<RepeatButton Grid.Column="0" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Command="{x:Static ScrollBar.LineDownCommand}" Focusable="false" Grid.Row="2" Style="{StaticResource MenuScrollButton}">
+								<RepeatButton.Visibility>
+									<MultiBinding ConverterParameter="100" Converter="{StaticResource MenuScrollingVisibilityConverter}" FallbackValue="Visibility.Collapsed">
+										<Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}"/>
+										<Binding Path="VerticalOffset" RelativeSource="{RelativeSource TemplatedParent}"/>
+										<Binding Path="ExtentHeight" RelativeSource="{RelativeSource TemplatedParent}"/>
+										<Binding Path="ViewportHeight" RelativeSource="{RelativeSource TemplatedParent}"/>
+									</MultiBinding>
+								</RepeatButton.Visibility>
+								<Path Data="{StaticResource DownArrow}" Fill="{StaticResource Menu.Static.Foreground}"/>
+							</RepeatButton>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+			<Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+				<Grid VerticalAlignment="Center">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
+					<Path x:Name="GlyphPanel" Data="{StaticResource Checkmark}" Fill="{TemplateBinding Foreground}" FlowDirection="LeftToRight" Margin="3" Visibility="Collapsed" VerticalAlignment="Center"/>
+					<ContentPresenter Grid.Column="1" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+					<Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom" PlacementTarget="{Binding ElementName=templateRoot}">
+						<Border x:Name="SubMenuBorder" BorderBrush="{StaticResource Menu.Static.Border}" BorderThickness="1" Background="{StaticResource Menu.Static.Background}" Padding="2">
+							<ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+								<Grid RenderOptions.ClearTypeHint="Enabled">
+									<Canvas HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+										<Rectangle x:Name="OpaqueRect" Fill="{Binding Background, ElementName=SubMenuBorder}" Height="{Binding ActualHeight, ElementName=SubMenuBorder}" Width="{Binding ActualWidth, ElementName=SubMenuBorder}"/>
+									</Canvas>
+									<Rectangle Fill="{StaticResource Menu.Static.Separator}" HorizontalAlignment="Left" Margin="29,2,0,2" Width="1"/>
+									<ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" Grid.IsSharedSizeScope="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle"/>
+								</Grid>
+							</ScrollViewer>
+						</Border>
+					</Popup>
+				</Grid>
+			</Border>
+			<ControlTemplate.Triggers>
+				<Trigger Property="IsSuspendingPopupAnimation" Value="true">
+					<Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
+				</Trigger>
+				<Trigger Property="Icon" Value="{x:Null}">
+					<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+				</Trigger>
+				<Trigger Property="IsChecked" Value="true">
+					<Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+					<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+				</Trigger>
+				<Trigger Property="IsHighlighted" Value="True">
+					<Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Background}"/>
+					<Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Border}"/>
+				</Trigger>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{StaticResource Menu.Disabled.Foreground}"/>
+					<Setter Property="Fill" TargetName="GlyphPanel" Value="{StaticResource Menu.Disabled.Foreground}"/>
+				</Trigger>
+				<Trigger Property="ScrollViewer.CanContentScroll" SourceName="SubMenuScrollViewer" Value="false">
+					<Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
+					<Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+				</Trigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+		<ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+			<Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+				<Grid VerticalAlignment="Center">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
+					<Path x:Name="GlyphPanel" Data="{StaticResource Checkmark}" Fill="{StaticResource Menu.Static.Foreground}" FlowDirection="LeftToRight" Margin="3" Visibility="Collapsed" VerticalAlignment="Center"/>
+					<ContentPresenter Grid.Column="1" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+				</Grid>
+			</Border>
+			<ControlTemplate.Triggers>
+				<Trigger Property="Icon" Value="{x:Null}">
+					<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+				</Trigger>
+				<Trigger Property="IsChecked" Value="true">
+					<Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+					<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+				</Trigger>
+				<Trigger Property="IsHighlighted" Value="True">
+					<Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Background}"/>
+					<Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Border}"/>
+				</Trigger>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{StaticResource Menu.Disabled.Foreground}"/>
+					<Setter Property="Fill" TargetName="GlyphPanel" Value="{StaticResource Menu.Disabled.Foreground}"/>
+				</Trigger>
+				<MultiTrigger>
+					<MultiTrigger.Conditions>
+						<Condition Property="IsHighlighted" Value="True"/>
+						<Condition Property="IsEnabled" Value="False"/>
+					</MultiTrigger.Conditions>
+					<Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Disabled.Background}"/>
+					<Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Disabled.Border}"/>
+				</MultiTrigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+		<Geometry x:Key="RightArrow">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+		<ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+			<Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Height="22" SnapsToDevicePixels="true">
+				<Grid Margin="-1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto"/>
+						<ColumnDefinition Width="13"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="30"/>
+						<ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
+						<ColumnDefinition Width="20"/>
+					</Grid.ColumnDefinitions>
+					<ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
+					<Border x:Name="GlyphPanel" BorderBrush="{StaticResource MenuItem.Highlight.Border}" BorderThickness="1" Background="{StaticResource MenuItem.Highlight.Background}" Height="22" Margin="-1,0,0,0" Visibility="Hidden" VerticalAlignment="Center" Width="22">
+						<Path x:Name="Glyph" Data="{DynamicResource Checkmark}" Fill="{StaticResource Menu.Static.Foreground}" FlowDirection="LeftToRight" Height="11" Width="9"/>
+					</Border>
+					<ContentPresenter Grid.Column="2" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+					<TextBlock Grid.Column="4" Margin="{TemplateBinding Padding}" Opacity="0.7" Text="{TemplateBinding InputGestureText}" VerticalAlignment="Center"/>
+					<Path x:Name="RightArrow" Grid.Column="5" Data="{StaticResource RightArrow}" Fill="{StaticResource Menu.Static.Foreground}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+					<Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" HorizontalOffset="-2" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Right" VerticalOffset="-3">
+						<Border x:Name="SubMenuBorder" BorderBrush="{StaticResource Menu.Static.Border}" BorderThickness="1" Background="{StaticResource Menu.Static.Background}" Padding="2">
+							<ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+								<Grid RenderOptions.ClearTypeHint="Enabled">
+									<Canvas HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+										<Rectangle x:Name="OpaqueRect" Fill="{Binding Background, ElementName=SubMenuBorder}" Height="{Binding ActualHeight, ElementName=SubMenuBorder}" Width="{Binding ActualWidth, ElementName=SubMenuBorder}"/>
+									</Canvas>
+									<Rectangle Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" HorizontalAlignment="Left" Margin="29,2,0,2" Width="1"/>
+									<ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" Grid.IsSharedSizeScope="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle"/>
+								</Grid>
+							</ScrollViewer>
+						</Border>
+					</Popup>
+				</Grid>
+			</Border>
+			<ControlTemplate.Triggers>
+				<Trigger Property="IsSuspendingPopupAnimation" Value="true">
+					<Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
+				</Trigger>
+				<Trigger Property="Icon" Value="{x:Null}">
+					<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+				</Trigger>
+				<Trigger Property="IsChecked" Value="True">
+					<Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+					<Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+				</Trigger>
+				<Trigger Property="IsHighlighted" Value="True">
+					<Setter Property="Background" TargetName="templateRoot" Value="Transparent"/>
+					<Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource MenuItem.Highlight.Border}"/>
+				</Trigger>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{StaticResource Menu.Disabled.Foreground}"/>
+					<Setter Property="Fill" TargetName="Glyph" Value="{StaticResource Menu.Disabled.Foreground}"/>
+					<Setter Property="Fill" TargetName="RightArrow" Value="{StaticResource Menu.Disabled.Foreground}"/>
+				</Trigger>
+				<Trigger Property="ScrollViewer.CanContentScroll" SourceName="SubMenuScrollViewer" Value="false">
+					<Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
+					<Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+				</Trigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+		<!--  Style for ListBoxItems in (Top) viewer listbox  -->
+		<!--<Style x:Key="_ListBoxItemStyle1" TargetType="ListBoxItem">
+			<Setter Property="Background" Value="{StaticResource Gray2}" />
+			<Setter Property="Foreground" Value="{StaticResource Black0}" />
+			<Setter Property="FontWeight" Value="Normal" />
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="Width" Value="{Binding Path=Width, ElementName=ViewersList}" />
 
-        
-   
-        
-        <!--  Button Style to handle disabled etc  -->
-        <Style x:Key="dimbutton" TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border
+			--><!--  Remove focus rectangle - IT WORKS  -->
+			<!--<Setter Property="FocusVisualStyle" Value="{x:Null}" />--><!--
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBoxItem">
+						<Border
 							Name="_Border"
 							Padding="3"
-							HorizontalAlignment="Center"
-							SnapsToDevicePixels="true">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="_Border" Property="Background" Value="{StaticResource Red0}" />
-                                <Setter Property="Control.Foreground" Value="{StaticResource White0}" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="_Border" Property="Background" Value="{StaticResource Gray2}" />
-                                <Setter TargetName="_Border" Property="Control.Foreground" Value="{StaticResource Gray3}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+							HorizontalAlignment="Stretch">
+							<ContentPresenter  HorizontalAlignment="Center"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="true" />
+									<Condition Property="IsSelected" Value="False" />
+								</MultiTrigger.Conditions>
+								<MultiTrigger.Setters>
+									<Setter Property="Foreground" Value="{StaticResource White0}" />
+									<Setter TargetName="_Border" Property="Background" Value="{StaticResource Black5}" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="FontWeight" Value="DemiBold" />
+								</MultiTrigger.Setters>
+							</MultiTrigger>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="true" />
+									<Condition Property="IsSelected" Value="true" />
+								</MultiTrigger.Conditions>
+								<MultiTrigger.Setters>
+									<Setter Property="Foreground" Value="{StaticResource Red0}" />
+									<Setter TargetName="_Border" Property="Background" Value="{StaticResource Black5}" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="FontWeight" Value="DemiBold" />
+								</MultiTrigger.Setters>
+							</MultiTrigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>-->
 
-        <!--#endregion various styles-->
+
+		<!--#endregion various styles-->
+	</Window.Resources>
+
+	<!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
 
 
-  
-    </Window.Resources>
-    
-    <!--$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$-->
-    
-        
-    <Grid HorizontalAlignment="Stretch">
-        <!--#region grid setup-->
-        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="83" />
-            <RowDefinition Height="45" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="15" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="15" />
-        </Grid.ColumnDefinitions>
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop Offset="0" Color="Black" />
-                <GradientStop Offset="0.972" Color="Gainsboro" />
-            </LinearGradientBrush>
-        </Grid.Background>
-        
-        <!--#endregion grid setup-->
-        
-        <!-- Menu item colors :-
-        Green5      - MenuBackground is normal menu item color
-        Orange4    - MenuItemSelectedBackground is the background when moiuse is over an item
-        White0       - MenuItemForeground handles Foreground when mouse s NOT over the menu item
-        Black0       - MenuSelectedForeground handles Foreground when mouse is OVER the menu item
-        Blue2         - MenuItemBorderColor is  the border color of EACH menu item
-        25              - MenuItemHeight controls the height of ALL MenuItems
-        x                 - MenuItemBorderThickness controls gap between menuitems
-        -->
-        <Menu
+	<Grid HorizontalAlignment="Stretch">
+		<!--#region grid setup-->
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition Height="83" />
+			<RowDefinition Height="45" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="50" />
+			<RowDefinition Height="15" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="15" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="15" />
+		</Grid.ColumnDefinitions>
+		<Grid.Background>
+			<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+				<GradientStop Offset="0" Color="Black" />
+				<GradientStop Offset="0.972" Color="Gainsboro" />
+			</LinearGradientBrush>
+		</Grid.Background>
+
+		<!--#endregion grid setup-->	
+
+		<!--#region Main MENU-->
+		
+		<Menu
 			Height="30"
 			HorizontalAlignment="Left"
 			HorizontalContentAlignment="Stretch"
-            local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource HeaderBrushYellow}"
-            local:MenuAttachedProperties.MenuItemBackground="{StaticResource HeaderBorderBrushYellow}"
-            local:MenuAttachedProperties.MenuItemForeground="{StaticResource Black0}"
-            local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource White0}"
-            local:MenuAttachedProperties.MenuFontSize="14"
-            local:MenuAttachedProperties.MenuFontWeight="DemiBold"
-            local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
-            local:MenuAttachedProperties.MenuItemBorderThickness="1"
-            local:MenuAttachedProperties.MenuItemHeight ="30"
-            local:MenuAttachedProperties.MenuItemMargin="2"
-            Background="Transparent"
+			local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource HeaderBrushYellow}"
+			local:MenuAttachedProperties.MenuItemBackground="{StaticResource HeaderBorderBrushYellow}"
+			local:MenuAttachedProperties.MenuItemForeground="{StaticResource TextWhiteToBlackHorizontal}"
+			local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource TextBlackToWhiteHorizontal}"
+			local:MenuAttachedProperties.MenuFontSize="14"
+			local:MenuAttachedProperties.MenuFontWeight="DemiBold"
+			local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
+			local:MenuAttachedProperties.MenuItemBorderThickness="1"
+			local:MenuAttachedProperties.MenuItemHeight ="30"
+			local:MenuAttachedProperties.MenuItemMargin="2"
+			Background="Transparent"
 			Grid.Column="1" 
-            BorderThickness="3"
-            BorderBrush="{StaticResource Black1}"
-            Width="810">
-  
-            <!--Menu ONE Drag Client-->
-            <MenuItem  Header="Drag Win."
-				     Name ="menu1"
-					Click="LoadDragClient_Click"
-					Foreground="{StaticResource VerticalRedGradient}"
-					Margin="1"
-					FontWeight="Bold"
-						Height="25"/>
+			BorderThickness="3"
+			BorderBrush="{StaticResource Black1}"
+			Width="810">
 
-            <!--Menu TWO Data Viewers-->
-            <MenuItem  Header="Data Viewers"
-						Name ="menu2"
-					    Background="Transparent"
-						Foreground="{StaticResource HorizontalGreenGradient}"
-						FontWeight="DemiBold"
-						IsTabStop="False"
-						Height="20">
+			<!--Menu ONE Drag Client-->
+			<MenuItem  Header="Drag Win."
+				Name ="menu1"
+				Click="LoadDragClient_Click"
+				Foreground="{StaticResource VerticalRedGradient}"
+				Margin="1"
+				FontWeight="Bold"
+				Height="25"/>
 
-                <MenuItem  Header="Bank A/C Viewer"
-						Click="LoadBankDbView_Click"
-	                       Template="{StaticResource MenuItemTemplate1}"/>
+			<!--Menu TWO Data Viewers-->
+			<MenuItem  Header="Data Viewers"
+					Name ="menu2"
+					Background="Transparent"
+					Foreground="{StaticResource HorizontalGreenGradient}"
+					FontWeight="DemiBold"
+					IsTabStop="False"
+					Height="20">
+				<MenuItem  Header="Bank A/C Viewer"
+					Click="LoadBankDbView_Click"
+	                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem  Header="Customer A/C Viewer"
+					Click="LoadCustDbView_Click"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem  Header="Details A/C Viewer"
+					Click="LoadDetailsDbView_Click"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem  Header="Full NorthWind database"
+					Click="LoadFullNorthwind_Click"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem  Header="Selected NorthWind database"
+					Click="LoadSelectedNorthwind_Click"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem  Header="Customer A/C Viewer"
-						Click="LoadCustDbView_Click"
-                       Template="{StaticResource MenuItemTemplate1}"/>
-
-
-                <MenuItem  Header="Details A/C Viewer"
-						Click="LoadDetailsDbView_Click"
-	                      Template="{StaticResource MenuItemTemplate1}"/>
-
-
-                <MenuItem  Header="Full NorthWind database"
-						Click="LoadFullNorthwind_Click"
-	                     Template="{StaticResource MenuItemTemplate1}"/>
-
-
-                <MenuItem  Header="Selected NorthWind database"
-						Click="LoadSelectedNorthwind_Click"
-	                     Template="{StaticResource MenuItemTemplate1}"/>
-
-
-                <Separator
+				<Separator
 					Style="{StaticResource Menu_Separator}"
 					Height="3"
-                    Width="191"
-                    HorizontalAlignment="Center"
-                    Foreground="Red"
-					ClipToBounds="True"
-					/>
+					  Width="191"
+					  HorizontalAlignment="Center"
+					  Foreground="Red"
+					ClipToBounds="True"/>
 
-                <MenuItem  Header="Multi A/C Viewer"
-						Click="LoadMultiView_Click"
-	                    Template="{StaticResource MenuItemTemplate1}"/>
+				<MenuItem  Header="Multi A/C Viewer"
+					Click="LoadMultiView_Click"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <!--<MenuItem  Header="Test Bank System"
+				<!--<MenuItem  Header="Test Bank System"
 						Click="TestBank_Click"
 						Margin="2"
 						FontWeight="Bold"
@@ -409,47 +679,42 @@
 						Background="{StaticResource Red0}"
 						Foreground="{StaticResource White0}"/>-->
 
-                <MenuItem  Header="Test Details System"
-						Click="TestDet_Click"
-                      Template="{StaticResource MenuItemTemplate1}"/>
-                
-                <MenuItem  Header="Multi View Listbox/Views"
-						Click="UserListbox_Click"
-                      Template="{StaticResource MenuItemTemplate1}"/>
+				<MenuItem  Header="Test Details System"
+					Click="TestDet_Click"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem  Header="Multi View Listbox/Views"
+					Click="UserListbox_Click"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem  Header="TreeView Viewer"
+					Click="TreeView_Click"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
+			</MenuItem>
 
-                <MenuItem  Header="TreeView Viewer"
-						Click="TreeView_Click"
-                      Template="{StaticResource MenuItemTemplate1}"/>
-            </MenuItem>
+			<!--================================================-->
 
-            <!--================================================-->
-   
-            <MenuItem  Header="Execute Sys"
+			<MenuItem  Header="Execute Sys"
 				     Name ="menu3"
 					Background="Transparent"
 					Foreground="{StaticResource Orange2}"
 					FontWeight="DemiBold"
 					IsTabStop="False"
 					Height="25">
+				<MenuItem  Header="Execute File/Program"
+					Click="Execute_Click"
+					MinWidth="200"
+					Padding="5,2,5,0"
+					IsTabStop="False"
+					Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem  Header="Maintain Search paths"
+					Click="Paths_Click"
+					MinWidth="200"
+	                   Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem  Header="Execute File/Program"
-						Click="Execute_Click"
-					     MinWidth="200"
-					     Padding="5,2,5,0"
-						IsTabStop="False"
-                      Template="{StaticResource MenuItemTemplate1}"/>
+			</MenuItem>
+			<!--================================================-->
 
-
-                <MenuItem  Header="Maintain Search paths"
-						Click="Paths_Click"
-					     MinWidth="200"
-	                   Template="{StaticResource MenuItemTemplate1}"/>
-
-            </MenuItem>
-            <!--================================================-->
-
-            <!--Menu entries - FOUR single menu options (No dropdown)-->
-            <MenuItem  Header="All Colors"
+			<!--Menu entries - FOUR single menu options (No dropdown)-->
+			<MenuItem  Header="All Colors"
 				     Name ="Colors"
 				     Click="Colors_Click"
 					Background="Transparent"
@@ -457,101 +722,83 @@
 					FontWeight="DemiBold"
 					IsTabStop="False"
 					Height="25"/>
-
-            <MenuItem Header="  Sys. Colors" 
+			<MenuItem Header="  Sys. Colors" 
 				    Click="sysColors_Click" 						
 					FontWeight="DemiBold"
 					Background="Transparent"
 					Foreground="{StaticResource HorizontalRedGradient}"/>
-
-            <MenuItem Header="  Bkgrounds" 
+			<MenuItem Header="  Bkgrounds" 
 				    Click="Backgrounds_Click" 						
 					FontWeight="DemiBold"
 					Background="Transparent"
 					Foreground="{StaticResource HeaderBrushYellow}"/>
-            <!--<MenuItem Header="  AnimMaster" 
-				    Click="AnimMaster_Click" 						
-					FontWeight="DemiBold"
-					Background="Transparent"
-					Foreground="{StaticResource White0}"/>-->
-            <MenuItem Header="  Animation" 
+			<MenuItem Header="  Animation" 
 				    Click="Animate_Click" 						
 					FontWeight="DemiBold"
 					Background="Transparent"
 					Foreground="{StaticResource VerticalBlueGradient}"/>
-            
-            <!--================================================-->
 
-            <MenuItem Header="  Testing" 				    
+			<!--================================================-->
+
+			<MenuItem Header="  Testing" 				    
 					FontWeight="DemiBold"
 					Background="Transparent"
 					Foreground="{StaticResource White0}" 
-                    Click="MenuItem_Click">
-
-				<MenuItem Header="Analog Clock" 
+					Click="MenuItem_Click">
+				<MenuItem Header=" Analog Clock" 
 				    Click="Clock_Click" 						
-                   Template="{StaticResource MenuItemTemplate1}"/>
-
+				    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 				<MenuItem Header="  BankAccount Window" 
 				    Click="Bankaccount_Click" 						
-                   Template="{StaticResource MenuItemTemplate1}"/>
-
+		                   Template="{StaticResource MenuItemCtrlTemplate1}"/>
 				<MenuItem Header="  BtnTest" 
 				    Click="ButtonTesting_Click" 						
-                   Template="{StaticResource MenuItemTemplate1}"/>
+				       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 				<MenuItem Header="  More Testing" 
 				    Click="MoreTesting_Click" 						
-                Template="{StaticResource MenuItemTemplate1}"/>
-            
-        </MenuItem>
-            
-            <!--================================================-->
-            <MenuItem Header=" Others" 
-					FontWeight="DemiBold"
-					Background="Transparent"
+		                Template="{StaticResource MenuItemCtrlTemplate1}"/>
+			</MenuItem>
+
+			<!--================================================-->
+			<MenuItem Header=" Others" 
+				FontWeight="DemiBold"
+				Background="Transparent"
    				Foreground="{StaticResource White0}">
-                
-                <MenuItem Header=" Styled Grid " 
-				    Click="Styled_Click" 						
-                    Template="{StaticResource MenuItemTemplate1}"/>
-                
-                <MenuItem Header="  Story Boards" 
+				<MenuItem Header=" Styled Grid " 
+				    Click="Styled_Click" 	
+	                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem Header="  Story Boards" 
 				    Click="StoryBoard_Click" 						
-                    Template="{StaticResource MenuItemTemplate1}"/>
-
-                <MenuItem Header="  Att'd Props " 
+		              Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem Header="  Att'd Props " 
 				    Click="Attached_Click" 						
-                    Template="{StaticResource MenuItemTemplate1}"/>
+			        Template="{StaticResource MenuItemCtrlTemplate1}"/>
+			</MenuItem>
 
-            </MenuItem>
-            <MenuItem Header="About..." 
-					FontWeight="DemiBold"
-					Background="Transparent"
-Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbox_Click" 						
-                />
-            <!--================================================-->
+			<MenuItem Header="About..." 
+				FontWeight="Bold"
+				Background="Transparent"
+				Foreground="{StaticResource HorizontalYellowGradient}"				    
+				Click="CustomMsgbox_Click" Style="{DynamicResource MenuItemStyle1}" />
+			<!--================================================-->
+		</Menu>
 
-        </Menu>
+		<!--#endregion-->
 
-        <!--#region Execute program-->
-
-        <!--#endregion option checkboxes/buttons-->
-
-
-        <!--  Top list for creating new viewers  -->
-        <ListBox
+		<!--  Top list for creating new viewers -->
+		<ListBox
 			x:Name="sqlSelector"
-			Grid.Row="1"
-			Grid.Column="1"
-			Height="80"
-			MinWidth="455"
-			VerticalAlignment="Top"
-			HorizontalContentAlignment="Stretch"
 			BorderBrush="Black"
 			BorderThickness="1"
 			FontSize="14"
 			GotFocus="SQLlist_Focused"
+			Grid.Row="1"
+			Grid.Column="1"
+			Height="80"
+			HorizontalAlignment="stretch"
+			HorizontalContentAlignment="Center"
 			IsTabStop="True"
+			MinWidth="455"
 			MouseDoubleClick="sqlselector_Select"
 			PreviewKeyDown="IsEnterKey"
 			ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -559,44 +806,47 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 			SelectedIndex="0"
 			Style="{StaticResource _styletest}"
 			TabIndex="0"
+			VerticalAlignment="Stretch"
+			VerticalContentAlignment="Stretch"
 			Visibility="Visible">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-
-            <!--  This makes the selected row visible when window looses focus - works on any grid  -->
-
-            <ListBox.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#96A3FB" />
-            </ListBox.Resources>
-
-            <ListBoxItem
+			<!--<ListBox.ItemContainerStyle>
+				<Style TargetType="ListBoxItem">
+					<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+				</Style>
+			</ListBox.ItemContainerStyle>-->
+			<ListBox.Resources>
+				<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#96A3FB" />
+			</ListBox.Resources>
+			
+			<!--#region Listbox Items-->
+			
+			<ListBoxItem
 				Width="auto"
 				Content="Bank Accounts"
 				IsSelected="true"
 				IsTabStop="false"
 				Style="{StaticResource _ListBoxItemStyle1}" />
-            <ListBoxItem
+			<ListBoxItem
 				Width="auto"
 				Content="Customer Accounts"
 				IsTabStop="false"
 				Style="{StaticResource _ListBoxItemStyle1}" />
-            <ListBoxItem
+			<ListBoxItem
 				Width="auto"
 				Content="Multi Bank Accounts"
 				IsTabStop="false"
 				Style="{StaticResource _ListBoxItemStyle1}" />
-        </ListBox>
+		</ListBox>
 
-        <Grid
+		<!--#endregion-->
+		
+		<Grid
 			x:Name="Grid2"
 			Grid.Row="2"
 			Grid.Column="1"
 			Margin="3.5,4,0,7">
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <!--<ComboBox x:Name="ViewerTypes"					
+			<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+				<!--<ComboBox x:Name="ViewerTypes"					
 						Background="Yellow"
 						Width="200" IsReadOnly="True"
 						VerticalAlignment="Center"
@@ -607,7 +857,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 						IsDropDownOpen="False"						
 						SelectionChanged="ComboBox_SelectionChanged">-->
 
-                <!--<ComboBoxItem>
+				<!--<ComboBoxItem>
 						<TextBlock
 							Text="Bank Database Viewer"							
 							/>
@@ -623,7 +873,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 							/>
 					</ComboBoxItem>
 				</ComboBox>-->
-                <Button
+				<Button
 					x:Name="BankViewer"
 					Width="80"
 					Height="30"
@@ -638,7 +888,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 					TabIndex="3"
 					Template="{StaticResource HorizontalGradientTemplateBlue}" />
 
-                <Button
+				<Button
 					x:Name="CustViewer"
 					Width="80"
 					Height="30"
@@ -653,7 +903,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 					TabIndex="3"
 					Template="{StaticResource HorizontalGradientTemplateBlue}" />
 
-                <Button
+				<Button
 					x:Name="DetViewer"
 					Width="80"
 					Height="30"
@@ -667,7 +917,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 					IsTabStop="True"
 					TabIndex="3"
 					Template="{StaticResource HorizontalGradientTemplateBlue}" />
-                <Button
+				<Button
 					x:Name="Spacer"
 					Width="10"
 					Height="30"
@@ -681,7 +931,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 					TabIndex="3"
 					Template="{StaticResource HorizontalGradientTemplateGray}" />
 
-                <Button
+				<Button
 					x:Name="CloseApp"
 					Width="108"
 					Height="30"
@@ -696,7 +946,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 					TabIndex="1"
 					Template="{StaticResource HorizontalGradientTemplateRed}" />
 
-                <Button
+				<Button
 					x:Name="MultiViewer"
 					Width="120"
 					Height="30"
@@ -711,7 +961,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 					TabIndex="2"
 					Template="{StaticResource HorizontalGradientTemplateBlue}" />
 
-                <Button
+				<Button
 					x:Name="SelectBtn"
 					Width="120"
 					Height="30"
@@ -726,20 +976,18 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 					TabIndex="3"
 					Template="{StaticResource HorizontalGradientTemplateBlue}" />
 
+			</StackPanel>
+		</Grid>
 
-            </StackPanel>
-        </Grid>
-
-        <!--  List of (Lower) currently open viewers  -->
-
-        <Grid
+		<!--  List of (Lower) currently open viewers  -->
+		<Grid
 			Grid.Row="4"
 			Grid.Column="1"
 			Width="550"
 			Height="45"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Bottom">
-            <Button
+			<Button
 				x:Name="SelectViewerBtn"
 				Grid.Row="0"
 				Grid.Column="0"
@@ -758,7 +1006,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 				TabIndex="4"
 				Template="{StaticResource HorizontalGradientTemplateBlue}" />
 
-            <Button
+			<Button
 				x:Name="ViewerDelete"
 				Grid.Row="0"
 				Grid.Column="0"
@@ -775,7 +1023,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 				TabIndex="5"
 				Template="{StaticResource HorizontalGradientTemplateBlue}" />
 
-            <CheckBox
+			<CheckBox
 				x:Name="OntopChkbox"
 				Width="100"
 				Margin="0,0,0,0"
@@ -783,7 +1031,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 				VerticalAlignment="Center"
 				Click="OntopChkbox_Click"
 				Content="Keep on Top" />
-            <Button
+			<Button
 				x:Name="ViewerDeleteAll"
 				Grid.Row="0"
 				Grid.Column="0"
@@ -799,66 +1047,61 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 				Style="{StaticResource dimbutton}"
 				TabIndex="5"
 				Template="{StaticResource HorizontalGradientTemplateBlue}" />
-        </Grid>
-        <ListBox
+		</Grid>
+
+		<!--  List of (Lower) currently open viewers  -->
+		<ListBox
 			x:Name="ViewersList"
-			Grid.Row="3"
-			Grid.Column="1"
-			MinHeight="100"
-			HorizontalAlignment="stretch"
-			VerticalAlignment="Stretch"
-			HorizontalContentAlignment="Stretch"
-			VerticalContentAlignment="Stretch"
 			BorderBrush="Black"
 			BorderThickness="1"
 			Focusable="True"
 			GotFocus="Viewerslist_Focused"
+			Grid.Row="3"
+			Grid.Column="1"
+			HorizontalAlignment="stretch"
+			HorizontalContentAlignment="Center"
 			IsTabStop="True"
-			ItemContainerStyle="{DynamicResource _ListBoxItemStyle2}"
 			Loaded="OnWindowLoaded"
+			MinHeight="100"
 			MouseDoubleClick="ViewersList_Select"
 			PreviewKeyDown="IsEnterKey"
 			PreviewMouseDown="ViewersList_PreviewMouseDown"
 			ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-			ScrollViewer.VerticalScrollBarVisibility="Disabled"
+			ScrollViewer.VerticalScrollBarVisibility="Auto"
 			Style="{StaticResource _styletest}"
 			TabIndex="3"
-			Visibility="Visible">
+			VerticalAlignment="Stretch"
+			VerticalContentAlignment="Stretch"
+			Visibility="Visible"
+			ItemContainerStyle="{DynamicResource _ListBoxItemStyle1}">
 
-            <!--
-				The lastline above allows me to set the listbox
-				items exactly as I want them - See Style in Resources above
-			-->
-            <!--  MouseUp="ViewersList_Select"  -->
-
-            <ListBoxItem
-				HorizontalContentAlignment="Stretch"
+			<ListBoxItem
 				Content="Currently Open Viewers"
 				FontWeight="SemiBold"
+				Foreground="Black"
 				IsEnabled="false"
 				IsTabStop="false"
-				Style="{StaticResource _ListBoxItemStyle2}" />
+				Style="{StaticResource _ListBoxItemStyle1}"/>
+		</ListBox>
 
-        </ListBox>
-
-        <Canvas x:Name="ExecuteFile"
+		<!--#region Popup window-->
+		<Canvas x:Name="ExecuteFile"
 			Background="{StaticResource Red2}"
 			  Grid.Row="1"
-			  Grid.Column="1"
-			  Grid.ColumnSpan="2"			  
+			  Grid.Column="1"			  
 			  Height="110"
 			  Width="330"
-			  Margin="0,60,0,10"
-			  Visibility="Visible"
+			  Margin="248,17,238,1"
+			  Visibility="Visible" Grid.RowSpan="2"
 			>
-            <TextBox x:Name="execName"
+			<TextBox x:Name="execName"
 					Height="24" 
 					Canvas.Left="12" 
 					Canvas.Top="64" 
 				   Padding="5,1,0,0"
 				   Width="212"
 				/>
-            <Button x:Name="DoIt" 
+			<Button x:Name="DoIt" 
 					Click="Exec_Click"
 					Background="{StaticResource HeaderBorderBrushGreen}"
 					Content="Execute" 
@@ -870,7 +1113,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 				  Visibility="Visible"
 					Width="89" 
 				  IsDefault="True" />
-            <Button x:Name="Scratch" 
+			<Button x:Name="Scratch" 
 					Click="scratch_Click"
 					Background="{StaticResource HeaderBorderBrushRed}"
 					Content="Cancel" 
@@ -882,7 +1125,7 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 				  Visibility="Visible"
 					Width="89" />
 
-            <TextBlock x:Name="label" 
+			<TextBlock x:Name="label" 
 				 Text="Enter the name of the file you wish to 'Display' or to have 'executed...'" 
 				 Canvas.Left="12" 
 				 Canvas.Top="15" 
@@ -895,8 +1138,9 @@ Foreground="{StaticResource HorizontalYellowGradient}"				    Click="CustomMsgbo
 				  Visibility="Visible"
 				 Height="41"/>
 
-        </Canvas>
+		</Canvas>
 
-
-    </Grid>
+		<!--#endregion-->
+		
+	</Grid>
 </Window>

@@ -421,8 +421,8 @@
 
                   local:DataGridColorCtrlAp.MouseoverSelectedBackground1="{StaticResource Yellow0}" 
                   local:DataGridColorCtrlAp.MouseoverSelectedForeground1="{StaticResource Red5}"
-                  Loaded="DataGrid_Loaded" Grid.ColumnSpan="3"
-                   >
+                  Loaded="DataGrid_Loaded" 
+			Grid.ColumnSpan="3">
                   <!--#region bank Columns-->
                   <DataGrid.Columns>
 

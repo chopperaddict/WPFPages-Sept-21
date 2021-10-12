@@ -571,13 +571,34 @@ namespace WPFPages .Views
 			this .Close ( );
 		}
 
-		private void DataGrid_Loaded ( object sender , RoutedEventArgs e )
+		private async void DataGrid_Loaded ( object sender , RoutedEventArgs e )
 		{
 			this .BankGrid .ItemsSource = null;
 			this .BankGrid .Items .Clear ( );
+			EventControl .BankDataLoaded += EventControl_BankDataLoaded1;
+
 			BankCollection BankViewcollection = new BankCollection ( );
-			BankViewcollection = BankCollection .LoadBank ( BankViewcollection , "BANKDATA" );
+			await BankCollection .LoadBank ( BankViewcollection , "BANKDATA" , 7 , true );
+			//BankViewcollection = BankCollection .LoadBank ( BankViewcollection , "BANKDATA" );
 			//CollectionViewSource  BankviewerView = CollectionViewSource . GetDefaultView ( BankViewcollection );
+			BankGrid .Refresh ( );
+			// Set our grids items source
+			//this .BankGrid .ItemsSource = BankViewcollection;
+
+			//this .BankGrid .SelectedIndex = 0;
+			//this .BankGrid .SelectedItem = 0;
+			//this .BankGrid .CurrentItem = 0;
+			//this .BankGrid .UpdateLayout ( );
+			//this .BankGrid .Refresh ( );
+
+		}
+
+		private void EventControl_BankDataLoaded1 ( object sender , LoadedEventArgs e )
+		{
+			BankCollection BankViewcollection = new BankCollection ( );
+			BankViewcollection  = e .DataSource as BankCollection ;
+			BankViewcollection = BankViewcollection;
+
 			BankGrid .Refresh ( );
 			// Set our grids items source
 			this .BankGrid .ItemsSource = BankViewcollection;
@@ -587,7 +608,6 @@ namespace WPFPages .Views
 			this .BankGrid .CurrentItem = 0;
 			this .BankGrid .UpdateLayout ( );
 			this .BankGrid .Refresh ( );
-
 		}
 
 		private void storyboard_Closed ( object sender , EventArgs e )

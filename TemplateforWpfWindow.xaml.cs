@@ -1,6 +1,4 @@
-﻿using MyAnalogClock;
-
-using System;
+﻿using System;
 using System .Collections .Generic;
 using System .Linq;
 using System .Text;
@@ -14,21 +12,21 @@ using System .Windows .Media;
 using System .Windows .Media .Imaging;
 using System .Windows .Shapes;
 
-using static MyAnalogClock .AnalogClock;
-
 namespace WPFPages
 {
 	/// <summary>
-	/// Interaction logic for AnalogClockHost.xaml
+	/// Interaction logic for TemplateforWpfWindow.xaml
 	/// </summary>
-	public partial class AnalogClockHost : Window
+	public partial class TemplateforWpfWindow : Window
 	{
-		public AnalogClockHost ( )
+		public TemplateforWpfWindow ( )
 		{
 			InitializeComponent ( );
 		}
 
+		private void Window_Loaded ( object sender , RoutedEventArgs e )
+		{
 
-
+		}
 	}
 }

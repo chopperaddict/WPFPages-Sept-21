@@ -662,35 +662,7 @@ namespace WPFPages . Views
 
 		private void OnWindowLoaded ( object sender, RoutedEventArgs e )
 		{
-			//			EventHandlers . SendViewerCommand ( 102 , ">>> Starting OnWindowLoaded()" , Flags . CurrentSqlViewer );
 			int counter = 0;
-
-			{
-				//			AddViewerToList (MainWindow.gv.PrettyDetails, Flags.CurrentSqlViewer);
-
-				//Try to populate our list of existing Viewers
-				//for (int x = 0; x < MainWindow.gv.MaxViewers; x++)
-				//{
-				//	if (MainWindow.gv.window[x] != null)
-				//	{
-				//		ListBoxItem lbi = new ListBoxItem ();
-
-				//		Binding binding = new Binding ("ListBoxItemText");
-				//		binding.Source = ListBoxItemText;
-				//		//lbi.SetBinding (ContentProperty, binding);
-				//		lbi.Content = MainWindow.gv.PrettyDetails;
-
-				//		ViewersList.SelectedIndex = ViewersList.Items.Add (lbi);
-
-				//		//Inital values going into our listbox item (entry)!!
-				//		lbi.Tag = MainWindow.gv.ListBoxId[x];
-				//		counter++;
-				//		//					ViewerDelete.IsEnabled = true;
-				//		//					SelectViewerBtn.IsEnabled = true;
-				//	}
-				//}
-//				StartUp = false;
-			}
 			//Set default active item to 1st valid entry
 			counter = ViewersList . Items . Count;
 
@@ -1611,6 +1583,12 @@ namespace WPFPages . Views
 		{
 			AnalogClockHost ah = new AnalogClockHost();
 			ah .Show ( );
+		}
+
+		private void Clock2_Click ( object sender , RoutedEventArgs e )
+		{
+			FullWPFWindow1 fw = new FullWPFWindow1();
+			fw .Show ( );
 		}
 	}
 }

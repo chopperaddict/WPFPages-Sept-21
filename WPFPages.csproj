@@ -118,9 +118,9 @@
     <Compile Include="Converts\DateTimeToShortStringConverter.cs" />
     <Compile Include="Converts\GetImageConverter.cs" />
     <Compile Include="Converts\HexConvert.cs" />
-    <Compile Include="Converts\IMulltiValueConverter.cs" />
     <Compile Include="Converts\Int2BrushConverter.cs" />
     <Compile Include="Converts\MoveTextblockToTop.cs" />
+    <Compile Include="Converts\MultiConverterTemplate.cs" />
     <Compile Include="Converts\NumericString2ShortDateConverter.cs" />
     <Compile Include="Converts\OpacityToDecimalConverter.cs" />
     <Compile Include="Converts\PadImageBase.cs" />
@@ -139,11 +139,18 @@
     <Compile Include="Converts\TextWidthMultiConverter.cs" />
     <Compile Include="Converts\TextVerticalPositionConverter.cs" />
     <Compile Include="Converts\ToggleBoolConverter.cs" />
+    <Compile Include="Converts\ToggleVisibilityConverter.cs" />
     <Compile Include="Converts\UniversalValueConverter.cs" />
-    <Compile Include="CustomControls\AnalogClock.cs" />
     <Compile Include="DataTemplates\BankDataStyleTemplateSelector.cs" />
     <Compile Include="DataTemplates\BankDataTemplateSelector.cs" />
     <Compile Include="DataTemplates\CustomerDataTemplateSelector.cs" />
+    <Compile Include="FullWPFWindow1.xaml.cs">
+      <DependentUpon>FullWPFWindow1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyStdConvertersClass.cs" />
+    <Compile Include="TemplateforWpfWindow.xaml.cs">
+      <DependentUpon>TemplateforWpfWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\APTestingControl.xaml.cs">
       <DependentUpon>APTestingControl.xaml</DependentUpon>
     </Compile>
@@ -220,7 +227,7 @@
       <DependentUpon>GradientDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HitControl.cs" />
-    <Compile Include="ViewModels\MenuAttachedProperties.cs" />
+    <Compile Include="Views\MenuAttachedProperties.cs" />
     <Compile Include="Views\MenuItem.cs" />
     <Compile Include="Observable.cs" />
     <Compile Include="Page0.xaml.cs" />
@@ -360,11 +367,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CustomControls\AnalogClockStyle.xaml">
+    <Page Include="DataGridStyles\CustomerDatagridStyleTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DataGridStyles\CustomerDatagridStyleTemplate.xaml">
+    <Page Include="DataTemplates\BankAccountDataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -421,6 +428,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DataTemplates\NWDataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FullWPFWindow1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\StdMenuStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TemplateforWpfWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

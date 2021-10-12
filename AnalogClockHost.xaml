@@ -6,19 +6,37 @@
 	  mc:Ignorable="d"
 	xmlns:Analogclock="clr-namespace:MyAnalogClock;assembly=MyAnalogClock"  
 	  WindowStartupLocation="CenterScreen"
-        Title="Analog Clock Host" Height="450" Width="450">
-	
+        Title="Analog Clock Host" Height="250" Width="250">
+
 	<!--xmlns:Analogclock="clr-namespace:MyAnalogClock"-->
 
 	<Window.Resources>
 		<!--<custom:AnalogClock  x:Key="analogclock"/>-->
 	</Window.Resources>
 	<!--OLD VERSION-->
-	<Grid Background="Cyan" Margin="5,25,13,33">
+	<Grid  x:Name="Clock">
 
-		<Analogclock:AnalogClock 	/>
+		<Analogclock:AnalogClock 				
+			HourHandColor="{StaticResource Orange0}"
+			MinuteHandColor="{StaticResource Green0}"
+			SecondsHandColor="{StaticResource Red0}"
+			Background="{StaticResource Yellow0}"
+			HourHandThickness="5"
+			MinuteHandThickness="2"
+			SecondsHandThickness="1" 
+			HourHandLength="-60"
+			MinuteHandLength="-75"
+			SecondHandLength="-85" 
+			Height="{Binding ElementName=Clock, Path=ActualHeight}"
+			Width="{Binding ElementName=Clock, Path=ActualWidth}"
+			ShowSeconds="true"
+			AnalogBackground="Black"
+			AnalogForeground="White" 
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center" 
+			/>
 
-	
+
 	</Grid>
 </Window>
  

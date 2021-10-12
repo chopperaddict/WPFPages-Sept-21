@@ -45,10 +45,7 @@ namespace WPFPages .Views
 
 		private bool ExpandAll = false;
 		private bool MouseLeftBtnDown = false;
-		// DEFAULT Background colors
-		private Brush UnselectedBackColor = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));        //White
-		private Brush SelectedBackColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x70, 0x09, 0xef));  // selected background
-																		//CURRENT Foreground color
+		//CURRENT Foreground color
 		private Brush CurrentForeColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0x00, 0x00));  // current foreground =black
 		private Brush CurrentBackColor = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));  // current foreground =White
 		private string CurrentCellName = "";
@@ -231,8 +228,8 @@ namespace WPFPages .Views
 			this .Show ( );
 			Utils .SetupWindowDrag ( this );
 			Flags .SqlBankActive = true;
-			BankCollection .LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
-			await CustCollection .LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 100 );
+			await  BankCollection .LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
+			await CustCollection .LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
 			uclistboxheight = UCListbox .ActualHeight;
 			uclistbox2height = UCListbox2 .ActualHeight;
 			datagrid .BringIntoView ( );
@@ -471,11 +468,8 @@ namespace WPFPages .Views
 				GridSelection = datagrid .SelectedIndex;
 				ListSelection = GridSelection;
 				UCListbox .SelectedIndex = ListSelection;
+				MouseLeftBtnDown = true;
 			}
-			else
-			{
-			}
-			MouseLeftBtnDown = true;
 		}
 		//private void Datagrid_PreviewMouseLeftButtonDown2 ( object sender, MouseButtonEventArgs e )
 		//{
@@ -1075,6 +1069,7 @@ namespace WPFPages .Views
 		private void datagrid_PreviewMouseLeftButtonup ( object sender , MouseButtonEventArgs e )
 		{
 			ScrollBarMouseMove = false;
+			this .IsSelected = false;
 
 		}
 
@@ -1270,6 +1265,26 @@ namespace WPFPages .Views
 		{
 			datagrid .RowHeight -= 1;
 			datagrid2 .RowHeight -= 1;
+		}
+
+		private void LbItem_PreviewMouseLeftButtonUp2 ( object sender , MouseButtonEventArgs e )
+		{
+			this .IsSelected = false;
+		}
+
+		private void LbItem_PreviewMouseLeftButtonUp ( object sender , MouseButtonEventArgs e )
+		{
+			this .IsSelected = false;
+		}
+
+		private void DbListbox_PreviewMouseLeftButtonUp2 ( object sender , MouseButtonEventArgs e )
+		{
+			this .IsSelected = false;
+		}
+
+		private void DbListbox_PreviewMouseLeftButtonUp ( object sender , MouseButtonEventArgs e )
+		{
+			this .IsSelected = false;
 		}
 	}
 	#endregion DRAG CODE

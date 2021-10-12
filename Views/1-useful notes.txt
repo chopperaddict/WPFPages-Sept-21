@@ -1,3 +1,15 @@
+=================================================
+
+// How to add  a Custom control to be found in a Custom Control Library (Remote method)
+
+xmlns:Analogclock="clr-namespace:MyAnalogClock;assembly=MyAnalogClock"  
+
+// How to add  a Custom control to be found in local project
+
+xmlns:analogclock="clr-namespace:WPFPages.Analogclock"
+
+=================================================
+
 //How to access template contents from C#
 // You can read values to store them in local variables using this method
 
