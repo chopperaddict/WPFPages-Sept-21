@@ -293,42 +293,42 @@
 				<MenuItem Header="A/c Type 1 Only"
 						Click="Linq1_Click"
 						IsCheckable="false"
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem Header="A/c Type 2 Only"
 						Click="Linq2_Click"
 						IsCheckable="False" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem Header="A/c Type 3 Only"
 						Click="Linq3_Click"
 						IsCheckable="False" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem Header="A/c Type 4 Only"
 						Click="Linq4_Click"
 						IsCheckable="False" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <Separator Style="{StaticResource Menu_Separator}"/>
 
                 <MenuItem Header="All Records"
 						Click="Linq6_Click"
 						IsCheckable="False" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <Separator />
 				<MenuItem
 						Click="Linq5_Click"
 						Header="Multi A/C Holders"
 						IsCheckable="False" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 						Click="Linq7_Click"
 						Header="Export Multi A/Cs"
 						IsCheckable="False" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
             </MenuItem>
 
@@ -364,7 +364,7 @@
 					CommandParameter="Selectedindex"
 					Foreground="{StaticResource Red0}"
 					Header="Show current Index"
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					Style="{StaticResource MenuItemLightblue}"
@@ -372,14 +372,14 @@
 					CommandParameter="Selectedindex"
 					Foreground="{StaticResource Red0}"
 					Header="Show current CustNo" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 				
 				<MenuItem
 					Style="{StaticResource MenuItemLightblue}"
 					Command="cmd:MyCommands.Exit"
 					Foreground="{StaticResource Red0}"
 					Header="Exit Command" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 
                 
@@ -394,7 +394,7 @@
 					Background="CadetBlue"
 					InputGestureText="Ctrl+H"
 					Header="Hello Command !" 
-                    Template="{StaticResource MenuItemTemplate1}">
+                    Template="{StaticResource MenuItemCtrlTemplate1}">
 
                 <!--<MenuItem.DataContext>
                         <local:BankDbView  x:Name="bankdbview"/>
@@ -413,7 +413,7 @@
 					Command="cmd:MyCommands.ShowMessage"
 					Foreground="{StaticResource Red0}"
 					Header="Show MessageBox" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
                 <MenuItem
@@ -421,7 +421,7 @@
 					Command="cmd:MyCommands.CloseWin"
 					Foreground="{StaticResource Red0}"
 					Header="Close Window" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
             </MenuItem>
 			

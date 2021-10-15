@@ -5,6 +5,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:conv="clr-namespace:WPFPages.Converts"
 	xmlns:local="clr-namespace:WPFPages.Views"
+	xmlns:att="clr-namespace:WPFPages.AttachedProperties"
+	xmlns:bankdata="clr-namespace:WPFPages.ViewModels"
 	xmlns:models="clr-namespace:WPFPages.ViewModels"
 	xmlns:Cells="clr-namespace:WPFPages"
 	mc:Ignorable="d"
@@ -34,7 +36,7 @@
 		<conv:Date2UTCConverter x:Key="Date2UTCConvert"/>
 		<conv:UniversalValueConverter x:Key="UniversalConvert"/>
 		<conv:Actype2Name x:Key="Ac2NameConvert"/>
-
+		<bankdata:BankAccountViewModel x:Key="bankvm"/>
 		<!--<d:DesignData BankAccountViewModel x:Key="Bankdata"/>-->
 		<!--<Cells:DataGridRowStyling x:Key="DGCELLS"/>-->
 
@@ -1630,7 +1632,8 @@
 					     Background="Transparent"
 					     Foreground="White"
 					     HorizontalAlignment="Left"
-						Margin="5,19,0,23"/>
+						Margin="5,19,0,23"/>					
+					
 					<TextBox x:Name="MaxValue"
 						Width="64"
 						Text="{Binding Path=CustNo, Mode=TwoWay, Source=this, FallbackValue=1056000}"
@@ -1639,8 +1642,8 @@
 						Foreground="Black"
 						HorizontalAlignment="Center"
 						VerticalAlignment="Center"
-						Margin="10,18,10,30"/>
-
+						Margin="10,18,10,30"/>				
+					
 					<TextBlock 
 							Width="132"
 							Height="25"
@@ -1659,14 +1662,13 @@
 							Margin="10,14,10,26"
 							HorizontalAlignment="Center"
 							HorizontalContentAlignment="Center"/>
-
 					<Button x:Name="LoadData"
 							Background="{StaticResource HeaderBorderBrushYellow}"	
+						  Margin="0 -15 0 0"
 							Template="{StaticResource HorizontalGradientTemplateYellow}"
 							Width="113"
 							Height="40"
-							HorizontalAlignment="Right"
-							  Margin="0,8,0,22"
+							  
                             Content="Load Selected Data"
 							PreviewMouseLeftButtonDown="DbList_LoadBtnPressed"
 							 >
@@ -1683,7 +1685,7 @@
                         </ContentPresenter>-->
 					</Button>
 
-			<Button x:Name="Resize_RowsUp"
+					<Button x:Name="Resize_RowsUp"
                         Background="{StaticResource HeaderBorderBrushYellow}"	
                         Template="{StaticResource HorizontalGradientTemplateYellow}"
                         Width="90"
@@ -1693,7 +1695,7 @@
                          Content="Row Height ^"
                         PreviewMouseLeftButtonDown="ResizeUp"/>
 
-			<Button x:Name="Resize_RowsDn"
+					<Button x:Name="Resize_RowsDn"
                         Background="{StaticResource HeaderBorderBrushYellow}"	
                         Template="{StaticResource HorizontalGradientTemplateYellow}"
                         Width="97"
@@ -1702,8 +1704,8 @@
                         Margin="10,8,0,22"
                             Content="Row Height v"
                         PreviewMouseLeftButtonDown="ResizeDn"/>
-					
-			<Button x:Name="CloseWin"
+
+					<Button x:Name="CloseWin"
 				     Background="{StaticResource HeaderBorderBrushRed}"	
 					FontSize="16"	
 					Foreground="{StaticResource White0}"
@@ -1711,14 +1713,17 @@
 				     Width="85"
 				     Height="40"
 				     HorizontalAlignment="Right"
-				     Margin="50,8,0,22"
+				     Margin="10,8,0,22"
 				     Content="Close"
 				     PreviewMouseLeftButtonDown="CloseBtn_PreviewMouseLeftButtonDown"/>
+
+					
 				</StackPanel>
 
 				<!--#endregion Data content control fields-->
 
-				<TextBlock Grid.Row="1" Grid.Column="1" 
+				<StackPanel Grid.Row="1" Grid.Column="1"  Orientation="Horizontal">
+				<TextBlock 
 					Background="Transparent"
 					FontSize="18" 
 					FontWeight="Bold" 
@@ -1727,7 +1732,21 @@
 					Margin="22 0 0 0"
 					Text="BankAccount Db" 
 					VerticalAlignment="Top"/>
-
+					
+				<TextBox x:Name="ViewFilterCondition"
+					DataContext="{StaticResource bankvm}"
+					Background="Beige"
+					FontSize="11"
+					Foreground="Black" 
+					Height="24"
+					Margin="15 0 0 0"
+					Padding="5"					
+					Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged, FallbackValue=1055028}"
+					Width="148"
+					/>					
+					
+					<!--Text="{Binding CustNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source=this}"-->
+				</StackPanel>
 				<!--#region DataGrid ONE-->
 
 				<!--// THIS IS AN EXAMPLE SETUP FOR THE NEW DATAGRID SYSTEM that uses various helpers
@@ -1752,10 +1771,11 @@
 						  BorderBrush="Red" 
 						  CanUserSortColumns="True"					    
 						  CellStyle="{StaticResource BankAccountGridStyle}"
+						  ItemsSource="{Binding bankcollection}"
 						  HorizontalAlignment="Stretch"
 						  Loaded="LoadColumns"
-						  local:DataGridColumnsColorAP.HeaderBackground="Red"
-						  local:DataGridColumnsColorAP.HeaderForeground="White"
+						  att:DataGridColumnsColorAP.HeaderBackground="Red"
+						  att:DataGridColumnsColorAP.HeaderForeground="White"
 						  Margin="1,7,0,8"
 						  MinHeight="150"
 						  Padding="1"
@@ -1771,8 +1791,8 @@
 						<DataGrid.Resources>
 							<!--Set the header layout-->
 							<Style TargetType="DataGridColumnHeader">
-								<Setter Property="Background" Value="{Binding (local:DataGridColumnsColorAP.HeaderBackground),  RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-								<Setter Property="Foreground" Value="{Binding (local:DataGridColumnsColorAP.HeaderForeground),  RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+								<Setter Property="Background" Value="{Binding (att:DataGridColumnsColorAP.HeaderBackground),  RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+								<Setter Property="Foreground" Value="{Binding (att:DataGridColumnsColorAP.HeaderForeground),  RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
 								<Setter Property="Height" Value="25"/>
 								<Setter Property="FontWeight" Value="DemiBold"/>
 							</Style>
@@ -1846,8 +1866,8 @@
 						BorderThickness="3"
 						BorderBrush="Blue" 						
 						HorizontalAlignment="Stretch"
-						local:DataGridColumnsColorAP.HeaderBackground="Red"
-						local:DataGridColumnsColorAP.HeaderForeground="White"
+						att:DataGridColumnsColorAP.HeaderBackground="Red"
+						att:DataGridColumnsColorAP.HeaderForeground="White"
 						Loaded="LoadColumns2"
 						MinHeight="75" 
 						PreviewDragEnter="datagrid_PreviewDragEnter"
@@ -1866,8 +1886,8 @@
 						<DataGrid.Resources>
 							<!--Set the header layout-->
 							<Style TargetType="{x:Type DataGridColumnHeader}">
-								<Setter Property="Background" Value="{Binding (local:DataGridColumnsColorAP.HeaderBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-								<Setter Property="Foreground" Value="{Binding (local:DataGridColumnsColorAP.HeaderForeground), RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+								<Setter Property="Background" Value="{Binding (att:DataGridColumnsColorAP.HeaderBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+								<Setter Property="Foreground" Value="{Binding (att:DataGridColumnsColorAP.HeaderForeground), RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
 								<Setter Property="Height" Value="25"/>
 								<Setter Property="FontWeight" Value="DemiBold"/>
 								<Setter Property="Height" Value="25"/>

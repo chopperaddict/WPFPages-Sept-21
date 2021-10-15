@@ -30,7 +30,12 @@ namespace WPFPages .Views
 			get; set;
 		}
 
-		private CustomerCollection Custcollection = new CustomerCollection ( );
+//		private CustomerCollection Custcollection = new CustomerCollection ( );
+		
+		CollectionViewSource cvs = new CollectionViewSource();
+		
+		
+		
 		// Crucial structure for use when a Grid row is being edited
 		private static CustRowData cvmCurrent = null;
 
@@ -310,7 +315,13 @@ namespace WPFPages .Views
 
 			CustviewerView = CollectionViewSource .GetDefaultView ( e .DataSource as CustCollection );
 			CustDbViewcollection = e .DataSource as CustCollection;
-			CustviewerView .Refresh ( );
+
+			// Add our CollectionView to THE One and only CollectionViewSource
+			cvs . Source = CustDbViewcollection;
+
+			ICollectionView cv = cvs . View;
+
+			CustviewerView . Refresh ( );
 			this .CustGrid .ItemsSource = CustviewerView;
 			this .CustGrid .SelectedIndex = cindex;
 			this .CustGrid .SelectedItem = cindex;
@@ -365,6 +376,11 @@ namespace WPFPages .Views
 			//			EventControl . WindowLinkChanged -= EventControl_WindowLinkChanged;
 
 			Utils .SaveProperty ( "CustDbView_cindex" , cindex .ToString ( ) );
+
+			//if ( !CustviewerView . IsEmpty )
+			//	ICollectionView icv = CustviewerView . SourceCollection as ICollectionView;
+			//		. DetachFromSourceCollection ( );
+
 		}
 
 		private void EventControl_WindowLinkChanged ( object sender , LinkageChangedArgs e )

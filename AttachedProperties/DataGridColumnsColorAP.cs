@@ -6,7 +6,7 @@ using System . Threading . Tasks;
 using System . Windows;
 using System . Windows . Media;
 
-namespace WPFPages . Views
+namespace WPFPages . AttachedProperties
 {
         public class DataGridColumnsColorAP : DependencyObject
         {

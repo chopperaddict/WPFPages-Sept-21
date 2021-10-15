@@ -9,13 +9,16 @@ using System . Threading;
 using System . Threading . Tasks;
 using System . Windows;
 using WPFPages . Properties;
+using System . Collections . Specialized;
+using System . ComponentModel;
+using System . Collections;
 
 namespace WPFPages . Views
 {
         /// <summary>
         /// Class to hold the Bank System Customers data for the system as an Observable collection
         /// </summary>
-        public class CustCollection : ObservableCollection<CustomerViewModel>
+        public class CustCollection : ObservableCollection<CustomerViewModel>, INotifyCollectionChanged , IEnumerable
         {
                 public static DataTable dtCust = new DataTable ( );
                 public static CustCollection Custinternalcollection = new CustCollection ( );
@@ -26,7 +29,8 @@ namespace WPFPages . Views
                 public static int bottomrec = 0;
                 public static int maxrec = 0;
                 public static string Caller = "";
-                #region CONSTRUCTOR
+
+            #region CONSTRUCTOR
 
                 public CustCollection ( )
                 {
@@ -34,7 +38,7 @@ namespace WPFPages . Views
 
                 #endregion CONSTRUCTOR
 
-                #region startup/load data / load collection (CustCollection)
+            #region startup/load data / load collection (CustCollection)
                 public async static Task<CustCollection> LoadCust ( CustCollection cc, string caller, int ViewerType = 1, bool NotifyAll = false, int start = 0, int end = 0, int max = 0 )
                 {
                         Notify = NotifyAll;
@@ -74,7 +78,7 @@ namespace WPFPages . Views
                                 if ( Flags . IsMultiMode == false )
                                 {
                                         CustCollection db = new CustCollection ( );
-                                        SelectViewer ( ViewerType, Custinternalcollection );
+//                                        SelectViewer ( ViewerType, Custinternalcollection );
                                         return db;
                                 }
                                 else
@@ -120,7 +124,7 @@ namespace WPFPages . Views
                                 if ( Flags . IsMultiMode == false )
                                 {
                                         // Finally fill and return The global Dataset
-                                        SelectViewer ( ViewerType, Custinternalcollection );
+//                                        SelectViewer ( ViewerType, Custinternalcollection );
                                         return null;// Custinternalcollection;
                                 }
                                 else
@@ -386,117 +390,10 @@ namespace WPFPages . Views
                         return Custinternalcollection;
                 }
 
-                #endregion startup/load data / load collection (Custinternalcollection)
-                public static bool SelectViewer ( int ViewerType, CustCollection tmp )
-                {
-                        bool result = false;
-                        switch ( ViewerType )
-                        {
-                                //case 1:
-                                //	SqlViewerCustcollection = tmp;
-                                //	result = true;
-                                //	break;
-                                //case 2:
-                                //	EditDbCustcollection = tmp;
-                                //	result = true;
-                                //	break;
-                                //case 3:
-                                //	MultiCustcollection = tmp;
-                                //	result = true;
-                                //	break;
-                                //case 4:
-                                //	CustViewDbcollection = tmp;
-                                //	result = true;
-                                //	break;
-                                //case 5:
-                                //	CustViewerDbcollection = tmp;
-                                //	result = true;
-                                //	break;
-                                //case 6:
-                                //	DetViewerDbcollection = tmp;
-                                //	result = true;
-                                //	break;
-                                //case 7:
-                                //	SqlViewerCustcollection = tmp;
-                                //	result = true;
-                                //	break;
-                                //case 8:
-                                //	SqlViewerDetcollection = tmp;
-                                //	result = true;
-                                //	break;
-                                default:
-                                        //					= tmp;
-                                        result = true;
-                                        break;
-                        }
-                        return result;
-                }
+            #endregion startup/load data / load collection (Custinternalcollection)
 
-                //**************************************************************************************************************************************************************//
-                // Entry point for all data load/Reload
-                //**************************************************************************************************************************************************************//
-                // NO LONGER USED
-                public static bool UpdateCustomerDb ( CustomerViewModel NewData, string CallerType )
-                {
-
-                        SqlConnection con;
-                        SqlCommand cmd = null;
-                        string ConString = "";
-                        ConString = ( string ) Settings . Default [ "BankSysConnectionString" ];
-                        //			@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = 'C:\USERS\IANCH\APPDATA\LOCAL\MICROSOFT\MICROSOFT SQL SERVER LOCAL DB\INSTANCES\MSSQLLOCALDB\IAN1.MDF'; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
-                        con = new SqlConnection ( ConString );
-                        try
-                        {
-                                //We need to update BOTH BankAccount AND DetailsViewModel to keep them in parallel
-                                using ( con )
-                                {
-                                        con . Open ( );
-                                        if ( CallerType == "CUSTOMER" )
-                                        {
-                                                cmd = new SqlCommand ( "UPDATE Customer SET BANKNO=@bankno, CUSTNO=@custno, ACTYPE=@actype, " +
-                                                        "FNAME=@FName, LNAME=@LName, ADDR1=Addr1, ADDR2=@Addr2, TOWN=@Town, COUNTY=@County," +
-                                                        " PCODE=@PCode, PHONE=@Phone, MOBILE=@Mobile, DOB=@dob, ODATE=@odate, CDATE=@cdate " +
-                                                        " where CUSTNO = @custno AND BANKNO = @bankno", con );
-                                                cmd . Parameters . AddWithValue ( "@id", Convert . ToInt32 ( NewData . Id ) );
-                                                cmd . Parameters . AddWithValue ( "@bankno", NewData . BankNo . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@custno", NewData . CustNo . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@actype", Convert . ToInt32 ( NewData . AcType ) );
-                                                cmd . Parameters . AddWithValue ( "@fname", NewData . FName . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@lname", NewData . LName . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@addr1", NewData . Addr1 . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@addr2", NewData . Addr2 . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@town", NewData . Town . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@county", NewData . County . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@pcode", NewData . PCode . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@phone", NewData . Phone . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@mobile", NewData . Mobile . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@dob", Convert . ToDateTime ( NewData . Dob ) );
-                                                cmd . Parameters . AddWithValue ( "@odate", Convert . ToDateTime ( NewData . ODate ) );
-                                                cmd . Parameters . AddWithValue ( "@cdate", Convert . ToDateTime ( NewData . CDate ) );
-                                        }
-                                        else
-                                        {
-                                                cmd = new SqlCommand ( "UPDATE Customer SET BANKNO=@bankno, CUSTNO=@custno, ACTYPE=@actype, ODATE=@odate, CDATE=@cdate where CUSTNO = @custno AND BANKNO = @bankno", con );
-                                                cmd . Parameters . AddWithValue ( "@id", Convert . ToInt32 ( NewData . Id ) );
-                                                cmd . Parameters . AddWithValue ( "@bankno", NewData . BankNo . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@custno", NewData . CustNo . ToString ( ) );
-                                                cmd . Parameters . AddWithValue ( "@actype", Convert . ToInt32 ( NewData . AcType ) );
-                                                cmd . Parameters . AddWithValue ( "@odate", Convert . ToDateTime ( NewData . ODate ) );
-                                                cmd . Parameters . AddWithValue ( "@cdate", Convert . ToDateTime ( NewData . CDate ) );
-                                        }
-                                        cmd . ExecuteNonQuery ( );
-                                        Debug . WriteLine ( "SQL Update of Customers successful..." );
-                                }
-                        }
-                        catch ( Exception ex )
-                        {
-                                Console . WriteLine ( $"CUSTOMER Update FAILED : {ex . Message}, {ex . Data}" );
-                        }
-                        return true;
-                }
-
-                #region EXPORT FUNCTIONS TO READ/WRITE CSV files
-                public static DataTable LoadCustExportData ( )
+            #region EXPORT FUNCTIONS TO READ/WRITE CSV files
+            public static DataTable LoadCustExportData ( )
                 {
                         DataTable dt = new DataTable ( );
                         SqlConnection con;
@@ -629,8 +526,70 @@ namespace WPFPages . Views
                         }
                         return tmp;
                 }
-                #endregion EXPORT FUNCTIONS TO READ/WRITE CSV files
+            #endregion EXPORT FUNCTIONS TO READ/WRITE CSV files
 
-        }
+            // NO LONGER USED
+            #region UpdateCustomers Db
+
+            public static bool UpdateCustomerDb ( CustomerViewModel NewData , string CallerType )
+            {
+
+                  SqlConnection con;
+                  SqlCommand cmd = null;
+                  string ConString = "";
+                  ConString = ( string ) Settings . Default [ "BankSysConnectionString" ];
+                  //			@"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = 'C:\USERS\IANCH\APPDATA\LOCAL\MICROSOFT\MICROSOFT SQL SERVER LOCAL DB\INSTANCES\MSSQLLOCALDB\IAN1.MDF'; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
+                  con = new SqlConnection ( ConString );
+                  try
+                  {
+                        //We need to update BOTH BankAccount AND DetailsViewModel to keep them in parallel
+                        using ( con )
+                        {
+                              con . Open ( );
+                              if ( CallerType == "CUSTOMER" )
+                              {
+                                    cmd = new SqlCommand ( "UPDATE Customer SET BANKNO=@bankno, CUSTNO=@custno, ACTYPE=@actype, " +
+                                            "FNAME=@FName, LNAME=@LName, ADDR1=Addr1, ADDR2=@Addr2, TOWN=@Town, COUNTY=@County," +
+                                            " PCODE=@PCode, PHONE=@Phone, MOBILE=@Mobile, DOB=@dob, ODATE=@odate, CDATE=@cdate " +
+                                            " where CUSTNO = @custno AND BANKNO = @bankno" , con );
+                                    cmd . Parameters . AddWithValue ( "@id" , Convert . ToInt32 ( NewData . Id ) );
+                                    cmd . Parameters . AddWithValue ( "@bankno" , NewData . BankNo . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@custno" , NewData . CustNo . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@actype" , Convert . ToInt32 ( NewData . AcType ) );
+                                    cmd . Parameters . AddWithValue ( "@fname" , NewData . FName . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@lname" , NewData . LName . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@addr1" , NewData . Addr1 . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@addr2" , NewData . Addr2 . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@town" , NewData . Town . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@county" , NewData . County . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@pcode" , NewData . PCode . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@phone" , NewData . Phone . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@mobile" , NewData . Mobile . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@dob" , Convert . ToDateTime ( NewData . Dob ) );
+                                    cmd . Parameters . AddWithValue ( "@odate" , Convert . ToDateTime ( NewData . ODate ) );
+                                    cmd . Parameters . AddWithValue ( "@cdate" , Convert . ToDateTime ( NewData . CDate ) );
+                              }
+                              else
+                              {
+                                    cmd = new SqlCommand ( "UPDATE Customer SET BANKNO=@bankno, CUSTNO=@custno, ACTYPE=@actype, ODATE=@odate, CDATE=@cdate where CUSTNO = @custno AND BANKNO = @bankno" , con );
+                                    cmd . Parameters . AddWithValue ( "@id" , Convert . ToInt32 ( NewData . Id ) );
+                                    cmd . Parameters . AddWithValue ( "@bankno" , NewData . BankNo . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@custno" , NewData . CustNo . ToString ( ) );
+                                    cmd . Parameters . AddWithValue ( "@actype" , Convert . ToInt32 ( NewData . AcType ) );
+                                    cmd . Parameters . AddWithValue ( "@odate" , Convert . ToDateTime ( NewData . ODate ) );
+                                    cmd . Parameters . AddWithValue ( "@cdate" , Convert . ToDateTime ( NewData . CDate ) );
+                              }
+                              cmd . ExecuteNonQuery ( );
+                              Debug . WriteLine ( "SQL Update of Customers successful..." );
+                        }
+                  }
+                  catch ( Exception ex )
+                  {
+                        Console . WriteLine ( $"CUSTOMER Update FAILED : {ex . Message}, {ex . Data}" );
+                  }
+                  return true;
+            }
+            #endregion UpdateCustomers Db
+      }
 }
 

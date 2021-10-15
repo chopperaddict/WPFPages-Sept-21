@@ -25,7 +25,7 @@ namespace WPFPages . UserControls
         /// </summary>
         public partial class APTestingControl : UserControl
         {
-                #region PropertyChanged
+                #region OnPropertyChanged
                 public event PropertyChangedEventHandler PropertyChanged;
 
                 protected void OnPropertyChanged ( string PropertyName )
@@ -36,7 +36,7 @@ namespace WPFPages . UserControls
                                         new PropertyChangedEventArgs ( PropertyName ) );
                         }
                 }
-                #endregion INotifyProp	
+                #endregion OnPropertyChanged
 
                 public APTestingControl ( )
                 {

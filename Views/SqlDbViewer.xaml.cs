@@ -982,6 +982,8 @@ namespace WPFPages
 			if ( SqlCustcollection . Count == 0 )
 				return;
 
+			// Test for an exisitngView for this Db
+			// NB Views are a GLOBALResource, so will cover ALL OPEN CUSTOMER VIEWS ANYWHERE
 			if ( CollectionViewSource . GetDefaultView ( SqlCustcollection ) . IsEmpty )
 				return;
 

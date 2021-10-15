@@ -2,6 +2,7 @@
 using System .Collections;
 using System .Collections .Generic;
 using System .Collections .ObjectModel;
+using System .ComponentModel;
 using System .Data;
 using System .Data .SqlClient;
 using System .Diagnostics;
@@ -50,6 +51,7 @@ namespace WPFPages .Views
 		private Brush CurrentBackColor = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));  // current foreground =White
 		private string CurrentCellName = "";
 		private bool areItemsExpanded;
+		public object FilterBankData { get; private set; }
 
 		public double uclistboxheight = 0;
 		public double uclistbox2height = 0;
@@ -205,8 +207,24 @@ namespace WPFPages .Views
 		}
 		#endregion full properties
 
+		#region INotifyPropertyChanged Members
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected void NotifyPropertyChanged ( string PropertyName )
+		{
+			if ( null != PropertyChanged )
+			{
+				PropertyChanged ( this ,
+					new PropertyChangedEventArgs ( PropertyName ) );
+			}
+		}
+		#endregion INotifyPropertyChanged Members
+
+
 
 		// Drag & Drop stuff
+
 		private bool IsLeftButtonDown = false;
 		private static Point _startPoint
 		{
@@ -216,6 +234,7 @@ namespace WPFPages .Views
 		{
 			get; set;
 		}
+	
 
 		public MultiviewListBoxViewers ( )
 		{
@@ -228,8 +247,9 @@ namespace WPFPages .Views
 			this .Show ( );
 			Utils .SetupWindowDrag ( this );
 			Flags .SqlBankActive = true;
-			await  BankCollection .LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
+			await BankCollection .LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
 			await CustCollection .LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
+
 			uclistboxheight = UCListbox .ActualHeight;
 			uclistbox2height = UCListbox2 .ActualHeight;
 			datagrid .BringIntoView ( );
@@ -238,13 +258,51 @@ namespace WPFPages .Views
 
 		private void EventControl_BankDataLoaded ( object sender , LoadedEventArgs e )
 		{
+			bool privateMethod = false;
 			Debug .WriteLine ( $"\n*** Loading Bank data in UserListboxViewer after BankDataLoaded trigger\n" );
 			SqlBankcollection = e .DataSource as BankCollection;
 			UCListbox .ItemsSource = SqlBankcollection;
-			datagrid .ItemsSource = SqlBankcollection;
+			//Get a View  of the Bank Data so we can sort and filter
+			var  BankCollectionView = CollectionViewSource.GetDefaultView(SqlBankcollection);
+			if ( privateMethod )
+			{
+				// Using my own filter class
+				var  filter = new ViewFilter ( BankCollectionView);
+				// Set the filter to data entry field on the window
+				filter .FilterExpression = "CustNo >= int.Parse(ViewFilterCondition.Text) AND CustNo < 1057000";
+				//filter .FilterExpression = ViewFilterCondition .Text;
+				datagrid .ItemsSource = BankCollectionView;
+				//END
+			}
+			else
+			{
+				// Std method  to filter
+				datagrid .ItemsSource = BankCollectionView;
+				datagrid .SelectedIndex = 0;
+				//BankAccountViewModel bvm = datagrid.SelectedItem as BankAccountViewModel;
+				//BankCollectionView .Filter = new Predicate<object> ( o => FiterBankData ( int.Parse(bvm.CustNo)) );
+				//datagrid .ItemsSource = BankCollectionView;
+			}
+
 			UCListbox .SelectedIndex = 0;
 			Mouse .OverrideCursor = System .Windows .Input .Cursors .Arrow;
 			datagrid .RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode .Visible;
+		}
+
+		/// <summary>
+		/// Filter condition for BankAccount Daa
+		/// </summary>
+		/// <param name="bankaccount"></param>
+		/// <returns></returns>
+		private bool FiterBankData ( int  custno )
+		{
+			return true;
+			//return  custno >1055000 && custno < 1055080;
+										  //.IndexOf ( Search , StringComparison .OrdinalIgnoreCase ) != -1;
+			//if(Search != null) Console .WriteLine ($"{Search}");
+			////if ( Search == null ) return false;
+			//return Search.Contains(bankaccount .CustNo);
+
 		}
 
 		private void EventControl_CustDataLoaded ( object sender , LoadedEventArgs e )

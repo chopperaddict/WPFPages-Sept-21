@@ -201,27 +201,27 @@
 				<MenuItem Header="A/c Type 1 Only"
 					    Click="Linq1_Click"
 					    IsCheckable="false"
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem Header="A/c Type 2 Only"
 					Click="Linq2_Click"
 					IsCheckable="False"
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem Header="A/c Type 3 Only"
 					Click="Linq3_Click"
 					IsCheckable="False"
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                     <MenuItem Header="A/c Type 4 Only"
 					Click="Linq4_Click"
 					IsCheckable="False"
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                     <MenuItem Header="Multi A/C Holders"
 					Click="Linq5_Click"
 					IsCheckable="False"
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
                 
                 <Separator Height="7"
                             Style="{StaticResource Menu_Separator}"/>
@@ -231,7 +231,7 @@
 						Click="Linq6_Click"
 						Foreground="Black"						
 						IsCheckable="False" 
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
   			</MenuItem>
 
@@ -260,13 +260,13 @@
 					Command="ApplicationCommands.New"
 					CommandParameter="Selectedindex"
 						Header="Show current Index" 
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					Command="ApplicationCommands.Cut"
 					CommandParameter="Selectedindex"
 					Header="Show current CustNo" 
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
                 <!--//===========================================-->
@@ -275,7 +275,7 @@
 					Command="cmd:MyCommands.Exit"                    
                     CommandParameter="Parameter = Window is about to be closed"
 					Header="Exit with parameter" 
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
                 <!--Command="{Binding local:BankDbView.Hello_Executed,
@@ -285,7 +285,7 @@
                     CommandParameter="This  a parameter ! !"
   					InputGestureText="Ctrl+H"
 					Header="Hello with Parameter" 
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
                 <Separator Style="{StaticResource Menu_Separator}"/>
@@ -293,7 +293,7 @@
                 <MenuItem
 					Command="cmd:MyCommands.ShowMessage"
 					Foreground="{StaticResource Red0}"
-					Header="Show MessageBox"                       Template="{StaticResource MenuItemTemplate1}"/>
+					Header="Show MessageBox"                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
 	<!--region std app commands-->
@@ -302,12 +302,12 @@
                 <MenuItem
 					Command="ApplicationCommands.Copy"
                     CommandParameter="This is text to be copied"
-	                    Template="{StaticResource MenuItemTemplate1}"/>
+	                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
               <MenuItem
 					Command="ApplicationCommands.Paste"
                     CommandParameter="This is text to be copied"
-	                   Template="{StaticResource MenuItemTemplate1}"/>
+	                   Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <!--endregion std app commands-->
 
@@ -315,7 +315,7 @@
 					Command="cmd:MyCommands.CloseWin"
 					Foreground="{StaticResource Red0}"
 					Header="Close Window" 
-                       Template="{StaticResource MenuItemTemplate1}"/>
+                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
             </MenuItem>
 

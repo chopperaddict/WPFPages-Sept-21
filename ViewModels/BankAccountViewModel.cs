@@ -9,6 +9,7 @@ using System . Collections . ObjectModel;
 using System . ComponentModel;
 using System . Diagnostics;
 using System . Windows . Controls;
+using System .Windows .Data;
 
 using WPFPages . Views;
 
@@ -68,6 +69,19 @@ namespace WPFPages . ViewModels
 		}
 
 		#endregion PropertyChanged
+
+		public static ObservableCollection<BankAccountViewModel> BankViewCollection { get; set; }
+		public static CollectionView BankCollectionView;// = new CollectionView(BankViewCollection);
+
+		private int search;
+		public int Search
+		{
+			get { return search; }
+			set{ search = value;  
+				OnPropertyChanged ( "Search" );
+				CollectionViewSource.GetDefaultView( BankViewCollection ) .Refresh();
+			}
+		}
 
 		#region CONSTRUCTORS
 
@@ -207,7 +221,6 @@ namespace WPFPages . ViewModels
 			return base . ToString ( );
 		}
 		#endregion STANDARD CLASS PROPERTIES SETUP
-
 
 	}
 }

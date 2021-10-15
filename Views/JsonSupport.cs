@@ -161,8 +161,10 @@ namespace WPFPages .Views
 			Output = tmp22 + "\t]\n\t}\n}\n";
 			sb .Clear ( );
 			sb .Append ( Output );
+			if ( !Directory .Exists ( @"C:\tmp" ))
+				Directory .CreateDirectory (  @"C:\tmp" );
 			File .WriteAllText ( @"C:\tmp\xx.json" , sb .ToString ( ) );
-			return sb .ToString ( ); ;
+			return sb .ToString ( );
 		}
 
 		private static string ParseStructure ( string input )

@@ -185,21 +185,20 @@
     <Compile Include="UserControls\NewImageButton.xaml.cs">
       <DependentUpon>NewImageButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\NWSupplier.cs" />
+    <Compile Include="ViewModels\NWSupplierCollection.cs" />
     <Compile Include="Views\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AttachedProperties\DataGridColorCtrlAp.cs" />
+    <Compile Include="Views\DataGridColorCtrlAp.cs" />
     <Compile Include="AttachedProperties\DataGridColumnsColorAP.cs" />
     <Compile Include="Views\Bankaccount.xaml.cs">
       <DependentUpon>Bankaccount.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DataGridUtilities.cs" />
     <Compile Include="Views\ExpandedState.cs" />
-    <Compile Include="AttachedProperties\ListboxColorCtrlAP.cs" />
+    <Compile Include="Views\ListboxColorCtrlAP.cs" />
     <Compile Include="AttachedProperties\Ex.cs" />
-    <Compile Include="ViewModels\ListBoxWindow.xaml.cs">
-      <DependentUpon>ListBoxWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\NwOrderCollection.cs" />
     <Compile Include="ViewModels\NwOrderDesignCollection.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
@@ -313,9 +312,13 @@
       <DependentUpon>Setup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SQLHandlers.cs" />
-    <Compile Include="Views\Storyboards.xaml.cs">
-      <DependentUpon>Storyboards.xaml</DependentUpon>
+    <Compile Include="Views\StylingTest.xaml.cs">
+      <DependentUpon>StylingTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TestNWView.xaml.cs">
+      <DependentUpon>TestNWView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFilter.cs" />
     <Compile Include="Views\SupportMethods.cs" />
     <Compile Include="Views\SysColors.xaml.cs">
       <DependentUpon>SysColors.xaml</DependentUpon>
@@ -447,15 +450,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewModels\ListBoxWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\AboutBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewModels\MenuStyles.xaml">
+    <Page Include="Styles\MenuStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -643,13 +642,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Storyboards.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ViewModels\StyledDatagridTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StylingTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Views\SysColors.xaml">
       <SubType>Designer</SubType>
@@ -664,6 +663,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ThreeDeeBtnControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestNWView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -780,7 +783,6 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
-    <None Include=".editorconfig" />
     <None Include="DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
@@ -793,6 +795,7 @@
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
     <None Include="Design\projectGuides.guides" />
+    <None Include="Snippets\Propchanged.snippet" />
     <None Include="ViewModels\Icons\calls-record.icns" />
     <None Include="ViewModels\Icons\cloud.icns" />
     <None Include="ViewModels\Icons\delete-text-message.icns" />

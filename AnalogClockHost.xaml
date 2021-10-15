@@ -16,7 +16,7 @@
 	<!--OLD VERSION-->
 	<Grid  x:Name="Clock">
 
-		<Analogclock:AnalogClock 				
+		<Analogclock:AnalogClock x:Name="analogclock"		
 			HourHandColor="{StaticResource Orange0}"
 			MinuteHandColor="{StaticResource Green0}"
 			SecondsHandColor="{StaticResource Red0}"
@@ -26,14 +26,16 @@
 			SecondsHandThickness="1" 
 			HourHandLength="-60"
 			MinuteHandLength="-75"
+			PreviewKeyDown="AnalogClock_PreviewKeyDown"
+			
 			SecondHandLength="-85" 
-			Height="{Binding ElementName=Clock, Path=ActualHeight}"
-			Width="{Binding ElementName=Clock, Path=ActualWidth}"
+			Height="221"
+			Width="242"
 			ShowSeconds="true"
 			AnalogBackground="Black"
 			AnalogForeground="White" 
 			HorizontalAlignment="Center"
-			VerticalAlignment="Center" 
+			VerticalAlignment="Center" Margin="0,2,0,-4" 
 			/>
 
 

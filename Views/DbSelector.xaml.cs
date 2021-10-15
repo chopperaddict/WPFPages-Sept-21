@@ -1466,8 +1466,8 @@ namespace WPFPages . Views
 		private void TestBank_Click(object sender, RoutedEventArgs e)
 		{
 			// load test observable collections testing window(s)
-//			TestBankDbView tbdv = new TestBankDbView();
-//			tbdv.Show();
+			TestBankDbView tbdv = new TestBankDbView();
+			tbdv .Show ( );
 		}
 
 		private void UserListbox_Click ( object sender, RoutedEventArgs e )
@@ -1551,15 +1551,15 @@ namespace WPFPages . Views
 
                 private void StoryBoard_Click ( object sender, RoutedEventArgs e )
                 {
-                        Storyboards test = new Storyboards ( );
-                        test. Show ( );
+                        Stylingtest test = new Stylingtest ( );
+                       test. Show ( );
 
                 }
 
                 private void Attached_Click ( object sender, RoutedEventArgs e )
                 {
-                        ListBoxWindow lbw = new ListBoxWindow ( );
-                        lbw . Show ( );
+//                        ListBoxWindow lbw = new ListBoxWindow ( );
+  //                      lbw . Show ( );
                 }
 
             private void Styled_Click ( object sender , RoutedEventArgs e )
@@ -1589,6 +1589,12 @@ namespace WPFPages . Views
 		{
 			FullWPFWindow1 fw = new FullWPFWindow1();
 			fw .Show ( );
+		}
+
+		private void NorthWind_Click ( object sender , RoutedEventArgs e )
+		{
+			TestNWView tnv = new TestNWView();
+			tnv . Show ( );
 		}
 	}
 }

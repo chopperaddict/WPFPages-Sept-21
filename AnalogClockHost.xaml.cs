@@ -28,7 +28,19 @@ namespace WPFPages
 			InitializeComponent ( );
 		}
 
-
-
+		private void AnalogClock_PreviewKeyDown ( object sender , KeyEventArgs e )
+		{
+			Console .WriteLine ($"Key is {e.Key.ToString()}");
+			if ( e .Key == Key .OemPlus
+				)
+				analogclock .Width--;
+			else if ( e .Key == Key .F8
+				)
+				analogclock .Width--;
+			else if ( e .Key == Key .F9)
+				analogclock .Width++;
+			else
+				analogclock .Width++;
+		}
 	}
 }

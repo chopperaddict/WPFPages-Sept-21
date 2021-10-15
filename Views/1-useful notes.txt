@@ -1,3 +1,61 @@
+
+=================================================
+
+//How  to Implement Filtering on a Db Collection using the Filter provided by the CollectionView 
+// This can be used to implement the classic "Data Changes" as you type into a field
+
+// Initial Setup when we get the Db Datato create the View
+			
+			// Declare the CollectionView
+			public CollectionView TestBankviewerView { get; set; }
+
+			// Once we have the data available :
+			// Get the default Collections View as our default ItemSource () (TestBankCollection is a CollectionView)
+
+			TestBankcollection = e .DataSource as TestBankCollection;
+			TestBankviewerView = CollectionViewSource .GetDefaultView ( TestBankcollection ) as CollectionView;
+			//Assign Collection to the datagrid
+			this .BankGrid .ItemsSource = TestBankcollection;
+			//Set the fillter we want up
+			TestBankviewerView .Filter = new Predicate<object> ( ( obj ) => FilterBankData ( obj as BankAccountViewModel ) );
+			// Clear DataGrid down and assign new (Filtered) data to it
+			this .BankGrid .ItemsSource = null;
+			this .BankGrid .Items .Clear ( );
+			this .BankGrid .ItemsSource = TestBankviewerView;
+			// Filtering completed
+
+		//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+		// THESE TWO FUNCTIONS LIVE TOGETHER AND HANDLE FILTERING OF A COLLECTION VIEW
+
+		/// <summary>
+		/// This is the CRUCIAL method that updates the grid whenever we change its content
+		/// which changes the content of the CollectonView we have assigned to our DataGrid's ItemsSource
+		/// so we just Refresh() of the CollectionView to update the grid with JUST the  data matching our filter condition
+
+		It is triggered by setting the TextBox Property TextChanged="filter_TextChanged"
+
+		private void filter_TextChanged ( object sender , TextChangedEventArgs e )
+		{
+			if ( BankGrid .ItemsSource != null )
+				TestBankviewerView .Refresh ( );
+		}
+
+		/// <summary>
+		/// This is the Filter method logic to filter BankAccount CustNo into a Datagrid
+		/// This checks that the data in  the Collectionview ONLY matches if it Contains the text for the filter.Text field
+		/// but it can be as complex as you like as long as it returns a bool
+
+		private bool FilterBankData ( BankAccountViewModel bvm )
+		{
+			string input = bvm.CustNo.ToString();
+			string  srchtxt = filter .Text;
+			if ( bvm == null ) return false;
+			bool b = input.Contains(srchtxt );
+			return b;
+		}
+
+		// Now all data will comply with the condition set above
+
 =================================================
 
 // How to add  a Custom control to be found in a Custom Control Library (Remote method)
@@ -77,12 +135,12 @@ xmlns:analogclock="clr-namespace:WPFPages.Analogclock"
              <MenuItem
 					Command="ApplicationCommands.Copy"
                     CommandParameter="This is text to be copied"
-	                    Template="{StaticResource MenuItemTemplate1}"/>
+	                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
               <MenuItem
 					Command="ApplicationCommands.Paste"
                     CommandParameter="This is text to be copied"
-	                   Template="{StaticResource MenuItemTemplate1}"/>
+	                   Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 					   etc..........
 
@@ -95,8 +153,12 @@ xmlns:analogclock="clr-namespace:WPFPages.Analogclock"
 					});
 =================================================
 
+How to use my DataGrid "Styles" with any DataGrid
+
 //Bankaccount/Customer Db DATAGRID CUSTOMISATION
-//styles etc are in "DataGridControlTemplates.xaml""
+//BankGrid styles etc are in "\DataGridStyles\BankDatagridStyleTemplate.xaml"
+//CustomerGrid styles etc are in "\DataGridStyles\CustomerDatagridStyleTemplate.xaml"
+//NorthWest Db styles etc are in "\DataGridStyles\NWStyleTemplate.xaml""
 
 //These provide a standard set of row colors for mouseover = no and mouseover = yes
 //for these type of datagrids
@@ -109,38 +171,28 @@ CellStyle="{StaticResource xxxtypeGridStyle}">
 // MENU CUSTOMISATON
 //How to use the Menu Attached Propertes in "MenuAttachedProperties.cs"
 
-//Other styles are in Menus.xaml
-<--        
-		Green5      - MenuBackground is normal menu item color
-        Orange4    - MenuItemSelectedBackground is the background when moiuse is over an item
-        White0       - MenuItemForeground handles Foreground when mouse s NOT over the menu item
-        Black0       - MenuSelectedForeground handles Foreground when mouse is OVER the menu item
-        Blue2         - MenuItemBorderColor is  the border color of EACH menu item
-        25              - MenuItemHeight controls the height of ALL MenuItems
-        x                 - MenuItemBorderThickness controls gap between menuitems
--->
-       <Menu
-			Height="30"
-			HorizontalAlignment="Left"
-			HorizontalContentAlignment="Stretch"
-            local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource Orange4}"
-            local:MenuAttachedProperties.MenuItemBackground="{StaticResource Red0}"
-            local:MenuAttachedProperties.MenuItemForeground="{StaticResource White0}"
-            local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource Black0}"
-            local:MenuAttachedProperties.MenuFontSize="12"
-            local:MenuAttachedProperties.MenuFontWeight="Normal"
-            local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
-            local:MenuAttachedProperties.MenuItemBorderThickness="1"
-            local:MenuAttachedProperties.MenuItemHeight ="30"
-            local:MenuAttachedProperties.MenuItemMargin="2"
-            Background="Transparent"
-			Grid.Column="1" 
-            BorderThickness="3"
-            BorderBrush="{StaticResource Black1}"
-            Width="810">
+      <Menu
+		Height="30"
+		HorizontalAlignment="Left"
+		HorizontalContentAlignment="Stretch"
+		local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource Orange4}"
+		local:MenuAttachedProperties.MenuItemBackground="{StaticResource Red0}"
+		local:MenuAttachedProperties.MenuItemForeground="{StaticResource White0}"
+		local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource Black0}"
+		local:MenuAttachedProperties.MenuFontSize="12"
+		local:MenuAttachedProperties.MenuFontWeight="Normal"
+		local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
+		local:MenuAttachedProperties.MenuItemBorderThickness="1"
+		local:MenuAttachedProperties.MenuItemHeight ="30"
+		local:MenuAttachedProperties.MenuItemMargin="2"
+		Background="Transparent"
+		Grid.Column="1" 
+		BorderThickness="3"
+		BorderBrush="{StaticResource Black1}"
+		Width="810">
 
-			//Add this the link to  the ControlTemplate (in "\Dicts\Menus.xaml") to each menuItems you want to be handled. 
-			Template="{StaticResource MenuItemTemplate1}"/>
+	//Add this the link to  the ControlTemplate (in "\Dicts\Menus.xaml") to each menuItems you want to be handled. 
+	Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 =================================================
 
@@ -255,6 +307,9 @@ Height="{Binding Height, ElementName=Innergrid, Converter={StaticResource AddTop
             / Must declare the event
             public event RoutedEventHandler Click;
 
+		//Setup handler to handle click event  from UserControl
+		Click += new RoutedEventHandler ( Threedbtn_Click );
+
             private void OnClick ( object sender, MouseButtonEventArgs e )
             {
                     if ( this . Click != null )
@@ -262,6 +317,20 @@ Height="{Binding Height, ElementName=Innergrid, Converter={StaticResource AddTop
                             this . Click ( this, e );
                     }
             }
+
+		// In the usercontrol, add this code :
+		 public event RoutedEventHandler Click;                
+             
+		 // This passes the Click event (from ThreeDeeBtnControl) on to user windows
+                private void OnButtonClick ( object sender, RoutedEventArgs e )
+                {
+                        if ( this . Click != null )
+                        {
+                                this . Click ( this, e );
+                        }
+                }
+
+		   and call it from the Click= property of the button or why.
 
 =================================================
 

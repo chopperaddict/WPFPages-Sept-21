@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:models="clr-namespace:WPFPages.ViewModels"
                   xmlns:view="clr-namespace:WPFPages.Views"
+                  xmlns:att="clr-namespace:WPFPages.AttachedProperties"
                     >
     <!--#region Bank DataGrid Style-->
 
@@ -307,7 +308,7 @@
             that has DataTemplate for the NW Customer Db
             and uses the AP AttachedProperties Class internally for all color control-->
       <Style x:Key="DataGridColorControlTemplate2" TargetType="{x:Type DataGridRow}">
-            <Setter Property="Height" Value="{Binding (models:ListboxColorCtrlAP.ItemHeight),  RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
+            <Setter Property="Height" Value="{Binding (att:ListboxColorCtrlAP.ItemHeight),  RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
    
             <Setter Property="Template">
 
@@ -345,9 +346,9 @@
                                                 <Condition Property="IsMouseOver" Value="false"/>
                                                 <Condition Property="IsSelected" Value="false"/>
                                           </MultiTrigger.Conditions>
-                                          <Setter Property="Background" TargetName="Bd" Value="{Binding (models:ListboxColorCtrlAP.Background), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
-                                          <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding (models:ListboxColorCtrlAP.Background), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
-                                          <Setter Property="TextElement.Foreground" Value="{Binding (models:ListboxColorCtrlAP.Foreground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="Background" TargetName="Bd" Value="{Binding (att:ListboxColorCtrlAP.Background), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding (att:ListboxColorCtrlAP.Background), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="TextElement.Foreground" Value="{Binding (att:ListboxColorCtrlAP.Foreground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                           <Setter Property="TextElement.FontWeight" Value="{Binding Path=(models:ListboxColorCtrlAP.FontWeight), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                           <Setter Property="TextElement.FontSize" Value="{Binding Path=(models:ListboxColorCtrlAP.FontSize), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                     </MultiTrigger>
@@ -357,9 +358,9 @@
                                                 <Condition Property="IsMouseOver" Value="true"/>
                                                 <Condition Property="IsSelected" Value="false"/>
                                           </MultiTrigger.Conditions>
-                                          <Setter Property="Background" TargetName="Bd" Value="{Binding (models:ListboxColorCtrlAP.MouseoverBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
-                                          <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding (models:ListboxColorCtrlAP.MouseoverBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
-                                          <Setter Property="TextElement.Foreground" Value="{Binding (models:ListboxColorCtrlAP.MouseoverForeground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="Background" TargetName="Bd" Value="{Binding (att:ListboxColorCtrlAP.MouseoverBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding (att:ListboxColorCtrlAP.MouseoverBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="TextElement.Foreground" Value="{Binding (att:ListboxColorCtrlAP.MouseoverForeground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                           <Setter Property="TextElement.FontWeight" Value="{Binding Path=(models:ListboxColorCtrlAP.FontWeight), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                           <Setter Property="TextElement.FontSize" Value="{Binding Path=(models:ListboxColorCtrlAP.FontSize), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                     </MultiTrigger>
@@ -370,9 +371,9 @@
                                                 <Condition Property="IsMouseOver" Value="false"/>
                                                 <Condition Property="IsSelected" Value="true"/>
                                           </MultiTrigger.Conditions>
-                                          <Setter Property="Background" TargetName="Bd" Value="{Binding (models:ListboxColorCtrlAP.SelectionBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
-                                          <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding (models:ListboxColorCtrlAP.SelectionBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
-                                          <Setter Property="TextElement.Foreground" Value="{Binding (models:ListboxColorCtrlAP.SelectionForeground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="Background" TargetName="Bd" Value="{Binding (att:ListboxColorCtrlAP.SelectionBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding (att:ListboxColorCtrlAP.SelectionBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="TextElement.Foreground" Value="{Binding (att:ListboxColorCtrlAP.SelectionForeground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                           <Setter Property="TextElement.FontWeight" Value="{Binding Path=(models:ListboxColorCtrlAP.FontWeightSelected), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                           <Setter Property="TextElement.FontSize" Value="{Binding Path=(models:ListboxColorCtrlAP.FontSize), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
 
@@ -384,9 +385,9 @@
                                                 <Condition Property="IsMouseOver" Value="True"/>
                                                 <Condition Property="IsSelected" Value="true"/>
                                           </MultiTrigger.Conditions>
-                                          <Setter Property="Background" TargetName="Bd" Value="{Binding (models:ListboxColorCtrlAP.MouseoverSelectedBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
-                                          <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding (models:ListboxColorCtrlAP.MouseoverSelectedBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
-                                          <Setter Property="TextElement.Foreground" Value="{Binding (models:ListboxColorCtrlAP.MouseoverSelectedForeground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="Background" TargetName="Bd" Value="{Binding (att:ListboxColorCtrlAP.MouseoverSelectedBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="BorderBrush" TargetName="Bd" Value="{Binding (att:ListboxColorCtrlAP.MouseoverSelectedBackground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                          <Setter Property="TextElement.Foreground" Value="{Binding (att:ListboxColorCtrlAP.MouseoverSelectedForeground), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                           <Setter Property="TextElement.FontWeight" Value="{Binding Path=(models:ListboxColorCtrlAP.FontWeightSelected), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                           <Setter Property="TextElement.FontSize" Value="{Binding Path=(models:ListboxColorCtrlAP.FontSize), RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                                     </MultiTrigger>

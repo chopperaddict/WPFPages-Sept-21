@@ -205,7 +205,7 @@
 					Click="Linq1_Click"
 					Header="A/c Type 1 Only"
 					IsCheckable="false"  
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					Background="#35F6FB"
@@ -213,31 +213,31 @@
 					Foreground="Black"
 					Header="A/c Type 2 Only"
 					IsCheckable="False"  
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					Click="Linq3_Click"
 					Header="A/c Type 3 Only"
 					IsCheckable="False"   
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					Click="Linq4_Click"
 					Header="A/c Type 4 Only"
 					IsCheckable="False"   
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					Click="Linq5_Click"
 					Header="Multi A/C Holders"
 					IsCheckable="False"   
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <Separator />
 				<MenuItem Header="All Records"
 						Click="Linq6_Click"
 						IsCheckable="False"   
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <Separator />
 			</MenuItem>
@@ -253,7 +253,7 @@
 						Click="Filterx_Click"
 						Header="Reset to ALL Ac's"
 					IsCheckable="false"   
-                    Template="{StaticResource MenuItemTemplate1}">
+                    Template="{StaticResource MenuItemCtrlTemplate1}">
 
                 <MenuItem.Icon >
 						<Image x:Name="FontsizeIcon" 
@@ -266,28 +266,28 @@
 					Click="Filterx_Click"
 					Header="A/c Type = 1"
 					IsCheckable="false"   
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					x:Name="Filter2"
 					Click="Filterx_Click"
 					Header="A/c Type = 2"
 					IsCheckable="false"   
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					x:Name="Filter3"
 					Click="Filterx_Click"
 					Header="A/c Type = 3"
 					IsCheckable="false"   
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
                 <MenuItem
 					x:Name="Filter4"
 					Click="Filterx_Click"
 					Header="A/c Type = 4"
 					IsCheckable="false"   
-                    Template="{StaticResource MenuItemTemplate1}"/>
+                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
             </MenuItem>
 

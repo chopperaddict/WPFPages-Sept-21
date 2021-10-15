@@ -2,41 +2,14 @@
 using System . Windows;
 using System . Windows . Media;
 
-
-namespace WPFPages . ViewModels
+namespace WPFPages . Views
 {
-        /// <summary>
-        /// Set of Attached properties for use with Listbox
-        /// </summary>
-        public  class ListboxColorCtrlAP: DependencyObject
+          public  class ListboxColorCtrlAP: DependencyObject
         {
                 #region Attached Properties
                 
-                #region ItemHeight AP
-                public static readonly DependencyProperty ItemHeightProperty
-                        = DependencyProperty . RegisterAttached (
-                        "ItemHeight",
-                        typeof ( double ),
-                        typeof (ListboxColorCtrlAP ),
-                        new PropertyMetadata ( ( double ) 20 ),OnItemheightChanged );
 
-                  public static double GetItemHeight ( DependencyObject d )
-                {
-                        return ( double ) d . GetValue ( ItemHeightProperty );
-                }
-                public static void SetItemHeight ( DependencyObject d, double value )
-                {
-                        d . SetValue ( ItemHeightProperty, value );
-                }
-                private static bool OnItemheightChanged ( object value )
-                {
-                        Console . WriteLine ( $"AP : ONItemHeightchanged = {value}" );
-
-                        return true;
-                }
-                #endregion ItemHeight
-
-                #region Background AP
+                #region Background 
                 public static readonly DependencyProperty BackgroundProperty
                   = DependencyProperty . RegisterAttached (
                   "Background",
@@ -107,7 +80,61 @@ namespace WPFPages . ViewModels
                     DependencyProperty . RegisterAttached ( "BorderThickness", typeof ( Thickness ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( default ) );
                 #endregion BorderThickness
 
-                #region Foreground Attached Property
+                #region FontSize
+                public static double GetFontSize ( DependencyObject obj )
+                {
+                        return ( double ) obj . GetValue ( FontSizeProperty );
+                }
+
+                public static void SetFontSize ( DependencyObject obj, double value )
+                {
+                        obj . SetValue ( FontSizeProperty, value );
+                }
+
+                // Using a DependencyProperty as the backing store for FontSize.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty FontSizeProperty =
+                    DependencyProperty . RegisterAttached ( "FontSize", typeof ( double ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( (double)14 ) );
+                #endregion FontSize
+
+                #region FontWeight
+                public static FontWeight GetFontWeight ( DependencyObject obj )
+                {
+                        return ( FontWeight ) obj . GetValue ( FontWeightProperty );
+                }
+
+                public static void SetFontWeight ( DependencyObject obj, FontWeight value )
+                {
+                        obj . SetValue ( FontWeightProperty, value );
+                }
+
+                // Using a DependencyProperty as the backing store for FontWeight.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty FontWeightProperty =
+                    DependencyProperty . RegisterAttached ( "FontWeight", typeof ( FontWeight ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( default ) );
+                #endregion FontWeight
+
+                #region FontWeightSelected
+                public static FontWeight GetFontWeightSelected ( DependencyObject obj )
+                {
+                        return ( FontWeight ) obj . GetValue ( FontWeightSelectedProperty );
+                }
+
+                public static void SetFontWeightSelected ( DependencyObject obj, FontWeight value )
+                {
+                        obj . SetValue ( FontWeightSelectedProperty, value );
+                }
+
+                // Using a DependencyProperty as the backing store for FontWeight.  This enables animation, styling, binding, etc...
+                public static readonly DependencyProperty FontWeightSelectedProperty =
+                    DependencyProperty . RegisterAttached ( "FontWeightSelected", typeof ( FontWeight ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( (FontWeight) FontWeight.FromOpenTypeWeight(400) ), OnFontWeightSelectedChanged );
+
+                private static bool OnFontWeightSelectedChanged ( object value )
+                {
+                        Console . WriteLine ($"FontWeightSelected has been reset to {value}" );
+                        return true;
+                }
+                #endregion FontWeight
+            
+            #region Foreground
                 public static readonly DependencyProperty ForegroundProperty
                  = DependencyProperty . RegisterAttached (
                  "Foreground",
@@ -130,7 +157,31 @@ namespace WPFPages . ViewModels
                 }
                 #endregion Foreground
 
-                #region SelectionBackground AP
+                #region ItemHeight
+                public static readonly DependencyProperty ItemHeightProperty
+                        = DependencyProperty . RegisterAttached (
+                        "ItemHeight",
+                        typeof ( double ),
+                        typeof (ListboxColorCtrlAP ),
+                        new PropertyMetadata ( ( double ) 20 ),OnItemheightChanged );
+
+                  public static double GetItemHeight ( DependencyObject d )
+                {
+                        return ( double ) d . GetValue ( ItemHeightProperty );
+                }
+                public static void SetItemHeight ( DependencyObject d, double value )
+                {
+                        d . SetValue ( ItemHeightProperty, value );
+                }
+                private static bool OnItemheightChanged ( object value )
+                {
+                        Console . WriteLine ( $"AP : ONItemHeightchanged = {value}" );
+
+                        return true;
+                }
+                #endregion ItemHeight
+
+                #region SelectionBackground 
                 public static Brush GetSelectionBackground ( DependencyObject obj )
                 {
                         return ( Brush ) obj . GetValue ( SelectionBackgroundProperty );
@@ -145,9 +196,9 @@ namespace WPFPages . ViewModels
                 public static readonly DependencyProperty SelectionBackgroundProperty =
                     DependencyProperty . RegisterAttached ( "SelectionBackground", typeof ( Brush ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( Brushes.Blue ) );
 
-                #endregion SelectionBackground AP
+                #endregion SelectionBackground
 
-                #region SelectionForeground AP
+                #region SelectionForeground
                 public static Brush GetSelectionForeground ( DependencyObject obj )
                 {
                         return ( Brush ) obj . GetValue ( SelectionForegroundProperty );
@@ -160,9 +211,9 @@ namespace WPFPages . ViewModels
                 public static readonly DependencyProperty SelectionForegroundProperty =
                     DependencyProperty . RegisterAttached ( "SelectionForeground", typeof ( Brush ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( Brushes.White) );
 
-                #endregion SelectionForeground AP              
+                #endregion SelectionForeground   
 
-                #region MouseoverForeground AP
+                #region MouseoverForeground
                 public static Brush GetMouseoverForeground ( DependencyObject obj )
                 {
                         return ( Brush ) obj . GetValue ( MouseoverForegroundProperty );
@@ -176,9 +227,9 @@ namespace WPFPages . ViewModels
                 // Using a DependencyProperty as the backing store for MouseoverForeground.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty MouseoverForegroundProperty =
                     DependencyProperty . RegisterAttached ( "MouseoverForeground", typeof ( Brush ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( Brushes.Black ) );
-                #endregion MouseoverForeground AP
+                #endregion MouseoverForeground
    
-                #region MouseoverBackground AP
+                #region MouseoverBackground
                 public static Brush GetMouseoverBackground ( DependencyObject obj )
                 {
                         return ( Brush ) obj . GetValue ( MouseoverBackgroundProperty );
@@ -192,9 +243,9 @@ namespace WPFPages . ViewModels
                 // Using a DependencyProperty as the backing store for MouseoverBackground.  This enables animation, styling, binding, etc...
                 public static readonly DependencyProperty MouseoverBackgroundProperty =
                     DependencyProperty . RegisterAttached ( "MouseoverBackground", typeof ( Brush ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( Brushes.LightGray) );
-                #endregion MouseoverBackground AP
+                #endregion MouseoverBackground 
 
-                #region MouseoverSelectedForeground AP
+                #region MouseoverSelectedForeground 
                 public static Brush GetMouseoverSelectedForeground ( DependencyObject obj )
                 {
                         return ( Brush ) obj . GetValue ( MouseoverSelectedForegroundProperty );
@@ -205,9 +256,9 @@ namespace WPFPages . ViewModels
                 }
                 public static readonly DependencyProperty MouseoverSelectedForegroundProperty =
                     DependencyProperty . RegisterAttached ( "MouseoverSelectedForeground", typeof ( Brush ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( Brushes.White ) );
-                #endregion MouseoverSelectedForeground AP
+                #endregion MouseoverSelectedForeground 
 
-                #region MouseoverSelectedBackground AP
+                #region MouseoverSelectedBackground 
                 public static Brush GetMouseoverSelectedBackground ( DependencyObject obj )
                 {
                         return ( Brush ) obj . GetValue ( MouseoverSelectedBackgroundProperty );
@@ -218,61 +269,8 @@ namespace WPFPages . ViewModels
                 }
                 public static readonly DependencyProperty MouseoverSelectedBackgroundProperty =
                     DependencyProperty . RegisterAttached ( "MouseoverSelectedBackground", typeof ( Brush ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( Brushes.Red ) );
-                #endregion MouseoverSelectedBackground AP
+                #endregion MouseoverSelectedBackground
 
-                #region FontSize AP
-                public static double GetFontSize ( DependencyObject obj )
-                {
-                        return ( double ) obj . GetValue ( FontSizeProperty );
-                }
-
-                public static void SetFontSize ( DependencyObject obj, double value )
-                {
-                        obj . SetValue ( FontSizeProperty, value );
-                }
-
-                // Using a DependencyProperty as the backing store for FontSize.  This enables animation, styling, binding, etc...
-                public static readonly DependencyProperty FontSizeProperty =
-                    DependencyProperty . RegisterAttached ( "FontSize", typeof ( double ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( (double)14 ) );
-                #endregion FontSize AP
-
-                #region FontWeight AP
-                public static FontWeight GetFontWeight ( DependencyObject obj )
-                {
-                        return ( FontWeight ) obj . GetValue ( FontWeightProperty );
-                }
-
-                public static void SetFontWeight ( DependencyObject obj, FontWeight value )
-                {
-                        obj . SetValue ( FontWeightProperty, value );
-                }
-
-                // Using a DependencyProperty as the backing store for FontWeight.  This enables animation, styling, binding, etc...
-                public static readonly DependencyProperty FontWeightProperty =
-                    DependencyProperty . RegisterAttached ( "FontWeight", typeof ( FontWeight ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( default ) );
-                #endregion FontWeight AP
-
-                #region FontWeightSelected AP
-                public static FontWeight GetFontWeightSelected ( DependencyObject obj )
-                {
-                        return ( FontWeight ) obj . GetValue ( FontWeightSelectedProperty );
-                }
-
-                public static void SetFontWeightSelected ( DependencyObject obj, FontWeight value )
-                {
-                        obj . SetValue ( FontWeightSelectedProperty, value );
-                }
-
-                // Using a DependencyProperty as the backing store for FontWeight.  This enables animation, styling, binding, etc...
-                public static readonly DependencyProperty FontWeightSelectedProperty =
-                    DependencyProperty . RegisterAttached ( "FontWeightSelected", typeof ( FontWeight ), typeof ( ListboxColorCtrlAP ), new PropertyMetadata ( (FontWeight) FontWeight.FromOpenTypeWeight(400) ), OnFontWeightSelectedChanged );
-
-                private static bool OnFontWeightSelectedChanged ( object value )
-                {
-                        Console . WriteLine ($"FontWeightSelected has been reset to {value}" );
-                        return true;
-                }
-                #endregion FontWeight AP
                   
                 #region dumyAPstring
                 public static readonly DependencyProperty dummyAPstringProperty =

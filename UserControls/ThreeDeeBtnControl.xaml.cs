@@ -17,14 +17,6 @@ namespace WPFPages . Views
                 /// How to pass a click event thru to end user of any UserControl
                 // Must declare the event
                 public event RoutedEventHandler Click;
-
-                private void OnClick ( object sender, MouseButtonEventArgs e )
-                {
-                        if ( this . Click != null )
-                        {
-                                this . Click ( this, e );
-                        }
-                }
                 
                 // This passes the Click event (from ThreeDeeBtnControl) on to user windows
                 private void OnButtonClick ( object sender, RoutedEventArgs e )

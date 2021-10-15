@@ -1,35 +1,21 @@
 ﻿using System;
-using System .Collections;
-using System .Collections .Generic;
-using System .Collections .ObjectModel;
-using System .ComponentModel;
-using System .Linq;
-using System .Text;
-using System .Threading;
-using System .Threading .Tasks;
-using System .Windows;
-using System .Windows .Controls;
-using System .Windows .Controls .Primitives;
-using System .Windows .Data;
-using System .Windows .Documents;
-using System .Windows .Input;
-using System .Windows .Media;
-using System .Windows .Media .Animation;
-using System .Windows .Media .Imaging;
-using System .Windows .Shapes;
-using System .Xml .Schema;
+using System . Collections . ObjectModel;
+using System . ComponentModel;
+using System . Linq;
+using System . Threading;
+using System . Windows;
+using System . Windows . Controls;
+using System . Windows . Data;
+using System . Windows . Input;
+using System . Windows . Media;
+using System . Windows . Media . Animation;
 
-using WPFLibrary2021;
+using WPFPages . Commands;
+using WPFPages . ViewModels;
 
-using WPFPages .Commands;
-using WPFPages .UserControls;
-using WPFPages .ViewModels;
-
-using static WPFPages .Views .nworder;
-
-namespace WPFPages .Views
+namespace WPFPages . Views
 {
-	public partial class Storyboards : Window
+	public partial class Stylingtest : Window
 	{
 		private bool DataSwitched = false;
 		private bool ScrollBarMouseMove = false;
@@ -58,24 +44,24 @@ namespace WPFPages .Views
 		//Handle click event  from 3DButton
 		public event RoutedEventHandler Click;
 
-		public Storyboards ( )
+		public Stylingtest ( )
 		{
 			InitializeComponent ( );
-			this .Show ( );
+			this . Show ( );
 		}
 		TextBox tb;
 		// how to access template named controls in c#
 		public override void OnApplyTemplate ( )
 		{
-			base .OnApplyTemplate ( );
+			base . OnApplyTemplate ( );
 
 			if ( Template != null )
 			{
-				Console .WriteLine ( $"TargetType = {Template .TargetType}" );
+				Console . WriteLine ( $"TargetType = {Template . TargetType}" );
 				TemplateContent tc = Template .Template;
-				Console .WriteLine ( $"{tc .ToString ( )}" );
-				
-				if ( Template .HasContent )
+				Console . WriteLine ( $"{tc . ToString ( )}" );
+
+				if ( Template . HasContent )
 				{
 					tb = GetTemplateChild ( "Controlname" ) as TextBox;
 					var v = GetTemplateChild ( "RectBtn" );
@@ -85,68 +71,69 @@ namespace WPFPages .Views
 		}
 		private async void CustGrid_Loaded ( object sender , RoutedEventArgs e )
 		{
-			EventControl .CustDataLoaded += EventControl_CustDataLoaded;
-			this .CustGrid .ItemsSource = null;
-			this .CustGrid .Items .Clear ( );
+			EventControl . CustDataLoaded += EventControl_CustDataLoaded;
+			this . CustGrid . ItemsSource = null;
+			this . CustGrid . Items . Clear ( );
 			CustCollection CustViewcollection = new CustCollection ( );
-			CustViewcollection = await CustCollection .LoadCust ( CustViewcollection , "CUSTDBVIEW" , 3 , true );
+			CustViewcollection = await CustCollection . LoadCust ( CustViewcollection , "CUSTDBVIEW" , 3 , true );
 		}
 
 		private void EventControl_CustDataLoaded ( object sender , LoadedEventArgs e )
 		{
-			LView3 .ItemsSource = null;
+			LView3 . ItemsSource = null;
 			//                        Customers1 = e . DataSource as CustomerCollection;
-			LView3 .ItemsSource = e .DataSource as CustCollection;
+			LView3 . ItemsSource = e . DataSource as CustCollection;
 			//                        CustGrid . ItemsSource = e . DataSource as CustCollection;
 
 			//                        CustGrid . ItemsSource = view1;
-			Customers1 = e .DataSource as ObservableCollection<CustomerViewModel>;
-			CustGrid .ItemsSource = Customers1;
+			Customers1 = e . DataSource as ObservableCollection<CustomerViewModel>;
+			CustGrid . ItemsSource = Customers1;
 
+			if ( CollectionViewSource . GetDefaultView ( Customers1 ) . IsEmpty )
+				return;
 			CustCollection custs = new CustCollection ( );
 			CollectionViewSource custview = new CollectionViewSource ( );
-			Customers1 = ( ObservableCollection<CustomerViewModel> ) CollectionViewSource .GetDefaultView ( Customers1 );
+			Customers1 = ( ObservableCollection<CustomerViewModel> ) CollectionViewSource . GetDefaultView ( Customers1 );
+			if ( view1 != ( CollectionView ) null && view1 . Count > 0 )
+				view1 . SortDescriptions . Clear ( );
+			view1 . SortDescriptions . Add ( new SortDescription ( "Surname" , ListSortDirection . Ascending ) );
+			CustGrid . ItemsSource = view1;
 
-			if ( view1 != ( CollectionView ) null && view1 .Count > 0 )
-				view1 .SortDescriptions .Clear ( );
-			view1 .SortDescriptions .Add ( new SortDescription ( "ShipName" , ListSortDirection .Ascending ) );
-			CustGrid .ItemsSource = view1;
-
-			this .CustGrid .SelectedIndex = 0;
-			this .CustGrid .SelectedItem = 0;
-			this .CustGrid .CurrentItem = 0;
-			this .CustGrid .UpdateLayout ( );
-			this .CustGrid .Refresh ( );
+			this . CustGrid . SelectedIndex = 0;
+			this . CustGrid . SelectedItem = 0;
+			this . CustGrid . CurrentItem = 0;
+			this . CustGrid . UpdateLayout ( );
+			this . CustGrid . Refresh ( );
 		}
 		private void storyboard_Loaded ( object sender , RoutedEventArgs e )
 		{
-			if ( NwOrders .Count > 0 )
-				NwOrders .Clear ( );
-			if ( NwCustomers .Count > 0 )
-				NwCustomers .Clear ( );
+			if ( NwOrders . Count > 0 )
+				NwOrders . Clear ( );
+			if ( NwCustomers . Count > 0 )
+				NwCustomers . Clear ( );
 
-			LView1 .Items .Clear ( );
-			LView1 .ItemsSource = null;
-			LView2 .Items .Clear ( );
-			LView2 .ItemsSource = null;
-			LView4 .Items .Clear ( );
-			LView4 .ItemsSource = null;
+			LView1 . Items . Clear ( );
+			LView1 . ItemsSource = null;
+			LView2 . Items . Clear ( );
+			LView2 . ItemsSource = null;
+			LView4 . Items . Clear ( );
+			LView4 . ItemsSource = null;
 
 			//Spawn remote threads to load NW order/Customer Db data
 			Thread thread1 = new Thread ( loadnworders );
-			thread1 .IsBackground = true;
+			thread1 . IsBackground = true;
 			Thread thread2 = new Thread ( loadcustomers );
-			thread2 .IsBackground = true;
+			thread2 . IsBackground = true;
 			//Handle click event  from 3DButton
 			Click += new RoutedEventHandler ( Threedbtn_Click );
 			// Kick the threads off
-			thread1 .Start ( );
-			thread2 .Start ( );
+			thread1 . Start ( );
+			thread2 . Start ( );
 			//Wait till threads have completed loading db's
-			while ( thread1 .ThreadState == ThreadState .Background )
-				Thread .Sleep ( 100 );
-			while ( thread2 .ThreadState == ThreadState .Background )
-				Thread .Sleep ( 100 );
+			while ( thread1 . ThreadState == ThreadState . Background )
+				Thread . Sleep ( 100 );
+			while ( thread2 . ThreadState == ThreadState . Background )
+				Thread . Sleep ( 100 );
 			CheckOrders ( );
 			CheckCustomers ( );
 			CustomersDbDataTemplateSelector cdb = new CustomersDbDataTemplateSelector();
@@ -158,37 +145,37 @@ namespace WPFPages .Views
 			// Load NwOrders Db into ListBox/View's
 			NwOrder1 = NwOrders;
 			view1 = new CollectionView ( NwOrder1 );
-			view1 = ( CollectionView ) CollectionViewSource .GetDefaultView ( NwOrder1 );
-			if ( view1 != ( CollectionView ) null && view1 .Count > 0 )
-				view1 .SortDescriptions .Clear ( );
-			view1 .SortDescriptions .Add ( new SortDescription ( "ShipName" , ListSortDirection .Ascending ) );
-			LView1 .ItemsSource = view1;
+			view1 = ( CollectionView ) CollectionViewSource . GetDefaultView ( NwOrder1 );
+			if ( view1 != ( CollectionView ) null && view1 . Count > 0 )
+				view1 . SortDescriptions . Clear ( );
+			view1 . SortDescriptions . Add ( new SortDescription ( "ShipName" , ListSortDirection . Ascending ) );
+			LView1 . ItemsSource = view1;
 			DataContext = view1;
-			LView1 .UpdateLayout ( );
-			LView1 .Refresh( );
-			Nwview1 = view1 .CurrentItem as nworder;
+			LView1 . UpdateLayout ( );
+			LView1 . Refresh ( );
+			Nwview1 = view1 . CurrentItem as nworder;
 		}
 		private void CheckCustomers ( )
 		{
 			// Load NwCustomers Db into ListBox/View's
 			view4 = new CollectionView ( NwCustomers );
-			view4 = ( CollectionView ) CollectionViewSource .GetDefaultView ( NwCustomers1 );
-			if ( view4 != ( CollectionView ) null && view4 .Count > 0 )
-				view4 .SortDescriptions .Clear ( );
-			view4 .SortDescriptions .Add ( new SortDescription ( "PostalCode" , ListSortDirection .Ascending ) );
-			LView2 .ItemsSource = view4;
+			view4 = ( CollectionView ) CollectionViewSource . GetDefaultView ( NwCustomers1 );
+			if ( view4 != ( CollectionView ) null && view4 . Count > 0 )
+				view4 . SortDescriptions . Clear ( );
+			view4 . SortDescriptions . Add ( new SortDescription ( "PostalCode" , ListSortDirection . Ascending ) );
+			LView2 . ItemsSource = view4;
 			DataContext = view4;
 			view3 = new CollectionView ( NwCustomers3 );
-			view3 = ( CollectionView ) CollectionViewSource .GetDefaultView ( NwCustomers3 );
-			if ( view3 != ( CollectionView ) null && view3 .Count > 0 )
-				view3 .SortDescriptions .Clear ( );
-			view3 .SortDescriptions .Add ( new SortDescription ( "CompanyName" , ListSortDirection .Ascending ) );
-			LView4 .ItemsSource = view3;
-			LView4 .Refresh ( );
+			view3 = ( CollectionView ) CollectionViewSource . GetDefaultView ( NwCustomers3 );
+			if ( view3 != ( CollectionView ) null && view3 . Count > 0 )
+				view3 . SortDescriptions . Clear ( );
+			view3 . SortDescriptions . Add ( new SortDescription ( "CompanyName" , ListSortDirection . Ascending ) );
+			LView4 . ItemsSource = view3;
+			LView4 . Refresh ( );
 			DataContext = view3;
 			NwCustomers6 = NwCustomers;
-			LView2 .ItemsSource = NwCustomers;
-			LView2 .Refresh ( );
+			LView2 . ItemsSource = NwCustomers;
+			LView2 . Refresh ( );
 			// do  The sortng with CollectionView
 			//view2 = ( CollectionView ) CollectionViewSource .GetDefaultView ( NwCustomers6 );
 			//if ( view2 != ( CollectionView ) null && view2 .Count > 0 )
@@ -203,13 +190,13 @@ namespace WPFPages .Views
 		private void loadnworders ( )
 		{
 			// Called as a background Thread
-			NwOrders = NwOrders .StdLoadOrders ( "" );
+			NwOrders = NwOrders . StdLoadOrders ( "" );
 			LoadOrderDb ( );
 		}
 		private void loadcustomers ( )
 		{
 			// Called as a background Thread
-			NwCustomers = nwc .GetNwCustomers ( );
+			NwCustomers = nwc . GetNwCustomers ( );
 			NwCustomers1 = NwCustomers;
 			NwCustomers3 = NwCustomers;
 			LoadOrderDb ( );
@@ -221,7 +208,7 @@ namespace WPFPages .Views
 			while ( true )
 			{
 				//Thread .Sleep ( 200 );
-				if ( NwOrders .Count > 0 )
+				if ( NwOrders . Count > 0 )
 				{
 					break;
 				}
@@ -233,7 +220,7 @@ namespace WPFPages .Views
 			while ( true )
 			{
 				//Thread .Sleep ( 200 );
-				if ( NwCustomers .Count > 0 )
+				if ( NwCustomers . Count > 0 )
 				{
 					break;
 				}
@@ -245,28 +232,28 @@ namespace WPFPages .Views
 
 			if ( DataSwitched )
 			{
-				if ( NwCustomers .Count == 0 )
-					NwCustomers = nwc .GetNwCustomers ( );
+				if ( NwCustomers . Count == 0 )
+					NwCustomers = nwc . GetNwCustomers ( );
 
 				//NwCustomers6 . Clear ( );
 				// assign to our Obs collection
 				NwCustomers6 = NwCustomers;
-				LView2 .ItemsSource = null;
+				LView2 . ItemsSource = null;
 				//LView2 . ListviewControl . Items . Clear ( );
-				LView2 .ItemsSource = NwCustomers6;
+				LView2 . ItemsSource = NwCustomers6;
 
 				CollectionView view2;
 				// do  The sortng with CollectionView
-				view2 = ( CollectionView ) CollectionViewSource .GetDefaultView ( NwCustomers6 );
-				if ( view2 != ( CollectionView ) null && view2 .Count > 0 )
-					view2 .SortDescriptions .Clear ( );
-				view2 .SortDescriptions .Add ( new SortDescription ( "Country" , ListSortDirection .Ascending ) );
-				view2 .SortDescriptions .Add ( new SortDescription ( "Region" , ListSortDirection .Ascending ) );
-				view2 .SortDescriptions .Add ( new SortDescription ( "City" , ListSortDirection .Ascending ) );
+				view2 = ( CollectionView ) CollectionViewSource . GetDefaultView ( NwCustomers6 );
+				if ( view2 != ( CollectionView ) null && view2 . Count > 0 )
+					view2 . SortDescriptions . Clear ( );
+				view2 . SortDescriptions . Add ( new SortDescription ( "Country" , ListSortDirection . Ascending ) );
+				view2 . SortDescriptions . Add ( new SortDescription ( "Region" , ListSortDirection . Ascending ) );
+				view2 . SortDescriptions . Add ( new SortDescription ( "City" , ListSortDirection . Ascending ) );
 				//NwCustomers6 = view2;
-				LView2 .ItemsSource = NwCustomers6;
+				LView2 . ItemsSource = NwCustomers6;
 
-				nwc = view2 .CurrentItem as nwcustomer;
+				nwc = view2 . CurrentItem as nwcustomer;
 				DataSwitched = false;
 
 				RotateControl ( LView2 , 360 , 2.0 );
@@ -276,14 +263,14 @@ namespace WPFPages .Views
 			}
 			else
 			{
-				view2 = ( CollectionView ) CollectionViewSource .GetDefaultView ( NwCustomers6 );
-				if ( view2 != ( CollectionView ) null && view2 .Count > 0 )
-					view2 .SortDescriptions .Clear ( );
-				view2 .SortDescriptions .Add ( new SortDescription ( "City" , ListSortDirection .Ascending ) );
-				view2 .SortDescriptions .Add ( new SortDescription ( "Region" , ListSortDirection .Ascending ) );
-				view2 .SortDescriptions .Add ( new SortDescription ( "Country" , ListSortDirection .Ascending ) );
+				view2 = ( CollectionView ) CollectionViewSource . GetDefaultView ( NwCustomers6 );
+				if ( view2 != ( CollectionView ) null && view2 . Count > 0 )
+					view2 . SortDescriptions . Clear ( );
+				view2 . SortDescriptions . Add ( new SortDescription ( "City" , ListSortDirection . Ascending ) );
+				view2 . SortDescriptions . Add ( new SortDescription ( "Region" , ListSortDirection . Ascending ) );
+				view2 . SortDescriptions . Add ( new SortDescription ( "Country" , ListSortDirection . Ascending ) );
 				//NwCustomers6 = view2;
-				LView2 .ItemsSource = view2;
+				LView2 . ItemsSource = view2;
 				//                                LView2 . ItemsSource = NwCustomers;
 				RotateControl ( LView2 , 360 , 2.0 );
 			}
@@ -309,17 +296,17 @@ namespace WPFPages .Views
 			{
 				foreach ( var item in NwCustomers6 )
 				{
-					if ( item .Country == country .Country )
+					if ( item . Country == country . Country )
 					{
-						foreach ( var city in item .Country )
+						foreach ( var city in item . Country )
 						{
-							NwCust .Add ( item );
+							NwCust . Add ( item );
 						}
 					}
 				}
 			}
 			// We now have a list arranged by City's inside Country's in our "Wrapped" ListView
-			LView2 .ItemsSource = NwCust;
+			LView2 . ItemsSource = NwCust;
 			DataSwitched = true;
 			//RenderTargetBitmap bmp = Utils . RenderBitmap ( LView2 );
 		}
@@ -367,13 +354,13 @@ namespace WPFPages .Views
 		public static void RotateControl ( FrameworkElement ctrl , double angle , double duration )
 		{
 			DoubleAnimation da = new DoubleAnimation ( );
-			da .From = 0;
-			da .To = angle;
-			da .Duration = new Duration ( TimeSpan .FromSeconds ( duration ) );
+			da . From = 0;
+			da . To = angle;
+			da . Duration = new Duration ( TimeSpan . FromSeconds ( duration ) );
 			//da . DecelerationRatio = 0.4;
 			RotateTransform rt = new RotateTransform ( );
-			ctrl .RenderTransform = rt;
-			rt .BeginAnimation ( RotateTransform .AngleProperty , da );
+			ctrl . RenderTransform = rt;
+			rt . BeginAnimation ( RotateTransform . AngleProperty , da );
 		}
 		// Yellow Background
 		private void LView2_Loaded ( object sender , RoutedEventArgs e )
@@ -463,7 +450,7 @@ namespace WPFPages .Views
 
 		#endregion
 
-		private void Items_CurrentChanging ( object sender , System .ComponentModel .CurrentChangingEventArgs e )
+		private void Items_CurrentChanging ( object sender , System . ComponentModel . CurrentChangingEventArgs e )
 		{
 			// This gets called when loading the grid !!!
 		}
@@ -500,11 +487,11 @@ namespace WPFPages .Views
 			{
 				foreach ( var item in NwCustomers6 )
 				{
-					if ( item .Country == country .Country )
+					if ( item . Country == country . Country )
 					{
-						foreach ( var city in item .Country )
+						foreach ( var city in item . Country )
 						{
-							NwCust .Add ( item );
+							NwCust . Add ( item );
 							//Console . WriteLine ( $"{item . Country}, {item . City}, {item . CompanyName}" );
 						}
 					}
@@ -512,7 +499,7 @@ namespace WPFPages .Views
 			}
 
 			// We now have a list arranged by City's inside Country's in our "Wrapped" ListView
-			LView2 .ItemsSource = NwCust;
+			LView2 . ItemsSource = NwCust;
 
 		}
 
@@ -540,11 +527,11 @@ namespace WPFPages .Views
 			{
 				foreach ( var item in NwCustomers6 )
 				{
-					if ( item .Country == country .Country )
+					if ( item . Country == country . Country )
 					{
-						foreach ( var city in item .Country )
+						foreach ( var city in item . Country )
 						{
-							NwCust .Add ( item );
+							NwCust . Add ( item );
 							//Console . WriteLine ( $"{item . Country}, {item . City}, {item . CompanyName}" );
 						}
 					}
@@ -552,7 +539,7 @@ namespace WPFPages .Views
 			}
 
 			// We now have a list arranged by City's inside Country's in our "Wrapped" ListView
-			LView2 .ItemsSource = NwCust;
+			LView2 . ItemsSource = NwCust;
 
 		}
 
@@ -568,20 +555,20 @@ namespace WPFPages .Views
 
 		private void ShadowLabelControl_PreviewMouseDoubleClick ( object sender , MouseButtonEventArgs e )
 		{
-			this .Close ( );
+			this . Close ( );
 		}
 
 		private async void DataGrid_Loaded ( object sender , RoutedEventArgs e )
 		{
-			this .BankGrid .ItemsSource = null;
-			this .BankGrid .Items .Clear ( );
-			EventControl .BankDataLoaded += EventControl_BankDataLoaded1;
+			this . BankGrid . ItemsSource = null;
+			this . BankGrid . Items . Clear ( );
+			EventControl . BankDataLoaded += EventControl_BankDataLoaded1;
 
 			BankCollection BankViewcollection = new BankCollection ( );
-			await BankCollection .LoadBank ( BankViewcollection , "BANKDATA" , 7 , true );
+			await BankCollection . LoadBank ( BankViewcollection , "BANKDATA" , 7 , true );
 			//BankViewcollection = BankCollection .LoadBank ( BankViewcollection , "BANKDATA" );
 			//CollectionViewSource  BankviewerView = CollectionViewSource . GetDefaultView ( BankViewcollection );
-			BankGrid .Refresh ( );
+			BankGrid . Refresh ( );
 			// Set our grids items source
 			//this .BankGrid .ItemsSource = BankViewcollection;
 
@@ -596,35 +583,35 @@ namespace WPFPages .Views
 		private void EventControl_BankDataLoaded1 ( object sender , LoadedEventArgs e )
 		{
 			BankCollection BankViewcollection = new BankCollection ( );
-			BankViewcollection  = e .DataSource as BankCollection ;
+			BankViewcollection = e . DataSource as BankCollection;
 			BankViewcollection = BankViewcollection;
 
-			BankGrid .Refresh ( );
+			BankGrid . Refresh ( );
 			// Set our grids items source
-			this .BankGrid .ItemsSource = BankViewcollection;
+			this . BankGrid . ItemsSource = BankViewcollection;
 
-			this .BankGrid .SelectedIndex = 0;
-			this .BankGrid .SelectedItem = 0;
-			this .BankGrid .CurrentItem = 0;
-			this .BankGrid .UpdateLayout ( );
-			this .BankGrid .Refresh ( );
+			this . BankGrid . SelectedIndex = 0;
+			this . BankGrid . SelectedItem = 0;
+			this . BankGrid . CurrentItem = 0;
+			this . BankGrid . UpdateLayout ( );
+			this . BankGrid . Refresh ( );
 		}
 
 		private void storyboard_Closed ( object sender , EventArgs e )
 		{
-			Customers1 .Clear ( );
-			NwOrders .Clear ( );
-			BankGrid .ItemsSource = null;
-			BankGrid .Items .Clear ( );
-			CustGrid .ItemsSource = null;
-			CustGrid .Items .Clear ( );
-			EventControl .CustDataLoaded -= EventControl_CustDataLoaded;
+			Customers1 . Clear ( );
+			NwOrders . Clear ( );
+			BankGrid . ItemsSource = null;
+			BankGrid . Items . Clear ( );
+			CustGrid . ItemsSource = null;
+			CustGrid . Items . Clear ( );
+			EventControl . CustDataLoaded -= EventControl_CustDataLoaded;
 
 		}
 
 		private void bankgrid_PreviewDragEnter ( object sender , DragEventArgs e )
 		{
-			e .Effects = ( DragDropEffects ) DragDropEffects .Move;
+			e . Effects = ( DragDropEffects ) DragDropEffects . Move;
 		}
 
 		private void bankgrid_PreviewMouseLeftButtonup ( object sender , MouseButtonEventArgs e )
@@ -638,29 +625,29 @@ namespace WPFPages .Views
 			Point mousePos = e.GetPosition(null);
 			Vector diff = _startPoint - mousePos;
 			string t1 = sender.GetType().ToString();
-			if ( e .LeftButton == MouseButtonState .Pressed &&
-			    Math .Abs ( diff .X ) > SystemParameters .MinimumHorizontalDragDistance ||
-			    Math .Abs ( diff .Y ) > SystemParameters .MinimumVerticalDragDistance )
+			if ( e . LeftButton == MouseButtonState . Pressed &&
+			    Math . Abs ( diff . X ) > SystemParameters . MinimumHorizontalDragDistance ||
+			    Math . Abs ( diff . Y ) > SystemParameters . MinimumVerticalDragDistance )
 			{
-				if ( IsLeftButtonDown && e .LeftButton == MouseButtonState .Pressed )
+				if ( IsLeftButtonDown && e . LeftButton == MouseButtonState . Pressed )
 				{
 					bool isvalid = false;
-					if ( t1 .Contains ( "ListBox" ) || t1 .Contains ( "ListView" ) )
+					if ( t1 . Contains ( "ListBox" ) || t1 . Contains ( "ListView" ) )
 					{
 						ListBox lb;
 						ListView lv;
 						isvalid = true;
-						if ( t1 .Contains ( "ListBox" ) )
+						if ( t1 . Contains ( "ListBox" ) )
 							lb = sender as ListBox;
-						else if ( t1 .Contains ( "ListView" ) )
+						else if ( t1 . Contains ( "ListView" ) )
 							lv = sender as ListView;
 						IsCust = true;
 					}
-					else if ( t1 .Contains ( "DataGrid" ) )
+					else if ( t1 . Contains ( "DataGrid" ) )
 					{
 						isvalid = true;
 						DataGrid dg = sender as DataGrid;
-						if ( dg .Name == "CustGrid" )
+						if ( dg . Name == "CustGrid" )
 							IsCust = true;
 					}
 					if ( isvalid )
@@ -675,31 +662,31 @@ namespace WPFPages .Views
 							//if ( t1 .Contains ( "ListView" ) )
 							//      bvm = UCListbox .SelectedItem as BankAccountViewModel;
 							//else
-							bvm = BankGrid .SelectedItem as BankAccountViewModel;
+							bvm = BankGrid . SelectedItem as BankAccountViewModel;
 							string str = GetExportRecords.CreateTextFromRecord(bvm, null, null, true, false);
 							string dataFormat = DataFormats.Text;
 							DataObject dataObject = new DataObject(dataFormat, str);
-							DragDrop .DoDragDrop (
+							DragDrop . DoDragDrop (
 							BankGrid ,
 							dataObject ,
-							DragDropEffects .Copy );
+							DragDropEffects . Copy );
 						}
 						else
 						{
 							CustomerViewModel cvm = new CustomerViewModel();
-							if ( t1 .Contains ( "ListBox" ) )
-								cvm = LView3 .SelectedItem as CustomerViewModel;
-							else if ( t1 .Contains ( "ListView" ) )
-								cvm = LView2 .SelectedItem as CustomerViewModel;
+							if ( t1 . Contains ( "ListBox" ) )
+								cvm = LView3 . SelectedItem as CustomerViewModel;
+							else if ( t1 . Contains ( "ListView" ) )
+								cvm = LView2 . SelectedItem as CustomerViewModel;
 							else
-								cvm = CustGrid .SelectedItem as CustomerViewModel;
+								cvm = CustGrid . SelectedItem as CustomerViewModel;
 							string str = GetExportRecords.CreateTextFromRecord(null, null, cvm, true, false);
 							string dataFormat = DataFormats.Text;
 							DataObject dataObject = new DataObject(dataFormat, str);
-							DragDrop .DoDragDrop (
+							DragDrop . DoDragDrop (
 							CustGrid ,
 							dataObject ,
-							DragDropEffects .Copy );
+							DragDropEffects . Copy );
 						}
 						IsLeftButtonDown = false;
 					}
@@ -710,26 +697,26 @@ namespace WPFPages .Views
 		private void bankgrid_PreviewMouseLeftButtondown ( object sender , MouseButtonEventArgs e )
 		{
 			// Gotta make sure it is not anywhere in the Scrollbar we clicked on 
-			if ( Utils .HitTestScrollBar ( sender , e ) )
+			if ( Utils . HitTestScrollBar ( sender , e ) )
 			{
 				ScrollBarMouseMove = true;
 				return;
 			}
-			if ( Utils .HitTestHeaderBar ( sender , e ) )
+			if ( Utils . HitTestHeaderBar ( sender , e ) )
 				return;
 
-			_startPoint = e .GetPosition ( null );
+			_startPoint = e . GetPosition ( null );
 			// Make sure the left mouse button is pressed down so we are really moving a record
-			if ( e .LeftButton == MouseButtonState .Pressed )
+			if ( e . LeftButton == MouseButtonState . Pressed )
 			{
 				IsLeftButtonDown = true;
 			}
 			string t = sender.GetType().ToString();
 			object b = e.OriginalSource;
-			if ( t .Contains ( "DataGrid" ) )
+			if ( t . Contains ( "DataGrid" ) )
 			{
 				DataGrid dg = sender as DataGrid;
-				GridSelection = dg .SelectedIndex;
+				GridSelection = dg . SelectedIndex;
 			}
 			else
 			{
@@ -741,7 +728,7 @@ namespace WPFPages .Views
 
 		private void Customer_PreviewDragEnter ( object sender , DragEventArgs e )
 		{
-			e .Effects = ( DragDropEffects ) DragDropEffects .Move;
+			e . Effects = ( DragDropEffects ) DragDropEffects . Move;
 		}
 		private void Customer_PreviewMouseLeftButtonup ( object sender , MouseButtonEventArgs e )
 		{
@@ -750,27 +737,39 @@ namespace WPFPages .Views
 		private void Customer_PreviewMouseLeftButtondown ( object sender , MouseButtonEventArgs e )
 		{
 			// Gotta make sure it is not anywhere in the Scrollbar we clicked on 
-			if ( Utils .HitTestScrollBar ( sender , e ) )
+			if ( Utils . HitTestScrollBar ( sender , e ) )
 			{
 				ScrollBarMouseMove = true;
 				return;
 			}
-			if ( Utils .HitTestHeaderBar ( sender , e ) )
+			if ( Utils . HitTestHeaderBar ( sender , e ) )
 				return;
 
-			_startPoint = e .GetPosition ( null );
+			_startPoint = e . GetPosition ( null );
 			// Make sure the left mouse button is pressed down so we are really moving a record
-			if ( e .LeftButton == MouseButtonState .Pressed )
+			if ( e . LeftButton == MouseButtonState . Pressed )
 			{
 				IsLeftButtonDown = true;
 			}
 			string t = sender.GetType().ToString();
 			object b = e.OriginalSource;
-			if ( t .Contains ( "ListView" ) )
+			if ( t . Contains ( "ListView" ) )
 			{
 				ListView dg = sender as ListView;
-				GridSelection = dg .SelectedIndex;
+				GridSelection = dg . SelectedIndex;
 			}
+		}
+
+		private void storyboard_Closing ( object sender , CancelEventArgs e )
+		{
+			if ( !view1 . IsEmpty )
+				view1 . DetachFromSourceCollection ( );
+			if ( !view2 . IsEmpty )
+				view2 . DetachFromSourceCollection ( );
+			if ( !view3 . IsEmpty )
+				view3 . DetachFromSourceCollection ( );
+			if ( !view4 . IsEmpty )
+				view4 . DetachFromSourceCollection ( );
 		}
 	}
 }

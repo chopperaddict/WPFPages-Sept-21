@@ -93,12 +93,13 @@
 
 		<SolidColorBrush x:Key="Red0" Color="Red" />
 
-		<!--  Style for full LISTBOXes (not listboxitems) on this form  -->
+		<!--  Style for full LISTBOXes (not listboxitems) on this form 
+			The background "lightens" quite elegantly and just slightly on mouse entry -->
 		<Style x:Key="_styletest" TargetType="ListBox">
-			<Setter Property="Control.Background" Value="{StaticResource Gray2}" />
+			<Setter Property="Background" Value="{StaticResource Gray2}" />
 			<!--<Setter Property="Control.Foreground" Value="{StaticResource Gray2}" />-->
-			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-			<Setter Property="HorizontalAlignment" Value="Stretch" />
+			<!--<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />-->
 			<Style.Triggers>
 				<MultiTrigger>
 					<MultiTrigger.Conditions>
@@ -110,7 +111,7 @@
 					</MultiTrigger.Setters>
 				</MultiTrigger>
 				<Trigger Property="IsMouseOver" Value="true">
-					<Setter Property="Control.Background" Value="{StaticResource Gray3}" />
+					<Setter Property="Background" Value="{StaticResource Gray3}" />
 					<Setter Property="BorderBrush" Value="{StaticResource Black1}" />
 					<Setter Property="Control.FontWeight" Value="SemiBold" />
 				</Trigger>
@@ -124,20 +125,52 @@
 			<Setter Property="FontWeight" Value="Normal" />
 			<Setter Property="FontSize" Value="14" />
 			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-			<!--<Setter Property="Width" Value="{Binding Path=Width, ElementName=ViewersList}" />-->
+			<Setter Property="Width" Value="{Binding Path=Width, ElementName=ViewersList}" />
 
-			  <!--Remove focus rectangle - IT WORKS-->  
+			  <!--Remove focus rectangle - IT WORKS-->
 			<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="ListBoxItem">
 						<Border
 							x:Name="_Border"
 							Padding="3"
-							HorizontalAlignment="Stretch">
-							<ContentPresenter  HorizontalAlignment="Center"/>
+							Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource 
+							AncestorType=ListBoxItem}}"
+							HorizontalAlignment="Center">
+							<ContentPresenter  
+								HorizontalAlignment="Center"
+								/>
 						</Border>
 						<ControlTemplate.Triggers>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="false" />
+									<Condition Property="IsSelected" Value="False" />
+								</MultiTrigger.Conditions>
+								<MultiTrigger.Setters>
+									<Setter Property="HorizontalAlignment" Value="Stretch" />
+									<Setter Property="TextElement.Foreground" Value="{StaticResource White0}" />
+									<Setter TargetName="_Border" Property="Background" Value="{StaticResource Gray2}" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="FontWeight" Value="DemiBold" />
+								</MultiTrigger.Setters>
+							</MultiTrigger>
+							<MultiTrigger>
+								<MultiTrigger.Conditions>
+									<Condition Property="IsMouseOver" Value="false" />
+									<Condition Property="IsSelected" Value="True" />
+								</MultiTrigger.Conditions>
+								<MultiTrigger.Setters>
+									<Setter Property="HorizontalAlignment" Value="Stretch" />
+									<Setter Property="TextElement.Foreground" Value="{StaticResource White0}" />
+									<Setter TargetName="_Border" Property="Background" Value="{StaticResource Black5}" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="FontWeight" Value="DemiBold" />
+								</MultiTrigger.Setters>
+							</MultiTrigger>
+
 							<MultiTrigger>
 								<MultiTrigger.Conditions>
 									<Condition Property="IsMouseOver" Value="true" />
@@ -146,7 +179,7 @@
 								<MultiTrigger.Setters>
 									<Setter Property="HorizontalAlignment" Value="Stretch" />
 									<Setter Property="TextElement.Foreground" Value="{StaticResource White0}" />
-									<Setter Property="Background" Value="{StaticResource Black5}" />
+									<Setter TargetName="_Border" Property="Background" Value="{StaticResource Black4}" />
 									<Setter Property="FontSize" Value="14" />
 									<Setter Property="FontWeight" Value="DemiBold" />
 								</MultiTrigger.Setters>
@@ -158,8 +191,8 @@
 								</MultiTrigger.Conditions>
 								<MultiTrigger.Setters>
 									<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-									<Setter Property="TextElement.Foreground" Value="{StaticResource Red0}" />
-									<Setter Property="Background" Value="{StaticResource Black5}" />
+									<Setter Property="TextElement.Foreground" Value="{StaticResource Cyan6}" />
+									<Setter TargetName="_Border" Property="Background" Value="{StaticResource Black4}" />
 									<Setter Property="FontSize" Value="14" />
 									<Setter Property="FontWeight" Value="DemiBold" />
 								</MultiTrigger.Setters>
@@ -669,15 +702,19 @@
 					Click="LoadMultiView_Click"
 					Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-				<!--<MenuItem  Header="Test Bank System"
+				<MenuItem  Header="Test NorthWind System"
+						Click="NorthWind_Click"
+						Margin="2"
+						FontWeight="Bold"
+						IsTabStop="False"
+						Template="{StaticResource MenuItemCtrlTemplate1}"/>
+
+				<MenuItem  Header="Test Bank System"
 						Click="TestBank_Click"
 						Margin="2"
 						FontWeight="Bold"
-						Height="20"
 						IsTabStop="False"
-						Style="{StaticResource MenuItemGreen}"
-						Background="{StaticResource Red0}"
-						Foreground="{StaticResource White0}"/>-->
+						Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 				<MenuItem  Header="Test Details System"
 					Click="TestDet_Click"
@@ -767,7 +804,7 @@
 				<MenuItem Header=" Styled Grid " 
 				    Click="Styled_Click" 	
 	                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
-				<MenuItem Header="  Story Boards" 
+				<MenuItem Header="   Styling Tests" 
 				    Click="StoryBoard_Click" 						
 		              Template="{StaticResource MenuItemCtrlTemplate1}"/>
 				<MenuItem Header="  Att'd Props " 

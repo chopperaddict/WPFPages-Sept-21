@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFPages.Views"
+        xmlns:bankdata="clr-namespace:WPFPages.ViewModels"
 	  x:Name="Bankviewtest"
         mc:Ignorable="d"
 	Closing="Window_Closing"
@@ -23,6 +24,9 @@
 
 	<!--d:DataContext="{d:DesignInstance Type=local:BankCollection}"-->
 	<Window.Resources>
+
+		<bankdata:BankAccountViewModel x:Key="bankvm"/>
+
 		<ContextMenu x:Key="ContextMenu1">
 			<MenuItem Header="View currently selected Record in JSON Format"  Click="ContextShowJson_Click" >
 				<MenuItem.Icon>
@@ -118,105 +122,11 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-
-		<!--<Style x:Key="UnfocusedSelection" TargetType="DataGridRow">
-		-->
-		<!--<Style TargetType="DataGridRow">-->
-		<!--
-			<Style.Triggers>
-				-->
-		<!--=====================
-						Window WITH Focus ....
-						SINGLE SELECTED  Item
-						=====================-->
-		<!--
-				<MultiTrigger>
-					-->
-		<!--// This is working 17/6/21-->
-		<!--
-					<MultiTrigger.Conditions>
-						<Condition Property="IsSelected" Value="true" />
-						<Condition Property="IsFocused" Value="false" />
-						-->
-		<!--<Condition Property="SelectionActive" Value="false" />-->
-		<!--
-					</MultiTrigger.Conditions>
-					<Setter Property="Background" Value="{StaticResource Red1}" />
-					<Setter Property="Foreground" Value="{StaticResource White0}" />
-					<Setter Property="Template" Value="{StaticResource SelectedTemplate}" />
-				</MultiTrigger>
-			</Style.Triggers>
-		</Style>-->
-
-
-
-		<!--Not in use-->
-		<Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
-			<!--<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-			<Setter Property="BorderBrush" Value="#FF688CAF"/>
-			<Setter Property="BorderThickness" Value="1"/>
-			<Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
-			<Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-			<Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-			<Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-			
-			<Setter Property="Template">
-				<Setter.Value>
-					
-					<ControlTemplate TargetType="{x:Type DataGrid}">
-						<Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" 
-							  BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-							<ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
-								<ScrollViewer.Template>
-									<ControlTemplate TargetType="{x:Type ScrollViewer}">
-										<Grid>
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="Auto"/>
-												<ColumnDefinition Width="*"/>
-												<ColumnDefinition Width="Auto"/>
-											</Grid.ColumnDefinitions>
-											<Grid.RowDefinitions>
-												<RowDefinition Height="Auto"/>
-												<RowDefinition Height="*"/>
-												<RowDefinition Height="Auto"/>
-											</Grid.RowDefinitions>
-											<Button Command="{x:Static DataGrid.SelectAllCommand}" Focusable="false" 
-												  Style="{DynamicResource {ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}" 
-												  Visibility="{Binding HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.All}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-											<DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.Column="1" Visibility="{Binding HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-											<ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.ColumnSpan="2" CanContentScroll="{TemplateBinding CanContentScroll}" Grid.Row="1"/>
-											<ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="2" Maximum="{TemplateBinding ScrollableHeight}" Orientation="Vertical" Grid.Row="1" ViewportSize="{TemplateBinding ViewportHeight}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
-											<Grid Grid.Column="1" Grid.Row="2">
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-													<ColumnDefinition Width="*"/>
-												</Grid.ColumnDefinitions>
-												<ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Column="1" Maximum="{TemplateBinding ScrollableWidth}" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
-											</Grid>
-										</Grid>
-									</ControlTemplate>
-								</ScrollViewer.Template>
-								<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-							</ScrollViewer>
-						</Border>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-			
-			<Style.Triggers>
-				<MultiTrigger>
-					<MultiTrigger.Conditions>
-						<Condition Property="IsGrouping" Value="true"/>
-						<Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
-					</MultiTrigger.Conditions>
-					<Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
-
-				</MultiTrigger>
-			</Style.Triggers>-->
-		</Style>
-
+		
 	</Window.Resources>
+	
+	
+	
 	<Grid>
 
 		<!--#region grid setup-->
@@ -254,11 +164,13 @@
 			Background="Transparent">
 
 			<!--// Menu Header-->
-			<MenuItem Header="_Linq Queries"
+			<!--<MenuItem Header="_Linq Queries"
 				Width="80"
 				Foreground="{StaticResource White0}">
 
-				<!--// Seperate menu items in DropDown-->
+				-->
+			<!--// Seperate menu items in DropDown-->
+			<!--
 				<MenuItem Header="A/c Type 1 Only"
 						Background="#35F6FB"
 						Click="Linq1_Click"
@@ -290,7 +202,9 @@
 
 			</MenuItem>
 
+			-->
 			<!--// Seperate menu items at top level -->
+			<!--
 			<MenuItem
 				Width="60"
 				Click="Filter_Click"
@@ -307,7 +221,7 @@
 				Width="50"
 				Click="Exit_Click"
 				Foreground="{StaticResource White1}"
-				Header="Exit..." />
+				Header="Exit..." />-->
 		</Menu>
 
 		<!--#endregion grid setup-->
@@ -323,6 +237,7 @@
 			ColumnHeaderStyle="{StaticResource HeaderStyleBlue}"
 			CanUserResizeColumns="True"
 			CanUserSortColumns="True"
+			CellStyle="{StaticResource BankAccountGridStyle}"
 			Grid.Column="1"
 			Grid.ColumnSpan="3"
 			Grid.Row="1"
@@ -343,26 +258,9 @@
 			SelectionUnit="FullRow"
 			VerticalAlignment="Stretch"
 			VerticalContentAlignment="Center"			
-			VerticalGridLinesBrush="{StaticResource Blue2}" 
->
-			<!--
-				SelectedIndex="{Binding SelectedIndex}"
-				SelectedItem="{Binding SelectedItem}"
-			-->
-			<!--  DataGridCell.Selected="BankGrid_Selected"  -->
-			<!--  ItemsSource="{Binding Source={StaticResource BankData}}"  -->
-			<!--<DataGrid.Background>
-				-->
-			<!--  create an elegant left to right light-> Dark gradient as a background  -->
-			<!--
-				<LinearGradientBrush StartPoint="1.3,0" EndPoint="0.0,1">
-					<GradientStop Offset="1" Color="#333333" />
-					<GradientStop Offset="0.3" Color="#35F6FB" />
-				</LinearGradientBrush>
-			</DataGrid.Background>-->
+			VerticalGridLinesBrush="{StaticResource Blue2}" >
 
 			<DataGrid.Resources>
-				<!--<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource Blue}" />-->
 				<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#6598FD" />
 				<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrush}" Color="#FFFFFF" />
 
@@ -410,7 +308,6 @@
 					Binding="{Binding IntRate, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='0.00'}"
 					Header="Interest"
 					SortMemberPath="IntRate" />
-				<!--  CellStyle="{StaticResource CenterText}"  -->
 
 				<!--  the next 2 show 2 ways to format a date - 1 a Converter the other a direct Format string  -->
 				<DataGridTemplateColumn
@@ -454,19 +351,15 @@
 			</DataGrid.Columns>
 			<!--#endregion bankfields-->
 
-
 		</DataGrid>
 
 		<Grid x:Name="DataFields"
-			DataContext="BankGrid"
-			Grid.Column="1" 
+			DataContext="BankGrid" 
 			Grid.ColumnSpan="2" 
-			Grid.Row="1"
-			Grid.RowSpan="2"
-			HorizontalAlignment="Stretch"
-			Margin="-3,230,0,3"
-			VerticalAlignment="Bottom"
-			>
+			Grid.Row="2"
+			Margin="12,52,177,0"
+			VerticalAlignment="Top">
+
 			<Grid.RowDefinitions>
 				<RowDefinition Height="40" />
 				<RowDefinition Height="40*" />
@@ -482,232 +375,6 @@
 			</Grid.ColumnDefinitions>
 			<!--#endregion Text Fields-->
 
-			<!--#region Text Fields-->
-			<Border
-				x:Name="MyDependenciesBorder"
-				BorderBrush="DarkBlue"
-				BorderThickness="2"
-				Grid.Row="0"
-				Grid.Column="0"
-				Grid.ColumnSpan="4"
-				Grid.RowSpan="4"
-				HorizontalAlignment="Stretch"
-				VerticalAlignment="Stretch"
-				Margin="5,1,-40,-8"
-				/>
-			<TextBlock
-					x:Name="textBlock"
-					FontWeight="Bold"
-					Foreground="White"
-					Grid.Column="0"
-					Grid.Row="0"
-					Height="25"
-					HorizontalAlignment="Center"
-					Padding="10,5,5,5"
-					VerticalAlignment="Center"
-					Text="Customer #" 
-					Width="70"
-/>
-			<TextBlock
-					x:Name="textBlock_Copy"
-					Foreground="White"
-					Grid.Column="0"
-					Grid.Row="1"
-					Width="70"
-					Height="25"
-					Padding="10,5,5,5"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					FontWeight="Bold"
-					Text="Bank A/c #" />
-
-			<TextBlock
-					x:Name="textBlock_Copy5"
-					Foreground="White"
-					Grid.Column="0"
-					Grid.Row="2"
-					Width="70"
-					Height="25"
-					Padding="10,5,5,5"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					FontWeight="Bold"
-					Text="A/c Type" />
-
-			<TextBlock
-					x:Name="textBlock_Copy1"
-					Foreground="White"
-					Grid.Column="0"
-					Grid.Row="3"
-					Width="84"
-					Height="25"
-					Padding="15,5,5,5"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					FontWeight="Bold"
-					RenderTransformOrigin="0.457,-0.36"
-					Text="A/c Balance" />
-
-			<TextBox
-					x:Name="Custno"
-					Foreground="Black"
-					Grid.Column="1"
-					Grid.Row="0"
-					Width="90"
-					Height="24"
-					Margin="5,0,-35,0"
-					Padding="10,3,0,0"
-					HorizontalAlignment="Center"
-					IsTabStop="True"
-					VerticalAlignment="Center"
-					HorizontalContentAlignment="Center"
-					FontSize="12"
-					TabIndex="0"
-					LostFocus ="Edit_LostFocus"
-					Text="{Binding CustNo, FallbackValue=Cust  #, UpdateSourceTrigger=LostFocus}" />
-
-
-			<TextBox
-					x:Name="Bankno"
-					Grid.Column="1"
-					Grid.Row="1"
-					Width="90"
-					Height="24"
-					Margin="5,0,-35,0"
-					Padding="10,3,0,0"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					HorizontalContentAlignment="Center"
-					IsTabStop="True"
-					FontSize="12"
-					Foreground="Red"
-					RenderTransformOrigin="0.422,2.208"
-					TabIndex="1"
-					LostFocus ="Edit_LostFocus"
-					Text="{Binding BankNo, FallbackValue=Bank A/c #, UpdateSourceTrigger=LostFocus}" />
-
-			<TextBox
-					x:Name="acType"
-					Foreground="Black"
-					Grid.Column="1"
-					Grid.Row="2"
-					Width="90"
-					Height="24"
-					Margin="5,0,-35,0"
-					Padding="5,3,0,0"
-					HorizontalAlignment="Center"
-					IsTabStop="True"
-					VerticalAlignment="Center"
-					HorizontalContentAlignment="Center"
-					FontSize="12"
-					SelectionChanged="SelectionChanged"
-					TabIndex="2"
-					LostFocus ="Edit_LostFocus"
-					Text="{Binding AcType, FallbackValue=AcType, UpdateSourceTrigger=LostFocus}"
-					TextAlignment="Center"
-					TextChanged="TextChanged" />
-
-
-			<TextBox
-					x:Name="balance"
-					Grid.Column="1"
-					Grid.Row="3"
-					Width="104"
-					Height="32"
-					Padding="5,3,0,0"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					HorizontalContentAlignment="Center"
-					IsTabStop="True"
-					FontSize="16"
-					FontWeight="DemiBold"
-					Foreground="Red"
-					Margin="5,0,-35,0"
-					SelectionChanged="SelectionChanged"
-					TabIndex="3"
-					LostFocus ="Edit_LostFocus"
-					Text="{Binding Balance, FallbackValue=Balance, UpdateSourceTrigger=LostFocus}"
-					TextAlignment="Center"
-					TextChanged="TextChanged" />
-
-
-			<TextBlock
-					x:Name="textBlock_Copy3"
-					Foreground="White"
-					Grid.Column="2"
-					Grid.Row="1"
-					Width="88"
-					Height="24"
-					Margin="15,0,-35,0"
-					Padding="5,5,5,5"
-					FontWeight="DemiBold"
-					Text="Date Opened"
-					TextAlignment="Center" />
-
-			<TextBox
-					x:Name="odate"
-					Foreground="Black"
-					Grid.Column="3"
-					Grid.Row="1"
-					Width="90"
-					Height="24"
-					Margin="15,0,-35,0"
-					Padding="5,3,0,0"
-					HorizontalContentAlignment="Center"
-					IsTabStop="True"
-					FontSize="12"
-					SelectionChanged="SelectionChanged"
-					TabIndex="4"
-					LostFocus ="Edit_LostFocus"
-					Text="{Binding ODate, FallbackValue=ODate, StringFormat=dd/MM/yyyy, UpdateSourceTrigger=LostFocus}"
-					TextAlignment="Center"
-					TextChanged="TextChanged" />
-
-			<TextBlock
-					x:Name="textBlock_Copy4"
-					Foreground="White"
-					Grid.Column="2"
-					Grid.Row="2"
-					Margin="3,0,-35,0"
-					Width="70"
-					Height="25"
-					Padding="5,5,5,5"
-					FontWeight="Bold"
-					Text="Close Date" />
-
-			<TextBox
-					x:Name="cdate"
-					Grid.Column="3"
-					Grid.Row="2"
-					Width="90"
-					Height="24"
-					Margin="15,0,-35,0"
-					Padding="5,3,0,0"
-					HorizontalContentAlignment="Center"
-					IsTabStop="True"
-					FontSize="12"
-					Foreground="Black"
-					SelectionChanged="SelectionChanged"
-					TabIndex="5"
-					LostFocus ="Edit_LostFocus"
-					Text="{Binding CDate, FallbackValue=CDate, StringFormat=dd/MM/yyyy, UpdateSourceTrigger=LostFocus}"
-					TextAlignment="Center"
-					TextChanged="TextChanged" />
-			<TextBlock
-					x:Name="Count"
-					Grid.Column="4"
-					Grid.Row="0"
-					Width="88"
-					Height="24"
-					Margin="15,0,-35,0"
-					Padding="5,3,5,5"
-					Background="DarkGray"
-					FontSize="14"
-					FontWeight="DemiBold"
-					Foreground="Red"
-					Text=" Counter"
-					TextAlignment="Center"
-					TextTrimming="WordEllipsis" />
 
 			<!--Test of private dependency property-->
 			<!--Caution : - you MUST provide a DATACONTEXT for this, I have given an x.Name to this 
@@ -718,9 +385,8 @@
 				   x:Name="MyCounter"
 				   Grid.Column="3"
 				   Grid.Row="0"
-				   Width="88"
 				   Height="24"
-				   Margin="244,7,-222,9"
+				   Margin="244,7,-276,9"
 				   Padding="5,3,5,5"
 				   Background="DarkGray"
 				   FontSize="14"
@@ -729,6 +395,38 @@
 				   Text="{Binding ElementName=Bankviewtest, Path=Counter}"
 				   TextAlignment="Center"
 				   TextTrimming="WordEllipsis" />
+
+			<CheckBox
+				x:Name="ChkboxCustomer"
+				Click="ChkboxCustomer_Click"
+				IsTabStop="False"
+				Margin="30,22,10,38"
+				IsChecked="True"
+				Content="Customers #"
+				FontWeight="Bold"
+				Foreground="{StaticResource Green8}"
+				Grid.ColumnSpan="2" Grid.RowSpan="3" />
+
+			<CheckBox
+				x:Name="ChkboxBank"
+				Click="ChkboxBank_Click"
+				IsTabStop="False"
+				Margin="29,1,11,19"
+				Content="Bank A/c #"
+				FontWeight="Bold"
+				Foreground="{StaticResource Green8}"
+				Grid.ColumnSpan="2" Grid.Row="2" />
+
+			<CheckBox
+					x:Name="ChkboxActype"
+					Click="ChkboxActype_Click"
+					IsTabStop="False"
+					Margin="29,20,11,0"
+					Content="A/c Type"
+					FontWeight="Bold"
+					Foreground="{StaticResource Green8}"
+					Grid.ColumnSpan="2" Grid.Row="2" />
+
 		</Grid>
 
 		<!--#region buttons2-->
@@ -768,6 +466,7 @@
 			Grid.Column="3"
 			Grid.ColumnSpan="2"
 			Grid.Row="2"
+			Content="Keep On Top"
 			Width="90"
 			Height="25"
 			Margin="15,10,0,0"
@@ -775,10 +474,11 @@
 			IsTabStop="False"
 			VerticalAlignment="Top"
 			Click="OntopChkbox_Click"
-			Content="Keep on Top"
 			FontWeight="Medium"
 			Foreground="Black"
-			IsChecked="true" />
+			IsChecked="true" >
+		</CheckBox>
+
 		<CheckBox
 			x:Name="LinkRecords"
 			Grid.Row="2"
@@ -796,11 +496,10 @@
 			Grid.Column="1"
 			Grid.ColumnSpan="2"
 			IsTabStop="False"
-			Margin="435,60,30,55"
+			Margin="435,60,66,55"
 			Click="LinkToParent_Click"
 			Content="Link  => to Parent Viewer"
-			Foreground="Red"
-			Width="200"/>
+			Foreground="Red"/>
 		<CheckBox
 			  x:Name="LinkToMulti"
 			  Grid.Row="2"
@@ -828,6 +527,72 @@
 			  VerticalContentAlignment="Top"
 			  Visibility="Visible"
 			  Width="20" Margin="95,5,0,5" Grid.ColumnSpan="2"/>
+
+
+		<TextBlock Margin="5,26,396,86" Grid.Column="1" Grid.Row="2"
+		Text = "Type in Customer #"	
+			     Foreground="White"/>
+		<TextBox x:Name="filter" 
+			   Grid.Column="1" 
+			   Grid.Row="2" 
+			   HorizontalContentAlignment="Center" 
+			   Margin="129,22,307,0" 
+			   Padding="2"
+			   Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,FallbackValue=105}" 
+			   TextWrapping="NoWrap" 
+			   RenderTransformOrigin="-7.07,1.598" 
+			   VerticalAlignment="Top"
+			   TextChanged="filter_TextChanged" 
+			   Height="23"/>
+		<TextBlock Margin="27,54,374,58" Grid.Column="1" Grid.Row="2"
+			Text = "Select Search Type :-"	
+			FontWeight="Bold"
+			FontSize="11"
+			Foreground="{StaticResource Green8}"/>
+		<Button
+			Grid.Row="2"
+			Grid.Column="1"
+			Width="100"
+			Height="30"
+			Margin="239,20,0,0"
+			HorizontalAlignment="Left"
+			IsTabStop="False"
+			VerticalAlignment="Top"
+			Background="{StaticResource HeaderBrushBlue}"
+			Click="ExportBankCSV_Click"
+			Content="Export to CSV"
+			Foreground="White"
+			Template="{StaticResource HorizontalGradientTemplateBlue}" />
+		<Button
+			  Grid.Row="2"
+			  Grid.Column="1"
+			  Width="100"
+			  Height="30"
+			  Margin="239,57,0,0"
+			  HorizontalAlignment="Left"
+			  IsTabStop="False"
+			  VerticalAlignment="Top"
+			  Background="{StaticResource HeaderBrushBlue}"
+			  Click="ExportToJSON"
+			  Content="Export to JSON"
+			  Foreground="White"
+			  Template="{StaticResource HorizontalGradientTemplateBlue}" />
+		<Button
+			  Grid.Row="2"
+			  Grid.Column="1"
+			  Width="119"
+			  Height="30"
+			  Margin="229,93,0,0"
+			  HorizontalAlignment="Left"
+			  IsTabStop="False"
+			  VerticalAlignment="Top"
+			  Background="{StaticResource HeaderBrushBlue}"
+			  Click="ImportFromJSON"
+			  Content="Import from JSON"
+			  Foreground="White"
+			  Template="{StaticResource HorizontalGradientTemplateBlue}" RenderTransformOrigin="1.259,0.075" />
+
+		<!--TestBankviewerView-->
 		<!--#endregion buttons2-->
 
 	</Grid>
