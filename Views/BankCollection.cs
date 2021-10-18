@@ -273,12 +273,12 @@ namespace WPFPages . Views
 				SqlConnection con;
 				string ConString = "";
 				ConString = ( string ) Properties . Settings . Default [ "BankSysConnectionString" ];
-				Debug . WriteLine ( $"Making new SQL connection in BANKCOLLECTION" );
+//				Debug . WriteLine ( $"Making new SQL connection in BANKCOLLECTION" );
 				con = new SqlConnection ( ConString );
 
 				using ( con )
 				{
-					Debug . WriteLine ( $"Using new SQL connection in BANKCOLLECTION" );
+//					Debug . WriteLine ( $"Using new SQL connection in BANKCOLLECTION" );
 					string commandline = "";
 
 					if ( Flags . IsMultiMode )
@@ -303,7 +303,7 @@ namespace WPFPages . Views
 					}
 					//					lock (bptr)
 					//					{
-					Debug . WriteLine ( $"BANK : SQL Reading BankCollection Datatable (307) in BankCollection load function " );
+//					Debug . WriteLine ( $"BANK : SQL Reading BankCollection Datatable (307) in BankCollection load function " );
 					SqlCommand cmd = new SqlCommand ( commandline, con );
 					SqlDataAdapter sda = new SqlDataAdapter ( cmd );
 					if ( dtBank == null )
@@ -330,7 +330,7 @@ namespace WPFPages . Views
 				object bptr = new object ( );
 				//				lock (bptr)
 				//				{
-				Debug . WriteLine ( $"BANK : SQL Locking BankCollection Load in BankCollection (331) load function " );
+//				Debug . WriteLine ( $"BANK : SQL Locking BankCollection Load in BankCollection (331) load function " );
 				for ( int i = 0 ; i < dtBank . Rows . Count ; i++ )
 				{
 					Bankinternalcollection . Add ( new BankAccountViewModel
@@ -346,7 +346,7 @@ namespace WPFPages . Views
 					} );
 					count = i;
 				}
-				Debug . WriteLine ( $"BANK : BankCollection Load completed in BankCollection (347) load function " );
+//				Debug . WriteLine ( $"BANK : BankCollection Load completed in BankCollection (347) load function " );
 				//				}
 			}
 			catch ( Exception ex )
@@ -391,9 +391,23 @@ namespace WPFPages . Views
 				Debug . WriteLine ( $"Using new SQL connection in BANKCOLLECTION" );
 				using ( con )
 				{
-					// Create a valid Query Command string including any active sort ordering
-					commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
-						$" where CustNo > {Min} AND CustNo < {Max} order by CustNo + BankNo ";
+					if ( Min == -1 && Max == -1 && Tot != -1)
+					{
+						// Create a valid Query Command string for a Maximum  # of records
+						commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
+							$"  order by CustNo + BankNo ";
+					}
+					else if(Min== -1 && Max == -1 && Tot == -1)
+					{
+						// Create a valid Query Command string for ALL records
+						commandline = $"Select  * from BankAccount  order by CustNo + BankNo ";
+					}
+					else
+					{
+						// Create a valid Query Command string for a Max # of records with start/End parameters for CustNo
+						commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
+							$" where CustNo > {Min} AND CustNo < {Max} order by CustNo + BankNo ";
+					}
 					SqlCommand cmd = new SqlCommand ( commandline, con );
 					SqlDataAdapter sda = new SqlDataAdapter ( cmd );
 					sda . Fill ( dt );
@@ -416,7 +430,7 @@ namespace WPFPages . Views
 		///  July 2021
 		/// </summary>
 		/// <returns></returns>
-		public async static Task<BankCollection >LoadSelectedCollection ( BankCollection temp, int max = -1, DataTable dtBank = null, bool Notify = false )
+		public  static BankCollection LoadSelectedCollection ( BankCollection bankCollection, int max = -1, DataTable dtBank = null, bool Notify = false )
 		{
 			object bptr = new object ( );
 			try
@@ -447,7 +461,7 @@ namespace WPFPages . Views
 			}
 			finally
 			{
-				Debug . WriteLine ( $"BANK : Completed load into Bankcollection :  {temp . Count} records loaded successfully ...." );
+//				Debug . WriteLine ( $"BANK : Completed load into Bankcollection :  {temp . Count} records loaded successfully ...." );
 				// This is ONLY called  if a requestor specifies the argument as TRUE
 				if ( Notify )
 				{

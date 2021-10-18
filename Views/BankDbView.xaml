@@ -37,7 +37,7 @@
 		<dateconv:ResourceToBrushConverter x:Key="Resource2BrushConvert"/>
 		<!--#endregion Converters-->
 
-		<!--#region ContextMenu--> 
+		<!--#region ContextMenu-->
 		<ContextMenu x:Key="ContextMenu1">
 			<MenuItem Header="View currently selected Record in JSON Format"  Click="ContextShowJson_Click" >
 				<MenuItem.Icon>
@@ -60,7 +60,7 @@
 					<Image Source="/Icons/wifi.png"  />
 				</MenuItem.Icon>
 			</MenuItem>
-			
+
 			<MenuItem Header="  System Colors" Click="sysColors_Click" Background="{StaticResource Blue1}" Foreground="White">
 			</MenuItem>
 
@@ -89,7 +89,7 @@
 					<Image Source="/Icons/wifi.png"  />
 				</MenuItem.Icon>
 			</MenuItem>
-			
+
 			<MenuItem Header="Exit" Click="ContextClose_Click" Background="{StaticResource Red1}" Foreground="White">
 				<MenuItem.Icon>
 					<Image Source="/Icons/document-delete_48x48.png"  />
@@ -100,7 +100,7 @@
 		<!--#endregion ContextMenu-->
 
 		<!--#region Styles-->
-		
+
 		<Style x:Key="HeaderStyleBlue" TargetType="DataGridColumnHeader">
 			<Setter Property="Background" Value="{StaticResource HeaderBrushBlue}" />
 			<Setter Property="Foreground" Value="White" />
@@ -180,7 +180,7 @@
 
 		<!--Db Collection-->
 		<self:BankCollection x:Key="Bankcollection"/>
-		
+
 	</Window.Resources>
 	<!--==================================================================-->
 
@@ -198,40 +198,40 @@
 		<CommandBinding Command="ApplicationCommands.New" 
 		    Executed="Command_New"
 		    CanExecute="CommandNew_CanExecute" />
-        
+
 		<CommandBinding Command="ApplicationCommands.Cut" 
 		    Executed="Command_Cut"
 		    CanExecute="CommandCut_CanExecute" />
-        
-        <CommandBinding Command="ApplicationCommands.Copy" 
+
+		<CommandBinding Command="ApplicationCommands.Copy" 
 		    Executed="Command_Copy"
 		    CanExecute="CommandCopy_CanExecute" />
-        
-        <CommandBinding Command="ApplicationCommands.Paste" 
+
+		<CommandBinding Command="ApplicationCommands.Paste" 
 		    Executed="Command_Paste"
 		    CanExecute="CommandPaste_CanExecute" />
 
-        <!--CUSTOM COMMAND-->
+		<!--CUSTOM COMMAND-->
 		<CommandBinding Command="cmd:MyCommands.Exit" 
 		    CanExecute="CommandExit_CanExecute"
 		    Executed="Command_Exit"/>
-        
+
 		<CommandBinding Command="cmd:MyCommands.ShowMessage" 
 		    CanExecute="ShowMessage_CanExecute"
 		    Executed="Show_Message"/>
 
-        <CommandBinding Command="cmd:MyCommands.CloseWin" 
+		<CommandBinding Command="cmd:MyCommands.CloseWin" 
 		    CanExecute="Close_CanExecute"
 		    Executed="CloseWin"		/>
-        <!--Now we have to add CommandBindings for the Hot key version-->
+		<!--Now we have to add CommandBindings for the Hot key version-->
 		<CommandBinding Command="cmd:MyCommands.Hello" 
 			CanExecute="Hello_CanExecute"
 			Executed="Hello_Executed"/>
 
-        <CommandBinding Command="cmd:MyCommands.Bye" 
+		<CommandBinding Command="cmd:MyCommands.Bye" 
 			CanExecute="Bye_CanExecute" 
 			Executed="Bye_Executed"/>
-        
+
 	</Window.CommandBindings>
 
 	<!--==================================================================-->
@@ -284,8 +284,8 @@
             local:MenuAttachedProperties.MenuItemMargin="2"
 
             Background="Transparent">
-   
-            <MenuItem Header="_Linq Queries"
+
+			<MenuItem Header="_Linq Queries"
 				Width="80"
 				Foreground="{StaticResource White0}">
 
@@ -295,42 +295,42 @@
 						IsCheckable="false"
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem Header="A/c Type 2 Only"
+				<MenuItem Header="A/c Type 2 Only"
 						Click="Linq2_Click"
 						IsCheckable="False" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem Header="A/c Type 3 Only"
+				<MenuItem Header="A/c Type 3 Only"
 						Click="Linq3_Click"
 						IsCheckable="False" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem Header="A/c Type 4 Only"
+				<MenuItem Header="A/c Type 4 Only"
 						Click="Linq4_Click"
 						IsCheckable="False" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <Separator Style="{StaticResource Menu_Separator}"/>
+				<Separator Style="{StaticResource Menu_Separator}"/>
 
-                <MenuItem Header="All Records"
+				<MenuItem Header="All Records"
 						Click="Linq6_Click"
 						IsCheckable="False" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <Separator />
+				<Separator />
 				<MenuItem
 						Click="Linq5_Click"
 						Header="Multi A/C Holders"
 						IsCheckable="False" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 						Click="Linq7_Click"
 						Header="Export Multi A/Cs"
 						IsCheckable="False" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-            </MenuItem>
+			</MenuItem>
 
 			<!--// Seperate menu items at top level -->
 			<MenuItem
@@ -341,7 +341,7 @@
                     />
 
 
-            <MenuItem
+			<MenuItem
 				Click="Options_Click"
 				Width="50"
 				Foreground="{StaticResource White1}"
@@ -349,10 +349,10 @@
                     />
 
 
-            <!--How to use a default "ApplicationCommands" option that we--> 
+			<!--How to use a default "ApplicationCommands" option that we-->
 			<!--provide the method for in our .CS. The Method in .CS is :-->
 			<!--private void Command_New ( object sender, ExecutedRoutedEventArgs e )-->
-			<!--NB The method can do ANYTHING IT WANTS, it does NOT have to--> 
+			<!--NB The method can do ANYTHING IT WANTS, it does NOT have to-->
 			<!--implement the New command it appears to be-->
 			<MenuItem
 				Width="Auto"
@@ -366,14 +366,14 @@
 					Header="Show current Index"
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					Style="{StaticResource MenuItemLightblue}"
 					Command="ApplicationCommands.Cut"
 					CommandParameter="Selectedindex"
 					Foreground="{StaticResource Red0}"
 					Header="Show current CustNo" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
-				
+
 				<MenuItem
 					Style="{StaticResource MenuItemLightblue}"
 					Command="cmd:MyCommands.Exit"
@@ -381,13 +381,13 @@
 					Header="Exit Command" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                
-                
-                
-                
-                <!--Command="{Binding HelloCommand,  RelativeSource={RelativeSource AncestorType={x:Type local:BankDbView}}}"-->
-                <!--Command="{Binding (HelloCommand), RelativeSource={RelativeSource AncestorType={x:Type local:BankDbView }}}"-->
-                <MenuItem Name="HelloItem"
+
+
+
+
+				<!--Command="{Binding HelloCommand,  RelativeSource={RelativeSource AncestorType={x:Type local:BankDbView}}}"-->
+				<!--Command="{Binding (HelloCommand), RelativeSource={RelativeSource AncestorType={x:Type local:BankDbView }}}"-->
+				<MenuItem Name="HelloItem"
 					Command="cmd:MyCommands.Hello"
                     CommandParameter="HelloItem"
 					Foreground="{StaticResource White0}"
@@ -396,17 +396,17 @@
 					Header="Hello Command !" 
                     Template="{StaticResource MenuItemCtrlTemplate1}">
 
-                <!--<MenuItem.DataContext>
+					<!--<MenuItem.DataContext>
                         <local:BankDbView  x:Name="bankdbview"/>
                     </MenuItem.DataContext>-->
-                </MenuItem>
+				</MenuItem>
 
 
 
 
 
 
-                <Separator Style="{StaticResource Menu_Separator}"/>
+				<Separator Style="{StaticResource Menu_Separator}"/>
 
 				<MenuItem
 					Style="{StaticResource MenuItemLightblue}"
@@ -416,22 +416,22 @@
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
-                <MenuItem
+				<MenuItem
 					Style="{StaticResource MenuItemLightblue}"
 					Command="cmd:MyCommands.CloseWin"
 					Foreground="{StaticResource Red0}"
 					Header="Close Window" 
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-            </MenuItem>
-			
+			</MenuItem>
+
 			<MenuItem Header ="Larger Font"
 				    x:Name="SizeChangeMenuItem2" 
 				    Width="130"
 				    Click="changesize_Click2"
                     >
 
-            <MenuItem.ItemTemplate>
+				<MenuItem.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" >
 							<TextBlock Text="Larger xxxx" 
@@ -452,7 +452,7 @@
 				Header="Exit..." 
                     />
 
-        </Menu>
+		</Menu>
 
 		<!--#endregion grid setup-->
 
@@ -495,7 +495,7 @@
 			VerticalContentAlignment="Center"			
 			VerticalGridLinesBrush="{StaticResource Blue2}" 			
 			CellStyle="{StaticResource BankAccountGridStyle}">
-			
+
 			<DataGrid.Resources>
 				<!--<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource Blue}" />-->
 				<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#6598FD" />
@@ -588,14 +588,14 @@
 					Width="50"
 					Header="Interest"
 					SortMemberPath="IntRate" >
-				<DataGridTemplateColumn.CellTemplate>
-					<DataTemplate>
-						<TextBlock
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock
 								HorizontalAlignment="Center"
 								VerticalAlignment="Center"
 								Text="{Binding IntRate, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='0.00'}" />
-					</DataTemplate>
-				</DataGridTemplateColumn.CellTemplate>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				<!--  CellStyle="{StaticResource CenterText}"  -->
 
@@ -611,7 +611,7 @@
 								VerticalAlignment="Center"
 								Text="{Binding Path=ODate, Converter={StaticResource DateConvert}}" />
 							<!--Text="{Binding Path=ODate, StringFormat='dd/MM/yyyy'}" />-->
-							
+
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 					<DataGridTemplateColumn.CellEditingTemplate>
@@ -774,7 +774,7 @@
 					LostFocus ="Edit_LostFocus"
 					Text="{Binding BankNo, FallbackValue=Bank A/c #, UpdateSourceTrigger=LostFocus}" />
 
-				<!--This shows how to use a converer to change the AcType numeric 
+			<!--This shows how to use a converer to change the AcType numeric 
 				value to a descriptive string in the data fields-->
 			<TextBlock
 					x:Name="acType"
@@ -898,16 +898,15 @@
 			<!--#endregion Text Fields-->
 
 		</Grid>
-		
+
 		<!--#region buttons2-->
 		<Button
 			x:Name="SaveBttn"
 			Grid.Column="3"
-			Grid.ColumnSpan="2"
 			Grid.Row="2"
 			Width="100"
 			Height="30"
-			Margin="10,61,0,0"
+			Margin="10,66,0,0"
 			HorizontalAlignment="Left"
 			IsTabStop="False"
 			VerticalAlignment="Top"
@@ -922,7 +921,7 @@
 			Grid.Column="3"
 			Width="100"
 			Height="30"
-			Margin="10,99,0,0"
+			Margin="10,103,0,0"
 			HorizontalAlignment="Left"
 			IsTabStop="False"
 			VerticalAlignment="Top"
@@ -997,6 +996,34 @@
 			  VerticalContentAlignment="Top"
 			  Visibility="Visible"
 			  Width="20" Margin="95,5,0,5" Grid.ColumnSpan="2"/>
+		<CheckBox
+				x:Name="ToggleViewStatus"
+				Checked="ToggleViewStatus_Checked"
+				Unchecked="ToggleViewStatus_Unchecked"
+				Grid.Row="2"
+				Grid.Column="1"
+				IsEnabled="True"
+				IsTabStop="False"
+				Margin="435,16,80,96"	    				
+				Content="Sharing Bank Data View"
+				FontWeight="DemiBold"  
+				Foreground="{StaticResource Green9}" 
+				Grid.ColumnSpan="2"
+				Width="150"/>
+		<Button
+			  Grid.Row="2"
+			  Grid.Column="3"
+			  Width="100"
+			  Height="30"
+			  Margin="8,29,0,0"
+			  HorizontalAlignment="Left"
+			  IsTabStop="False"
+			  VerticalAlignment="Top"
+			  Background="{StaticResource HeaderBrushBlue}"
+			  Click="Reload_Click"
+			  Content="Reload Db"
+			  Foreground="White"
+			  Template="{StaticResource HorizontalGradientTemplateBlue}" />
 		<!--#endregion buttons2-->
 
 	</Grid>

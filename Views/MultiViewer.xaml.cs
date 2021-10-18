@@ -29,7 +29,7 @@ namespace WPFPages . Views
 //		private DetCollection DetMultiViewerDbcollection = null;
 
 		private BankCollection MBankcollection = null;
-		private CustCollection MCustcollection = null;
+		private AllCustomers MCustcollection = null;
 		private DetCollection MDetcollection = null;
 		public Stopwatch stopwatch1 = new Stopwatch ( );
 		public Stopwatch stopwatch2 = new Stopwatch ( );
@@ -210,7 +210,7 @@ namespace WPFPages . Views
 			{
 				Mouse . OverrideCursor = Cursors . Wait;
 				Flags . SqlCustActive  = true;
-				CustCollection . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
+				AllCustomers . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
 			} );
 //			Thread . Sleep ( 5000 );
 			return t1;
@@ -242,7 +242,7 @@ namespace WPFPages . Views
 							      //			if ( e . CallerDb != "MULTIVIEWER" )
 							      //				return;
 			Flags . SqlBankActive  = false;
-			Debug . WriteLine ($"\n*** Loading Bank data in BankDbView after BankDataLoaded trigger\n" );
+//			Debug . WriteLine ($"\n*** Loading Bank data in BankDbView after BankDataLoaded trigger\n" );
 							      // ONLY proceed if we triggered the new data request
 							      //			if ( e . CallerDb != "MULTIVIEWER" ) return;
 			Debug . WriteLine ( $"\n*** Loading Bank data in MultiViewer after BankDataLoaded trigger\n" );
@@ -300,7 +300,7 @@ namespace WPFPages . Views
 			LoadingDbData = true;
 			MCustcollection?.Clear();
 			// This is how to convert to  CollectionView
-			MCustcollection = e . DataSource as CustCollection;
+			MCustcollection = e . DataSource as AllCustomers;
 			this . CustomerGrid . ItemsSource = CollectionViewSource . GetDefaultView ( MCustcollection );
 
 			this . CustomerGrid . Refresh ( );
@@ -382,7 +382,7 @@ namespace WPFPages . Views
 			else if ( CurrentDb == "CUSTOMER" )
 			{
 				Flags . SqlCustActive = true;
-				await CustCollection . LoadCust ( null, "CUSTOMER", 2, true );
+				await AllCustomers . LoadCust ( null, "CUSTOMER", 2, true );
 			}
 			else if ( CurrentDb == "DETAILS" )
 			{
@@ -557,7 +557,7 @@ namespace WPFPages . Views
 			MCustcollection = null;
 			stopwatch2 . Start ( );
 			Flags . SqlCustActive  = true;
-			await CustCollection . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
+			await AllCustomers . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
 			//			if ( MultiDetcollection == null || MultiDetcollection . Count == 0 )
 			MDetcollection = null;
 
@@ -680,7 +680,7 @@ namespace WPFPages . Views
 			//			MultiBankcollection = BankCollection . MultiBankcollection;
 
 			Flags . SqlCustActive  = true;
-			await CustCollection . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
+			await AllCustomers . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
 			//			MultiCustcollection = CustCollection . MultiCustcollection;
 
 			Flags . SqlDetActive  = true;
@@ -1246,7 +1246,7 @@ namespace WPFPages . Views
 			this . CustomerGrid . ItemsSource = null;
 			this . CustomerGrid . Items . Clear ( );
 			Flags . SqlCustActive  = true;
-			await CustCollection . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
+			await AllCustomers . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
 			//this . CustomerGrid . ItemsSource = CollectionViewSource . GetDefaultView ( MCustcollection );
 			//this . CustomerGrid . Refresh ( );
 			//			ExtensionMethods . Refresh ( this . CustomerGrid );
@@ -1835,7 +1835,7 @@ namespace WPFPages . Views
 			{
 				// Bank updated a row, so just update Customer and Details
 				Flags . SqlCustActive  = true;
-				await CustCollection . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
+				await AllCustomers . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
 				Flags . SqlDetActive  = true;
 				await DetailCollection . LoadDet ( "MULTIVIEWER", 3, true );
 				Mouse . OverrideCursor = Cursors . Arrow;
@@ -1859,7 +1859,7 @@ namespace WPFPages . Views
 				Flags . SqlBankActive  = true;
 				BankCollection . LoadBank ( MBankcollection, "MULTIVIEWER", 3, true );
 				Flags . SqlCustActive  = true;
-				await CustCollection . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
+				await AllCustomers . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
 				Mouse . OverrideCursor = Cursors . Arrow;
 				inprogress = false;
 				return;
@@ -1880,7 +1880,7 @@ namespace WPFPages . Views
 			Flags . SqlBankActive  = true;
 			BankCollection . LoadBank ( MBankcollection, "MULTIVIEWER", 3, true );
 			Flags . SqlCustActive  = true;
-			await CustCollection . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
+			await AllCustomers . LoadCust ( MCustcollection, "MULTIVIEWER", 3, true );
 			Flags . SqlDetActive  = true;
 			await DetailCollection . LoadDet ( "MULTIVIEWER", 3, true );
 			Mouse . OverrideCursor = Cursors . Arrow;
@@ -2284,7 +2284,7 @@ namespace WPFPages . Views
 					bank = CustRecord . BankNo;
 					cust = CustRecord . CustNo;
 					dg . ItemsSource = null;
-					CustCollection . dtCust?.Clear ( );
+					AllCustomers . dtCust?.Clear ( );
 					e . Handled = true;
 					key1 = false;
 					// Call the method to update any other Viewers that may be open
@@ -2605,7 +2605,6 @@ namespace WPFPages . Views
 						string str = GetExportRecords . CreateTextFromRecord ( bvm, null, null, true, false );
 						string dataFormat = DataFormats . Text;
 						DataObject dataObject = new DataObject ( dataFormat, str );
-
 						System . Windows . DragDrop . DoDragDrop (
 						BankGrid,
 						dataObject,

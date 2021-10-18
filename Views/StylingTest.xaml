@@ -233,7 +233,7 @@
             <ctrl:ImageButton
                   Background="{StaticResource Green5}" 
                   Foreground="White"
-                  Source="/Icons/harddrive.png"
+                   Source="/Icons/harddrive.png"
                   ImgWidth="55"
                   CornerRadius="10"
                   Text="Drive C:\"

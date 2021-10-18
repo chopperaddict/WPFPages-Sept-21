@@ -22,6 +22,9 @@ namespace WPFPages
 
 	public static class Flags
 	{
+		// Controls whether we use the comon Collection View or not in data viewers of all types
+		public static bool UseSharedView { get; set; }
+
 		public static bool SqlBankActive = false;
 		public static bool SqlCustActive = false;
 		public static bool SqlDetActive = false;
@@ -34,7 +37,7 @@ namespace WPFPages
 		public static Window NwSelectionWindow;
 		// Pointers to our data collections
 		public static DetCollection DetCollection = null;
-		public static CustCollection CustCollection = null;
+		public static AllCustomers CustCollection = null;
 		public static BankCollection BankCollection = null;
 
 		//		public static SqlConnection con = null;

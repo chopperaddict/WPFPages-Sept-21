@@ -182,7 +182,7 @@ namespace WPFPages . Views
 			{
 				selectedItem = listbox . SelectedItem . ToString ( );
 				BankCollection Bankcollection = new BankCollection ( );
-				CustCollection Custcollection = new CustCollection ( );
+				AllCustomers Custcollection = new AllCustomers ( );
 				DetCollection Detcollection = new DetCollection ( );
 				if ( selectedItem . ToUpper ( ) . Contains ( "MULTI BANK ACCOUNTS" ) )
 				{
@@ -1595,6 +1595,12 @@ namespace WPFPages . Views
 		{
 			TestNWView tnv = new TestNWView();
 			tnv . Show ( );
+		}
+
+		private void ItemsControl_Click ( object sender , RoutedEventArgs e )
+		{
+			ItemsControlDemo id = new ItemsControlDemo();
+			id . Show ( );
 		}
 	}
 }

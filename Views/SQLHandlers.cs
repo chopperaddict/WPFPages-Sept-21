@@ -173,7 +173,7 @@ namespace WPFPages . Views
 				cs . ODate = ss . ODate;
 				cs . CDate = ss . CDate;
 				// ss = CustomerViewModel
-				CustCollection . UpdateCustomerDb ( cs , "BANKACCOUNT");
+				AllCustomers . UpdateCustomerDb ( cs , "BANKACCOUNT");
 				// sa = DetailsViewModel 
 				// Copy Bank data to Details
 				sa . Id = ss . Id;
@@ -209,13 +209,13 @@ namespace WPFPages . Views
 				cs . ODate = sa . ODate;
 				cs . CDate = sa . CDate;
 				// ss = CustomerViewModel
-				CustCollection . UpdateCustomerDb ( cs, "DETAILS" );
+				AllCustomers . UpdateCustomerDb ( cs, "DETAILS" );
 				return true;
 			}
 			else if ( CurrentDb == "CUSTOMER" )
 			{
 				// ss = CustomerViewModel
-				CustCollection . UpdateCustomerDb ( cs, "CUSTOMER" );
+				AllCustomers . UpdateCustomerDb ( cs, "CUSTOMER" );
 				ss . Id = cs . Id;
 				ss . BankNo = cs . BankNo;
 				ss . CustNo = cs . CustNo;

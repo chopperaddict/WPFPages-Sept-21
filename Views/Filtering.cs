@@ -157,7 +157,7 @@ namespace WPFPages . Views
 			else if ( CurrentDb == "CUSTOMER" )
 			{
 				Commandline1 = $"Select * from Customer where ";
-				CustCollection . dtCust . Clear ( );
+				AllCustomers . dtCust . Clear ( );
 			}
 			else if ( CurrentDb == "DETAILS" )
 			{

@@ -74,15 +74,15 @@ namespace WPFPages . Views
 			EventControl . CustDataLoaded += EventControl_CustDataLoaded;
 			this . CustGrid . ItemsSource = null;
 			this . CustGrid . Items . Clear ( );
-			CustCollection CustViewcollection = new CustCollection ( );
-			CustViewcollection = await CustCollection . LoadCust ( CustViewcollection , "CUSTDBVIEW" , 3 , true );
+			AllCustomers CustViewcollection = new AllCustomers ( );
+			CustViewcollection = await AllCustomers . LoadCust ( CustViewcollection , "CUSTDBVIEW" , 3 , true );
 		}
 
 		private void EventControl_CustDataLoaded ( object sender , LoadedEventArgs e )
 		{
 			LView3 . ItemsSource = null;
 			//                        Customers1 = e . DataSource as CustomerCollection;
-			LView3 . ItemsSource = e . DataSource as CustCollection;
+			LView3 . ItemsSource = e . DataSource as AllCustomers;
 			//                        CustGrid . ItemsSource = e . DataSource as CustCollection;
 
 			//                        CustGrid . ItemsSource = view1;
@@ -91,7 +91,7 @@ namespace WPFPages . Views
 
 			if ( CollectionViewSource . GetDefaultView ( Customers1 ) . IsEmpty )
 				return;
-			CustCollection custs = new CustCollection ( );
+			AllCustomers custs = new AllCustomers ( );
 			CollectionViewSource custview = new CollectionViewSource ( );
 			Customers1 = ( ObservableCollection<CustomerViewModel> ) CollectionViewSource . GetDefaultView ( Customers1 );
 			if ( view1 != ( CollectionView ) null && view1 . Count > 0 )

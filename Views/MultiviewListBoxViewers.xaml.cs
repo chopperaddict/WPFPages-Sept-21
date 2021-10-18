@@ -38,7 +38,7 @@ namespace WPFPages .Views
 		// Declare all 3 of the local Db pointers
 		public BankCollection SqlBankcollection = new BankCollection();
 		public BankCollection BackupBankcollection = new BankCollection();
-		public CustCollection SqlCustcollection = new CustCollection();
+		public AllCustomers SqlCustcollection = new AllCustomers();
 		public DetCollection SqlDetcollection = new DetCollection();
 		public static List<BankAccountViewModel> BankList = new List<BankAccountViewModel>();
 		public List<CustomerViewModel> CustList = new List<CustomerViewModel>();
@@ -248,7 +248,7 @@ namespace WPFPages .Views
 			Utils .SetupWindowDrag ( this );
 			Flags .SqlBankActive = true;
 			await BankCollection .LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
-			await CustCollection .LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
+			await AllCustomers .LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
 
 			uclistboxheight = UCListbox .ActualHeight;
 			uclistbox2height = UCListbox2 .ActualHeight;
@@ -307,7 +307,7 @@ namespace WPFPages .Views
 
 		private void EventControl_CustDataLoaded ( object sender , LoadedEventArgs e )
 		{
-			SqlCustcollection = e .DataSource as CustCollection;
+			SqlCustcollection = e .DataSource as AllCustomers;
 			datagrid2 .ItemsSource = SqlCustcollection;
 			datagrid2 .SelectedIndex = 0;
 			UCListbox2 .ItemsSource = SqlCustcollection;
@@ -387,7 +387,7 @@ namespace WPFPages .Views
 			DbList_LoadBtnPressed ( null , null );
 			UCListbox2 .ItemsSource = null;
 			UCListbox2 .Items .Clear ( );
-			await CustCollection .LoadCust ( SqlCustcollection , "" , 1 , true );
+			await AllCustomers .LoadCust ( SqlCustcollection , "" , 1 , true );
 		}
 
 		private void LbiExpander_Expanded ( object sender , RoutedEventArgs e )
@@ -928,7 +928,7 @@ namespace WPFPages .Views
 			max = Convert .ToInt32 ( MaxValue .Text );
 			tot = Convert .ToInt32 ( MaxRecords .Text );
 			dtBank = BankCollection .LoadSelectedBankData ( min , max , tot );
-			await BankCollection .LoadSelectedCollection ( SqlBankcollection , -1 , dtBank , true );
+			BankCollection .LoadSelectedCollection ( SqlBankcollection , -1 , dtBank , true );
 
 			DbList_LoadBtnPressed2 ( sender , e );
 			Mouse .OverrideCursor = System .Windows .Input .Cursors .Arrow;
@@ -957,7 +957,7 @@ namespace WPFPages .Views
 			max = Convert .ToInt32 ( MaxValue .Text );
 			tot = Convert .ToInt32 ( MaxRecords .Text );
 			dtCust = BankCollection .LoadSelectedBankData ( min , max , tot );
-			await CustCollection .LoadCust ( SqlCustcollection , "" , 1 , true , min , max , tot );
+			await AllCustomers .LoadCust ( SqlCustcollection , "" , 1 , true , min , max , tot );
 			Mouse .OverrideCursor = System .Windows .Input .Cursors .Arrow;
 
 		}

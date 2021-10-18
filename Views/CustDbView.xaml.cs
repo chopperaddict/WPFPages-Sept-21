@@ -23,7 +23,7 @@ namespace WPFPages .Views
 	/// </summary>
 	public partial class CustDbView : Window
 	{
-		private static CustCollection CustDbViewcollection = null;// = new CustCollection ( );//. CustViewerDbcollection;
+		private static AllCustomers CustDbViewcollection = null;// = new CustCollection ( );//. CustViewerDbcollection;
 											    // Get our personal Collection view of the Db
 		private ICollectionView CustviewerView
 		{
@@ -123,7 +123,7 @@ namespace WPFPages .Views
 
 
 			Flags .SqlCustActive = true;
-			await CustCollection .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
+			await AllCustomers .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
 
 			SaveBttn .IsEnabled = false;
 			// Save linkage setting as we need to disable it while we are loading
@@ -160,7 +160,7 @@ namespace WPFPages .Views
 				return;
 			//Update our own data tyoe only
 			Flags .SqlCustActive = true;
-			CustCollection .LoadCust ( null , "CUSTOMER" , 2 , true );
+			AllCustomers .LoadCust ( null , "CUSTOMER" , 2 , true );
 
 		}
 
@@ -190,7 +190,7 @@ namespace WPFPages .Views
 			this .CustGrid .Items .Clear ( );
 			Mouse .OverrideCursor = Cursors .Wait;
 			Flags .SqlCustActive = true;
-			CustDbViewcollection = await CustCollection .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
+			CustDbViewcollection = await AllCustomers .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
 			IsDirty = false;
 		}
 
@@ -239,7 +239,7 @@ namespace WPFPages .Views
 				// and this will notify any other open viewers as well
 				cvmCurrent = null;
 				Flags .SqlCustActive = true;
-				await CustCollection .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 2 , true );
+				await AllCustomers .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 2 , true );
 				return;
 			}
 
@@ -313,8 +313,8 @@ namespace WPFPages .Views
 			Flags .SqlCustActive = false;
 			LoadingDbData = true;
 
-			CustviewerView = CollectionViewSource .GetDefaultView ( e .DataSource as CustCollection );
-			CustDbViewcollection = e .DataSource as CustCollection;
+			CustviewerView = CollectionViewSource .GetDefaultView ( e .DataSource as AllCustomers );
+			CustDbViewcollection = e .DataSource as AllCustomers;
 
 			// Add our CollectionView to THE One and only CollectionViewSource
 			cvs . Source = CustDbViewcollection;
@@ -1082,7 +1082,7 @@ namespace WPFPages .Views
 				this .CustGrid .ItemsSource = null;
 				this .CustGrid .Items .Clear ( );
 				Flags .SqlCustActive = true;
-				await CustCollection .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 1 , true );
+				await AllCustomers .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 1 , true );
 				this .CustGrid .ItemsSource = CustviewerView;
 				// Notify everyone else of the data change
 				EventControl .TriggerViewerDataUpdated ( CustviewerView ,

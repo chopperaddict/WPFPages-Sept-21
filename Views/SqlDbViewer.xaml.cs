@@ -63,12 +63,12 @@ namespace WPFPages
 
 		//Temporary collection to support linq querying
 		private BankCollection BankReserved = new BankCollection ( );
-		private CustCollection CustReserved = new CustCollection ( );
+		private AllCustomers CustReserved = new AllCustomers ( );
 		private DetCollection DetReserved = new DetCollection ( );
 
 		// Declare all 3 of the local Db pointers
 		private BankCollection SqlBankcollection = null;
-		private CustCollection SqlCustcollection = null;
+		private AllCustomers SqlCustcollection = null;
 		private DetCollection SqlDetcollection = null;
 
 		// Crucial structure for use when a Grid row is being edited
@@ -616,7 +616,7 @@ namespace WPFPages
 					stopwatch . Start ( );
 					Debug . WriteLine ( "\nSQLDBVIEWER : awaiting Load of Customer Data" );
 					Flags . SqlCustActive  = true;
-					CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+					AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 					break;
 
 				case "DETAILS":
@@ -691,7 +691,7 @@ namespace WPFPages
 			else if ( CurrentDb == "CUSTOMER" )
 			{
 				Flags . SqlCustActive  = true;
-				CustCollection . LoadCust ( null, "CUSTOMER", 2, true );
+				AllCustomers . LoadCust ( null, "CUSTOMER", 2, true );
 			}
 			else if ( CurrentDb == "DETAILS" )
 			{
@@ -884,7 +884,7 @@ namespace WPFPages
 				// Save our current position
 				SavedCustRow = this . CustomerGrid . SelectedIndex;
 				Flags . SqlCustActive  = true;
-				CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+				AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 				Console . WriteLine ( $"\nDEBUG RELOADING : Entered SQLDBVIEWER EventControl_SqlDataUpdated : Customer data triggered by BankCollection\nData is being loaded here ?\n " );
 			}
 			else if ( CurrentDb == "DETAILS" )
@@ -978,7 +978,7 @@ namespace WPFPages
 			if ( e . DataSource == null || e . RowCount == 0 )
 				return;
 
-			SqlCustcollection = e . DataSource as CustCollection;
+			SqlCustcollection = e . DataSource as AllCustomers;
 			if ( SqlCustcollection . Count == 0 )
 				return;
 
@@ -1295,7 +1295,7 @@ namespace WPFPages
 				this . CustomerGrid . Items . Clear ( );
 				Mouse . OverrideCursor = Cursors . Wait;
 				Flags . SqlCustActive  = true;
-				await CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+				await AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 				Mouse . OverrideCursor = Cursors . Arrow;
 			}
 			else if ( CurrentDb == "DETAILS" )
@@ -1766,7 +1766,7 @@ namespace WPFPages
 			//This calls  LoadCustomerTask for us after sorting out the command line sort order requested
 			///and it clears down any  existing data in DataTable or Collection
 			Flags . SqlCustActive  = true;
-			CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+			AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 
 			CurrentActiveGrid = this . CustomerGrid;
 			this . CustomerGrid . ItemsSource = SqlCustcollection;
@@ -1940,7 +1940,7 @@ namespace WPFPages
 				this . CustomerGrid . Items . Clear ( );
 				//				dtCust . Clear ( );
 				Flags . SqlCustActive  = true;
-				CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+				AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 				//this . CustomerGrid . ItemsSource = CollectionViewSource . GetDefaultView ( SqlViewerCustcollection );
 				//this . CustomerGrid . Refresh ( );
 				////				ExtensionMethods . Refresh ( this . CustomerGrid );
@@ -2552,7 +2552,7 @@ namespace WPFPages
 				// and this will notify any other open viewers as well
 				cvmCurrent = null;
 				Flags . SqlCustActive  = true;
-				CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 2, true );
+				AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 2, true );
 				return;
 			}
 
@@ -4131,7 +4131,7 @@ namespace WPFPages
 					SqlCustcollection = null;
 
 					Flags . SqlCustActive  = true;
-					CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+					AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 				}
 				else if ( CurrentDb == "DETAILS" )
 				{
@@ -4981,7 +4981,7 @@ namespace WPFPages
 					cust = CustRecord . CustNo;
 					dg . ItemsSource = null;
 					SqlCustcollection . Clear ( );
-					CustCollection . dtCust?.Clear ( );
+					AllCustomers . dtCust?.Clear ( );
 
 					//Remove it from SQL Db as well
 					DeleteRecord ( "CUSTOMER", CustRecord . BankNo, CustRecord . CustNo, CurrentRow );
@@ -5190,7 +5190,7 @@ namespace WPFPages
 					       where ( items . AcType == 1 )
 					       orderby items . CustNo
 					       select items;
-				CustCollection vm = new CustCollection ( );
+				AllCustomers vm = new AllCustomers ( );
 				foreach ( var item in accounts )
 				{
 					vm . Add ( item );
@@ -5270,7 +5270,7 @@ namespace WPFPages
 					       where ( items . AcType == 2 )
 					       orderby items . CustNo
 					       select items;
-				CustCollection vm = new CustCollection ( );
+				AllCustomers vm = new AllCustomers ( );
 				foreach ( var item in accounts )
 				{
 					vm . Add ( item );
@@ -5351,7 +5351,7 @@ namespace WPFPages
 					       where ( items . AcType == 3 )
 					       orderby items . CustNo
 					       select items;
-				CustCollection vm = new CustCollection ( );
+				AllCustomers vm = new AllCustomers ( );
 				foreach ( var item in accounts )
 				{
 					vm . Add ( item );
@@ -5429,7 +5429,7 @@ namespace WPFPages
 					       where ( items . AcType == 4 )
 					       orderby items . CustNo
 					       select items;
-				CustCollection vm = new CustCollection ( );
+				AllCustomers vm = new AllCustomers ( );
 				foreach ( var item in accounts )
 				{
 					vm . Add ( item );
@@ -5551,7 +5551,7 @@ namespace WPFPages
 						}
 					}
 				}
-				CustCollection vm = new CustCollection ( );
+				AllCustomers vm = new AllCustomers ( );
 				foreach ( var item in accounts )
 				{
 					vm . Add ( item );
@@ -5632,7 +5632,7 @@ namespace WPFPages
 			{
 				CustomerGrid . ItemsSource = null;
 				Flags . SqlCustActive  = true;
-				CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+				AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 				CustomerGrid . Refresh ( );
 				CustFiltered = false;
 				Count . Text = $"{this . CustomerGrid . SelectedIndex} / { this . CustomerGrid . Items . Count . ToString ( )}";
@@ -5826,7 +5826,7 @@ namespace WPFPages
 			string part2 = "";
 			string outstats = "Please check Output for failure details";
 			// Export CUSTOMER DATA to CSV
-			int count = CustCollection . ExportCustData ( @"C:\users\ianch\Documents\CustomerDbBankb.csv", CurrentDb );
+			int count = AllCustomers . ExportCustData ( @"C:\users\ianch\Documents\CustomerDbBankb.csv", CurrentDb );
 			if ( count > 0 )
 			{
 				part2 = $"\n{count} records have been saved successully.";
@@ -6664,7 +6664,7 @@ namespace WPFPages
 					// Save our reserve collection
 					CustReserved = null;
 					Flags . SqlCustActive  = true;
-                                        await CustCollection . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
+                                        await AllCustomers . LoadCust ( SqlCustcollection, "SQLDBVIEWER", 1, true );
 					this . CustomerGrid . ItemsSource = SqlCustcollection;
 				}
 				else if ( CurrentDb == "DETAILS" )

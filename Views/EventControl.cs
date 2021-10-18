@@ -66,7 +66,7 @@ namespace WPFPages.Views
 
 
 		public static event EventHandler<LoadedEventArgs> TestDataChanged;
-//		public static event EventHandler<LinkageChangedArgs> WindowLinkChanged;
+		public static event EventHandler<NotifyAllViewersOfViewSharingStatus> ViewSharingChanged;
 
 
 		#endregion ALL NEW EVENTS
@@ -123,15 +123,22 @@ namespace WPFPages.Views
 		//------------------------------//
 		// INDEX CHANGE EVENTS
 		//------------------------------//
-		public static void TriggerForceEditDbIndexChanged(object obj, IndexChangedArgs e)
+		
+		public static void TriggerViewSharingChanged ( object obj , NotifyAllViewersOfViewSharingStatus e )
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  ForceEditDbIndexChanged EVENT trigger");
-			if (ForceEditDbIndexChanged != null)
-				ForceEditDbIndexChanged?.Invoke(obj, e);
+			Console . WriteLine ( $"DEBUG : In EventControl : Sending  ViewSharingChanged EVENT trigger from {e.Sender}" );
+			if ( ViewSharingChanged != null )
+				ViewSharingChanged?.Invoke ( obj , e );
+		}
+		public static void TriggerForceEditDbIndexChanged ( object obj , IndexChangedArgs e )
+		{
+//			Console . WriteLine ( $"DEBUG : In EventControl : Sending  ForceEditDbIndexChanged EVENT trigger" );
+			if ( ForceEditDbIndexChanged != null )
+				ForceEditDbIndexChanged?.Invoke ( obj , e );
 		}
 		public static void TriggerEditDbIndexChanged(object obj, IndexChangedArgs e)
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  EditIndexChanged EVENT trigger");
+//			Console.WriteLine($"DEBUG : In EventControl : Sending  EditIndexChanged EVENT trigger");
 			if (EditIndexChanged != null)
 				EditIndexChanged?.Invoke(obj, e);
 		}
@@ -161,38 +168,38 @@ namespace WPFPages.Views
 
 		public static void TriggerGlobalDataChanged(object obj, GlobalEventArgs e)
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  Global DataChanged EVENT trigger (from{obj?.ToString()})");
+//			Console.WriteLine($"DEBUG : In EventControl : Sending  Global DataChanged EVENT trigger (from{obj?.ToString()})");
 			if (GlobalDataChanged != null)
 				GlobalDataChanged?.Invoke(obj, e);
 		}
 
 		public static void TriggerTestDataChanged(object obj, LoadedEventArgs e)
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  TestDataChanged EVENT trigger (from{obj?.ToString()})");
+//			Console.WriteLine($"DEBUG : In EventControl : Sending  TestDataChanged EVENT trigger (from{obj?.ToString()})");
 			if (TestDataChanged != null)
 				TestDataChanged?.Invoke(obj, e);
 		}
 		public static void TriggerViewerDataUpdated(object obj, LoadedEventArgs e)
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  ViewerDataUpdated EVENT trigger (from{obj?.ToString()})");
+//			Console.WriteLine($"DEBUG : In EventControl : Sending  ViewerDataUpdated EVENT trigger (from{obj?.ToString()})");
 			if (ViewerDataUpdated != null)
 				ViewerDataUpdated?.Invoke(obj, e);
 		}
 		public static void TriggerEditDbDataUpdated(object obj, LoadedEventArgs e)
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  EditDbDataUpdated EVENT trigger (from{obj?.ToString()})");
+//			Console.WriteLine($"DEBUG : In EventControl : Sending  EditDbDataUpdated EVENT trigger (from{obj?.ToString()})");
 			if (EditDbDataUpdated != null)
 				EditDbDataUpdated?.Invoke(obj, e);
 		}
 		public static void TriggerMultiViewerDataUpdated(object obj, LoadedEventArgs e)
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  MultiViewerDataUpdated EVENT trigger (from{obj?.ToString()})");
+//			Console.WriteLine($"DEBUG : In EventControl : Sending  MultiViewerDataUpdated EVENT trigger (from{obj?.ToString()})");
 			if (MultiViewerDataUpdated != null)
 				MultiViewerDataUpdated?.Invoke(obj, e);
 		}
 		public static void TriggerTransferDataUpdated(object obj, LoadedEventArgs e)
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  TransferDataUpdated EVENT trigger (from{obj?.ToString()})");
+//			Console.WriteLine($"DEBUG : In EventControl : Sending  TransferDataUpdated EVENT trigger (from{obj?.ToString()})");
 			if (TransferDataUpdated != null)
 				TransferDataUpdated?.Invoke(obj, e);
 		}
@@ -203,7 +210,7 @@ namespace WPFPages.Views
 		//------------------------------//		
 		public static void TriggerBankDataLoaded(object obj, LoadedEventArgs e)
 		{
-			Console.WriteLine($"DEBUG : In EventControl : Sending  BankDataLoaded EVENT trigger (from{obj?.ToString()})");
+//			Console.WriteLine($"DEBUG : In EventControl : Sending  BankDataLoaded EVENT trigger (from{obj?.ToString()})");
 			if (BankDataLoaded != null)
 				BankDataLoaded?.Invoke(obj, e);
 		}

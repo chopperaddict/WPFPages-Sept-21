@@ -131,6 +131,7 @@
     <Compile Include="Converts\ResetTextWidth.cs" />
     <Compile Include="Converts\Resource2BrushConverter.cs" />
     <Compile Include="Converts\SetTextTopOffset.cs" />
+    <Compile Include="Converts\PadHeight.cs" />
     <Compile Include="Converts\StringtoBrushConverter.cs" />
     <Compile Include="Converts\StringtoColorConverter.cs" />
     <Compile Include="Converts\TextLeftPositionConverter.cs" />
@@ -197,6 +198,9 @@
     </Compile>
     <Compile Include="Views\DataGridUtilities.cs" />
     <Compile Include="Views\ExpandedState.cs" />
+    <Compile Include="Views\ItemsControlDemo.xaml.cs">
+      <DependentUpon>ItemsControlDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ListboxColorCtrlAP.cs" />
     <Compile Include="AttachedProperties\Ex.cs" />
     <Compile Include="ViewModels\NwOrderCollection.cs" />
@@ -559,6 +563,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GradientDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemsControlDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

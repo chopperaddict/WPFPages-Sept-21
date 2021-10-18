@@ -1,4 +1,96 @@
 
+
+=================================================
+
+		/// How to access ListBox (or ListView) current record's data from c# using PreviewMouse event
+		private void ListBox_OnPreviewMouseDown ( object sender , MouseButtonEventArgs e )
+		{
+			var item = ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
+			if ( item != null )
+			{
+				// ListBox item clicked - do some cool things here
+			}
+		}
+		or in xaml :
+
+	<ListBox.ItemContainerStyle>
+		<Style TargetType="{x:Type ListBoxItem}">
+			<EventSetter Event="PreviewMouseLeftButtonUp" Handler="ListBox_OnPreviewMouseDown"/>
+			<EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBox_OnPreviewMouseUp"/>
+			<EventSetter Event="PreviewDragEnter" Handler="ListBox_OnPreviewDragEnter"/>
+		</Style>
+	</ListBox.ItemContainerStyle>
+
+
+=================================================
+
+// How to change fillter conditions on the fly
+
+	string arg = changefiltertype.Text;
+	if ( arg == "ACTYPE" )
+		BankviewerView . Filter = new Predicate<object> ( Actypefiltermethod );
+	viewer.Refresh();
+
+	// You  need relevant Methods matching the condition you want it tested against  eg:
+
+	private bool Actypefiltermethod ( object obj )
+	{
+		BankAccountViewModel bvm = obj as BankAccountViewModel;
+		Console . WriteLine ( $"Testing  for {bvm . AcType} == {ActypeFiltervalue} as AcType" );
+		return bvm . AcType == ActypeFiltervalue;
+	}
+
+=================================================
+
+// How to use an Action<T>
+/// Type is Void, args = up to 16
+
+	// Testing Action<T> : takes x arguments, but MUST NOT return anything
+	Action<object, string, int> Myaction;
+	Myaction = output;
+	
+	//Implementation :-
+
+	private void output (object obj, string str, int i)
+	{
+			//do Something ----
+	}
+	
+	To use it in a Lambda expression :-
+
+=================================================
+
+//How to use a Func
+
+
+=================================================
+
+// How to check for an existing data View and if one is available, use it rather than loading form Db via SQL
+// This is very much faster then reloading the data...
+
+	//Here we have a CollectionView declared in BankAccountViewModel that we update as neccessary from this program
+
+	   			if ( BankAccountViewModel . BankCollectionView != null )
+			{
+				if ( BankAccountViewModel . BankCollectionView . IsEmpty == false )
+				{
+					BankviewerView = BankAccountViewModel . BankCollectionView;
+					}
+					else
+					{
+						** load from SQL
+						BankViewcollection = e . DataSource as BankCollection;
+						// Get the View for this Db collection
+						BankviewerView = CollectionViewSource . GetDefaultView ( BankViewcollection );
+						//Add this View to our Views Collection - WORKS !!!
+						BankAccountViewModel . BankCollectionView = BankviewerView;
+					}
+
+=================================================
+
+	// This STOPS all those infuriating "Failed Binding"" debug messages from appearing
+	System . Diagnostics . PresentationTraceSources . DataBindingSource . Switch . Level = System . Diagnostics . SourceLevels . Critical;
+
 =================================================
 
 //How  to Implement Filtering on a Db Collection using the Filter provided by the CollectionView 
@@ -291,6 +383,7 @@ located in the viewModels Folder (declared as "models" in the xaml file,
 //How to pass a Dp or other variable/property value  as a parameter to a converter by adding XPath=property to the converter clause
 
 Height="{Binding Height, ElementName=Innergrid, Converter={StaticResource AddTopOffset}, XPath=TextTopMargin}"
+
 =================================================
 
 //How to call a converter from c#
@@ -396,6 +489,7 @@ can be used most anywhere in XAML code
 <Canvas.DataContext>
 	<datamodel:BankAccountViewModel/>
 </Canvas.DataContext>
+
 =================================================
 
 		<!--// How to pass value parameters to a Multi Converter, so ThreeDeeBtnControl is accessible in the Converter-->
@@ -408,7 +502,6 @@ can be used most anywhere in XAML code
 			</local:ThreeDeeBtnControl.Width>
 
 =================================================
-
 
         //You can use this format almost anywhere to change a Dependency Poperty
 

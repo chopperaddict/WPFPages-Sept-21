@@ -277,7 +277,7 @@ namespace WPFPages .Views
 		}
 
 		//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-		private async void EventControl_BankDataLoaded ( object sender , LoadedEventArgs e )
+		private  void EventControl_BankDataLoaded ( object sender , LoadedEventArgs e )
 		{
 			// Event handler for BankDataLoaded
 			if ( e .DataSource == null )
@@ -317,7 +317,7 @@ namespace WPFPages .Views
 			Mouse .OverrideCursor = Cursors .Arrow;
 			IsDirty = false;
 			sw .Stop ( );
-			Debug .WriteLine ( $"BANKDBVIEW : Bank Data fully loaded in {( double ) sw .ElapsedMilliseconds / ( double ) 1000} secs" );
+			Debug .WriteLine ( $"BANKDBVIEW : Bank Data auto loaded in {( double ) sw .ElapsedMilliseconds / ( double ) 1000} secs\n" );
 		}
 		#endregion Startup/ Closedown
 

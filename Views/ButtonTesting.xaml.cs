@@ -171,16 +171,16 @@ namespace WPFPages . Views
                 }
 
 
-                //*************************************************************************************************************//
-                // ================= This is the main logic  for the mousemove system====================================//
-                //*************************************************************************************************************//
-                /// <summary>
-                /// This is a delegate that is passed from MouseMove method 
-                /// </summary>
-                /// <param name="e"></param>
-                /// <param name="hitcontrol"></param>
-                /// <returns></returns>
-                public bool DoMouseCheck ( MouseEventArgs e, HitControl hitcontrol, string argname = "", object argobject = null )
+            /// <summary>
+            /// This is a delegate that is passed from MouseMove method 
+            ///*************************************************************************************************************//
+            /// ================= This is the main logic  for the mousemove system====================================//
+            ///*************************************************************************************************************//
+            /// </summary>
+            /// <param name="e"></param>
+            /// <param name="hitcontrol"></param>
+            /// <returns></returns>
+            public bool DoMouseCheck ( MouseEventArgs e, HitControl hitcontrol, string argname = "", object argobject = null )
                 {
                         string controltarget = "";
                         if ( !LockOutput )
@@ -399,8 +399,6 @@ namespace WPFPages . Views
                         }
                         return true;
                 }
-
-                //*************************************************************************************************************//
 
                 #region specialist mousemove handlers
 
@@ -865,24 +863,6 @@ namespace WPFPages . Views
                 }
         }
 
-        public class ConvertedDpClass : DependencyObject
-        {
-                public static DependencyProperty ConvertedDpProperty =
-                   DependencyProperty . Register ( "ConvertedDp", typeof ( object ),
-                   typeof ( ConvertedDpClass ), new UIPropertyMetadata ( default ) );
-
-                public object ConvertedDp
-                {
-                        get
-                        {
-                                return ( object ) GetValue ( ConvertedDpProperty );
-                        }
-                        set
-                        {
-                                SetValue ( ConvertedDpProperty, value );
-                        }
-                }
-        }
-
+  
 
 }

@@ -20,6 +20,7 @@ namespace WPFPages . ViewModels
 {
 	public partial class BankAccountViewModel : INotifyPropertyChanged
 	{
+
 		#region PropertyChanged
 
 		new public event PropertyChangedEventHandler PropertyChanged;
@@ -70,8 +71,9 @@ namespace WPFPages . ViewModels
 
 		#endregion PropertyChanged
 
-		public static ObservableCollection<BankAccountViewModel> BankViewCollection { get; set; }
-		public static CollectionView BankCollectionView;// = new CollectionView(BankViewCollection);
+		// Create a Collection that can be added to View Collection ?
+		public static ObservableCollection<BankAccountViewModel> BankViewObservableCollection { get; set; }
+		public static ICollectionView BankCollectionView;
 
 		private int search;
 		public int Search
@@ -79,16 +81,17 @@ namespace WPFPages . ViewModels
 			get { return search; }
 			set{ search = value;  
 				OnPropertyChanged ( "Search" );
-				CollectionViewSource.GetDefaultView( BankViewCollection ) .Refresh();
+				CollectionViewSource.GetDefaultView( BankViewObservableCollection ) .Refresh();
 			}
 		}
 
-		#region CONSTRUCTORS
+		#region CONSTRUCTOR
 
 		public BankAccountViewModel ( )
 		{
+			BankCollectionView = CollectionViewSource . GetDefaultView ( BankViewObservableCollection );
 		}
-		#endregion CONSTRUCTORS
+		#endregion CONSTRUCTOR
 
 		public static DataGrid ActiveEditDbViewer = null;
 

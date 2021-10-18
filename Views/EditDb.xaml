@@ -1422,7 +1422,7 @@
 				HorizontalContentAlignment="Center"
 				Click="Button_Click"
 				FontWeight="Bold"
-				Style="{StaticResource GreenGreenButton}">
+				Style="{StaticResource GreenButton}">
 				<Border
 					Name="_Border2"
 					Padding="3"

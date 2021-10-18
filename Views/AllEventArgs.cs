@@ -134,21 +134,17 @@ namespace WPFPages . Views
 	}
 	public class NotifyAllViewersOfUpdateEventArgs : EventArgs
 	{
-		public string CurrentDb
-		{
-			get; set;
-		}
+		public string CurrentDb{get; set;}
+	}
+	public class NotifyAllViewersOfViewSharingStatus: EventArgs
+	{
+		public string Sender { get; set; }
+		public bool IsShared{get; set;}
 	}
 	public class DataUpdatedEventArgs : EventArgs
 	{
-		public string CurrentDb
-		{
-			get; set;
-		}
-		public int Row
-		{
-			get; set;
-		}
+		public string CurrentDb{get; set;}
+		public int Row{get; set;}
 	}
 
 	//Inherited Event Args  for Callbacks

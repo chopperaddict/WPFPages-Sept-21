@@ -15,8 +15,10 @@ using WPFPages . UserControls;
 
 namespace WPFPages . Views
 {
-
-#pragma warning disable CS0234
+        /// <summary>
+        /// Support class for a window that demonstrates how  to access objects currently under the mouse pointer
+        /// It is useful for getting hierarchy of any control by calling these methods
+        /// </summary>
         public class MousoverHandlers : FrameworkElement
         {
                   /// <summary>

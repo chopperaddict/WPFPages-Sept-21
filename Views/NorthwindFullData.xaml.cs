@@ -139,7 +139,7 @@ namespace WPFPages . Views
                 public DataSet ds = new DataSet ( );
 
                 public nwcustomer NwCust = new nwcustomer ( );
-                public CustCollection NwCustCollection = new CustCollection ( );
+                public AllCustomers NwCustCollection = new AllCustomers ( );
                 public NwOrderCollection NwOrdCollection = new NwOrderCollection ( );
                 public NwOrderDetails NwOdCollection = new NwOrderDetails ( -1 );
                 public NwProductCollection NwProdCollection = new NwProductCollection ( -1 );
@@ -453,11 +453,11 @@ namespace WPFPages . Views
                         this . Refresh ( );
                         return ds;
                 }
-                private CustCollection LoadCustomerData ( )
+                private AllCustomers LoadCustomerData ( )
                 {
                         int count = 0;
                         DataTable dtCust = ds . Tables [ 0 ];
-                        CustCollection Custinternalcollection = new CustCollection ( );
+                        AllCustomers Custinternalcollection = new AllCustomers ( );
                         try
                         {
                                 for ( int i = 0 ; i < dtCust . Rows . Count ; i++ )

@@ -800,14 +800,18 @@
 			<MenuItem Header=" Others" 
 				FontWeight="DemiBold"
 				Background="Transparent"
+				Block.IsHyphenationEnabled="True"
    				Foreground="{StaticResource White0}">
 				<MenuItem Header=" Styled Grid " 
 				    Click="Styled_Click" 	
 	                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
-				<MenuItem Header="   Styling Tests" 
+				<MenuItem Header=" Items Control" 
+				    Click="ItemsControl_Click" 						
+		              Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem Header=" Styling Tests" 
 				    Click="StoryBoard_Click" 						
 		              Template="{StaticResource MenuItemCtrlTemplate1}"/>
-				<MenuItem Header="  Att'd Props " 
+				<MenuItem Header=" Att'd Props " 
 				    Click="Attached_Click" 						
 			        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 			</MenuItem>

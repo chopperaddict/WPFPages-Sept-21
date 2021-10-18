@@ -27,7 +27,7 @@ namespace WPFPages . Views
 		//		public static event DbUpdated NotifyOfDataChange;
 
 		public BankCollection EditDbBankcollection = null;// BankCollection . EditDbBankcollection;
-		public CustCollection EditDbCustcollection = null;//= CustCollection . EditDbCustcollection;
+		public AllCustomers EditDbCustcollection = null;//= CustCollection . EditDbCustcollection;
 		public DetCollection EditDbDetcollection = null;//= DetCollection . EditDbDetcollection;
 
 		// Get our personal Collection view of the Db
@@ -296,7 +296,7 @@ namespace WPFPages . Views
 				this . DataGrid2 . Items . Clear ( );
 				Mouse . OverrideCursor = Cursors . Wait;
 				Flags . SqlCustActive  = true;
-				await CustCollection . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
+				await AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
 				//this . DataGrid2 . ItemsSource = EditDbCustcollection;
 				//this . DataGrid2 . SelectedIndex = currsel;
 				//this . DataGrid2 . Refresh ( );
@@ -617,7 +617,7 @@ namespace WPFPages . Views
 				if ( EditDbCustcollection == null || EditDbCustcollection . Count == 0 )
 				{
 					Flags . SqlCustActive  = true;
-					await CustCollection . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
+					await AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
 				}
 //				this . DataGrid2 . ItemsSource = EditDbDetcollection;
 			}
@@ -834,7 +834,7 @@ namespace WPFPages . Views
 			else if ( CurrentDb == "CUSTOMER" )
 			{
 				Flags . SqlCustActive  = true;
-				CustCollection . LoadCust ( null, "CUSTOMER", 2, true );
+				AllCustomers . LoadCust ( null, "CUSTOMER", 2, true );
 			}
 			else if ( CurrentDb == "DETAILS" )
 			{
@@ -888,7 +888,7 @@ namespace WPFPages . Views
 			}
 			else if ( CurrentDb == "CUSTOMER" )
 			{
-				EditDbCustcollection = e . DataSource as CustCollection;
+				EditDbCustcollection = e . DataSource as AllCustomers;
 				EditCustviewerView = CollectionViewSource . GetDefaultView ( EditDbCustcollection );
 				EditCustviewerView . Refresh ( );
 				try
@@ -1340,7 +1340,7 @@ namespace WPFPages . Views
 
 				this . DataGrid2 . ItemsSource = EditDbCustcollection;
 				Flags . SqlCustActive  = true;
-				await CustCollection . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
+				await AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
 				this . DataGrid2 . SelectedIndex = currsel;
 			}
 			//			Debug . WriteLine ( $" 2-5-END *** TRACE *** EDITDB : DataGrid2_RowEditEnding - Exiting\n*** Should *** be Processing completed...\n" );
@@ -1929,7 +1929,7 @@ namespace WPFPages . Views
 				sqlh . UpdateDbRow ( CurrentDb, this . DataGrid2 . SelectedItem );
 				IsDirty = false;
 				Flags . SqlCustActive  = true;
-				EditDbCustcollection = await CustCollection . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
+				EditDbCustcollection = await AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
 				dGrid . ItemsSource = null;
 //				dGrid . ItemsSource = EditDbCustcollection;
 //				dGrid . SelectedIndex = currsel;
