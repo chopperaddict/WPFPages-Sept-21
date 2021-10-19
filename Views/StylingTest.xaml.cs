@@ -762,13 +762,13 @@ namespace WPFPages . Views
 
 		private void storyboard_Closing ( object sender , CancelEventArgs e )
 		{
-			if ( !view1 . IsEmpty )
+			if (view1 != null &&  !view1 . IsEmpty )
 				view1 . DetachFromSourceCollection ( );
-			if ( !view2 . IsEmpty )
+			if ( view2 != null && !view2 . IsEmpty )
 				view2 . DetachFromSourceCollection ( );
-			if ( !view3 . IsEmpty )
+			if ( view3 != null && !view3 . IsEmpty )
 				view3 . DetachFromSourceCollection ( );
-			if ( !view4 . IsEmpty )
+			if ( view4 != null && !view4 . IsEmpty )
 				view4 . DetachFromSourceCollection ( );
 		}
 	}

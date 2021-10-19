@@ -3,6 +3,7 @@ using System . Collections . Generic;
 using System . Globalization;
 using System . Linq;
 using System . Net;
+using System . Runtime . CompilerServices;
 using System . Text;
 using System . Threading . Tasks;
 using System . Windows;
@@ -29,6 +30,11 @@ namespace WPFPages . Views
 		private GradientDisplay gw = null;
 		public bool Loading = true;
 		private bool DisplayWindowActive = false;
+		private bool HBtnPatternActive = true;
+		private bool VBtnPatternActive = true;
+		private bool DBtnPatternActive = true;
+
+		#region Properties
 		private bool ToggleActive
 		{
 			get; set;
@@ -137,6 +143,7 @@ namespace WPFPages . Views
 				blueValue = value;
 			}
 		}
+		#endregion Properties
 
 		private string ShowHexValues ( )
 		{
@@ -158,7 +165,7 @@ namespace WPFPages . Views
 			//opGreen . Text = Convert . ToInt32 ( g ) . ToString ( "X2" );
 			//opBlue . Text = Convert . ToInt32 ( b ) . ToString ( "X2" );
 			opAll . Text = output;
-			AllDec. Text = output;
+			AllDec . Text = output;
 			return output;
 		}
 		public BackgroundDesigner ( string args )
@@ -241,6 +248,7 @@ namespace WPFPages . Views
 			Utils . SetupWindowDrag ( this );
 			CreateGradient ( );
 		}
+
 		private void CreateAllBrushes ( )
 		{
 			OpacityValue = 255;
@@ -258,7 +266,7 @@ namespace WPFPages . Views
 			ActivePane = 1;
 			SaveBrush ( Colors1 );
 			PaintOutput ( Colors1 );
-			this . Refresh ( );
+			this . UpdateLayout ( );
 			OpacityValue = 255;
 			RedValue = 0;
 			GreenValue = 255;
@@ -274,7 +282,7 @@ namespace WPFPages . Views
 			ActivePane = 2;
 			SaveBrush ( Colors2 );
 			PaintOutput ( Colors2 );
-			this . Refresh ( );
+			this . UpdateLayout ( );
 			OpacityValue = 255;
 			RedValue = 0;
 			GreenValue = 0;
@@ -290,7 +298,7 @@ namespace WPFPages . Views
 			ActivePane = 3;
 			SaveBrush ( Colors3 );
 			PaintOutput ( Colors3 );
-			this . Refresh ( );
+			this . UpdateLayout ( );
 		}
 		private void DisplayPanel ( Color c )
 		{
@@ -304,7 +312,7 @@ namespace WPFPages . Views
 		#region SLIDER Handlers
 		private void OpacitySlider_ValueChanged ( object sender , RoutedPropertyChangedEventArgs<double> e )
 		{
-//			Brush brush;
+			//			Brush brush;
 			int newopac = 0;
 			if ( Loading )
 				return;
@@ -334,7 +342,7 @@ namespace WPFPages . Views
 			RedValue = e . NewValue;
 			//			RedLevel . Text = Convert . ToInt32 ( e . NewValue ) . ToString ( );
 			// Update the color with new Red Value
-			Color c= Color . FromArgb ( Convert . ToByte ( OpacityValue), Convert . ToByte ( RedValue), Convert . ToByte ( GreenValue), Convert . ToByte ( BlueValue) );
+			Color c = Color . FromArgb ( Convert . ToByte ( OpacityValue ), Convert . ToByte ( RedValue ), Convert . ToByte ( GreenValue ), Convert . ToByte ( BlueValue ) );
 			Loading = true;
 			SaveBrush ( c );
 			DisplayPanel ( c );
@@ -381,13 +389,11 @@ namespace WPFPages . Views
 				Colors2 = c;
 			else if ( ActivePane == 3 )
 				Colors3 = c;
-			//			else if ( ActivePane == 4 )
-			//				Colors4 = c;
 		}
 
 		private void ClipSave_Click ( object sender , RoutedEventArgs e )
 		{
-			//Clipboard . SetText ( opAll . Text );
+			Clipboard . SetText ( AllDec . Text );
 		}
 
 		#region Panel Activation buttons
@@ -405,7 +411,7 @@ namespace WPFPages . Views
 			ShowHexValues ( );
 			Output1 . Background = Brush1;
 			//			Output1 . Background = new SolidColorBrush ( c );
-			Output1 . Refresh ( );
+			Output1 . UpdateLayout ( );
 		}
 		private void Button2_Click ( object sender , RoutedEventArgs e )
 		{
@@ -416,11 +422,9 @@ namespace WPFPages . Views
 			ActivePane = 2;
 			Color c = Colors2;
 			ActiveColor = Colors2;
-			//			c = GetColorsFromRgb ( 2);
 			Output2 . Background = Brush2;
-			//			Output2 . Background = new SolidColorBrush ( c );
 			SetSliders ( c );
-			Output2 . Refresh ( );
+			Output2 . UpdateLayout ( );
 		}
 
 		private void Button3_Click ( object sender , RoutedEventArgs e )
@@ -436,10 +440,10 @@ namespace WPFPages . Views
 			Output3 . Background = Brush3;
 			//			Output2 . Background = new SolidColorBrush ( c );
 			//SetSliders ( c );
-			//Output3 . Refresh ( );
+			//Output3 . UpdateLayout ( );
 
 		}
-	
+
 		#endregion Active buttons
 
 		private void PaintOutput ( Color c )
@@ -472,7 +476,7 @@ namespace WPFPages . Views
 		#region Brush Helpers
 		public void SetSysColorsFromColor ( Color color )
 		{
-			string s = color. ToString ( ) . Substring ( 1 );
+			string s = color . ToString ( ) . Substring ( 1 );
 			string os = s . Substring ( 0, 2 );
 			string rs = s . Substring ( 2, 2 );
 			string gs = s . Substring ( 4, 2 );
@@ -491,7 +495,7 @@ namespace WPFPages . Views
 			Brush brush = new SolidColorBrush ( color );
 			return brush;
 		}
-		public string ColorstringFromBrush(Brush brush)
+		public string ColorstringFromBrush ( Brush brush )
 		{
 			string output = "";
 			output = brush . ToString ( );
@@ -521,7 +525,7 @@ namespace WPFPages . Views
 		}
 		private void SetSliders ( Color c )
 		{
-			string s = c. ToString ( ) . Substring ( 1 );
+			string s = c . ToString ( ) . Substring ( 1 );
 			string os = s . Substring ( 0, 2 );
 			string rs = s . Substring ( 2, 2 );
 			string gs = s . Substring ( 4, 2 );
@@ -532,15 +536,15 @@ namespace WPFPages . Views
 			int b = ( int ) Convert . ToInt32 ( bs, 16 );
 			Loading = true;
 			OpacitySlider . Value = o;
-			OpacitySlider . Refresh ( );
+			OpacitySlider . UpdateLayout ( );
 			RedSlider . Value = r;
-			RedSlider . Refresh ( );
+			RedSlider . UpdateLayout ( );
 			GreenSlider . Value = g;
-			GreenSlider . Refresh ( );
+			GreenSlider . UpdateLayout ( );
 			BlueSlider . Value = b;
-			BlueSlider . Refresh ( );
-			Gradientstop.Value = GradientValue;
-			Gradientstop . Refresh ( );
+			BlueSlider . UpdateLayout ( );
+			Gradientstop . Value = GradientValue;
+			Gradientstop . UpdateLayout ( );
 			Loading = false;
 		}
 
@@ -548,35 +552,44 @@ namespace WPFPages . Views
 		private void Output_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			ActivePane = 1;
+			Btn3 . Content = "";
+			Btn2 . Content = "";
+			Btn1 . Content = "Active...";
 			Button1_Click ( null , null );
 			DisplayPanel ( Colors1 );
-			Output1 . Refresh ( );
-			Btn4 . Refresh ( );
+			Output1 . UpdateLayout ( );
+			Btn4 . UpdateLayout ( );
 		}
 		private void Output2_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			ActivePane = 2;
+			Btn1 . Content = "";
+			Btn3 . Content = "";
+			Btn2 . Content = "Active...";
 			Button2_Click ( null , null );
 			DisplayPanel ( Colors2 );
-			Output2 . Refresh ( );
-			Btn4 . Refresh ( );
+			Output2 . UpdateLayout ( );
+			Btn4 . UpdateLayout ( );
 		}
 
 		private void Output3_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			ActivePane = 3;
+			Btn1 . Content = "";
+			Btn2 . Content = "";
+			Btn3 . Content = "Active...";
 			Button3_Click ( null , null );
 			DisplayPanel ( Colors3 );
-			Output3 . Refresh ( );
-			Btn4 . Refresh ( );
+			Output3 . UpdateLayout ( );
+			Btn4 . UpdateLayout ( );
 		}
 		private void Output4_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			//ActivePane = 4;
 			//Button4_Click ( null, null );
 			//DisplayPanel (Colors4 );
-			//Final. Refresh ( );
-			Btn4 . Refresh ( );
+			//Final. UpdateLayout ( );
+			Btn4 . UpdateLayout ( );
 		}
 		private void Final_PreviewMouseRightButtonDown ( object sender , MouseButtonEventArgs e )
 		{
@@ -648,39 +661,39 @@ namespace WPFPages . Views
 		private void LinkPanels_Click ( object sender , RoutedEventArgs e )
 		{
 			GradientStyle = 3;  // horizontal
-//			VerticalOption . Content = "Horizontal Active ...";
+						  //			VerticalOption . Content = "Horizontal Active ...";
 			CreateGradient ( );
 			e . Handled = true;
 			if ( DisplayWindowActive && gw != null )
 				gw . Background = Final . Background;
-			LinkPanels . Refresh ( );
+			LinkPanels . UpdateLayout ( );
 		}
 
 		private void VerticalOption_Click ( object sender , RoutedEventArgs e )
 		{
 			GradientStyle = 1;
-//			VerticalOption . Content = "Vertical Active ...";
+			//			VerticalOption . Content = "Vertical Active ...";
 			CreateGradient ( );
 			e . Handled = true;
 			if ( DisplayWindowActive && gw != null )
 				gw . Background = Final . Background;
-			VerticalOption. Refresh ( );
+			VerticalOption . UpdateLayout ( );
 		}
 
 		private void DiagonalOption_Click ( object sender , RoutedEventArgs e )
 		{
 			GradientStyle = 2;
-//			DiagonalOption . Content = "Diagonal Active ...";
+			//			DiagonalOption . Content = "Diagonal Active ...";
 			CreateGradient ( );
 			e . Handled = true;
 			if ( DisplayWindowActive && gw != null )
 				gw . Background = Final . Background;
-			DiagonalOption . Refresh ( );
+			DiagonalOption . UpdateLayout ( );
 		}
 		private void ToggleOption_Click ( object sender , RoutedEventArgs e )
 		{
 			// Reverse Final panel display
-				ToggleActive = !ToggleActive;
+			ToggleActive = !ToggleActive;
 			CreateGradient ( );
 			if ( DisplayWindowActive && gw != null )
 				gw . Background = Final . Background;
@@ -713,8 +726,7 @@ namespace WPFPages . Views
 				DBtn . Background = CreateDiagonalGradient ( false );
 			}
 			if ( DisplayWindowActive && gw != null )
-				gw . Background = Final . Background; ;
-
+				gw . Background = Final . Background;
 		}
 		private LinearGradientBrush CreateVerticalGradient ( bool isFull )
 		{
@@ -790,16 +802,16 @@ namespace WPFPages . Views
 				lgb . GradientStops . Add ( gstop3 );
 				lgb . GradientStops . Add ( gstop2 );
 				lgb . GradientStops . Add ( gstop );
-				lgb . StartPoint = new Point ( 1, 0.5 );
-				lgb . EndPoint = new Point (0,  0.5  );
+				lgb . StartPoint = new Point ( 1 , 0.5 );
+				lgb . EndPoint = new Point ( 0 , 0.5 );
 			}
 			if ( isFull )
 			{
 				Btn4 . Content = "Vertical";
 				Btn4 . BringIntoView ( );
-				Final . Refresh ( );
+				Final . UpdateLayout ( );
 			}
-				CreateDefinition ( lgb );
+			CreateDefinition ( lgb );
 			return lgb;
 		}
 
@@ -888,7 +900,7 @@ namespace WPFPages . Views
 				//				DBtn . Background = lgb;
 				Btn4 . Content = "Diagonal";
 				Btn4 . BringIntoView ( );
-				Final . Refresh ( );
+				Final . UpdateLayout ( );
 				CreateDefinition ( lgb );
 			}
 			return lgb;
@@ -978,7 +990,7 @@ namespace WPFPages . Views
 			{
 				Btn4 . Content = "Horizontal";
 				Btn4 . BringIntoView ( );
-				Final . Refresh ( );
+				Final . UpdateLayout ( );
 			}
 			CreateDefinition ( lgb );
 			return lgb;
@@ -986,14 +998,14 @@ namespace WPFPages . Views
 		private void CreateDefinition ( LinearGradientBrush lgb )
 		{
 			string s = "";
-			string [] offset1;
-			string[] offset2;
-			string[] offset3;
-			string temp=lgb . GradientStops [ 0 ] . ToString ( );
+			string [ ] offset1;
+			string [ ] offset2;
+			string [ ] offset3;
+			string temp = lgb . GradientStops [ 0 ] . ToString ( );
 			offset1 = temp . Split ( ',' );
-			temp=lgb . GradientStops [ 1 ] . ToString ( );
+			temp = lgb . GradientStops [ 1 ] . ToString ( );
 			offset2 = temp . Split ( ',' );
-			temp=lgb . GradientStops [ 2 ] . ToString ( );
+			temp = lgb . GradientStops [ 2 ] . ToString ( );
 			offset3 = temp . Split ( ',' );
 			s = $"Start  : {lgb . StartPoint . ToString ( )}  : {lgb . EndPoint . ToString ( )}, " +
 				$"Left : {offset1 [ 0 ]} : {offset1 [ 1 ]}, " +
@@ -1021,7 +1033,7 @@ namespace WPFPages . Views
 			//Change position of splitter
 			GradientValue = e . NewValue;
 			CreateGradient ( );
-			OffsetVal . Text = Convert.ToInt32(GradientValue).ToString();
+			OffsetVal . Text = Convert . ToInt32 ( GradientValue ) . ToString ( );
 		}
 
 		private void GradientText_PreviewMouseRightButtonDown ( object sender , MouseButtonEventArgs e )
@@ -1033,25 +1045,41 @@ namespace WPFPages . Views
 		{
 			GradientStyle = 1;
 			Final . Background = VBtn . Background;
+			if ( DisplayWindowActive )
+			{
+				gw . Background = Final . Background;
+				gw . Show ( );
+			}
 		}
 
 		private void HBtn_Click ( object sender , RoutedEventArgs e )
 		{
-			GradientStyle = 3;			
+			GradientStyle = 3;
 			Final . Background = HBtn . Background;
+			if ( DisplayWindowActive )
+			{
+				gw . Background = Final . Background;
+				gw . Show ( );
+			}
 		}
 
 		private void DBtn_Click ( object sender , RoutedEventArgs e )
 		{
-			GradientStyle = 2;			
+			GradientStyle = 2;
 			Final . Background = DBtn . Background;
+			if ( DisplayWindowActive )
+			{
+				gw . Background = Final . Background;
+				gw . Show ( );
+			}
 		}
-
 		private void SaveToClipBoard_Click ( object sender , MouseButtonEventArgs e )
 		{
 			Border b = sender as Border;
+			if ( b == null )
+				return;
 			string s = ColorstringFromBrush ( b . Background );
-			Clipboard . SetText ( s.Substring (1) );
+			Clipboard . SetText ( s . Substring ( 1 ) );
 		}
 
 		private void opAll_Drop ( object sender , DragEventArgs e )
@@ -1067,130 +1095,130 @@ namespace WPFPages . Views
 			if ( dataString . Contains ( "#" ) )
 			{
 				opAll . Text = dataString . Substring ( 3 );
-				AllDec. Text = dataString . Substring ( 3 );
+				AllDec . Text = dataString . Substring ( 3 );
 			}
 			else if ( dataString . Contains ( "\r\n" ) )
 			{
 				opAll . Text = dataString . Substring ( 2 );
-				AllDec. Text = dataString . Substring ( 2 );
+				AllDec . Text = dataString . Substring ( 2 );
 			}
 			else
 			{
 				opAll . Text = dataString;
 				AllDec . Text = dataString;
 			}
-			string o = opAll . Text .Substring(0,2);
-			string r = opAll . Text .Substring(2,2);
-			string g = opAll . Text .Substring(4,2);
-			string b = opAll . Text .Substring(6,2);
-			int io= Convert.ToInt32(o,16);
-			int ir= Convert.ToInt32(r,16);
-			int ig= Convert.ToInt32(g,16);
-			int ib= Convert.ToInt32(b,16);
-			Color c = Color.FromArgb((Byte)io, (Byte)ir, (Byte)ig, (Byte)ib );
+			string o = opAll . Text . Substring ( 0, 2 );
+			string r = opAll . Text . Substring ( 2, 2 );
+			string g = opAll . Text . Substring ( 4, 2 );
+			string b = opAll . Text . Substring ( 6, 2 );
+			int io = Convert . ToInt32 ( o, 16 );
+			int ir = Convert . ToInt32 ( r, 16 );
+			int ig = Convert . ToInt32 ( g, 16 );
+			int ib = Convert . ToInt32 ( b, 16 );
+			Color c = Color . FromArgb ( ( Byte ) io, ( Byte ) ir, ( Byte ) ig, ( Byte ) ib );
 			if ( ActivePane == 1 )
 			{
 				Button1_Click ( null , null );
-				DisplayPanel ( c);
-				Output1 . Refresh ( );
+				DisplayPanel ( c );
+				Output1 . UpdateLayout ( );
 			}
 			if ( ActivePane == 2 )
 			{
 				Button2_Click ( null , null );
-				DisplayPanel ( c);
-				Output3 . Refresh ( );
+				DisplayPanel ( c );
+				Output3 . UpdateLayout ( );
 			}
 			if ( ActivePane == 3 )
 			{
 				Button3_Click ( null , null );
 				DisplayPanel ( Colors3 );
-				Output3 . Refresh ( );
+				Output3 . UpdateLayout ( );
 			}
 			CreateGradient ( );
-			Final . Refresh ( );
+			Final . UpdateLayout ( );
 		}
 
 		private void opAll_PreviewKeyDown ( object sender , KeyEventArgs e )
 		{
 			if ( e . Key == Key . Enter || e . Key == Key . Escape )
 			{
-                                TextBox t = sender as TextBox;
-                                string str = t . Text;
-                                
-				UpdateFromIncomingData (str);
+				TextBox t = sender as TextBox;
+				string str = t . Text;
+
+				UpdateFromIncomingData ( str );
 			}
 		}
-		private void UpdateFromIncomingData (string dataString )
+		private void UpdateFromIncomingData ( string dataString )
 		{
-                        bool hash = false;
+			bool hash = false;
 			//ColorstringFromBrush(e.Data );
-	                 if ( dataString . Contains ( "\r\n" ) )
+			if ( dataString . Contains ( "\r\n" ) )
 			{
 				opAll . Text = dataString . Substring ( 2 );
-				AllDec. Text = dataString . Substring ( 2 );
+				AllDec . Text = dataString . Substring ( 2 );
 			}
 			else
 			{
 				opAll . Text = dataString;
-				AllDec. Text = dataString;
+				AllDec . Text = dataString;
 			}
-			if (opAll.Text.Length < 8)
+			if ( opAll . Text . Length < 8 )
 			{
-				MessageBox . Show ( "The Color value entered is incompete, it MUST have 8 Digits/Characters");
+				MessageBox . Show ( "The Color value entered is incompete, it MUST have 8 Digits/Characters" );
 				return;
 			}
 			try
 			{
-                                string o = "";
-                                string r = "";
-                                string g = "";
-                                string b = "";
-                                if ( dataString . Contains ( "#" ) )
-                                {
-                                        hash = true;
-                                        o = opAll . Text . Substring ( 1, 2 );
-                                        r = opAll . Text . Substring ( 3, 2 );
-                                        g = opAll . Text . Substring ( 5, 2 );
-                                        b = opAll . Text . Substring ( 7, 2 );
-                                }
-                                else
-                                {
-                                         o = opAll . Text . Substring ( 0, 2 );
-                                         r = opAll . Text . Substring ( 2, 2 );
-                                         g = opAll . Text . Substring ( 4, 2 );
-                                         b = opAll . Text . Substring ( 6, 2 );
-                                }
+				string o = "";
+				string r = "";
+				string g = "";
+				string b = "";
+				if ( dataString . Contains ( "#" ) )
+				{
+					hash = true;
+					o = opAll . Text . Substring ( 1 , 2 );
+					r = opAll . Text . Substring ( 3 , 2 );
+					g = opAll . Text . Substring ( 5 , 2 );
+					b = opAll . Text . Substring ( 7 , 2 );
+				}
+				else
+				{
+					o = opAll . Text . Substring ( 0 , 2 );
+					r = opAll . Text . Substring ( 2 , 2 );
+					g = opAll . Text . Substring ( 4 , 2 );
+					b = opAll . Text . Substring ( 6 , 2 );
+				}
 
-                                int io= Convert.ToInt32(o,16);
-				int ir= Convert.ToInt32(r,16);
-				int ig= Convert.ToInt32(g,16);
-				int ib= Convert.ToInt32(b,16);
-				Color c = Color.FromArgb((Byte)io, (Byte)ir, (Byte)ig, (Byte)ib );
+				int io = Convert . ToInt32 ( o, 16 );
+				int ir = Convert . ToInt32 ( r, 16 );
+				int ig = Convert . ToInt32 ( g, 16 );
+				int ib = Convert . ToInt32 ( b, 16 );
+				Color c = Color . FromArgb ( ( Byte ) io, ( Byte ) ir, ( Byte ) ig, ( Byte ) ib );
 				if ( ActivePane == 1 )
 				{
 					Button1_Click ( null , null );
 					DisplayPanel ( c );
-					Output1 . Refresh ( );
+					Output1 . UpdateLayout ( );
 				}
 				if ( ActivePane == 2 )
 				{
 					Button2_Click ( null , null );
 					DisplayPanel ( c );
-					Output3 . Refresh ( );
+					Output3 . UpdateLayout ( );
 				}
 				if ( ActivePane == 3 )
 				{
 					Button3_Click ( null , null );
 					DisplayPanel ( Colors3 );
-					Output3 . Refresh ( );
+					Output3 . UpdateLayout ( );
 				}
 				CreateGradient ( );
-                                if ( hash )
-                                {
-                                        opAll . Text = dataString ;
-                                        AllDec . Text = dataString;
-                                }
-                                Final . Refresh ( );
+				if ( hash )
+				{
+					opAll . Text = dataString;
+					AllDec . Text = dataString;
+				}
+				Final . UpdateLayout ( );
 			}
 			catch
 			{
@@ -1198,7 +1226,7 @@ namespace WPFPages . Views
 			}
 		}
 
-		private void DisplayGradientOption_Click ( object sender, RoutedEventArgs e )
+		private void DisplayGradientOption_Click ( object sender , RoutedEventArgs e )
 		{
 			gw = new GradientDisplay ( );
 			gw . Background = Final . Background;
@@ -1209,19 +1237,19 @@ namespace WPFPages . Views
 
 		}
 
-		private void opGreen_MouseRightButtonDown ( object sender, MouseButtonEventArgs e )
+		private void opGreen_MouseRightButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 
 		}
 
-		private void SaveColorToClipBoard ( object sender, MouseButtonEventArgs e )
+		private void SaveColorToClipBoard ( object sender , MouseButtonEventArgs e )
 		{
 			TextBlock tb = sender as TextBlock;
 			string txt = tb . Text;
 			Clipboard . SetText ( txt );
 		}
 
-		private void ValueDisplay_Click ( object sender, RoutedEventArgs e )
+		private void ValueDisplay_Click ( object sender , RoutedEventArgs e )
 		{
 			if ( DecimalDisplay . Visibility == Visibility . Visible )
 			{
@@ -1234,6 +1262,41 @@ namespace WPFPages . Views
 				HexDisplay . Visibility = Visibility . Hidden;
 			}
 		}
-	}
-}
 
+		private void VBtn_MouseEnter ( object sender , MouseEventArgs e )
+		{
+			VBtnPatternActive = true;
+		}
+
+		private void DBtn_MouseEnter ( object sender , MouseEventArgs e )
+		{
+			DBtnPatternActive = true;
+		}
+		private void HBtn_MouseEnter ( object sender , MouseEventArgs e )
+		{
+			HBtnPatternActive = true;
+		}
+
+		private void DiagonalOption_IsKeyboardFocusedChanged ( object sender , DependencyPropertyChangedEventArgs e )
+		{
+
+		}
+
+		private void Output_PreviewMouseRightButtonDown ( object sender , MouseButtonEventArgs e )
+		{
+			AllDec . Text = Output1 . Background . ToString ( );
+		}
+
+		private void Output3_PreviewMouseRightButtonDown ( object sender , MouseButtonEventArgs e )
+		{
+			AllDec . Text = Output2 . Background . ToString ( );
+		}
+
+		private void Output2_PreviewMouseRightButtonDown ( object sender , MouseButtonEventArgs e )
+		{
+			AllDec . Text = Output3 . Background . ToString ( );
+		}
+
+	}
+
+}

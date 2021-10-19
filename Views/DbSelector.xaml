@@ -805,6 +805,9 @@
 				<MenuItem Header=" Styled Grid " 
 				    Click="Styled_Click" 	
 	                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
+				<MenuItem Header=" Grouped Accounts" 
+				    Click="Grouping_Click" 	
+	                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 				<MenuItem Header=" Items Control" 
 				    Click="ItemsControl_Click" 						
 		              Template="{StaticResource MenuItemCtrlTemplate1}"/>

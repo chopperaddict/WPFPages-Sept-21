@@ -77,7 +77,7 @@
     <!--Assign it as :ItemContainerStye ={StaticResource ListBoxDataTemplate}-->
     
     <!--// This ia good working listbox/view item control style 
-            that has DataTemplate for the NW Customer Db
+            that has DataTemplate for the***  NW Customer Db ***
             and uses the AP AttachedProperties Class internally for all color control-->
       <Style x:Key="ListBoxColorControlTemplate" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Height" Value="{Binding (views:ListboxColorCtrlAP.ItemHeight),  RelativeSource={RelativeSource AncestorType=ListBox}}"/>

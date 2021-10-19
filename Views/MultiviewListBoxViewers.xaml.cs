@@ -1,33 +1,33 @@
 ﻿using System;
-using System .Collections;
-using System .Collections .Generic;
-using System .Collections .ObjectModel;
-using System .ComponentModel;
-using System .Data;
-using System .Data .SqlClient;
-using System .Diagnostics;
-using System .Linq;
-using System .Reflection;
-using System .Runtime .CompilerServices;
-using System .Runtime .Remoting .Channels;
-using System .Text;
-using System .Threading .Tasks;
-using System .Windows;
-using System .Windows .Controls;
-using System .Windows .Controls .Primitives;
-using System .Windows .Data;
-using System .Windows .Documents;
-using System .Windows .Input;
-using System .Windows .Media;
-using System .Windows .Media .Imaging;
-using System .Windows .Shapes;
+using System . Collections;
+using System . Collections . Generic;
+using System . Collections . ObjectModel;
+using System . ComponentModel;
+using System . Data;
+using System . Data . SqlClient;
+using System . Diagnostics;
+using System . Linq;
+using System . Reflection;
+using System . Runtime . CompilerServices;
+using System . Runtime . Remoting . Channels;
+using System . Text;
+using System . Threading . Tasks;
+using System . Windows;
+using System . Windows . Controls;
+using System . Windows . Controls . Primitives;
+using System . Windows . Data;
+using System . Windows . Documents;
+using System . Windows . Input;
+using System . Windows . Media;
+using System . Windows . Media . Imaging;
+using System . Windows . Shapes;
 
-using WPFPages .ViewModels;
-using WPFPages .Views;
+using WPFPages . ViewModels;
+using WPFPages . Views;
 
 
 
-namespace WPFPages .Views
+namespace WPFPages . Views
 {
 
 	/// <summary>
@@ -234,7 +234,7 @@ namespace WPFPages .Views
 		{
 			get; set;
 		}
-	
+
 
 		public MultiviewListBoxViewers ( )
 		{
@@ -242,26 +242,29 @@ namespace WPFPages .Views
 		}
 		private async void Window_Loaded ( object sender , RoutedEventArgs e )
 		{
-			EventControl .BankDataLoaded += EventControl_BankDataLoaded;
-			EventControl .CustDataLoaded += EventControl_CustDataLoaded;
-			this .Show ( );
-			Utils .SetupWindowDrag ( this );
-			Flags .SqlBankActive = true;
-			await BankCollection .LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
-			await AllCustomers .LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
+			EventControl . BankDataLoaded += EventControl_BankDataLoaded;
+			EventControl . CustDataLoaded += EventControl_CustDataLoaded;
+			this . Show ( );
+			Utils . SetupWindowDrag ( this );
+			Flags . SqlBankActive = true;
+			DataGridUtilities . LoadDataGridColumns ( datagrid, e );
+			DataGridUtilities . LoadDataGridColumns2 ( datagrid2, e );
 
-			uclistboxheight = UCListbox .ActualHeight;
-			uclistbox2height = UCListbox2 .ActualHeight;
-			datagrid .BringIntoView ( );
-			datagrid2 .BringIntoView ( );
+			await BankCollection . LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
+			await AllCustomers . LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
+
+			uclistboxheight = UCListbox . ActualHeight;
+			uclistbox2height = UCListbox2 . ActualHeight;
+			datagrid . BringIntoView ( );
+			datagrid2 . BringIntoView ( );
 		}
 
 		private void EventControl_BankDataLoaded ( object sender , LoadedEventArgs e )
 		{
 			bool privateMethod = false;
-			Debug .WriteLine ( $"\n*** Loading Bank data in UserListboxViewer after BankDataLoaded trigger\n" );
-			SqlBankcollection = e .DataSource as BankCollection;
-			UCListbox .ItemsSource = SqlBankcollection;
+			Debug . WriteLine ( $"\n*** Loading Bank data in UserListboxViewer after BankDataLoaded trigger\n" );
+			SqlBankcollection = e . DataSource as BankCollection;
+			UCListbox . ItemsSource = SqlBankcollection;
 			//Get a View  of the Bank Data so we can sort and filter
 			var  BankCollectionView = CollectionViewSource.GetDefaultView(SqlBankcollection);
 			if ( privateMethod )
@@ -269,24 +272,24 @@ namespace WPFPages .Views
 				// Using my own filter class
 				var  filter = new ViewFilter ( BankCollectionView);
 				// Set the filter to data entry field on the window
-				filter .FilterExpression = "CustNo >= int.Parse(ViewFilterCondition.Text) AND CustNo < 1057000";
+				filter . FilterExpression = "CustNo >= int.Parse(ViewFilterCondition.Text) AND CustNo < 1057000";
 				//filter .FilterExpression = ViewFilterCondition .Text;
-				datagrid .ItemsSource = BankCollectionView;
-				//END
+				datagrid . ItemsSource = BankCollectionView;
+				UCListbox . ItemsSource = BankCollectionView;
 			}
 			else
 			{
 				// Std method  to filter
-				datagrid .ItemsSource = BankCollectionView;
-				datagrid .SelectedIndex = 0;
-				//BankAccountViewModel bvm = datagrid.SelectedItem as BankAccountViewModel;
-				//BankCollectionView .Filter = new Predicate<object> ( o => FiterBankData ( int.Parse(bvm.CustNo)) );
-				//datagrid .ItemsSource = BankCollectionView;
+				datagrid . ItemsSource = BankCollectionView;
+				datagrid . SelectedIndex = 0;
+				UCListbox . ItemsSource = BankCollectionView;
 			}
 
-			UCListbox .SelectedIndex = 0;
-			Mouse .OverrideCursor = System .Windows .Input .Cursors .Arrow;
-			datagrid .RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode .Visible;
+			datagrid . SelectedIndex = 0;
+			UCListbox . SelectedIndex = 0;
+
+			Mouse . OverrideCursor = System . Windows . Input . Cursors . Arrow;
+			//datagrid . RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode . Visible;
 		}
 
 		/// <summary>
@@ -294,11 +297,11 @@ namespace WPFPages .Views
 		/// </summary>
 		/// <param name="bankaccount"></param>
 		/// <returns></returns>
-		private bool FiterBankData ( int  custno )
+		private bool FiterBankData ( int custno )
 		{
 			return true;
 			//return  custno >1055000 && custno < 1055080;
-										  //.IndexOf ( Search , StringComparison .OrdinalIgnoreCase ) != -1;
+			//.IndexOf ( Search , StringComparison .OrdinalIgnoreCase ) != -1;
 			//if(Search != null) Console .WriteLine ($"{Search}");
 			////if ( Search == null ) return false;
 			//return Search.Contains(bankaccount .CustNo);
@@ -307,11 +310,18 @@ namespace WPFPages .Views
 
 		private void EventControl_CustDataLoaded ( object sender , LoadedEventArgs e )
 		{
-			SqlCustcollection = e .DataSource as AllCustomers;
-			datagrid2 .ItemsSource = SqlCustcollection;
-			datagrid2 .SelectedIndex = 0;
-			UCListbox2 .ItemsSource = SqlCustcollection;
-			Mouse .OverrideCursor = System .Windows .Input .Cursors .Arrow;
+			SqlCustcollection = e . DataSource as AllCustomers;
+			datagrid2 . ItemsSource = SqlCustcollection;
+			Console . WriteLine ( $"in CustomerdataLoaded  handler: datagrid2 count = { datagrid2 . Items . Count}" );
+			datagrid2 . SelectedIndex = 0;
+			UCListbox2 . ItemsSource = SqlCustcollection;
+			UCListbox2 . SelectedIndex = 0;
+			//			UCListbox . Visibility = Visibility . Collapsed;
+			//			datagrid2 . Visibility = Visibility . Visible;
+			Console . WriteLine ( $"Customer data just Loaded : datagrid2 count = { datagrid2 . Items . Count}" );
+			Mouse . OverrideCursor = System . Windows . Input . Cursors . Arrow;
+			datagrid2 . Visibility = Visibility . Visible;
+			datagrid2 . BringIntoView ( );
 		}
 
 		private void Select ( int low , int high , int total )
@@ -334,8 +344,8 @@ namespace WPFPages .Views
 		}
 		private void Window_Closed ( object sender , EventArgs e )
 		{
-			EventControl .BankDataLoaded -= EventControl_BankDataLoaded;
-			EventControl .CustDataLoaded -= EventControl_CustDataLoaded;
+			EventControl . BankDataLoaded -= EventControl_BankDataLoaded;
+			EventControl . CustDataLoaded -= EventControl_CustDataLoaded;
 			UnloadDataGridColumns ( );
 		}
 		/// <summary>
@@ -344,9 +354,9 @@ namespace WPFPages .Views
 		private void UnloadDataGridColumns ( )
 		{
 			ObservableCollection<DataGridColumn> dgc = datagrid.Columns;
-			dgc .Clear ( );
+			dgc . Clear ( );
 			ObservableCollection<DataGridColumn> dgc2 = datagrid2.Columns;
-			dgc2 .Clear ( );
+			dgc2 . Clear ( );
 		}
 		#region DATA LOAD FUNCTIONS
 		public static BankCollection LoadBankTest ( BankCollection temp , DataTable dtBank )
@@ -381,20 +391,28 @@ namespace WPFPages .Views
 
 		private async void ClearBtn_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
-			// clear listbox.
-			UCListbox .ItemsSource = null;
-			UCListbox .Items .Clear ( );
+			// Clear Grid
+			//datagrid . ItemsSource = null;
+			//datagrid . Items . Clear ( );
+			//datagrid2 . ItemsSource = null;
+			//datagrid2 . Items . Clear ( );
+			//// clear listbox.
+			//UCListbox . ItemsSource = null;
+			//UCListbox . Items . Clear ( );
+			// loads the Bank Db and calls load of Customer as well
 			DbList_LoadBtnPressed ( null , null );
-			UCListbox2 .ItemsSource = null;
-			UCListbox2 .Items .Clear ( );
-			await AllCustomers .LoadCust ( SqlCustcollection , "" , 1 , true );
+			//UCListbox2 . ItemsSource = null;
+			//UCListbox2 . Items . Clear ( );
+			////Reload data for both types
+			//await BankCollection . LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
+			//await AllCustomers . LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
 		}
 
 		private void LbiExpander_Expanded ( object sender , RoutedEventArgs e )
 		{
 			// triggered whenever an item is expanded
 			Expander ex = new Expander();
-			AreItemsExpanded = ex .IsExpanded;
+			AreItemsExpanded = ex . IsExpanded;
 
 		}
 
@@ -402,26 +420,26 @@ namespace WPFPages .Views
 		{
 			BankAccountViewModel bvm = new BankAccountViewModel();
 			// we are in a TextBlock or TextBox of the ListView
-			if ( e .Key == Key .Enter || e .Key == Key .Tab )
+			if ( e . Key == Key . Enter || e . Key == Key . Tab )
 			{
 				string t = sender.GetType().ToString();
-				if ( t .Contains ( "TextBox" ) || t .Contains ( "TextBlock" ) )
+				if ( t . Contains ( "TextBox" ) || t . Contains ( "TextBlock" ) )
 				{
 					// in a listview !!
 					if ( listSelection > -1 )
-						bvm = UCListbox .SelectedItem as BankAccountViewModel;
+						bvm = UCListbox . SelectedItem as BankAccountViewModel;
 				}
 				if ( bvm != null )
-					BankCollection .UpdateBankDb ( bvm , "BANKACCOUNT" );
+					BankCollection . UpdateBankDb ( bvm , "BANKACCOUNT" );
 
-				EventControl .TriggerViewerDataUpdated ( this , new LoadedEventArgs
+				EventControl . TriggerViewerDataUpdated ( this , new LoadedEventArgs
 				{
 					CallerType = "USERLISTBOXVIEWER" ,
 					CallerDb = "BANKACCOUNT" ,
 					DataSource = SqlBankcollection ,
-					RowCount = UCListbox .SelectedIndex ,
-					Bankno = bvm .BankNo ,
-					Custno = bvm .CustNo
+					RowCount = UCListbox . SelectedIndex ,
+					Bankno = bvm . BankNo ,
+					Custno = bvm . CustNo
 				} );
 			}
 
@@ -430,38 +448,40 @@ namespace WPFPages .Views
 		private void ToggleBtn_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			// switch betwee Datagrid and ListView
-			if ( UCListbox .Visibility == Visibility .Visible )
+			if ( UCListbox . Visibility == Visibility . Visible )
 			{
-				Utils .SetUpGridSelection ( datagrid , ListSelection );
-				UCListbox .Visibility = Visibility .Collapsed;
-				UCListbox2 .Visibility = Visibility .Collapsed;
-				datagrid .Visibility = Visibility .Visible;
-				datagrid2 .Visibility = Visibility .Visible;
-				datagrid .SelectedIndex = ListSelection;
-				datagrid .SelectedItem = GridSelection;
-				datagrid .ScrollIntoView ( datagrid .SelectedItem );
-				this .Refresh ( );
-				datagrid .Focus ( );
-				datagrid .Refresh ( );
-				datagrid .SelectedIndex = GridSelection;
-				datagrid .SelectedItem = GridSelection;
+				//Switch  to DataGrid view
+				Utils . SetUpGridSelection ( datagrid , ListSelection );
+				// Toggle viz of the grid -v- view
+				UCListbox . Visibility = Visibility . Collapsed;
+				UCListbox2 . Visibility = Visibility . Collapsed;
+				datagrid . Visibility = Visibility . Visible;
+				datagrid2 . Visibility = Visibility . Visible;
+				datagrid . SelectedIndex = ListSelection;
+				datagrid . SelectedItem = GridSelection;
+				if ( datagrid . SelectedItem != null )
+					datagrid . ScrollIntoView ( datagrid . SelectedItem );
+				this . Refresh ( );
+				datagrid . Focus ( );
+				datagrid . Refresh ( );
+				datagrid . SelectedIndex = GridSelection;
+				datagrid . SelectedItem = GridSelection;
 			}
 			else
 			{
-				//Uttils .SetUpGListboxSelection ( UCListbox , GridSelection );
-				datagrid .Visibility = Visibility .Collapsed;
-				datagrid2 .Visibility = Visibility .Collapsed;
-				UCListbox .Visibility = Visibility .Visible;
-				//UCListbox .Height = uclistboxheight;
-				//UCListbox2 .Height = uclistbox2height;
-				UCListbox2 .Visibility = Visibility .Visible;
-				this .Refresh ( );
-				UCListbox .SelectedIndex = ListSelection;
-				UCListbox .SelectedItem = GridSelection;
-				UCListbox .Refresh ( );
-				UCListbox2 .Refresh ( );
-				UCListbox .ScrollIntoView ( UCListbox .SelectedItem );
-				UCListbox .Focus ( );
+				//Switch  to ListView view
+				datagrid . Visibility = Visibility . Collapsed;
+				datagrid2 . Visibility = Visibility . Collapsed;
+				UCListbox . Visibility = Visibility . Visible;
+				UCListbox2 . Visibility = Visibility . Visible;
+				this . Refresh ( );
+				UCListbox . SelectedIndex = ListSelection;
+				UCListbox . SelectedItem = GridSelection;
+				UCListbox . Refresh ( );
+				UCListbox2 . Refresh ( );
+				if ( UCListbox . SelectedItem != null )
+					UCListbox . ScrollIntoView ( UCListbox . SelectedItem );
+				UCListbox . Focus ( );
 			}
 			//if ( UCListbox2 .Visibility == Visibility .Visible )
 			//{
@@ -493,10 +513,10 @@ namespace WPFPages .Views
 		{
 			try
 			{
-				ListSelection = UCListbox .SelectedIndex;
-				CurrentIndex = UCListbox .SelectedIndex;
+				ListSelection = UCListbox . SelectedIndex;
+				CurrentIndex = UCListbox . SelectedIndex;
 				ListSelection = CurrentIndex;
-				UCListbox .SelectedItem = CurrentIndex;
+				UCListbox . SelectedItem = CurrentIndex;
 			}
 			catch
 			{
@@ -507,10 +527,10 @@ namespace WPFPages .Views
 		{
 			try
 			{
-				ListSelection = UCListbox2 .SelectedIndex;
-				CurrentIndex = UCListbox2 .SelectedIndex;
+				ListSelection = UCListbox2 . SelectedIndex;
+				CurrentIndex = UCListbox2 . SelectedIndex;
 				ListSelection2 = CurrentIndex;
-				this .IsSelected = true;
+				this . IsSelected = true;
 			}
 			catch
 			{
@@ -521,11 +541,11 @@ namespace WPFPages .Views
 		private void Datagrid_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			string t = sender.GetType().ToString();
-			if ( t .Contains ( "DataGrid" ) )
+			if ( t . Contains ( "DataGrid" ) )
 			{
-				GridSelection = datagrid .SelectedIndex;
+				GridSelection = datagrid . SelectedIndex;
 				ListSelection = GridSelection;
-				UCListbox .SelectedIndex = ListSelection;
+				UCListbox . SelectedIndex = ListSelection;
 				MouseLeftBtnDown = true;
 			}
 		}
@@ -546,7 +566,7 @@ namespace WPFPages .Views
 
 		private void LbItem_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
-			ListSelection = UCListbox .SelectedIndex;
+			ListSelection = UCListbox . SelectedIndex;
 			//UCListbox . Items [ ListSelection ] = UCListbox . SelectedItem;
 			GridSelection = ListSelection;
 			//this . IsSelected = true;
@@ -554,10 +574,10 @@ namespace WPFPages .Views
 		}
 		private void LbItem_PreviewMouseLeftButtonDown2 ( object sender , MouseButtonEventArgs e )
 		{
-			ListSelection = UCListbox2 .SelectedIndex;
+			ListSelection = UCListbox2 . SelectedIndex;
 			//UCListbox2 . Items [ ListSelection ] = UCListbox2 . SelectedItem;
 			GridSelection = ListSelection;
-			this .IsSelected = true;
+			this . IsSelected = true;
 		}
 
 		//private void Expander_Expanded ( object sender, RoutedEventArgs e )
@@ -577,8 +597,8 @@ namespace WPFPages .Views
 			ListBoxItem lbi = new ListBoxItem();
 			ListBox lv = sender as ListBox;
 			int sel = lv.SelectedIndex;
-			lbi = ( ListBoxItem ) UCListbox .ItemContainerGenerator .ContainerFromIndex ( UCListbox .SelectedIndex );
-			ListSelection = UCListbox .SelectedIndex;
+			lbi = ( ListBoxItem ) UCListbox . ItemContainerGenerator . ContainerFromIndex ( UCListbox . SelectedIndex );
+			ListSelection = UCListbox . SelectedIndex;
 			GridSelection = ListSelection;
 			//			int count = 0;
 
@@ -587,27 +607,27 @@ namespace WPFPages .Views
 		private void UCListbox_SelectionChanged ( object sender , SelectionChangedEventArgs e )
 		{
 			// Store in a class variable
-			CurrentIndex = UCListbox .SelectedIndex;
+			CurrentIndex = UCListbox . SelectedIndex;
 			ListSelection = CurrentIndex;
-			Debug .WriteLine ( $"Index is set to {CurrentIndex}" );
+			Debug . WriteLine ( $"Index is set to {CurrentIndex}" );
 		}
 		private void UCListbox_SelectionChanged2 ( object sender , SelectionChangedEventArgs e )
 		{
-			CurrentIndex = UCListbox2 .SelectedIndex;
+			CurrentIndex = UCListbox2 . SelectedIndex;
 			ListSelection2 = CurrentIndex;
-			Debug .WriteLine ( $"Index of  Customer ListView is set to {CurrentIndex}" );
+			Debug . WriteLine ( $"Index of  Customer ListView is set to {CurrentIndex}" );
 		}
 
 
 		private FrameworkElement FindByName ( string name , FrameworkElement root )
 		{
 			Stack<FrameworkElement> tree = new Stack<FrameworkElement>();
-			tree .Push ( root );
+			tree . Push ( root );
 
-			while ( tree .Count > 0 )
+			while ( tree . Count > 0 )
 			{
 				FrameworkElement current = tree.Pop();
-				if ( current .Name == name )
+				if ( current . Name == name )
 					return current;
 
 				int count = VisualTreeHelper.GetChildrenCount(current);
@@ -615,7 +635,7 @@ namespace WPFPages .Views
 				{
 					DependencyObject child = VisualTreeHelper.GetChild(current, i);
 					if ( child is FrameworkElement )
-						tree .Push ( ( FrameworkElement ) child );
+						tree . Push ( ( FrameworkElement ) child );
 				}
 			}
 
@@ -624,9 +644,9 @@ namespace WPFPages .Views
 		private void datagrid_SelectionChanged ( object sender , SelectionChangedEventArgs e )
 		{
 			DataGrid dg = new DataGrid();
-			dg = e .Source as DataGrid;
+			dg = e . Source as DataGrid;
 			var dgr = dg.Items.CurrentItem;
-			GridSelection = dg .SelectedIndex;
+			GridSelection = dg . SelectedIndex;
 			ListSelection = GridSelection;
 			var template = datagrid;
 			TextBlock tb = (TextBlock)this.datagrid.FindName("custno2");
@@ -645,7 +665,7 @@ namespace WPFPages .Views
 
 			foreach ( var t in types )
 			{
-				Console .WriteLine ( "Attributes for type {0}:" , t .Name );
+				Console . WriteLine ( "Attributes for type {0}:" , t . Name );
 
 				TypeAttributes attr = t.Attributes;
 
@@ -653,30 +673,30 @@ namespace WPFPages .Views
 				TypeAttributes visibility = attr & TypeAttributes.VisibilityMask;
 				switch ( visibility )
 				{
-					case TypeAttributes .NotPublic:
-						Console .WriteLine ( "   ...is not public" );
+					case TypeAttributes . NotPublic:
+						Console . WriteLine ( "   ...is not public" );
 						break;
-					case TypeAttributes .Public:
-						Console .WriteLine ( "   ...is public" );
+					case TypeAttributes . Public:
+						Console . WriteLine ( "   ...is public" );
 						break;
-					case TypeAttributes .NestedPublic:
-						Console .WriteLine ( "   ...is nested and public" );
+					case TypeAttributes . NestedPublic:
+						Console . WriteLine ( "   ...is nested and public" );
 						break;
-					case TypeAttributes .NestedPrivate:
-						Console .WriteLine ( "   ...is nested and private" );
+					case TypeAttributes . NestedPrivate:
+						Console . WriteLine ( "   ...is nested and private" );
 						break;
-					case TypeAttributes .NestedFamANDAssem:
-						Console .WriteLine ( "   ...is nested, and inheritable only within the assembly" +
+					case TypeAttributes . NestedFamANDAssem:
+						Console . WriteLine ( "   ...is nested, and inheritable only within the assembly" +
 						   "\n         (cannot be declared in C#)" );
 						break;
-					case TypeAttributes .NestedAssembly:
-						Console .WriteLine ( "   ...is nested and internal" );
+					case TypeAttributes . NestedAssembly:
+						Console . WriteLine ( "   ...is nested and internal" );
 						break;
-					case TypeAttributes .NestedFamily:
-						Console .WriteLine ( "   ...is nested and protected" );
+					case TypeAttributes . NestedFamily:
+						Console . WriteLine ( "   ...is nested and protected" );
 						break;
-					case TypeAttributes .NestedFamORAssem:
-						Console .WriteLine ( "   ...is nested and protected internal" );
+					case TypeAttributes . NestedFamORAssem:
+						Console . WriteLine ( "   ...is nested and protected internal" );
 						break;
 				}
 
@@ -684,14 +704,14 @@ namespace WPFPages .Views
 				TypeAttributes layout = attr & TypeAttributes.LayoutMask;
 				switch ( layout )
 				{
-					case TypeAttributes .AutoLayout:
-						Console .WriteLine ( "   ...is AutoLayout" );
+					case TypeAttributes . AutoLayout:
+						Console . WriteLine ( "   ...is AutoLayout" );
 						break;
-					case TypeAttributes .SequentialLayout:
-						Console .WriteLine ( "   ...is SequentialLayout" );
+					case TypeAttributes . SequentialLayout:
+						Console . WriteLine ( "   ...is SequentialLayout" );
 						break;
-					case TypeAttributes .ExplicitLayout:
-						Console .WriteLine ( "   ...is ExplicitLayout" );
+					case TypeAttributes . ExplicitLayout:
+						Console . WriteLine ( "   ...is ExplicitLayout" );
 						break;
 				}
 
@@ -699,32 +719,32 @@ namespace WPFPages .Views
 				TypeAttributes classSemantics = attr & TypeAttributes.ClassSemanticsMask;
 				switch ( classSemantics )
 				{
-					case TypeAttributes .Class:
-						if ( t .IsValueType )
+					case TypeAttributes . Class:
+						if ( t . IsValueType )
 						{
-							Console .WriteLine ( "   ...is a value type" );
+							Console . WriteLine ( "   ...is a value type" );
 						}
 						else
 						{
-							Console .WriteLine ( "   ...is a class" );
+							Console . WriteLine ( "   ...is a class" );
 						}
 						break;
-					case TypeAttributes .Interface:
-						Console .WriteLine ( "   ...is an interface" );
+					case TypeAttributes . Interface:
+						Console . WriteLine ( "   ...is an interface" );
 						break;
 				}
 
-				if ( ( attr & TypeAttributes .Abstract ) != 0 )
+				if ( ( attr & TypeAttributes . Abstract ) != 0 )
 				{
-					Console .WriteLine ( "   ...is abstract" );
+					Console . WriteLine ( "   ...is abstract" );
 				}
 
-				if ( ( attr & TypeAttributes .Sealed ) != 0 )
+				if ( ( attr & TypeAttributes . Sealed ) != 0 )
 				{
-					Console .WriteLine ( "   ...is sealed" );
+					Console . WriteLine ( "   ...is sealed" );
 				}
 
-				Console .WriteLine ( );
+				Console . WriteLine ( );
 
 			}
 		}
@@ -750,9 +770,9 @@ namespace WPFPages .Views
 
 			if ( tb != null )
 			{
-				CurrentBackColor = tb .Background;
-				CurrentForeColor = tb .Foreground;
-				CurrentCellName = tb .Name;
+				CurrentBackColor = tb . Background;
+				CurrentForeColor = tb . Foreground;
+				CurrentCellName = tb . Name;
 				//				Debug . WriteLine ( $"Name={CurrentCellName }, B = {CurrentBackColor}, F = {CurrentForeColor}" );
 			}
 			if ( MouseLeftBtnDown == true )
@@ -763,7 +783,7 @@ namespace WPFPages .Views
 				{
 					string a = item.Header as String;
 
-					if ( a .Contains ( "Balance" ) )
+					if ( a . Contains ( "Balance" ) )
 					{
 						isbank = true;
 						break;
@@ -774,12 +794,12 @@ namespace WPFPages .Views
 					// must be a Bank grid
 					BankAccountViewModel bvm = new BankAccountViewModel();
 					string t1 = sender.GetType().ToString();
-					if ( t1 .Contains ( "ListView" ) )
-						bvm = UCListbox .SelectedItem as BankAccountViewModel;
+					if ( t1 . Contains ( "ListView" ) )
+						bvm = UCListbox . SelectedItem as BankAccountViewModel;
 					else
-						bvm = datagrid .SelectedItem as BankAccountViewModel;
-					str = GetExportRecords .CreateTextFromRecord ( bvm , null , null , true , false );
-					dataFormat = DataFormats .Text;
+						bvm = datagrid . SelectedItem as BankAccountViewModel;
+					str = GetExportRecords . CreateTextFromRecord ( bvm , null , null , true , false );
+					dataFormat = DataFormats . Text;
 				}
 				else
 				{
@@ -787,12 +807,12 @@ namespace WPFPages .Views
 					// must be a Customer grid
 					CustomerViewModel cvm = new CustomerViewModel ();
 					string t1 = sender.GetType().ToString();
-					if ( t1 .Contains ( "ListView" ) )
-						cvm = UCListbox .SelectedItem as CustomerViewModel;
+					if ( t1 . Contains ( "ListView" ) )
+						cvm = UCListbox . SelectedItem as CustomerViewModel;
 					else
-						cvm = datagrid .SelectedItem as CustomerViewModel;
-					str = GetExportRecords .CreateTextFromRecord ( null , null , cvm , true , false );
-					dataFormat = DataFormats .Text;
+						cvm = datagrid . SelectedItem as CustomerViewModel;
+					str = GetExportRecords . CreateTextFromRecord ( null , null , cvm , true , false );
+					dataFormat = DataFormats . Text;
 				}
 
 				DataObject dataObject = new DataObject(dataFormat, str);
@@ -810,9 +830,9 @@ namespace WPFPages .Views
 
 			if ( tb != null )
 			{
-				CurrentBackColor = tb .Background;
-				CurrentForeColor = tb .Foreground;
-				CurrentCellName = tb .Name;
+				CurrentBackColor = tb . Background;
+				CurrentForeColor = tb . Foreground;
+				CurrentCellName = tb . Name;
 				//				Debug . WriteLine ( $"Name={CurrentCellName }, B = {CurrentBackColor}, F = {CurrentForeColor}" );
 			}
 			if ( MouseLeftBtnDown == true )
@@ -823,7 +843,7 @@ namespace WPFPages .Views
 				{
 					string a = item.Header as String;
 
-					if ( a .Contains ( "Balance" ) )
+					if ( a . Contains ( "Balance" ) )
 					{
 						isbank = true;
 						break;
@@ -834,24 +854,24 @@ namespace WPFPages .Views
 					// must be a Bank grid
 					BankAccountViewModel bvm = new BankAccountViewModel();
 					string t1 = sender.GetType().ToString();
-					if ( t1 .Contains ( "ListView" ) )
-						bvm = UCListbox .SelectedItem as BankAccountViewModel;
+					if ( t1 . Contains ( "ListView" ) )
+						bvm = UCListbox . SelectedItem as BankAccountViewModel;
 					else
-						bvm = datagrid .SelectedItem as BankAccountViewModel;
-					str = GetExportRecords .CreateTextFromRecord ( bvm , null , null , true , false );
-					dataFormat = DataFormats .Text;
+						bvm = datagrid . SelectedItem as BankAccountViewModel;
+					str = GetExportRecords . CreateTextFromRecord ( bvm , null , null , true , false );
+					dataFormat = DataFormats . Text;
 				}
 				else
 				{
 					// must be a Customer grid
 					CustomerViewModel cvm = new CustomerViewModel ();
 					string t1 = sender.GetType().ToString();
-					if ( t1 .Contains ( "ListView" ) )
-						cvm = UCListbox .SelectedItem as CustomerViewModel;
+					if ( t1 . Contains ( "ListView" ) )
+						cvm = UCListbox . SelectedItem as CustomerViewModel;
 					else
-						cvm = datagrid .SelectedItem as CustomerViewModel;
-					str = GetExportRecords .CreateTextFromRecord ( null , null , cvm , true , false );
-					dataFormat = DataFormats .Text;
+						cvm = datagrid . SelectedItem as CustomerViewModel;
+					str = GetExportRecords . CreateTextFromRecord ( null , null , cvm , true , false );
+					dataFormat = DataFormats . Text;
 				}
 
 				DataObject dataObject = new DataObject(dataFormat, str);
@@ -864,8 +884,8 @@ namespace WPFPages .Views
 		private void ListView_PreviewMouseRightButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			ContextMenu cm = this.FindResource("ContextMenu2") as ContextMenu;
-			cm .PlacementTarget = sender as ListView;
-			cm .IsOpen = true;
+			cm . PlacementTarget = sender as ListView;
+			cm . IsOpen = true;
 		}
 
 		public void FindChildren<T> ( List<T> results , DependencyObject startNode )
@@ -875,10 +895,10 @@ namespace WPFPages .Views
 			for ( int i = 0 ; i < count ; i++ )
 			{
 				DependencyObject current = VisualTreeHelper.GetChild(startNode, i);
-				if ( ( current .GetType ( ) ) .Equals ( typeof ( T ) ) || ( current .GetType ( ) .GetTypeInfo ( ) .IsSubclassOf ( typeof ( T ) ) ) )
+				if ( ( current . GetType ( ) ) . Equals ( typeof ( T ) ) || ( current . GetType ( ) . GetTypeInfo ( ) . IsSubclassOf ( typeof ( T ) ) ) )
 				{
 					T asType = (T)current;
-					results .Add ( asType );
+					results . Add ( asType );
 				}
 				FindChildren<T> ( results , current );
 			}
@@ -888,19 +908,13 @@ namespace WPFPages .Views
 		{
 			//Click inside ListView Item
 			Border brdr = sender as Border;
-			//			ListView lv = GetParent ( ( Visual ) e . Source );
-			//CurrentIndex = lv . SelectedIndex;
-			//			object o = FindName("UCListbox");
-			//			ListView LV = o as ListView;
-			//			CurrentIndex  = LV . FocusedItem;
-			//			CurrentIndex = LV . SelectedIndex;
 
 		}
 		private ListView GetParent ( Visual v )
 		{
 			while ( v != null )
 			{
-				v = VisualTreeHelper .GetParent ( v ) as Visual;
+				v = VisualTreeHelper . GetParent ( v ) as Visual;
 				if ( v is ListView )
 					break;
 			}
@@ -917,48 +931,48 @@ namespace WPFPages .Views
 			//				return;
 			//			b . Background = FindResource ( "Gray3" ) as SolidColorBrush;
 			//			b . BorderBrush = FindResource ( "Red3" ) as SolidColorBrush;
-			DataTable dtBank = new DataTable();
-			UCListbox .ItemsSource = null;
-			UCListbox .Items .Clear ( );
-			UCListbox .Refresh ( );
-			UCListbox .UpdateLayout ( );
-			Mouse .OverrideCursor = System .Windows .Input .Cursors .Wait;
-			SqlBankcollection .Clear ( );
-			min = Convert .ToInt32 ( MinValue .Text );
-			max = Convert .ToInt32 ( MaxValue .Text );
-			tot = Convert .ToInt32 ( MaxRecords .Text );
-			dtBank = BankCollection .LoadSelectedBankData ( min , max , tot );
-			BankCollection .LoadSelectedCollection ( SqlBankcollection , -1 , dtBank , true );
+			Mouse . OverrideCursor = System . Windows . Input . Cursors . Wait;
+			datagrid . ItemsSource = null;
+			datagrid . Items . Clear ( );
+			// clear listbox.
+			UCListbox . ItemsSource = null;
+			UCListbox . Items . Clear ( );
 
-			DbList_LoadBtnPressed2 ( sender , e );
-			Mouse .OverrideCursor = System .Windows .Input .Cursors .Arrow;
+			UCListbox . Refresh ( );
+			SqlBankcollection . Clear ( );
+			min = Convert . ToInt32 ( MinValue . Text );
+			max = Convert . ToInt32 ( MaxValue . Text );
+			tot = Convert . ToInt32 ( MaxRecords . Text );
+
+			// Load data  from both dbs'
+			DataTable dtBank = new DataTable();
+			dtBank = BankCollection . LoadSelectedBankData ( Min: min , Max: max , Tot: tot );
+			BankCollection . LoadSelectedCollection ( SqlBankcollection , max: max , dtBank, true );
+			//await BankCollection . LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
+
+			// This loads the Customers Db
+			 DbList_LoadBtnPressed2 ( sender , e );
+			Mouse . OverrideCursor = System . Windows . Input . Cursors . Arrow;
 
 		}
 
-		private async void DbList_LoadBtnPressed2 ( object sender , MouseButtonEventArgs e )
+		private void DbList_LoadBtnPressed2 ( object sender , MouseButtonEventArgs e )
 		{
 			int min = 0, max = 0, tot = 0;
-			//return;
-			//Reset the background of the Load Data button
-
-			//Border b = sender as Border;
-			//if ( b == null )
-			//        return;
-			//b . Background = FindResource ( "Gray3" ) as SolidColorBrush;
-			//b . BorderBrush = FindResource ( "Red3" ) as SolidColorBrush;
-			DataTable dtCust = new DataTable();
-			UCListbox2 .ItemsSource = null;
-			UCListbox2 .Items .Clear ( );
-			UCListbox2 .Refresh ( );
-			UCListbox2 .UpdateLayout ( );
-			Mouse .OverrideCursor = System .Windows .Input .Cursors .Wait;
-			SqlCustcollection .Clear ( );
-			min = Convert .ToInt32 ( MinValue .Text );
-			max = Convert .ToInt32 ( MaxValue .Text );
-			tot = Convert .ToInt32 ( MaxRecords .Text );
-			dtCust = BankCollection .LoadSelectedBankData ( min , max , tot );
-			await AllCustomers .LoadCust ( SqlCustcollection , "" , 1 , true , min , max , tot );
-			Mouse .OverrideCursor = System .Windows .Input .Cursors .Arrow;
+			datagrid2 . ItemsSource = null;
+			datagrid2 . Items . Clear ( );
+			UCListbox2 . ItemsSource = null;
+			UCListbox2 . Items . Clear ( );
+			UCListbox2 . Refresh ( );
+			datagrid2 . Refresh ( );
+			UCListbox2 . UpdateLayout ( );
+			Mouse . OverrideCursor = System . Windows . Input . Cursors . Wait;
+			SqlCustcollection . Clear ( );
+			min = Convert . ToInt32 ( MinValue . Text );
+			max = Convert . ToInt32 ( MaxValue . Text );
+			tot = Convert . ToInt32 ( MaxRecords . Text );
+			AllCustomers . LoadCust ( SqlCustcollection , "MULTIVIEWLISTBOXVIEWERS" , start: min , end: max , max: tot , NotifyAll: true );
+			Mouse . OverrideCursor = System . Windows . Input . Cursors . Arrow;
 
 		}
 
@@ -974,11 +988,11 @@ namespace WPFPages .Views
 			BankCollection vm = new BankCollection();
 			foreach ( var item in accounts )
 			{
-				vm .Add ( item );
+				vm . Add ( item );
 			}
-			UCListbox .ItemsSource = null;
-			UCListbox .Items .Clear ( );
-			UCListbox .ItemsSource = vm;
+			UCListbox . ItemsSource = null;
+			UCListbox . Items . Clear ( );
+			UCListbox . ItemsSource = vm;
 		}
 
 		private void Linq2_Click ( object sender , RoutedEventArgs e )
@@ -992,11 +1006,11 @@ namespace WPFPages .Views
 			BankCollection vm = new BankCollection();
 			foreach ( var item in accounts )
 			{
-				vm .Add ( item );
+				vm . Add ( item );
 			}
-			UCListbox .ItemsSource = null;
-			UCListbox .Items .Clear ( );
-			UCListbox .ItemsSource = vm;
+			UCListbox . ItemsSource = null;
+			UCListbox . Items . Clear ( );
+			UCListbox . ItemsSource = vm;
 		}
 
 		private void Linq3_Click ( object sender , RoutedEventArgs e )
@@ -1010,11 +1024,11 @@ namespace WPFPages .Views
 			BankCollection vm = new BankCollection();
 			foreach ( var item in accounts )
 			{
-				vm .Add ( item );
+				vm . Add ( item );
 			}
-			UCListbox .ItemsSource = null;
-			UCListbox .Items .Clear ( );
-			UCListbox .ItemsSource = vm;
+			UCListbox . ItemsSource = null;
+			UCListbox . Items . Clear ( );
+			UCListbox . ItemsSource = vm;
 		}
 		private void Linq4_Click ( object sender , RoutedEventArgs e )
 		{
@@ -1027,11 +1041,11 @@ namespace WPFPages .Views
 			BankCollection vm = new BankCollection();
 			foreach ( var item in accounts )
 			{
-				vm .Add ( item );
+				vm . Add ( item );
 			}
-			UCListbox .ItemsSource = null;
-			UCListbox .Items .Clear ( );
-			UCListbox .ItemsSource = vm;
+			UCListbox . ItemsSource = null;
+			UCListbox . Items . Clear ( );
+			UCListbox . ItemsSource = vm;
 		}
 
 		/// <summary>
@@ -1060,20 +1074,20 @@ namespace WPFPages .Views
 			{
 				foreach ( var item2 in accounts )
 				{
-					if ( item2 .CustNo .ToString ( ) == item1 .Key )
+					if ( item2 . CustNo . ToString ( ) == item1 . Key )
 					{
-						output .Add ( item2 );
+						output . Add ( item2 );
 					}
 				}
 			}
 			BankCollection vm = new BankCollection();
 			foreach ( var item in output )
 			{
-				vm .Add ( item );
+				vm . Add ( item );
 			}
-			UCListbox .ItemsSource = null;
-			UCListbox .Items .Clear ( );
-			UCListbox .ItemsSource = vm;
+			UCListbox . ItemsSource = null;
+			UCListbox . Items . Clear ( );
+			UCListbox . ItemsSource = vm;
 		}
 		//*************************************************************************************************************//
 		// Turn filter OFF
@@ -1086,10 +1100,10 @@ namespace WPFPages .Views
 		{
 			//			BackupBankcollection = null;
 			SqlBankcollection = null;
-			UCListbox .ItemsSource = null;
-			Flags .SqlCustActive = true;
-			BankCollection .LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
-			UCListbox .Refresh ( );
+			UCListbox . ItemsSource = null;
+			Flags . SqlCustActive = true;
+			BankCollection . LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
+			UCListbox . Refresh ( );
 		}
 
 
@@ -1118,7 +1132,7 @@ namespace WPFPages .Views
 
 		private void datagrid_PreviewDragEnter ( object sender , DragEventArgs e )
 		{
-			e .Effects = ( DragDropEffects ) DragDropEffects .Move;
+			e . Effects = ( DragDropEffects ) DragDropEffects . Move;
 			//Debug . WriteLine ( $"Setting drag cursor...." );
 		}
 
@@ -1127,7 +1141,7 @@ namespace WPFPages .Views
 		private void datagrid_PreviewMouseLeftButtonup ( object sender , MouseButtonEventArgs e )
 		{
 			ScrollBarMouseMove = false;
-			this .IsSelected = false;
+			this . IsSelected = false;
 
 		}
 
@@ -1135,86 +1149,86 @@ namespace WPFPages .Views
 		{
 
 			// Gotta make sure it is not anywhere in the Scrollbar we clicked on 
-			if ( Utils .HitTestScrollBar ( sender , e ) )
+			if ( Utils . HitTestScrollBar ( sender , e ) )
 			{
 				ScrollBarMouseMove = true;
 				return;
 			}
-			if ( Utils .HitTestHeaderBar ( sender , e ) )
+			if ( Utils . HitTestHeaderBar ( sender , e ) )
 				return;
 
-			_startPoint = e .GetPosition ( null );
+			_startPoint = e . GetPosition ( null );
 			// Make sure the left mouse button is pressed down so we are really moving a record
-			if ( e .LeftButton == MouseButtonState .Pressed )
+			if ( e . LeftButton == MouseButtonState . Pressed )
 			{
 				IsLeftButtonDown = true;
 			}
 			string t = sender.GetType().ToString();
 			object b = e.OriginalSource;
-			if ( t .Contains ( "DataGrid" ) )// && b.Name == "DGR_Border")
+			if ( t . Contains ( "DataGrid" ) )// && b.Name == "DGR_Border")
 			{
 				DataGrid dg = sender as DataGrid;
-				if ( dg .Name == "datagrid" )
+				if ( dg . Name == "datagrid" )
 				{
-					GridSelection = datagrid .SelectedIndex;
+					GridSelection = datagrid . SelectedIndex;
 					ListSelection = GridSelection;
-					UCListbox .SelectedIndex = ListSelection;
+					UCListbox . SelectedIndex = ListSelection;
 				}
 				else
 				{
-					GridSelection2 = datagrid2 .SelectedIndex;
+					GridSelection2 = datagrid2 . SelectedIndex;
 					ListSelection2 = GridSelection2;
-					UCListbox2 .SelectedIndex = ListSelection;
+					UCListbox2 . SelectedIndex = ListSelection;
 				}
 			}
 			else
 			{
-				ListSelection = UCListbox .SelectedIndex;
+				ListSelection = UCListbox . SelectedIndex;
 				GridSelection = ListSelection;
-				datagrid .SelectedIndex = ListSelection;
+				datagrid . SelectedIndex = ListSelection;
 			}
 
 		}
 		private void datagrid_PreviewMouseLeftButtondown2 ( object sender , MouseButtonEventArgs e )
 		{
 			// Gotta make sure it is not anywhere in the Scrollbar we clicked on 
-			if ( Utils .HitTestScrollBar ( sender , e ) )
+			if ( Utils . HitTestScrollBar ( sender , e ) )
 			{
 				ScrollBarMouseMove = true;
 				return;
 			}
-			if ( Utils .HitTestHeaderBar ( sender , e ) )
+			if ( Utils . HitTestHeaderBar ( sender , e ) )
 				return;
 
-			_startPoint = e .GetPosition ( null );
+			_startPoint = e . GetPosition ( null );
 			// Make sure the left mouse button is pressed down so we are really moving a record
-			if ( e .LeftButton == MouseButtonState .Pressed )
+			if ( e . LeftButton == MouseButtonState . Pressed )
 			{
 				IsLeftButtonDown = true;
 			}
 			string t = sender.GetType().ToString();
 			object b = e.OriginalSource;
-			if ( t .Contains ( "DataGrid" ) )// && b.Name == "DGR_Border")
+			if ( t . Contains ( "DataGrid" ) )// && b.Name == "DGR_Border")
 			{
 				DataGrid dg = sender as DataGrid;
-				if ( dg .Name == "datagrid" )
+				if ( dg . Name == "datagrid" )
 				{
-					GridSelection = datagrid .SelectedIndex;
+					GridSelection = datagrid . SelectedIndex;
 					ListSelection = GridSelection;
-					UCListbox .SelectedIndex = ListSelection;
+					UCListbox . SelectedIndex = ListSelection;
 				}
 				else
 				{
-					GridSelection2 = datagrid2 .SelectedIndex;
+					GridSelection2 = datagrid2 . SelectedIndex;
 					ListSelection2 = GridSelection2;
-					UCListbox2 .SelectedIndex = ListSelection2;
+					UCListbox2 . SelectedIndex = ListSelection2;
 				}
 			}
 			else
 			{
-				ListSelection2 = UCListbox2 .SelectedIndex;
+				ListSelection2 = UCListbox2 . SelectedIndex;
 				GridSelection2 = ListSelection2;
-				datagrid2 .SelectedIndex = ListSelection2;
+				datagrid2 . SelectedIndex = ListSelection2;
 			}
 
 		}
@@ -1225,25 +1239,25 @@ namespace WPFPages .Views
 			Point mousePos = e.GetPosition(null);
 			Vector diff = _startPoint - mousePos;
 			string t1 = sender.GetType().ToString();
-			if ( e .LeftButton == MouseButtonState .Pressed &&
-			    Math .Abs ( diff .X ) > SystemParameters .MinimumHorizontalDragDistance ||
-			    Math .Abs ( diff .Y ) > SystemParameters .MinimumVerticalDragDistance )
+			if ( e . LeftButton == MouseButtonState . Pressed &&
+			    Math . Abs ( diff . X ) > SystemParameters . MinimumHorizontalDragDistance ||
+			    Math . Abs ( diff . Y ) > SystemParameters . MinimumVerticalDragDistance )
 			{
-				if ( IsLeftButtonDown && e .LeftButton == MouseButtonState .Pressed )
+				if ( IsLeftButtonDown && e . LeftButton == MouseButtonState . Pressed )
 				{
 					bool isvalid = false;
-					if ( t1 .Contains ( "ListView" ) )
+					if ( t1 . Contains ( "ListView" ) )
 					{
 						isvalid = true;
 						ListView dg = sender as ListView ;
-						if ( dg .Name == "UCListbox2" )
+						if ( dg . Name == "UCListbox2" )
 							IsCust = true;
 					}
-					else if ( t1 .Contains ( "DataGrid" ) )
+					else if ( t1 . Contains ( "DataGrid" ) )
 					{
 						isvalid = true;
 						DataGrid dg = sender as DataGrid;
-						if ( dg .Name == "datagrid2" )
+						if ( dg . Name == "datagrid2" )
 							IsCust = true;
 					}
 					if ( isvalid )
@@ -1255,32 +1269,32 @@ namespace WPFPages .Views
 						if ( IsCust == false )
 						{
 							BankAccountViewModel bvm = new BankAccountViewModel();
-							if ( t1 .Contains ( "ListView" ) )
-								bvm = UCListbox .SelectedItem as BankAccountViewModel;
+							if ( t1 . Contains ( "ListView" ) )
+								bvm = UCListbox . SelectedItem as BankAccountViewModel;
 							else
-								bvm = datagrid .SelectedItem as BankAccountViewModel;
+								bvm = datagrid . SelectedItem as BankAccountViewModel;
 							string str = GetExportRecords.CreateTextFromRecord(bvm, null, null, true, false);
 							string dataFormat = DataFormats.Text;
 							DataObject dataObject = new DataObject(dataFormat, str);
-							DragDrop .DoDragDrop (
+							DragDrop . DoDragDrop (
 							datagrid ,
 							dataObject ,
-							DragDropEffects .Copy );
+							DragDropEffects . Copy );
 						}
 						else
 						{
 							CustomerViewModel cvm = new CustomerViewModel();
-							if ( t1 .Contains ( "ListView" ) )
-								cvm = UCListbox2 .SelectedItem as CustomerViewModel;
+							if ( t1 . Contains ( "ListView" ) )
+								cvm = UCListbox2 . SelectedItem as CustomerViewModel;
 							else
-								cvm = datagrid2 .SelectedItem as CustomerViewModel;
+								cvm = datagrid2 . SelectedItem as CustomerViewModel;
 							string str = GetExportRecords.CreateTextFromRecord(null, null, cvm, true, false);
 							string dataFormat = DataFormats.Text;
 							DataObject dataObject = new DataObject(dataFormat, str);
-							DragDrop .DoDragDrop (
+							DragDrop . DoDragDrop (
 							datagrid ,
 							dataObject ,
-							DragDropEffects .Copy );
+							DragDropEffects . Copy );
 						}
 						IsLeftButtonDown = false;
 					}
@@ -1291,58 +1305,58 @@ namespace WPFPages .Views
 		private void DbList_ShowDropGrid ( object sender , MouseButtonEventArgs e )
 		{
 			DropDataGridData ddg = new DropDataGridData();
-			ddg .Show ( );
+			ddg . Show ( );
 		}
 
 		private void LoadColumns ( object sender , RoutedEventArgs e )
 		{
 			//This calls the Datagrid utilities file DataGridUtilities.CS
-			DataGridUtilities .LoadDataGridColumns ( sender , e );
+			DataGridUtilities . LoadDataGridColumns ( sender , e );
 
 		}
 
 		private void LoadColumns2 ( object sender , RoutedEventArgs e )
 		{
-			DataGridUtilities .LoadDataGridColumns2 ( sender , e );
+			DataGridUtilities . LoadDataGridColumns2 ( sender , e );
 
 		}
 
 		private void CloseBtn_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
-			this .Close ( );
+			this . Close ( );
 		}
 
 		private void ResizeUp ( object sender , MouseButtonEventArgs e )
 		{
-			datagrid .RowHeight += 1;
-			datagrid2 .RowHeight += 1;
+			datagrid . RowHeight += 1;
+			datagrid2 . RowHeight += 1;
 
 		}
 
 		private void ResizeDn ( object sender , MouseButtonEventArgs e )
 		{
-			datagrid .RowHeight -= 1;
-			datagrid2 .RowHeight -= 1;
+			datagrid . RowHeight -= 1;
+			datagrid2 . RowHeight -= 1;
 		}
 
 		private void LbItem_PreviewMouseLeftButtonUp2 ( object sender , MouseButtonEventArgs e )
 		{
-			this .IsSelected = false;
+			this . IsSelected = false;
 		}
 
 		private void LbItem_PreviewMouseLeftButtonUp ( object sender , MouseButtonEventArgs e )
 		{
-			this .IsSelected = false;
+			this . IsSelected = false;
 		}
 
 		private void DbListbox_PreviewMouseLeftButtonUp2 ( object sender , MouseButtonEventArgs e )
 		{
-			this .IsSelected = false;
+			this . IsSelected = false;
 		}
 
 		private void DbListbox_PreviewMouseLeftButtonUp ( object sender , MouseButtonEventArgs e )
 		{
-			this .IsSelected = false;
+			this . IsSelected = false;
 		}
 	}
 	#endregion DRAG CODE
@@ -1352,12 +1366,12 @@ namespace WPFPages .Views
 	{
 		public static bool GetIsChanged ( DependencyObject obj )
 		{
-			return ( bool ) obj .GetValue ( IsChangedProperty );
+			return ( bool ) obj . GetValue ( IsChangedProperty );
 		}
 
 		public static void SetIsChanged ( DependencyObject obj , bool value )
 		{
-			obj .SetValue ( IsChangedProperty , value );
+			obj . SetValue ( IsChangedProperty , value );
 		}
 
 		public static readonly DependencyProperty IsChangedProperty =
@@ -1365,23 +1379,24 @@ namespace WPFPages .Views
 
 		private static void IsChangedCallback ( DependencyObject d , DependencyPropertyChangedEventArgs e )
 		{
-			if ( true .Equals ( e .NewValue ) )
+			if ( true . Equals ( e . NewValue ) )
 			{
 				FrameworkContentElement contentElement = d as FrameworkContentElement;
 				if ( contentElement != null )
 				{
-					contentElement .FocusVisualStyle = null;
+					contentElement . FocusVisualStyle = null;
 					return;
 				}
 
 				FrameworkElement element = d as FrameworkElement;
 				if ( element != null )
 				{
-					element .FocusVisualStyle = null;
+					element . FocusVisualStyle = null;
 				}
 			}
 		}
 		#endregion VisualTree
+
 	}
 
 }

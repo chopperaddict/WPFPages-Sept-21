@@ -1,22 +1,22 @@
 ﻿using System;
-using System .Collections .Generic;
-using System .ComponentModel;
-using System .Diagnostics;
-using System .IO;
-using System .Linq;
-using System .Threading;
-using System .Threading .Tasks;
-using System .Windows;
-using System .Windows .Controls;
-using System .Windows .Data;
-using System .Windows .Input;
-using System .Windows .Media;
-using System .Windows .Media .Imaging;
+using System . Collections . Generic;
+using System . ComponentModel;
+using System . Diagnostics;
+using System . IO;
+using System . Linq;
+using System . Threading;
+using System . Threading . Tasks;
+using System . Windows;
+using System . Windows . Controls;
+using System . Windows . Data;
+using System . Windows . Input;
+using System . Windows . Media;
+using System . Windows . Media . Imaging;
 
-using WPFPages .Commands;
-using WPFPages .ViewModels;
+using WPFPages . Commands;
+using WPFPages . ViewModels;
 
-namespace WPFPages .Views
+namespace WPFPages . Views
 {
 	/// <summary>
 	/// Interaction logic for CustDbView.xaml
@@ -24,18 +24,18 @@ namespace WPFPages .Views
 	public partial class CustDbView : Window
 	{
 		private static AllCustomers CustDbViewcollection = null;// = new CustCollection ( );//. CustViewerDbcollection;
-											    // Get our personal Collection view of the Db
+											  // Get our personal Collection view of the Db
 		private ICollectionView CustviewerView
 		{
 			get; set;
 		}
 
-//		private CustomerCollection Custcollection = new CustomerCollection ( );
-		
+		//		private CustomerCollection Custcollection = new CustomerCollection ( );
+
 		CollectionViewSource cvs = new CollectionViewSource();
-		
-		
-		
+
+
+
 		// Crucial structure for use when a Grid row is being edited
 		private static CustRowData cvmCurrent = null;
 
@@ -80,7 +80,7 @@ namespace WPFPages .Views
 			Startup = true;
 			InitializeComponent ( );
 			//Identify individual windows for update protection
-			this .Tag = ( Guid ) Guid .NewGuid ( );
+			this . Tag = ( Guid ) Guid . NewGuid ( );
 		}
 		#region Mouse support
 		private void DoDragMove ( )
@@ -88,7 +88,7 @@ namespace WPFPages .Views
 		 // which will crash the DragMove Fn.....
 			try
 			{
-				this .DragMove ( );
+				this . DragMove ( );
 			}
 			catch { return; }
 		}
@@ -97,70 +97,65 @@ namespace WPFPages .Views
 		#region Startup/ Closedown
 		private async void Window_Loaded ( object sender , RoutedEventArgs e )
 		{
-			Mouse .OverrideCursor = Cursors .Wait;
-			this .Show ( );
-			this .Refresh ( );
+			Mouse . OverrideCursor = Cursors . Wait;
+			this . Show ( );
+			this . Refresh ( );
 			Startup = true;
 
 			string ndx = ( string ) Properties . Settings . Default [ "CustDbView_cindex" ];
-			cindex = int .Parse ( ndx );
-			this .CustGrid .SelectedIndex = cindex < 0 ? 0 : cindex;
+			cindex = int . Parse ( ndx );
+			this . CustGrid . SelectedIndex = cindex < 0 ? 0 : cindex;
 
-			//			this . MouseDown += delegate { DoDragMove ( ); };
-			Utils .SetupWindowDrag ( this );
+			Utils . SetupWindowDrag ( this );
 			// An EditDb has changed the current index
-			EventControl .EditIndexChanged += EventControl_EditIndexChanged;
+			EventControl . EditIndexChanged += EventControl_EditIndexChanged;
 			// A Multiviewer has changed the current index
-			EventControl .MultiViewerIndexChanged += EventControl_EditIndexChanged;
+			EventControl . MultiViewerIndexChanged += EventControl_EditIndexChanged;
 			// Another viewer has changed the current index
-			EventControl .ViewerIndexChanged += EventControl_EditIndexChanged;      // Callback in THIS FILE
-			EventControl .ViewerDataUpdated += EventControl_DataUpdated;
-			EventControl .CustDataLoaded += EventControl_CustDataLoaded;
+			EventControl . ViewerIndexChanged += EventControl_EditIndexChanged;      // Callback in THIS FILE
+			EventControl . ViewerDataUpdated += EventControl_DataUpdated;
+			EventControl . CustDataLoaded += EventControl_CustDataLoaded;
+			EventControl . GlobalDataChanged += EventControl_GlobalDataChanged;
 
+			Flags . SqlCustActive = true;
+			await AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
 
-			EventControl .GlobalDataChanged += EventControl_GlobalDataChanged;
-			//			EventControl . WindowLinkChanged += EventControl_WindowLinkChanged;
-
-
-			Flags .SqlCustActive = true;
-			await AllCustomers .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
-
-			SaveBttn .IsEnabled = false;
+			SaveBttn . IsEnabled = false;
 			// Save linkage setting as we need to disable it while we are loading
 			bool tmp = Flags . LinkviewerRecords;
 
-			Flags .CustDbEditor = this;
+			Flags . CustDbEditor = this;
 			// Set window to TOPMOST
-			OntopChkbox .IsChecked = true;
-			this .Topmost = true;
-			this .Focus ( );
+			OntopChkbox . IsChecked = true;
+			this . Topmost = true;
+			this . Focus ( );
 			// start our linkage monitor
 			t1 = new Thread ( checkLinkages );
-			t1 .IsBackground = true;
-			t1 .Priority = ThreadPriority .Lowest;
-			t1 .Start ( );
-			if ( Flags .LinkviewerRecords )
+			t1 . IsBackground = true;
+			t1 . Priority = ThreadPriority . Lowest;
+			t1 . Start ( );
+			if ( Flags . LinkviewerRecords )
 			{
-				LinkRecords .IsChecked = true;
+				LinkRecords . IsChecked = true;
 				LinktoParent = false;
 			}
 			else
 			{
-				LinkRecords .IsChecked = false;
+				LinkRecords . IsChecked = false;
 				LinktoParent = false;
 			}
 			LinktoMultiParent = false;
 
-			Mouse .OverrideCursor = Cursors .Arrow;
+			Mouse . OverrideCursor = Cursors . Arrow;
 			Startup = false;
 		}
 		private void EventControl_GlobalDataChanged ( object sender , GlobalEventArgs e )
 		{
-			if ( e .CallerType == "CUSTDBVIEWER" )
+			if ( e . CallerType == "CUSTDBVIEWER" )
 				return;
 			//Update our own data tyoe only
-			Flags .SqlCustActive = true;
-			AllCustomers .LoadCust ( null , "CUSTOMER" , 2 , true );
+			Flags . SqlCustActive = true;
+			AllCustomers . LoadCust ( null , "CUSTOMER" , 2 , true );
 
 		}
 
@@ -174,34 +169,34 @@ namespace WPFPages .Views
 				//IsEditing = false;
 				return;
 			}
-			this .CustGrid .SelectedIndex = e .Row;
-			cindex = e .Row;
-			this .CustGrid .Refresh ( );
+			this . CustGrid . SelectedIndex = e . Row;
+			cindex = e . Row;
+			this . CustGrid . Refresh ( );
 			Triggered = false;
 		}
 
 		private async void EventControl_DataUpdated ( object sender , LoadedEventArgs e )
 		{
-			Debug .WriteLine ( $"CustDbView : Data changed event notification received successfully." );
-			if ( e .CallerType == "CUSTDBVIEW" || e .CallerDb == "CUSTOMER" )
+			Debug . WriteLine ( $"CustDbView : Data changed event notification received successfully." );
+			if ( e . CallerType == "CUSTDBVIEW" || e . CallerDb == "CUSTOMER" )
 				return;
 			int currsel = this . CustGrid . SelectedIndex;
-			this .CustGrid .ItemsSource = null;
-			this .CustGrid .Items .Clear ( );
-			Mouse .OverrideCursor = Cursors .Wait;
-			Flags .SqlCustActive = true;
-			CustDbViewcollection = await AllCustomers .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
+			this . CustGrid . ItemsSource = null;
+			this . CustGrid . Items . Clear ( );
+			Mouse . OverrideCursor = Cursors . Wait;
+			Flags . SqlCustActive = true;
+			CustDbViewcollection = await AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
 			IsDirty = false;
 		}
 
 		public void ExternalDataUpdate ( int DbEditChangeType , int row , string currentDb )
 		{
 			// Reciiving Notifiaction from a remote viewer that data has been changed, so we MUST now update our DataGrid
-			Debug .WriteLine ( $"CUSTDBVIEW : Data changed event notification received successfully. in ExternalDataUpdate(187)" );
-			this .CustGrid .ItemsSource = null;
-			this .CustGrid .Items .Clear ( );
-			this .CustGrid .ItemsSource = CustDbViewcollection;
-			this .CustGrid .Refresh ( );
+			Debug . WriteLine ( $"CUSTDBVIEW : Data changed event notification received successfully. in ExternalDataUpdate(187)" );
+			this . CustGrid . ItemsSource = null;
+			this . CustGrid . Items . Clear ( );
+			this . CustGrid . ItemsSource = CustDbViewcollection;
+			this . CustGrid . Refresh ( );
 		}
 		#endregion Startup/ Closedown
 
@@ -215,9 +210,9 @@ namespace WPFPages .Views
 			{
 				// Nope, so create a new one and get on with the edit process
 				CustomerViewModel tmp = new CustomerViewModel ( );
-				tmp = e .Row .Item as CustomerViewModel;
+				tmp = e . Row . Item as CustomerViewModel;
 				// This sets up a new bvmControl object if needed, else we  get a null back
-				cvmCurrent = CellEditControl .CustGrid_EditStart ( cvmCurrent , e );
+				cvmCurrent = CellEditControl . CustGrid_EditStart ( cvmCurrent , e );
 			}
 			IsEditing = true;
 		}
@@ -228,22 +223,22 @@ namespace WPFPages .Views
 
 			// Has Data been changed in one of our rows. ?
 			CustomerViewModel cvm = this . CustGrid . SelectedItem as CustomerViewModel;
-			cvm = e .Row .Item as CustomerViewModel;
+			cvm = e . Row . Item as CustomerViewModel;
 
 			// The sequence of these next 2 blocks is critical !!!
 			//if we get here, make sure we have been NOT been told to EsCAPE out
 			//	this is a DataGridEditAction dgea
-			if ( e .EditAction == DataGridEditAction .Cancel )
+			if ( e . EditAction == DataGridEditAction . Cancel )
 			{
 				// ENTER was hit, so data has been saved - go ahead and reload our grid with new data
 				// and this will notify any other open viewers as well
 				cvmCurrent = null;
-				Flags .SqlCustActive = true;
-				await AllCustomers .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 2 , true );
+				Flags . SqlCustActive = true;
+				await AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 2 , true );
 				return;
 			}
 
-			if ( CellEditControl .CustGrid_EditEnding ( cvmCurrent , CustGrid , e ) == false )
+			if ( CellEditControl . CustGrid_EditEnding ( cvmCurrent , CustGrid , e ) == false )
 			{       // No change made
 				  //	cvmCurrent = null;
 				return;
@@ -251,51 +246,51 @@ namespace WPFPages .Views
 			IsEditing = false;
 
 		}
-		private async void ViewerGrid_RowEditEnding ( object sender , System .Windows .Controls .DataGridRowEditEndingEventArgs e )
+		private async void ViewerGrid_RowEditEnding ( object sender , System . Windows . Controls . DataGridRowEditEndingEventArgs e )
 		{
 			// Save changes and tell other viewers about the change
 			int currow = 0;
-			currow = this .CustGrid .SelectedIndex;
+			currow = this . CustGrid . SelectedIndex;
 			cindex = currow;
 			// Save changes and tell other viewers about the change
 			// if our saved row is null, it has already been checked in Cell_EndDedit processing
 			// and found no changes have been made, so we can abort this update
 			if ( cvmCurrent == null )
 			{
-				this .CustGrid .Refresh ( );
+				this . CustGrid . Refresh ( );
 				return;
 			}
 			// Save current row so we can reposition correctly at end of the entire refresh process
 			//			Flags . SqlCustCurrentIndex = currow;
 			CustomerViewModel ss = new CustomerViewModel ( );
-			ss = this .CustGrid .SelectedItem as CustomerViewModel;
+			ss = this . CustGrid . SelectedItem as CustomerViewModel;
 			// This is the NEW DATA from the current row
 			SQLHandlers sqlh = new SQLHandlers ( );
-			await sqlh .UpdateDbRowAsync ( "CUSTOMER" , ss , this .CustGrid .SelectedIndex );
+			await sqlh . UpdateDbRowAsync ( "CUSTOMER" , ss , this . CustGrid . SelectedIndex );
 
-			this .CustGrid .SelectedIndex = currow;
-			this .CustGrid .SelectedItem = currow;
-			Utils .SetUpGridSelection ( this .CustGrid , currow );
+			this . CustGrid . SelectedIndex = currow;
+			this . CustGrid . SelectedItem = currow;
+			Utils . SetUpGridSelection ( this . CustGrid , currow );
 			// Notify EditDb to upgrade its grid
-			if ( Flags .CurrentEditDbViewer != null )
-				Flags .CurrentEditDbViewer .UpdateGrid ( "CUSTOMER" );
+			if ( Flags . CurrentEditDbViewer != null )
+				Flags . CurrentEditDbViewer . UpdateGrid ( "CUSTOMER" );
 
 			// ***********  DEFINITE WIN  **********
 			// This DOES trigger a notidfication to SQLDBVIEWER for sure !!!   14/5/21
-			EventControl .TriggerViewerDataUpdated ( CustDbViewcollection ,
+			EventControl . TriggerViewerDataUpdated ( CustDbViewcollection ,
 				  new LoadedEventArgs
 				  {
 					  CallerType = "CUSTDBVIEW" ,
 					  CallerDb = "CUSTOMER" ,
 					  DataSource = CustDbViewcollection ,
-					  SenderGuid = this .Tag .ToString ( ) ,
-					  RowCount = this .CustGrid .SelectedIndex
+					  SenderGuid = this . Tag . ToString ( ) ,
+					  RowCount = this . CustGrid . SelectedIndex
 				  } );
-			EventControl .TriggerGlobalDataChanged ( this , new GlobalEventArgs
+			EventControl . TriggerGlobalDataChanged ( this , new GlobalEventArgs
 			{
 				CallerType = "CUSTDBVIEW" ,
 				AccountType = "CUSTOMER" ,
-				SenderGuid = this .Tag?.ToString ( )
+				SenderGuid = this . Tag?.ToString ( )
 			} );
 		}
 
@@ -303,18 +298,18 @@ namespace WPFPages .Views
 		{
 			// Event handler for CustDataLoaded
 			// ONLY proceeed if we triggered the new data request
-			if ( e .CallerDb != "CUSTDBVIEW" )
+			if ( e . CallerDb != "CUSTDBVIEW" )
 				return;
-			this .CustGrid .ItemsSource = null;
-			this .CustGrid .Items .Clear ( );
-			if ( e .DataSource == null )
+			this . CustGrid . ItemsSource = null;
+			this . CustGrid . Items . Clear ( );
+			if ( e . DataSource == null )
 				return;
 
-			Flags .SqlCustActive = false;
+			Flags . SqlCustActive = false;
 			LoadingDbData = true;
 
-			CustviewerView = CollectionViewSource .GetDefaultView ( e .DataSource as AllCustomers );
-			CustDbViewcollection = e .DataSource as AllCustomers;
+			CustviewerView = CollectionViewSource . GetDefaultView ( e . DataSource as AllCustomers );
+			CustDbViewcollection = e . DataSource as AllCustomers;
 
 			// Add our CollectionView to THE One and only CollectionViewSource
 			cvs . Source = CustDbViewcollection;
@@ -322,22 +317,22 @@ namespace WPFPages .Views
 			ICollectionView cv = cvs . View;
 
 			CustviewerView . Refresh ( );
-			this .CustGrid .ItemsSource = CustviewerView;
-			this .CustGrid .SelectedIndex = cindex;
-			this .CustGrid .SelectedItem = cindex;
-			this .CustGrid .CurrentItem = cindex;
-			this .CustGrid .UpdateLayout ( );
-			Utils .SetUpGridSelection ( CustGrid , cindex );
+			this . CustGrid . ItemsSource = CustviewerView;
+			this . CustGrid . SelectedIndex = cindex;
+			this . CustGrid . SelectedItem = cindex;
+			this . CustGrid . CurrentItem = cindex;
+			this . CustGrid . UpdateLayout ( );
+			Utils . SetUpGridSelection ( CustGrid , cindex );
 			bool reslt = false;
 
-			Thread .Sleep ( 250 );
-			DataFields .Refresh ( );
-			Count .Text = $"{this .CustGrid .SelectedIndex} / { this .CustGrid .Items .Count .ToString ( )}";
-			this .CustGrid .Refresh ( );
-			Debug .WriteLine ( "BANKDBVIEW : Customer Data fully loaded" );
+			Thread . Sleep ( 250 );
+			DataFields . Refresh ( );
+			Count . Text = $"{this . CustGrid . SelectedIndex} / { this . CustGrid . Items . Count . ToString ( )}";
+			this . CustGrid . Refresh ( );
+			Debug . WriteLine ( "BANKDBVIEW : Customer Data fully loaded" );
 		}
 
-		private void ShowCust_KeyDown ( object sender , System .Windows .Input .KeyEventArgs e )
+		private void ShowCust_KeyDown ( object sender , System . Windows . Input . KeyEventArgs e )
 		{
 
 		}
@@ -347,35 +342,35 @@ namespace WPFPages .Views
 			Close ( );
 		}
 
-		private void Window_Closing ( object sender , System .ComponentModel .CancelEventArgs e )
+		private void Window_Closing ( object sender , System . ComponentModel . CancelEventArgs e )
 		{
-			if ( ( Flags .LinkviewerRecords == false && IsDirty )
-					    || SaveBttn .IsEnabled )
+			if ( ( Flags . LinkviewerRecords == false && IsDirty )
+					    || SaveBttn . IsEnabled )
 			{
 				MessageBoxResult result = MessageBox . Show
 						    ( "You have unsaved changes.  Do you want them saved now ?", "Possible Data Loss", MessageBoxButton . YesNo, MessageBoxImage . Question, MessageBoxResult . Yes );
-				if ( result == MessageBoxResult .Yes )
+				if ( result == MessageBoxResult . Yes )
 				{
 					SaveButton ( );
 				}
 				// Do not want ot save it, so disable  save button again
-				SaveBttn .IsEnabled = false;
+				SaveBttn . IsEnabled = false;
 				IsDirty = false;
 			}
-			t1 .Abort ( null );
-			Flags .CustDbEditor = null;
-			EventControl .EditIndexChanged -= EventControl_EditIndexChanged;
+			t1 . Abort ( null );
+			Flags . CustDbEditor = null;
+			EventControl . EditIndexChanged -= EventControl_EditIndexChanged;
 			// A Multiviewer has changed the current index
-			EventControl .MultiViewerIndexChanged -= EventControl_EditIndexChanged;
+			EventControl . MultiViewerIndexChanged -= EventControl_EditIndexChanged;
 			// Another SqlDbviewer has changed the current index
-			EventControl .ViewerIndexChanged -= EventControl_EditIndexChanged;      // Callback in THIS FILE
-			EventControl .ViewerDataUpdated -= EventControl_DataUpdated;
-			EventControl .CustDataLoaded -= EventControl_CustDataLoaded;
+			EventControl . ViewerIndexChanged -= EventControl_EditIndexChanged;      // Callback in THIS FILE
+			EventControl . ViewerDataUpdated -= EventControl_DataUpdated;
+			EventControl . CustDataLoaded -= EventControl_CustDataLoaded;
 
-			EventControl .GlobalDataChanged -= EventControl_GlobalDataChanged;
+			EventControl . GlobalDataChanged -= EventControl_GlobalDataChanged;
 			//			EventControl . WindowLinkChanged -= EventControl_WindowLinkChanged;
 
-			Utils .SaveProperty ( "CustDbView_cindex" , cindex .ToString ( ) );
+			Utils . SaveProperty ( "CustDbView_cindex" , cindex . ToString ( ) );
 
 			//if ( !CustviewerView . IsEmpty )
 			//	ICollectionView icv = CustviewerView . SourceCollection as ICollectionView;
@@ -385,11 +380,11 @@ namespace WPFPages .Views
 
 		private void EventControl_WindowLinkChanged ( object sender , LinkageChangedArgs e )
 		{
-			if ( e .sender != this )
+			if ( e . sender != this )
 				checkLinkages ( );
 		}
 
-		private void CustGrid_SelectionChanged ( object sender , System .Windows .Controls .SelectionChangedEventArgs e )
+		private void CustGrid_SelectionChanged ( object sender , System . Windows . Controls . SelectionChangedEventArgs e )
 		{
 			if ( LoadingDbData )
 			{
@@ -397,23 +392,23 @@ namespace WPFPages .Views
 				return;
 			}
 			IsDirty = false;
-			if ( this .CustGrid .SelectedItem == null )
+			if ( this . CustGrid . SelectedItem == null )
 				return;
-			Utils .SetUpGridSelection ( this .CustGrid , this .CustGrid .SelectedIndex );
-			cindex = this .CustGrid .SelectedIndex;
+			Utils . SetUpGridSelection ( this . CustGrid , this . CustGrid . SelectedIndex );
+			cindex = this . CustGrid . SelectedIndex;
 			Startup = true;
-			DataFields .DataContext = this .CustGrid .SelectedItem;
-			if ( Flags .LinkviewerRecords && Triggered == false )
+			DataFields . DataContext = this . CustGrid . SelectedItem;
+			if ( Flags . LinkviewerRecords && Triggered == false )
 			{
 				//				Debug . WriteLine ( $" 7-1 *** TRACE *** CUSTDBVIEWER : Itemsview_OnSelectionChanged  CUSTOMER - Sending TriggerEditDbIndexChanged Event trigger" );
-				TriggerViewerIndexChanged ( this .CustGrid );
+				TriggerViewerIndexChanged ( this . CustGrid );
 			}
 
 			// check to see if an SqlDbViewer has been opened that we can link to
-			if ( Flags .SqlCustViewer != null && LinkToParent .IsEnabled == false )
+			if ( Flags . SqlCustViewer != null && LinkToParent . IsEnabled == false )
 			{
-				LinkToParent .IsEnabled = true;
-				SqlParentViewer = Flags .SqlCustViewer;
+				LinkToParent . IsEnabled = true;
+				SqlParentViewer = Flags . SqlCustViewer;
 			}
 			//else if ( Flags . SqlCustViewer == null )
 			//{
@@ -439,25 +434,25 @@ namespace WPFPages .Views
 				if ( SqlParentViewer != null )
 				{
 					int rec = Utils . FindMatchingRecord ( dvm . CustNo, dvm . BankNo, SqlParentViewer . CustomerGrid, "CUSTOMER" );
-					SqlParentViewer .CustomerGrid .SelectedIndex = rec;
-					Utils .SetUpGridSelection ( SqlParentViewer .CustomerGrid , rec );
+					SqlParentViewer . CustomerGrid . SelectedIndex = rec;
+					Utils . SetUpGridSelection ( SqlParentViewer . CustomerGrid , rec );
 				}
 				else if ( MultiParentViewer != null )
 				{
 					int rec = Utils . FindMatchingRecord ( dvm . CustNo, dvm . BankNo, MultiParentViewer . CustomerGrid, "CUSTOMER" );
-					MultiParentViewer .CustomerGrid .SelectedIndex = rec;
-					Utils .SetUpGridSelection ( MultiParentViewer .CustomerGrid , rec );
+					MultiParentViewer . CustomerGrid . SelectedIndex = rec;
+					Utils . SetUpGridSelection ( MultiParentViewer . CustomerGrid , rec );
 				}
 			}
 			else if ( LinktoMultiParent )
 			{
-				Flags .SqlMultiViewer .CustomerGrid .SelectedIndex = this .CustGrid .SelectedIndex;
-				Flags .SqlMultiViewer .CustomerGrid .ScrollIntoView ( this .CustGrid .SelectedIndex );
-				Utils .SetUpGridSelection ( Flags .SqlMultiViewer .CustomerGrid , this .CustGrid .SelectedIndex );
+				Flags . SqlMultiViewer . CustomerGrid . SelectedIndex = this . CustGrid . SelectedIndex;
+				Flags . SqlMultiViewer . CustomerGrid . ScrollIntoView ( this . CustGrid . SelectedIndex );
+				Utils . SetUpGridSelection ( Flags . SqlMultiViewer . CustomerGrid , this . CustGrid . SelectedIndex );
 			}
 
 			IsDirty = false;
-			Count .Text = $"{this .CustGrid .SelectedIndex} / { this .CustGrid .Items .Count .ToString ( )}";
+			Count . Text = $"{this . CustGrid . SelectedIndex} / { this . CustGrid . Items . Count . ToString ( )}";
 			Triggered = false;
 		}
 
@@ -471,45 +466,45 @@ namespace WPFPages .Views
 			// Get the current rows data
 			IsDirty = false;
 			int CurrentSelection = this . CustGrid . SelectedIndex;
-			this .CustGrid .SelectedItem = this .CustGrid .SelectedIndex;
+			this . CustGrid . SelectedItem = this . CustGrid . SelectedIndex;
 			CustomerViewModel cvm = new CustomerViewModel ( );
-			cvm = this .CustGrid .SelectedItem as CustomerViewModel;
+			cvm = this . CustGrid . SelectedItem as CustomerViewModel;
 
 			SaveFieldData ( );
 
 			// update the current rows data content to send  to Update process
-			cvm .BankNo = Bankno .Text;
-			cvm .CustNo = Custno .Text;
-			cvm .AcType = Convert .ToInt32 ( acType .Text );
+			cvm . BankNo = Bankno . Text;
+			cvm . CustNo = Custno . Text;
+			cvm . AcType = Convert . ToInt32 ( acType . Text );
 			//	cvm . Balance = Convert . ToDecimal ( balance . Text );
-			cvm .ODate = Convert .ToDateTime ( odate .Text );
-			cvm .CDate = Convert .ToDateTime ( cdate .Text );
+			cvm . ODate = Convert . ToDateTime ( odate . Text );
+			cvm . CDate = Convert . ToDateTime ( cdate . Text );
 			// Call Handler to update ALL Db's via SQL
 			SQLHandlers sqlh = new SQLHandlers ( );
-			await sqlh .UpdateDbRow ( "CUSTOMER" , cvm );
+			await sqlh . UpdateDbRow ( "CUSTOMER" , cvm );
 
-			EventControl .TriggerViewerDataUpdated ( CustDbViewcollection ,
+			EventControl . TriggerViewerDataUpdated ( CustDbViewcollection ,
 				  new LoadedEventArgs
 				  {
 					  CallerType = "CUSTDBVIEW" ,
 					  CallerDb = "CUSTOMER" ,
 					  DataSource = CustDbViewcollection ,
-					  SenderGuid = this .Tag .ToString ( ) ,
-					  RowCount = this .CustGrid .SelectedIndex
+					  SenderGuid = this . Tag . ToString ( ) ,
+					  RowCount = this . CustGrid . SelectedIndex
 				  } );
-			EventControl .TriggerGlobalDataChanged ( this , new GlobalEventArgs
+			EventControl . TriggerGlobalDataChanged ( this , new GlobalEventArgs
 			{
 				CallerType = "CUSTDBVIEW" ,
 				AccountType = "CUSTOMER" ,
-				SenderGuid = this .Tag?.ToString ( )
+				SenderGuid = this . Tag?.ToString ( )
 			} );
 
 			//Gotta reload our data because the update clears it down totally to null
-			this .CustGrid .SelectedIndex = CurrentSelection;
-			this .CustGrid .SelectedItem = CurrentSelection;
-			this .CustGrid .Refresh ( );
+			this . CustGrid . SelectedIndex = CurrentSelection;
+			this . CustGrid . SelectedItem = CurrentSelection;
+			this . CustGrid . Refresh ( );
 
-			SaveBttn .IsEnabled = false;
+			SaveBttn . IsEnabled = false;
 			return true;
 		}
 
@@ -538,42 +533,42 @@ namespace WPFPages .Views
 
 		private void SaveFieldData ( )
 		{
-			_bankno = Bankno .Text;
-			_custno = Custno .Text;
-			_actype = acType .Text;
+			_bankno = Bankno . Text;
+			_custno = Custno . Text;
+			_actype = acType . Text;
 			//			_balance = balance . Text;
-			_odate = odate .Text;
-			_cdate = cdate .Text;
+			_odate = odate . Text;
+			_cdate = cdate . Text;
 		}
 		private void CompareFieldData ( )
 		{
 			if ( SaveBttn == null )
 				return;
-			SaveBttn .IsEnabled = false;
+			SaveBttn . IsEnabled = false;
 			;
-			if ( _bankno != Bankno .Text )
-				SaveBttn .IsEnabled = true;
-			if ( _custno != Custno .Text )
-				SaveBttn .IsEnabled = true;
-			if ( _actype != acType .Text )
-				SaveBttn .IsEnabled = true;
+			if ( _bankno != Bankno . Text )
+				SaveBttn . IsEnabled = true;
+			if ( _custno != Custno . Text )
+				SaveBttn . IsEnabled = true;
+			if ( _actype != acType . Text )
+				SaveBttn . IsEnabled = true;
 			//if ( _balance != balance . Text )
 			//	SaveBttn . IsEnabled = true;
-			if ( _odate != odate .Text )
-				SaveBttn .IsEnabled = true;
-			if ( _cdate != cdate .Text )
-				SaveBttn .IsEnabled = true;
+			if ( _odate != odate . Text )
+				SaveBttn . IsEnabled = true;
+			if ( _cdate != cdate . Text )
+				SaveBttn . IsEnabled = true;
 
-			if ( SaveBttn .IsEnabled )
+			if ( SaveBttn . IsEnabled )
 				IsDirty = true;
 		}
 
 		private void OntopChkbox_Click ( object sender , RoutedEventArgs e )
 		{
-			if ( OntopChkbox .IsChecked == ( bool? ) true )
-				this .Topmost = true;
+			if ( OntopChkbox . IsChecked == ( bool? ) true )
+				this . Topmost = true;
 			else
-				this .Topmost = false;
+				this . Topmost = false;
 		}
 
 		private void SaveBtn ( object sender , RoutedEventArgs e )
@@ -587,41 +582,41 @@ namespace WPFPages .Views
 			bool reslt = false;
 			if ( IsLinkActive ( reslt ) == false )
 			{
-				LinkToParent .IsEnabled = false;
-				LinkToParent .IsChecked = false;
+				LinkToParent . IsEnabled = false;
+				LinkToParent . IsChecked = false;
 				SqlParentViewer = null;
-				LinkRecords .IsChecked = false;
+				LinkRecords . IsChecked = false;
 			}
 			// force viewers to change records in line with each other
-			if ( LinkRecords .IsChecked == true )
-				Flags .LinkviewerRecords = true;
+			if ( LinkRecords . IsChecked == true )
+				Flags . LinkviewerRecords = true;
 			else
-				Flags .LinkviewerRecords = false;
-			if ( Flags .SqlBankViewer != null )
-				Flags .SqlBankViewer .LinkRecords .IsChecked = Flags .LinkviewerRecords;
-			if ( Flags .SqlCustViewer != null )
-				Flags .SqlCustViewer .LinkRecords .IsChecked = Flags .LinkviewerRecords;
-			if ( Flags .SqlDetViewer != null )
-				Flags .SqlDetViewer .LinkRecords .IsChecked = Flags .LinkviewerRecords;
-			if ( Flags .SqlMultiViewer != null )
-				Flags .SqlMultiViewer .LinkRecords .IsChecked = Flags .LinkviewerRecords;
-			if ( Flags .BankDbEditor != null )
-				Flags .BankDbEditor .LinkRecords .IsChecked = Flags .LinkviewerRecords;
-			if ( Flags .DetDbEditor != null )
-				Flags .DetDbEditor .LinkRecords .IsChecked = Flags .LinkviewerRecords;
-			LinkRecords .Refresh ( );
-			if ( Flags .LinkviewerRecords == true )
+				Flags . LinkviewerRecords = false;
+			if ( Flags . SqlBankViewer != null )
+				Flags . SqlBankViewer . LinkRecords . IsChecked = Flags . LinkviewerRecords;
+			if ( Flags . SqlCustViewer != null )
+				Flags . SqlCustViewer . LinkRecords . IsChecked = Flags . LinkviewerRecords;
+			if ( Flags . SqlDetViewer != null )
+				Flags . SqlDetViewer . LinkRecords . IsChecked = Flags . LinkviewerRecords;
+			if ( Flags . SqlMultiViewer != null )
+				Flags . SqlMultiViewer . LinkRecords . IsChecked = Flags . LinkviewerRecords;
+			if ( Flags . BankDbEditor != null )
+				Flags . BankDbEditor . LinkRecords . IsChecked = Flags . LinkviewerRecords;
+			if ( Flags . DetDbEditor != null )
+				Flags . DetDbEditor . LinkRecords . IsChecked = Flags . LinkviewerRecords;
+			LinkRecords . Refresh ( );
+			if ( Flags . LinkviewerRecords == true )
 			{
 				LinktoParent = false;
-				LinkToParent .IsEnabled = false;
-				LinkToParent .IsChecked = false;
+				LinkToParent . IsEnabled = false;
+				LinkToParent . IsChecked = false;
 			}
 			else
 			{
 				if ( SqlParentViewer != null )
-					LinkToParent .IsEnabled = true;
+					LinkToParent . IsEnabled = true;
 				else
-					LinkToParent .IsEnabled = false;
+					LinkToParent . IsEnabled = false;
 			}
 			//			EventControl . TriggerWindowLinkChanged ( this, new LinkageChangedArgs { LinkToAll = Flags . LinkviewerRecords } );
 		}
@@ -632,25 +627,25 @@ namespace WPFPages .Views
 		/// </summary>
 		/// <param name="grid"></param>
 		//*************************************************************************************************************//
-		public void TriggerViewerIndexChanged ( System .Windows .Controls .DataGrid grid )
+		public void TriggerViewerIndexChanged ( System . Windows . Controls . DataGrid grid )
 		{
 			string SearchCustNo = "";
 			string SearchBankNo = "";
 			CustomerViewModel CurrentCustSelectedRecord = this . CustGrid . SelectedItem as CustomerViewModel;
 			if ( CurrentCustSelectedRecord == null )
 				return;
-			SearchCustNo = CurrentCustSelectedRecord .CustNo;
-			SearchBankNo = CurrentCustSelectedRecord .BankNo;
-			EventControl .TriggerViewerIndexChanged ( this ,
+			SearchCustNo = CurrentCustSelectedRecord . CustNo;
+			SearchBankNo = CurrentCustSelectedRecord . BankNo;
+			EventControl . TriggerViewerIndexChanged ( this ,
 			new IndexChangedArgs
 			{
 				Senderviewer = this ,
 				Bankno = SearchBankNo ,
 				Custno = SearchCustNo ,
-				dGrid = this .CustGrid ,
+				dGrid = this . CustGrid ,
 				Sender = "CUSTOMER" ,
 				SenderId = "CUSTDBVIEW" ,
-				Row = this .CustGrid .SelectedIndex
+				Row = this . CustGrid . SelectedIndex
 			} );
 		}
 
@@ -663,7 +658,7 @@ namespace WPFPages .Views
 						 where ( items . AcType == 1 )
 						 orderby items . CustNo
 						 select items;
-			this .CustGrid .ItemsSource = bankaccounts;
+			this . CustGrid . ItemsSource = bankaccounts;
 		}
 		private void Linq2_Click ( object sender , RoutedEventArgs e )
 		{
@@ -672,7 +667,7 @@ namespace WPFPages .Views
 						 where ( items . AcType == 2 )
 						 orderby items . CustNo
 						 select items;
-			this .CustGrid .ItemsSource = bankaccounts;
+			this . CustGrid . ItemsSource = bankaccounts;
 		}
 		private void Linq3_Click ( object sender , RoutedEventArgs e )
 		{
@@ -681,7 +676,7 @@ namespace WPFPages .Views
 						 where ( items . AcType == 3 )
 						 orderby items . CustNo
 						 select items;
-			this .CustGrid .ItemsSource = bankaccounts;
+			this . CustGrid . ItemsSource = bankaccounts;
 		}
 		private void Linq4_Click ( object sender , RoutedEventArgs e )
 		{
@@ -690,7 +685,7 @@ namespace WPFPages .Views
 						 where ( items . AcType == 4 )
 						 orderby items . CustNo
 						 select items;
-			this .CustGrid .ItemsSource = bankaccounts;
+			this . CustGrid . ItemsSource = bankaccounts;
 		}
 		private void Linq5_Click ( object sender , RoutedEventArgs e )
 		{
@@ -712,24 +707,24 @@ namespace WPFPages .Views
 			{
 				foreach ( var item2 in bankaccounts )
 				{
-					if ( item2 .CustNo .ToString ( ) == item1 .Key )
+					if ( item2 . CustNo . ToString ( ) == item1 . Key )
 					{
-						output .Add ( item2 );
+						output . Add ( item2 );
 					}
 				}
 			}
-			this .CustGrid .ItemsSource = output;
+			this . CustGrid . ItemsSource = output;
 		}
 		private void Linq6_Click ( object sender , RoutedEventArgs e )
 		{
 			var accounts = from items in CustDbViewcollection orderby items . CustNo, items . AcType select items;
-			this .CustGrid .ItemsSource = accounts;
+			this . CustGrid . ItemsSource = accounts;
 		}
 
 		private void Filter_Click ( object sender , RoutedEventArgs e )
 		{
 			// Show Filter system
-			System .Windows .MessageBox .Show ( "Filter dialog will appear here !!" );
+			System . Windows . MessageBox . Show ( "Filter dialog will appear here !!" );
 		}
 
 		#endregion Menu items
@@ -745,7 +740,7 @@ namespace WPFPages .Views
 		}
 		private void Minimize_click ( object sender , RoutedEventArgs e )
 		{
-			this .WindowState = WindowState .Normal;
+			this . WindowState = WindowState . Normal;
 		}
 
 		private void Window_MouseDown ( object sender , MouseButtonEventArgs e )
@@ -763,10 +758,10 @@ namespace WPFPages .Views
 			bool reslt = false;
 			if ( IsLinkActive ( reslt ) == false )
 			{
-				LinkToParent .IsEnabled = false;
-				LinkToParent .IsChecked = false;
+				LinkToParent . IsEnabled = false;
+				LinkToParent . IsChecked = false;
 				SqlParentViewer = null;
-				LinkRecords .IsChecked = false;
+				LinkRecords . IsChecked = false;
 			}
 			else
 				LinktoParent = !LinktoParent;
@@ -775,7 +770,7 @@ namespace WPFPages .Views
 		private void Edit_LostFocus ( object sender , RoutedEventArgs e )
 		{
 			IsDirty = true;
-			SaveBttn .IsEnabled = true;
+			SaveBttn . IsEnabled = true;
 		}
 
 
@@ -784,16 +779,16 @@ namespace WPFPages .Views
 		private void Window_PreviewKeyUp ( object sender , KeyEventArgs e )
 		{
 
-			if ( e .Key == Key .RightShift || e .Key == Key .LeftShift )
+			if ( e . Key == Key . RightShift || e . Key == Key . LeftShift )
 			{
 				keyshifted = false;
 				return;
 			}
 
-			if ( keyshifted && ( e .Key == Key .RightShift || e .Key == Key .LeftShift ) )
+			if ( keyshifted && ( e . Key == Key . RightShift || e . Key == Key . LeftShift ) )
 			{
 				//keyshifted = false;
-				e .Handled = true;
+				e . Handled = true;
 				return;
 			}
 
@@ -801,32 +796,32 @@ namespace WPFPages .Views
 
 		private void Window_PreviewKeyDown ( object sender , KeyEventArgs e )
 		{
-			if ( e .Key == Key .RightShift || e .Key == Key .LeftShift )
+			if ( e . Key == Key . RightShift || e . Key == Key . LeftShift )
 			{
 				keyshifted = true;
-				e .Handled = true;
+				e . Handled = true;
 				return;
 			}
-			if ( keyshifted && ( e .Key == Key .RightShift || e .Key == Key .LeftShift ) )
+			if ( keyshifted && ( e . Key == Key . RightShift || e . Key == Key . LeftShift ) )
 			{
 				keyshifted = false;
-				e .Handled = true;
+				e . Handled = true;
 				return;
 			}
 
 			if ( keyshifted == false )
 			{
 				// NO SHIFT KEY - KEY DOWN
-				if ( e .Key == Key .Tab && e .Source == odate )
+				if ( e . Key == Key . Tab && e . Source == odate )
 				{
-					e .Handled = true;
-					cdate .Focus ( );
+					e . Handled = true;
+					cdate . Focus ( );
 					return;
 				}
-				if ( e .Key == Key .Tab && e .Source == cdate )
+				if ( e . Key == Key . Tab && e . Source == cdate )
 				{
-					e .Handled = true;
-					Custno .Focus ( );
+					e . Handled = true;
+					Custno . Focus ( );
 					return;
 				}
 				return;
@@ -835,17 +830,17 @@ namespace WPFPages .Views
 			{
 				// SHIFT KEY DOWN - KEY DOWN
 				// Handle  the tabs to make them cycle around the data entry fields
-				if ( e .Key == Key .Tab && e .Source == cdate )
+				if ( e . Key == Key . Tab && e . Source == cdate )
 				{
-					e .Handled = true;
-					odate .Focus ( );
+					e . Handled = true;
+					odate . Focus ( );
 					//keyshifted = false;
 					return;
 				}
-				if ( e .Key == Key .Tab && e .Source == Custno )
+				if ( e . Key == Key . Tab && e . Source == Custno )
 				{
-					e .Handled = true;
-					cdate .Focus ( );
+					e . Handled = true;
+					cdate . Focus ( );
 					return;
 				}
 			}
@@ -856,12 +851,12 @@ namespace WPFPages .Views
 		#region HANDLERS for linkage checkboxes, inluding Thread montior
 		static bool IsLinkActive ( bool ParentLinkTo )
 		{
-			return Flags .SqlCustViewer != null && ParentLinkTo == false;
+			return Flags . SqlCustViewer != null && ParentLinkTo == false;
 		}
 
 		static bool IsMultiLinkActive ( bool MultiParentLinkTo )
 		{
-			if ( Flags .SqlMultiViewer == null )
+			if ( Flags . SqlMultiViewer == null )
 				return false;
 			else
 				return true;
@@ -869,13 +864,13 @@ namespace WPFPages .Views
 		private void CustGrid_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			// Gotta make sure it is not anywhere in the Scrollbar we clicked on 
-			if ( Utils .HitTestScrollBar ( sender , e ) )
+			if ( Utils . HitTestScrollBar ( sender , e ) )
 				return;
-			if ( Utils .HitTestHeaderBar ( sender , e ) )
+			if ( Utils . HitTestHeaderBar ( sender , e ) )
 				return;
-			_startPoint = e .GetPosition ( null );
+			_startPoint = e . GetPosition ( null );
 			// Make sure the left mouse button is pressed down so we are really moving a record
-			if ( e .LeftButton == MouseButtonState .Pressed )
+			if ( e . LeftButton == MouseButtonState . Pressed )
 			{
 				IsLeftButtonDown = true;
 			}
@@ -885,25 +880,25 @@ namespace WPFPages .Views
 			Point mousePos = e . GetPosition ( null );
 			Vector diff = _startPoint - mousePos;
 
-			if ( e .LeftButton == MouseButtonState .Pressed &&
-			    Math .Abs ( diff .X ) > SystemParameters .MinimumHorizontalDragDistance ||
-			    Math .Abs ( diff .Y ) > SystemParameters .MinimumVerticalDragDistance )
+			if ( e . LeftButton == MouseButtonState . Pressed &&
+			    Math . Abs ( diff . X ) > SystemParameters . MinimumHorizontalDragDistance ||
+			    Math . Abs ( diff . Y ) > SystemParameters . MinimumVerticalDragDistance )
 			{
-				if ( IsLeftButtonDown && e .LeftButton == MouseButtonState .Pressed )
+				if ( IsLeftButtonDown && e . LeftButton == MouseButtonState . Pressed )
 				{
-					if ( CustGrid .SelectedItem != null )
+					if ( CustGrid . SelectedItem != null )
 					{
 						// We are dragging from the DETAILS grid
 						//Working string version
 						CustomerViewModel cvm = new CustomerViewModel ( );
-						cvm = CustGrid .SelectedItem as CustomerViewModel;
+						cvm = CustGrid . SelectedItem as CustomerViewModel;
 						string str = GetExportRecords . CreateTextFromRecord ( null, null, cvm, true, false );
 						string dataFormat = DataFormats . Text;
 						DataObject dataObject = new DataObject ( dataFormat, str );
-						System .Windows .DragDrop .DoDragDrop (
+						System . Windows . DragDrop . DoDragDrop (
 						CustGrid ,
 						dataObject ,
-						DragDropEffects .Move );
+						DragDropEffects . Move );
 						//IsLeftButtonDown = false;
 					}
 				}
@@ -916,8 +911,8 @@ namespace WPFPages .Views
 
 			if ( IsMultiLinkActive ( reslt ) == false )
 			{
-				LinkToMulti .IsEnabled = false;
-				LinkToMulti .IsChecked = false;
+				LinkToMulti . IsEnabled = false;
+				LinkToMulti . IsChecked = false;
 				MultiParentViewer = null;
 				LinktoMultiParent = false;
 			}
@@ -926,12 +921,12 @@ namespace WPFPages .Views
 				LinktoMultiParent = !LinktoMultiParent;
 				if ( LinktoMultiParent )
 				{
-					LinkToMulti .IsChecked = true;
+					LinkToMulti . IsChecked = true;
 					LinktoMultiParent = true;
 				}
 				else
 				{
-					LinkToMulti .IsChecked = false;
+					LinkToMulti . IsChecked = false;
 					LinktoMultiParent = false;
 				}
 			}
@@ -949,39 +944,39 @@ namespace WPFPages .Views
 				try
 				{
 					int AllLinks = 0;
-					Thread .Sleep ( 2000 );
+					Thread . Sleep ( 2000 );
 
 					bool reslt = false;
 					if ( IsLinkActive ( reslt ) )
 					{
 						AllLinks++;
-						Application .Current .Dispatcher .Invoke ( ( ) =>
-					   {
-						   ResetLinkages ( "LINKTOPARENT" , true );
-					   } );
+						Application . Current . Dispatcher . Invoke ( ( ) =>
+						{
+							ResetLinkages ( "LINKTOPARENT" , true );
+						} );
 					}
 					else
 					{
-						Application .Current .Dispatcher .Invoke ( ( ) =>
-					   {
-						   ResetLinkages ( "LINKTOPARENT" , false );
-					   } );
+						Application . Current . Dispatcher . Invoke ( ( ) =>
+						{
+							ResetLinkages ( "LINKTOPARENT" , false );
+						} );
 					}
 
 					if ( IsMultiLinkActive ( reslt ) == false )
 					{
-						Application .Current .Dispatcher .Invoke ( ( ) =>
-					   {
-						   ResetLinkages ( "MULTILINKTOPARENT" , false );
-					   } );
+						Application . Current . Dispatcher . Invoke ( ( ) =>
+						{
+							ResetLinkages ( "MULTILINKTOPARENT" , false );
+						} );
 					}
 					else
 					{
 						AllLinks++;
-						Application .Current .Dispatcher .Invoke ( ( ) =>
-					   {
-						   ResetLinkages ( "MULTILINKTOPARENT" , true );
-					   } );
+						Application . Current . Dispatcher . Invoke ( ( ) =>
+						{
+							ResetLinkages ( "MULTILINKTOPARENT" , true );
+						} );
 					}
 					//if ( AllLinks >= 1 )
 					//	Application . Current . Dispatcher . Invoke ( ( ) =>
@@ -996,7 +991,7 @@ namespace WPFPages .Views
 				}
 				catch ( Exception ex )
 				{
-					Debug .WriteLine ( $"Auto link sensor is probably closing gracefully....\n{ex .Message}, {ex .Data}" );
+					Debug . WriteLine ( $"Auto link sensor is probably closing gracefully....\n{ex . Message}, {ex . Data}" );
 					isclosing = true;
 				}
 			}
@@ -1005,9 +1000,9 @@ namespace WPFPages .Views
 		{
 			if ( linktype == "LINKTOPARENT" )
 			{
-				LinkToParent .IsEnabled = value;
+				LinkToParent . IsEnabled = value;
 				if ( value )
-					SqlParentViewer = Flags .SqlCustViewer;
+					SqlParentViewer = Flags . SqlCustViewer;
 				else
 				{
 					LinktoParent = false;
@@ -1019,22 +1014,22 @@ namespace WPFPages .Views
 			{
 				if ( value )
 				{
-					LinkToMulti .IsEnabled = value;
-					MultiParentViewer = Flags .SqlMultiViewer;
+					LinkToMulti . IsEnabled = value;
+					MultiParentViewer = Flags . SqlMultiViewer;
 				}
 				else
 				{
-					LinkToMulti .IsEnabled = false;
-					LinkToMulti .IsChecked = false;
+					LinkToMulti . IsEnabled = false;
+					LinkToMulti . IsChecked = false;
 					MultiParentViewer = null;
 					LinktoMultiParent = false;
 				}
 				return;
 			}
 			if ( linktype == "ALLLINKS" && value )
-				LinkRecords .IsEnabled = true;
+				LinkRecords . IsEnabled = true;
 			else
-				LinkRecords .IsEnabled = false;
+				LinkRecords . IsEnabled = false;
 		}
 
 
@@ -1042,13 +1037,13 @@ namespace WPFPages .Views
 		private async void CustGrid_PreviewMouseRightButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			ContextMenu cm = this . FindResource ( "ContextMenu1" ) as ContextMenu;
-			cm .PlacementTarget = this .CustGrid as DataGrid;
-			cm .IsOpen = true;
+			cm . PlacementTarget = this . CustGrid as DataGrid;
+			cm . IsOpen = true;
 		}
 
 		private void CustGrid_DragEnter ( object sender , DragEventArgs e )
 		{
-			e .Effects = ( DragDropEffects ) DragDropEffects .Move;
+			e . Effects = ( DragDropEffects ) DragDropEffects . Move;
 		}
 
 		private void ContextClose_Click ( object sender , RoutedEventArgs e )
@@ -1066,64 +1061,64 @@ namespace WPFPages .Views
 			CustomerViewModel cvm = new CustomerViewModel ( );
 			int currsel = 0;
 			DataGridRow RowData = new DataGridRow ( );
-			cvm = this .CustGrid .SelectedItem as CustomerViewModel;
-			currsel = this .CustGrid .SelectedIndex;
+			cvm = this . CustGrid . SelectedItem as CustomerViewModel;
+			currsel = this . CustGrid . SelectedIndex;
 			RowInfoPopup rip = new RowInfoPopup ( "CUSTOMER", CustGrid );
-			rip .Topmost = true;
-			rip .DataContext = RowData;
-			rip .BringIntoView ( );
-			rip .Focus ( );
-			rip .ShowDialog ( );
+			rip . Topmost = true;
+			rip . DataContext = RowData;
+			rip . BringIntoView ( );
+			rip . Focus ( );
+			rip . ShowDialog ( );
 
 			//If data has been changed, update everywhere
 			// Update the row on return in case it has been changed
-			if ( rip .IsDirty )
+			if ( rip . IsDirty )
 			{
-				this .CustGrid .ItemsSource = null;
-				this .CustGrid .Items .Clear ( );
-				Flags .SqlCustActive = true;
-				await AllCustomers .LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 1 , true );
-				this .CustGrid .ItemsSource = CustviewerView;
+				this . CustGrid . ItemsSource = null;
+				this . CustGrid . Items . Clear ( );
+				Flags . SqlCustActive = true;
+				await AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 1 , true );
+				this . CustGrid . ItemsSource = CustviewerView;
 				// Notify everyone else of the data change
-				EventControl .TriggerViewerDataUpdated ( CustviewerView ,
+				EventControl . TriggerViewerDataUpdated ( CustviewerView ,
 					  new LoadedEventArgs
 					  {
 						  CallerType = "CUSTBVIEW" ,
 						  CallerDb = "CUSTOMER" ,
 						  DataSource = CustviewerView ,
-						  SenderGuid = this .Tag .ToString ( ) ,
-						  RowCount = this .CustGrid .SelectedIndex
+						  SenderGuid = this . Tag . ToString ( ) ,
+						  RowCount = this . CustGrid . SelectedIndex
 					  } );
-				EventControl .TriggerGlobalDataChanged ( this , new GlobalEventArgs
+				EventControl . TriggerGlobalDataChanged ( this , new GlobalEventArgs
 				{
 					CallerType = "CUSTDBVIEW" ,
 					AccountType = "CUSTOMER" ,
-					SenderGuid = this .Tag?.ToString ( )
+					SenderGuid = this . Tag?.ToString ( )
 				} );
 			}
 			else
-				this .CustGrid .SelectedItem = RowData .Item;
+				this . CustGrid . SelectedItem = RowData . Item;
 
 			// This sets up the selected Index/Item and scrollintoview in one easy FUNC function call (GridInitialSetup is  the FUNC name)
-			this .CustGrid .SelectedIndex = currsel;
-			Count .Text = $"{this .CustGrid .SelectedIndex} / { this .CustGrid .Items .Count .ToString ( )}";
+			this . CustGrid . SelectedIndex = currsel;
+			Count . Text = $"{this . CustGrid . SelectedIndex} / { this . CustGrid . Items . Count . ToString ( )}";
 			// This is essential to get selection activated again
-			this .CustGrid .Focus ( );
+			this . CustGrid . Focus ( );
 
 		}
 
 		private void ContextSettings_Click ( object sender , RoutedEventArgs e )
 		{
 			Setup setup = new Setup ( );
-			setup .Show ( );
-			setup .BringIntoView ( );
-			setup .Topmost = true;
-			this .Focus ( );
+			setup . Show ( );
+			setup . BringIntoView ( );
+			setup . Topmost = true;
+			this . Focus ( );
 		}
 
 		private void ContextDisplayJsonData_Click ( object sender , RoutedEventArgs e )
 		{
-			JsonSupport .CreateShowJsonText ( false , "CUSTOMER" , CustDbViewcollection );
+			JsonSupport . CreateShowJsonText ( false , "CUSTOMER" , CustDbViewcollection );
 		}
 
 		private void ContextShowJson_Click ( object sender , RoutedEventArgs e )
@@ -1132,13 +1127,13 @@ namespace WPFPages .Views
 			//MENU ITEM 'Read and display JSON File'
 			//============================================//
 			string Output = "";
-			this .Refresh ( );
+			this . Refresh ( );
 			////We need to save current Collectionview as a Json (binary) data to disk
 			//// this is the best way to save persistent data in Json format
 			////using tmp folder for interim file that we will then display
 			CustomerViewModel bvm = this . CustGrid . SelectedItem as CustomerViewModel;
-			Output = JsonSupport .CreateShowJsonText ( true , "CUSTOMER" , bvm , "CustomerViewModel" );
-			MessageBox .Show ( Output , "Currently selected record in JSON format" , MessageBoxButton .OK , MessageBoxImage .Information , MessageBoxResult .OK );
+			Output = JsonSupport . CreateShowJsonText ( true , "CUSTOMER" , bvm , "CustomerViewModel" );
+			MessageBox . Show ( Output , "Currently selected record in JSON format" , MessageBoxButton . OK , MessageBoxImage . Information , MessageBoxResult . OK );
 		}
 
 		private void ViewJsonRecord_Click ( object sender , RoutedEventArgs e )
@@ -1147,52 +1142,52 @@ namespace WPFPages .Views
 			//MENU ITEM 'Read and display JSON File'
 			//============================================//
 			string Output = "";
-			this .Refresh ( );
+			this . Refresh ( );
 			////We need to save current Collectionview as a Json (binary) data to disk
 			//// this is the best way to save persistent data in Json format
 			////using tmp folder for interim file that we will then display
 			CustomerViewModel bvm = this . CustGrid . SelectedItem as CustomerViewModel;
-			Output = JsonSupport .CreateShowJsonText ( true , "CUSTOMER" , bvm , "CustomerViewModel" );
-			MessageBox .Show ( Output , "Currently selected record in JSON format" , MessageBoxButton .OK , MessageBoxImage .Information , MessageBoxResult .OK );
+			Output = JsonSupport . CreateShowJsonText ( true , "CUSTOMER" , bvm , "CustomerViewModel" );
+			MessageBox . Show ( Output , "Currently selected record in JSON format" , MessageBoxButton . OK , MessageBoxImage . Information , MessageBoxResult . OK );
 		}
 
 		private void changesize_Click3 ( object sender , RoutedEventArgs e )
 		{
 			Thickness t = new Thickness ( );
 
-			if ( CustGrid .RowHeight == 32 )
+			if ( CustGrid . RowHeight == 32 )
 			{
-				CustGrid .RowHeight = 25;
-				SizeChangeMenuItem3 .Header = "Larger Font";
-				SizeChangeMenuItem3 .FontSize = 16;
-				t .Top = 4;
-				t .Bottom = 0;
-				SizeChangeMenuItem3 .Margin = t;
+				CustGrid . RowHeight = 25;
+				SizeChangeMenuItem3 . Header = "Larger Font";
+				SizeChangeMenuItem3 . FontSize = 16;
+				t . Top = 4;
+				t . Bottom = 0;
+				SizeChangeMenuItem3 . Margin = t;
 				Brush br = Utils . GetDictionaryBrush ( "White0" );
-				SizeChangeMenuItem3 .Foreground = br;
+				SizeChangeMenuItem3 . Foreground = br;
 
 				string path = @"/Views/magnify plus red.png";
-				FontsizeIcon3 .Source = new BitmapImage ( new Uri ( path , UriKind .RelativeOrAbsolute ) );
-				t .Top = 0;
-				t .Bottom = 0;
-				FontsizeIcon3 .Margin = t;
+				FontsizeIcon3 . Source = new BitmapImage ( new Uri ( path , UriKind . RelativeOrAbsolute ) );
+				t . Top = 0;
+				t . Bottom = 0;
+				FontsizeIcon3 . Margin = t;
 			}
 			else
 			{
-				CustGrid .RowHeight = 32;
-				SizeChangeMenuItem3 .Header = "Smaller Font";
-				SizeChangeMenuItem3 .FontSize = 10;
-				t .Top = ( double ) 8;
-				SizeChangeMenuItem3 .Margin = t;
+				CustGrid . RowHeight = 32;
+				SizeChangeMenuItem3 . Header = "Smaller Font";
+				SizeChangeMenuItem3 . FontSize = 10;
+				t . Top = ( double ) 8;
+				SizeChangeMenuItem3 . Margin = t;
 				Brush br = Utils . GetDictionaryBrush ( "White0" );
-				SizeChangeMenuItem3 .Foreground = br;
+				SizeChangeMenuItem3 . Foreground = br;
 
 				string path = @"/Views/magnify minus red.png";
-				FontsizeIcon3 .Source = new BitmapImage ( new Uri ( path , UriKind .RelativeOrAbsolute ) );
-				t .Top = -5;
+				FontsizeIcon3 . Source = new BitmapImage ( new Uri ( path , UriKind . RelativeOrAbsolute ) );
+				t . Top = -5;
 				//				t . Bottom = 5;
 				//				t . Right = 5;
-				FontsizeIcon3 .Margin = t;
+				FontsizeIcon3 . Margin = t;
 				//				FontsizeIcon . Width = 30;
 
 
@@ -1207,14 +1202,14 @@ namespace WPFPages .Views
 		// Using a built in ApplicationComands.xxxx Command todo whatever we want
 		private void CommandNew_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = true;
+			e . CanExecute = true;
 		}
 		private void Command_New ( object sender , ExecutedRoutedEventArgs e )
 		{
 			//handle the actual command code here
 			CustDbView bdv = sender as CustDbView ;
 			int x = bdv . CustGrid . SelectedIndex;
-			MessageBox .Show ( $"New Command has been run... Yeaaaahh !!!\nIndex is {x}" );
+			MessageBox . Show ( $"New Command has been run... Yeaaaahh !!!\nIndex is {x}" );
 		}
 		#endregion ApplicationsCommands.New Command handlers
 
@@ -1224,15 +1219,15 @@ namespace WPFPages .Views
 		// the e contains a CommandParameter OBJECT that can be passed by  the calling function
 		private void CommandCut_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = true;
+			e . CanExecute = true;
 		}
 		private void Command_Cut ( object sender , ExecutedRoutedEventArgs e )
 		{
 			CustDbView  bdv = sender as CustDbView ;
 			CustomerViewModel bvm = new CustomerViewModel( );
-			bvm = CustGrid .SelectedItem as CustomerViewModel;
+			bvm = CustGrid . SelectedItem as CustomerViewModel;
 			int x = bdv . CustGrid . SelectedIndex;
-			MessageBox .Show ( $"Cut Command has been run... Yeaaaahh !!!\nCustNo is {bvm .CustNo}" );
+			MessageBox . Show ( $"Cut Command has been run... Yeaaaahh !!!\nCustNo is {bvm . CustNo}" );
 		}
 		#endregion ApplicationsCommands.Cut Command handlers
 
@@ -1240,11 +1235,11 @@ namespace WPFPages .Views
 
 		private void Paste_Executed ( object sender , ExecutedRoutedEventArgs e )
 		{
-			MessageBox .Show ( "Command has been run... Yeaaaahh !!!" );
+			MessageBox . Show ( "Command has been run... Yeaaaahh !!!" );
 		}
 		private void Paste_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = true;
+			e . CanExecute = true;
 		}
 
 		#endregion ApplicationsCommands.Paste Command handlers
@@ -1252,9 +1247,9 @@ namespace WPFPages .Views
 		#region MyCommands.Exit CUSTOM Command handler
 		private void CommandCopy_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = true;
+			e . CanExecute = true;
 		}
-		
+
 		private void Command_Copy ( object sender , ExecutedRoutedEventArgs e )
 		{
 		}
@@ -1263,44 +1258,44 @@ namespace WPFPages .Views
 		}
 		private void CommandPaste_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = true;
+			e . CanExecute = true;
 		}
 
 		public void changesize_Click2 ( object sender , RoutedEventArgs e )
 		{
 			Thickness t = new Thickness ( );
 
-			if ( CustGrid .RowHeight == 32 )
+			if ( CustGrid . RowHeight == 32 )
 			{
-				CustGrid .RowHeight = 25;
-				SizeChangeMenuItem2 .Header = "Larger Font";
-				SizeChangeMenuItem2 .FontSize = 16;
-				t .Top = 0;
-				t .Bottom = 0;
-				SizeChangeMenuItem2 .Margin = t;
+				CustGrid . RowHeight = 25;
+				SizeChangeMenuItem2 . Header = "Larger Font";
+				SizeChangeMenuItem2 . FontSize = 16;
+				t . Top = 0;
+				t . Bottom = 0;
+				SizeChangeMenuItem2 . Margin = t;
 				Brush br = Utils . GetDictionaryBrush ( "White0" );
-				SizeChangeMenuItem2 .Foreground = br;
+				SizeChangeMenuItem2 . Foreground = br;
 
 				string path = @"/Views/magnify plus red.png";
-				FontsizeIcon2 .Source = new BitmapImage ( new Uri ( path , UriKind .RelativeOrAbsolute ) );
-				t .Top = 0;
-				t .Bottom = 0;
-				FontsizeIcon2 .Margin = t;
+				FontsizeIcon2 . Source = new BitmapImage ( new Uri ( path , UriKind . RelativeOrAbsolute ) );
+				t . Top = 0;
+				t . Bottom = 0;
+				FontsizeIcon2 . Margin = t;
 			}
 			else
 			{
-				CustGrid .RowHeight = 32;
-				SizeChangeMenuItem2 .Header = "Smaller Font";
-				SizeChangeMenuItem2 .FontSize = 10;
-				t .Top = ( double ) 8;
-				SizeChangeMenuItem2 .Margin = t;
+				CustGrid . RowHeight = 32;
+				SizeChangeMenuItem2 . Header = "Smaller Font";
+				SizeChangeMenuItem2 . FontSize = 10;
+				t . Top = ( double ) 8;
+				SizeChangeMenuItem2 . Margin = t;
 				Brush br = Utils . GetDictionaryBrush ( "White0" );
-				SizeChangeMenuItem2 .Foreground = br;
+				SizeChangeMenuItem2 . Foreground = br;
 
 				string path = @"/Views/magnify minus red.png";
-				FontsizeIcon2 .Source = new BitmapImage ( new Uri ( path , UriKind .RelativeOrAbsolute ) );
-				t .Top = -5;
-				FontsizeIcon2 .Margin = t;
+				FontsizeIcon2 . Source = new BitmapImage ( new Uri ( path , UriKind . RelativeOrAbsolute ) );
+				t . Top = -5;
+				FontsizeIcon2 . Margin = t;
 			}
 		}
 
@@ -1313,12 +1308,12 @@ namespace WPFPages .Views
 		/// <param name="e"></param>
 		private void CommandExit_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = MenuCommands .CommandExit_CanExecute ( e .Parameter );
+			e . CanExecute = MenuCommands . CommandExit_CanExecute ( e . Parameter );
 		}
 		private void Command_Exit ( object sender , ExecutedRoutedEventArgs e )
-		{	
-			
-			Dispatcher .Invoke ( ( ) => { MenuCommands .CommandExit_Executed ( sender, e .Parameter ); } );
+		{
+
+			Dispatcher . Invoke ( ( ) => { MenuCommands . CommandExit_Executed ( sender , e . Parameter ); } );
 		}
 
 		#endregion MyCommands.ExitCommand handlers
@@ -1345,13 +1340,13 @@ namespace WPFPages .Views
 		/// <param name="e"></param>
 		private void ShowMessage_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = true;
+			e . CanExecute = true;
 		}
 		/// NB
 		/// The Actual method to be performed MUST be in the CodeBehind, it CANNOT be in a seperate file
 		private void Show_Message ( object sender , ExecutedRoutedEventArgs e )
 		{
-			MessageBox .Show ( "Custom Show Message() Command has been run... Yeaaaahh !!!" );
+			MessageBox . Show ( "Custom Show Message() Command has been run... Yeaaaahh !!!" );
 		}
 
 		#endregion MyCommands.ShowMessage CUSTOM handlers
@@ -1360,29 +1355,29 @@ namespace WPFPages .Views
 
 		private void Hello_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = MenuCommands .Hello_CanExecute ( e .Parameter);
+			e . CanExecute = MenuCommands . Hello_CanExecute ( e . Parameter );
 		}
 		private void Hello_Executed ( object sender , ExecutedRoutedEventArgs e )
 		{
-			Dispatcher.Invoke( () => {MenuCommands .Hello_Executed ( e .Parameter );});
+			Dispatcher . Invoke ( ( ) => { MenuCommands . Hello_Executed ( e . Parameter ); } );
 		}
 		private void Bye_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-			e .CanExecute = MenuCommands .Bye_CanExecute ( e .Parameter );
+			e . CanExecute = MenuCommands . Bye_CanExecute ( e . Parameter );
 		}
 		void Bye_Executed ( object sender , ExecutedRoutedEventArgs e )
 		{
-			Dispatcher .Invoke ( ( ) => {MenuCommands .Bye_Executed ( e .Parameter );} );
+			Dispatcher . Invoke ( ( ) => { MenuCommands . Bye_Executed ( e . Parameter ); } );
 		}
 		private void Close_CanExecute ( object sender , CanExecuteRoutedEventArgs e )
 		{
-//			bool IsDirty  = (bool) e.Parameter;
-			e .CanExecute = MenuCommands .Close_CanExecute (IsDirty);
+			//			bool IsDirty  = (bool) e.Parameter;
+			e . CanExecute = MenuCommands . Close_CanExecute ( IsDirty );
 		}
 		private void CloseWin ( object sender , ExecutedRoutedEventArgs e )
 		{
 			//Send window handle and a message in "parameter"
-			Dispatcher .Invoke ( ( ) => { MenuCommands. Close_Executed (sender, e.Parameter); } );
+			Dispatcher . Invoke ( ( ) => { MenuCommands . Close_Executed ( sender , e . Parameter ); } );
 		}
 
 		#endregion Applicaton built in Commands

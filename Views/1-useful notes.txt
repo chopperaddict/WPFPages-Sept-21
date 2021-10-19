@@ -1,4 +1,23 @@
+// Templates that support  AP color control
+		
+	*** Class DataGridColorCtrlAp ***
+	   CellStyle :  BankAccountGridStyle
+	   CellStyle :  NWSuppliersGridStyle
+	   CellStyle : NWSuppliersGridStyle
 
+	*** Class ListboxColorCtrlAP ***
+	ItemContainerStyle : DataGridColorControlTemplate2
+	ItemContainerStyle : ListBoxColorControlTemplate
+
+=================================================
+// Howto split grids etc
+
+		<GridSplitter 
+				Background="Blue" 
+				Height="15"
+				HorizontalAlignment="Stretch"	 
+				ResizeDirection="Rows"
+				ResizeBehavior="BasedOnAlignment"/>
 
 =================================================
 
@@ -176,7 +195,7 @@ xmlns:analogclock="clr-namespace:WPFPages.Analogclock"
                         return;
                 }
 
-		    // HOW to Select a template - Maybe (not tried)
+		    // HOW to Select a template - Maybe (works too)
 
 			CustomersDbDataTemplateSelector cdb = new CustomersDbDataTemplateSelector();
 			cdb.SelectTemplate(object o, Dependencyobject dp)

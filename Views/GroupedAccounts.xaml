@@ -6,35 +6,9 @@
         xmlns:local="clr-namespace:WPFPages.Views"
         mc:Ignorable="d"
         Title="GroupedAccounts" Height="450" Width="800">
-	
-	
-	<Window.Resources>
-	<!--<Style x:Key="tblStyle2" TargetType="TextBlock">
-		<Style.Triggers>
-			<Trigger Property="IsMouseOver" Value="True">
-				<Setter Property="Background" Value="White"/>
-				<Setter Property="Foreground" Value="Red"/>
-				<Setter Property="Height" Value="15"/>
-			</Trigger>
-			--><!--<Trigger Property="IsMouseOver" Value="False">
-				<Setter Property="Background" Value="Yellow"/>
-				<Setter Property="Foreground" Value="White"/>
-				<Setter Property= "FontSize"  Value="11"/>
-				<Setter Property="Height" Value="20"/>
-			</Trigger>--><!--
-		</Style.Triggers>
-	</Style>-->
 
-		<!--<Style TargetType="ItemsControl">
-			<Setter Property="Background" Value="Red"/>
-			<Style.Triggers>
-				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" Value="White"/>
-					<Setter Property="Foreground" Value="Red"/>
-					<Setter Property="Height" Value="15"/>
-				</Trigger>
-			</Style.Triggers>
-		</Style>-->
+
+	<Window.Resources>
 
 		<ControlTemplate x:Key="GroupItemTemplate">
 			<Expander IsExpanded="True" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom">
@@ -42,13 +16,8 @@
 				<Expander.Header>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="{Binding AcType}" 
-				            FontWeight="Bold" Background="{StaticResource Red3}" FontSize="20">							
+				            FontWeight="Bold" Background="{StaticResource Red3}" FontSize="20">
 						</TextBlock>
-						<!--<TextBlock Text="{Binding ItemCount}" 
-                           Foreground="Green" FontWeight="Bold" FontStyle="Italic" FontSize="20"
-                           Margin="4,0,0,0"/>
-						<TextBlock Text=" employee(s)" 
-                           Foreground="Silver" FontStyle="Italic" FontSize="20"/>-->
 					</StackPanel>
 				</Expander.Header>
 
@@ -59,16 +28,6 @@
 		</ControlTemplate>
 
 
-		<!--<ControlTemplate x:Key="ItemsPresenter">
-			<StackPanel>
-				<TextBlock Text="{Binding CustNo}"
-					Background="Red"
-					Foreground="White"
-					/>
-			</StackPanel>
-			<ControlTemplate.Triggers>
-			</ControlTemplate.Triggers>
-		</ControlTemplate>-->
 	</Window.Resources>
 	<Grid>
 
@@ -86,7 +45,8 @@
 
 			<Grid.RowDefinitions>
 				<RowDefinition  Height="25"/>
-				<RowDefinition  Height="*"/>
+				<RowDefinition  Height="Auto"/>
+				<RowDefinition  Height="25"/>
 				<RowDefinition/>
 			</Grid.RowDefinitions>
 
@@ -96,24 +56,27 @@
 					 FontWeight="Bold"
 					>Listview with GroupStyle to group by BankNo (lview3)</Label>
 
-					
-				<Border x:Name="HeightHelperPanel18" 
+
+			<Border x:Name="HeightHelperPanel18" 
 					Grid.Row="1" 
-					Grid.RowSpan="2"
-					Padding="5"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch" >
+					Grid.RowSpan="3"
+					Padding="5" Margin="0,0,0,157" >
 
-				<ListView Name="lview3" 
-						Height="{Binding Path=ActualHeight, ElementName=HeightHelperPanel18}"
-						VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,-5,10,10"
-						Background="{StaticResource Red0}" Foreground="Black" BorderBrush="Black" BorderThickness="2">
+				<ListView Name="lview3"
+					Background="{StaticResource Red8}"
+					BorderBrush="Black"
+					BorderThickness="2"
+					Foreground="{StaticResource White0}"
+					Height="Auto"
+					Margin="10,-5,10,-141"
+					VerticalContentAlignment="Stretch" 
+					ItemContainerStyle="{DynamicResource _ListBoxItemStyle1}"
+											   >
+					
 						
-					<!--//The declaration above handles colors of the main items panel, but NOT for the individual rows-->  
+				
+					<!--//The declaration above handles colors of the main items panel, but NOT for the individual rows-->
 					<ListView.Resources>
-						<!--<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="{DynamicResource Blue}" />-->
-						<!--<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Red" />-->
-
 						<!-- We can format anything we might wish here -->
 						<Style TargetType="{x:Type Border}">
 							<!--This is the default Listview setup-->
@@ -132,10 +95,10 @@
 							<Setter Property="FontStyle" Value="Oblique"/>
 						</Style>
 
-						<!--// This style controls the backgrpound  of the TextBlock fields in each row only, not  the bits between--> 
+						<!--// This style controls the backgrpound  of the TextBlock fields in each row only, not  the bits between-->
 						<Style TargetType="{x:Type TextBlock}">
 							<Setter Property="HorizontalAlignment" Value="Left"/>
-							<Setter Property="Background" Value="{StaticResource Green0}"/>
+							<Setter Property="Background" Value="{StaticResource Red8}"/>
 							<Setter Property="Foreground" Value="White"/>
 							<Setter Property="FontWeight" Value="SemiBold"/>
 							<Setter Property="FontStyle" Value="Oblique"/>
@@ -150,24 +113,21 @@
 
 							<GridViewColumn Header="Cust #" Width="70"
 									    DisplayMemberBinding="{Binding CustNo}"/>
-
-							<GridViewColumn Header=" Bank  #" Width="70" 									    
+							<GridViewColumn Header=" Bank  #" Width="70"
 									DisplayMemberBinding="{Binding BankNo}"/>
-
-							<GridViewColumn Header="Balance" Width="70" 
+							<GridViewColumn Header="Balance" Width="70"
 									DisplayMemberBinding="{Binding Balance}"/>
-							<GridViewColumn Header="Ac Type" Width="70" 
+							<GridViewColumn Header="Ac Type" Width="70"
 									DisplayMemberBinding="{Binding AcType}"/>
-							<GridViewColumn Header="Int %" Width="70" 
+							<GridViewColumn Header="Int %" Width="70"
 									DisplayMemberBinding="{Binding IntRate}"/>
-							<GridViewColumn Header="Opened" Width="70" 
+							<GridViewColumn Header="Opened" Width="70"
 									DisplayMemberBinding="{Binding ODate}"/>
-							<GridViewColumn Header="Closed" Width="70" 
-									DisplayMemberBinding="{Binding CDate}"/>
-
+							<GridViewColumn Header="Closed" Width="70"
+									DisplayMemberBinding="{Binding CDate}"/>							
 						</GridView>
 					</ListView.View>
-
+					
 					<ListView.GroupStyle>
 						<!--//Not sure how this works really !!-->
 						<GroupStyle>
@@ -176,23 +136,23 @@
 								<Style TargetType="{x:Type GroupItem}" >
 									<Setter Property="Template" Value="{StaticResource GroupItemTemplate}"/>
 									<Setter Property="Template">
-											<Setter.Value>
+										<Setter.Value>
 											<ControlTemplate>
-												
+
 												<!--This lets us expand the selected group-->
 												<Expander IsExpanded="True">
 													<!--Now we format the Group header line itself-->
-													<Expander.Header>														
+													<Expander.Header>
 														<StackPanel Orientation="Horizontal">
-															<TextBlock Text="{Binding Name}" 
-																	FontWeight="Bold" 
-																		Foreground="Red" 
-																		FontSize="16" 
+															<TextBlock Text="{Binding Name}"
+																	FontWeight="Bold"
+																		Foreground="Red"
+																		FontSize="16"
 																		VerticalAlignment="Bottom" />
-																<TextBlock Text=" Bank A/c's by Type" 
-																	FontSize="14" 
-																	Foreground="Red" 
-																	FontStyle="Italic" 
+															<TextBlock Text=" Bank A/c's by Type"
+																	FontSize="14"
+																	Foreground="Red"
+																	FontStyle="Italic"
 																	VerticalAlignment="Bottom" />
 														</StackPanel>
 													</Expander.Header>

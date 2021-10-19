@@ -48,8 +48,7 @@
             </LinearGradientBrush>
 
             <!--// Template for Storyboard demo panel only -->
-            <ControlTemplate x:Key="MyControlTemplate" 
-                  TargetType="{x:Type ContentControl}">
+            <ControlTemplate x:Key="MyControlTemplate" TargetType="{x:Type ContentControl}">
                   <Border x:Name="outborder"
                           Margin="0,0,0,-4"
                           BorderBrush="{TemplateBinding BorderBrush}"
@@ -567,6 +566,8 @@
             <!--#endregion BankDb-->
 
             <!--#region Customers Db-->
+		
+		<!--Uses Attached properties to control colours via the CellStyle template that supports these-->
             <DataGrid x:Name="CustGrid"
                   Margin="18,585,14,3"
                   AutoGenerateColumns="False"
@@ -581,12 +582,9 @@
                   views:DataGridColorCtrlAp.Foreground="{StaticResource Black0}"                  
                   views:DataGridColorCtrlAp.BackgroundMouseover="{StaticResource Blue0}"
                   views:DataGridColorCtrlAp.ForegroundMouseover="{StaticResource White0}"
-                      
-                        
                   Loaded="CustGrid_Loaded" Grid.ColumnSpan="4">
 			<!--views:DataGridColorCtrlAp.SelectionBackground1="{StaticResource Red5}" 
                   views:DataGridColorCtrlAp.SelectionForeground1="{StaticResource White0}"
-
                   views:DataGridColorCtrlAp.MouseoverSelectedBackground1="{StaticResource Yellow0}" 
                   views:DataGridColorCtrlAp.MouseoverSelectedForeground1="{StaticResource Red5}"-->
 

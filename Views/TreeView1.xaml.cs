@@ -139,7 +139,8 @@ namespace WPFPages . Views
 		public void GetBankPrimaryData ( )
 		{
 			string path = @"C:\users\ianch\documents\multiaccounts.dat";
-
+			if ( File . Exists ( path ) == false )
+				return;
 			string data = System . IO . File . ReadAllText ( path );
 			string [ ] datas = data . Split ( '\n' );
 			int x = 0;

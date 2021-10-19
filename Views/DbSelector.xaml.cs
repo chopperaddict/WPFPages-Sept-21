@@ -1602,5 +1602,11 @@ namespace WPFPages . Views
 			ItemsControlDemo id = new ItemsControlDemo();
 			id . Show ( );
 		}
+
+		private void Grouping_Click ( object sender , RoutedEventArgs e )
+		{
+			GroupedAccounts ga = new GroupedAccounts();
+			ga . Show ( );
+		}
 	}
 }

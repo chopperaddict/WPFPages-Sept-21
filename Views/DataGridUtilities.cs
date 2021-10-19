@@ -38,11 +38,15 @@ namespace WPFPages . Views
                         //This works just fine
                         // Load  the CUSTOMER columns definitions from the Resourcefile "BankDataGridColumns.xaml"
                         DataGrid dg2 = sender as DataGrid;
-                        if ( dg2 . Columns . Count == 0 )
-                                dg2 . Items . Clear ( );
+                  if ( dg2 . Columns . Count == 0 )
+                  {
+                        dg2 . Columns . Clear ( );
+                        dg2 . ItemsSource = null;
+                        dg2 . Items . Clear ( );
+                  }
                         // Get columns setup from an x:Array stored in Resources somewhere.
                         DataGridColumn [ ] columns2 = dg2 . FindResource ( "DGColumns2" ) as DataGridColumn [ ];
-                        dg2 . Columns . Clear ( );
+                        //dg2 . Columns . Clear ( );
                         try
                         {
                                 foreach ( var item2 in columns2 )

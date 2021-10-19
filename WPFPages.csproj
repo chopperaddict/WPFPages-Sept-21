@@ -197,7 +197,9 @@
       <DependentUpon>Bankaccount.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DataGridUtilities.cs" />
-    <Compile Include="Views\ExpandedState.cs" />
+    <Compile Include="Views\GroupedAccounts.xaml.cs">
+      <DependentUpon>GroupedAccounts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ItemsControlDemo.xaml.cs">
       <DependentUpon>ItemsControlDemo.xaml</DependentUpon>
     </Compile>
@@ -219,12 +221,10 @@
     <Compile Include="Views\ColorsSelector.xaml.cs">
       <DependentUpon>ColorsSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CustomerCollection.cs" />
     <Compile Include="Views\DropDataGridData.xaml.cs">
       <DependentUpon>DropDataGridData.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converts\DummyDebugConverter.cs" />
-    <Compile Include="Views\Folder.cs" />
     <Compile Include="Converts\HeaderToImageConverter.cs" />
     <Compile Include="Views\GradientDisplay.xaml.cs">
       <DependentUpon>GradientDisplay.xaml</DependentUpon>
@@ -442,6 +442,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\ListBoxViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\StdMenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -565,6 +569,10 @@
     <Page Include="Views\GradientDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GroupedAccounts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ItemsControlDemo.xaml">
       <SubType>Designer</SubType>

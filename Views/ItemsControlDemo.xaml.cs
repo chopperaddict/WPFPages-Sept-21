@@ -40,9 +40,12 @@ namespace WPFPages . Views
 
 			itemsControl . ItemsSource = null;
 			itemsControl . Items . Clear ( );
+			itemsControl2 . ItemsSource = null;
+			itemsControl2 . Items . Clear ( );
 
 			BankViewcollection = e . DataSource as BankCollection;
 			itemsControl . ItemsSource = BankViewcollection;
+			itemsControl2 . ItemsSource = BankViewcollection;
 		}
 
 		private void Window_Loaded ( object sender , RoutedEventArgs e )

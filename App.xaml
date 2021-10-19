@@ -33,7 +33,8 @@
                 <ResourceDictionary Source="DataGridStyles\CustomerDatagridStyleTemplate.xaml" />
                 <ResourceDictionary Source="DataTemplates\BankDataTemplates.xaml" />
                 <ResourceDictionary Source="DataTemplates\CustomersDataTemplates.xaml" />
-			<ResourceDictionary Source="Styles\StdMenuStyle.xaml" />
+                  <ResourceDictionary Source="Styles\StdMenuStyle.xaml" />
+			<ResourceDictionary Source="Styles\ListBoxViewStyles.xaml" />
 			<ResourceDictionary Source="Dicts\BankDataGridColumns.xaml" />
 				<!--<ResourceDictionary Source="DataTemplates\BankAccountDataTemplates.xaml" />
 			<ResourceDictionary Source="DataTemplates\CustomersDataTemplates.xaml" />-->

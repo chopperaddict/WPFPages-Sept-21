@@ -257,19 +257,22 @@
 				</TextBox.ToolTip>
 
 			</TextBox>
-
 			<Button x:Name="ClipSave"
-				     AllowDrop="True"
+
+				AllowDrop="True"
 				Content="Save to ClipBoard"
 				FontSize="12"				 
 				Height="40"
 				VerticalAlignment="Center"
 				Width="117"
-				Margin="30,0,5,0"
+				Margin="25,0,5,0"
 				Click="ClipSave_Click"
-				Background="Green"
+				 Background="{StaticResource HeaderBrushGreen}"
 				Foreground="White"
+				Template="{StaticResource HorizontalGradientTemplateGreen}"
 				/>
+
+
 		</StackPanel>
 
 		<StackPanel x:Name="DecimalDisplay"
@@ -429,18 +432,20 @@
 			</TextBox>
 
 			<Button x:Name="ClipSave1"
-				     AllowDrop="True"
+				AllowDrop="True"
 				Content="Save to ClipBoard"
 				FontSize="12"				 
 				Height="40"
 				VerticalAlignment="Center"
 				Width="117"
-				Margin="30,0,5,0"
+				Margin="25,0,5,0"
 				Click="ClipSave_Click"
-				Background="Green"
+				 Background="{StaticResource HeaderBrushGreen}"
 				Foreground="White"
+				Template="{StaticResource HorizontalGradientTemplateGreen}"
 				/>
-		</StackPanel>
+
+	</StackPanel>
 
 		<TextBlock x:Name="opacityLevel"
 			Grid.Row="2"
@@ -527,10 +532,12 @@
 			  FontWeight="Bold"
 			  HorizontalAlignment="Left"
 			  Content=""
+			PreviewMouseLeftButtonDown="Output_PreviewMouseLeftButtonDown"
+			PreviewMouseRightButtonDown="SaveToClipBoard_Click"
 			  VerticalContentAlignment="Center"
 			  Margin="25,0,0,185"
 			  Width="65"
-			   Panel.ZIndex="3"/>
+			   Panel.ZIndex="13"/>
 
 		<Label x:Name="Btn2"
 			Grid.Row="6"
@@ -540,11 +547,13 @@
 			  Foreground="{StaticResource White0}"
 			  FontWeight="Bold"
 			  HorizontalAlignment="Left"
+			PreviewMouseLeftButtonDown="Output2_PreviewMouseLeftButtonDown"
+			PreviewMouseRightButtonDown="SaveToClipBoard_Click"
 			  Content=""
 			  VerticalContentAlignment="Center"
 			  Margin="242,0,0,185"
 			  Width="65"
-			 Panel.ZIndex="3"/>
+			 Panel.ZIndex="13"/>
 
 		<Label   x:Name="Btn3"
 			   Grid.Row="6"
@@ -554,10 +563,12 @@
 			  FontWeight="Bold"
 			  HorizontalAlignment="Left"
 			  Margin="115,0,0,186"
+			PreviewMouseLeftButtonDown="Output3_PreviewMouseLeftButtonDown"
+			PreviewMouseRightButtonDown="SaveToClipBoard_Click"
 			  Content=""
 			  VerticalContentAlignment="Center"
 			  Width="65" 
-			   Panel.ZIndex="3"/>
+			   Panel.ZIndex="13"/>
 
 		<Label   x:Name="Btn4"
 			   Grid.Row="6"

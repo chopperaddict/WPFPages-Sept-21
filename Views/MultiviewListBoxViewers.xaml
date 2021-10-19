@@ -1773,7 +1773,6 @@
 						  CellStyle="{StaticResource BankAccountGridStyle}"
 						  ItemsSource="{Binding bankcollection}"
 						  HorizontalAlignment="Stretch"
-						  Loaded="LoadColumns"
 						  att:DataGridColumnsColorAP.HeaderBackground="Red"
 						  att:DataGridColumnsColorAP.HeaderForeground="White"
 						  Margin="1,7,0,8"
@@ -1787,6 +1786,7 @@
 						 SelectionChanged="datagrid_SelectionChanged"
 						  VerticalAlignment="Stretch"
 						  Visibility="Visible">
+						<!--Loaded="LoadColumns"-->
 
 						<DataGrid.Resources>
 							<!--Set the header layout-->
@@ -1868,7 +1868,6 @@
 						HorizontalAlignment="Stretch"
 						att:DataGridColumnsColorAP.HeaderBackground="Red"
 						att:DataGridColumnsColorAP.HeaderForeground="White"
-						Loaded="LoadColumns2"
 						MinHeight="75" 
 						PreviewDragEnter="datagrid_PreviewDragEnter"
 						PreviewMouseLeftButtonUp="datagrid_PreviewMouseLeftButtonup"
@@ -1882,6 +1881,8 @@
 						Visibility="Visible" 
 						VerticalAlignment="Stretch"
 						VerticalContentAlignment="Stretch">
+						<!--Loaded="LoadColumns2"-->
+						<!--RowDetailsVisibilityMode="Visible"-->
 
 						<DataGrid.Resources>
 							<!--Set the header layout-->
@@ -1964,13 +1965,13 @@
 					<Button x:Name="ClearBtn"
 						Background="{StaticResource HeaderBorderBrushYellow}"	
 						Content="Reload Db's"
-                            Template="{StaticResource HorizontalGradientTemplateYellow}"
-                            Margin="0,27,0,-5"
-                            Width="100"
-                            Height="40"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            PreviewMouseLeftButtonDown="ClearBtn_PreviewMouseLeftButtonDown">
+					    Template="{StaticResource HorizontalGradientTemplateYellow}"
+					    Margin="0,27,0,-5"
+					    Width="100"
+					    Height="40"
+					    HorizontalAlignment="Right"
+					    VerticalAlignment="Top"
+					    PreviewMouseLeftButtonDown="ClearBtn_PreviewMouseLeftButtonDown">
 						<!--<ContentPresenter Name ="ThisContent" >
 							<ContentPresenter.Content>
 								<TextBlock Text="Reload"

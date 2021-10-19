@@ -17,10 +17,7 @@ namespace WPFPages . Views
 	/// Class to hold the Bank System Customers data for the system as an Observable collection
 	/// </summary>
 	public class AllCustomers : ObservableCollection<CustomerViewModel>, INotifyCollectionChanged, IEnumerable
-	{
-		// Create a Collection that can be added to View Collection ?
-		public ObservableCollection<CustomerCollection> CustomersCollection { get; set; }
-		
+	{    	
 		public static DataTable dtCust = new DataTable ( );
 		public static AllCustomers Custinternalcollection = new AllCustomers ( );
 
@@ -54,9 +51,12 @@ namespace WPFPages . Views
 				if ( USEFULLTASK )
 				{
 					{
+						DataTable dt = new DataTable();
 						Custinternalcollection = new AllCustomers ( );
 						Console . WriteLine ( $"Calling LoadCustomersAsync" );
-						await Custinternalcollection . LoadCustomerTaskInSortOrderAsync ( );
+						//						await Custinternalcollection . LoadCustomerTaskInSortOrderAsync ( );
+						LoadCustDataSql ( dt , -1 , false );
+						LoadCustomerCollection ( dt);
 					}
 					return Custinternalcollection;
 				}
@@ -96,49 +96,10 @@ namespace WPFPages . Views
 			}
 		}
 
-		private static async Task<AllCustomers> ProcessRequest ( int ViewerType )
-		{
-			object lockobject = new object ( );
-
-			if ( USEFULLTASK )
-			{
-				{
-					Custinternalcollection = null;
-					Custinternalcollection = new AllCustomers ( );
-					AllCustomers cc = new AllCustomers ( );
-					//                                        Console . WriteLine ( $"in LoadCustomersAsync calling cc" );
-
-					cc . LoadCustomerTaskInSortOrderAsync ( );
-				}
-				return ( AllCustomers ) null;
-			}
-			else
-			{
-				//					Debug . WriteLine ( $"\n ***** Loading BankAccount Data from disk (using Abbreviated Await Control system)*****\n" );
-				//CustCollection c = new CustCollection();
-				//c . LoadCustDataSql ( );
-
-				//if ( dtCust . Rows . Count > 0 )
-				//	Custinternalcollection = LoadCustomerTest ( );
-				// We now have the ONE AND ONLY pointer the the Bank data in variable Bankcollection
-				Flags . CustCollection = Custinternalcollection;
-				if ( Flags . IsMultiMode == false )
-				{
-					// Finally fill and return The global Dataset
-					//                                        SelectViewer ( ViewerType, Custinternalcollection );
-					return null;// Custinternalcollection;
-				}
-				else
-				{
-					// return the "working  copy" pointer, it has  filled the relevant collection to match the viewer
-					return null;// Custinternalcollection;
-				}
-			}
-		}
 
 		public async Task<AllCustomers> LoadCustomerTaskInSortOrderAsync ( bool b = false , int row = 0 , bool NotifyAll = false )
 		{
-
+			DataTable dt = new DataTable();
 			if ( dtCust . Rows . Count > 0 )
 				dtCust . Clear ( );
 
@@ -151,7 +112,7 @@ namespace WPFPages . Views
 						    async ( ) =>
 						    {
 							    //                                                Console . WriteLine ( $"Calling LoadCustDataSql" );
-							    await LoadCustDataSql ( );
+							    await LoadCustDataSql ( dt);
 						    }
 					  );
 			t1 . ContinueWith
@@ -159,7 +120,7 @@ namespace WPFPages . Views
 				  async ( Custinternalcollection ) =>
 				  {
 					  Console . WriteLine ( $"dtCust = {dtCust . Rows . Count} Calling LoadCustomerCollection" );
-					  await LoadCustomerCollection ( );
+					  await LoadCustomerCollection (dt );
 				  } , TaskScheduler . FromCurrentSynchronizationContext ( )
 			 );
 
@@ -203,27 +164,18 @@ namespace WPFPages . Views
 
 		}
 
-
-
-
 		/// Handles the actual conneciton ot SQL to load the Details Db data required
 		/// </summary>
 		/// <returns></returns>
-		public async Task<bool> LoadCustDataSql ( DataTable dt = null , int mode = -1 , bool isMultiMode = false )
+		public async static Task<DataTable> LoadCustDataSql ( DataTable dt = null , int mode = -1 , bool isMultiMode = false )
 		//Load data from Sql Server
 		{
-			object bptr = new object ( );
-
 			SqlConnection con;
 			string ConString = "";
 			ConString = ( string ) Properties . Settings . Default [ "BankSysConnectionString" ];
 			Debug . WriteLine ( $"Making new SQL connection in CUSTCOLLECTION" );
 			con = new SqlConnection ( ConString );
-			//if ( con== null )
-			//{
 			Debug . WriteLine ( $"CUSTCOLLECTION : No connecting to load SQL..." );
-			//	con= new SqlConnection ( ConString );
-			//}
 			try
 			{
 				using ( con )
@@ -257,46 +209,34 @@ namespace WPFPages . Views
 						}
 						else
 						{
-
 							commandline = "Select * from Customer  order by ";
 							commandline = Utils . GetDataSortOrder ( commandline );
 						}
 					}
 					SqlCommand cmd = new SqlCommand ( commandline, con );
 					SqlDataAdapter sda = new SqlDataAdapter ( cmd );
-					//CustCollection bptr = new CustCollection ( );
-					//					lock ( bptr . LockCustReadData )
-					//					{
-					//					lock ( bptr )
-					//					{
-					sda . Fill ( dtCust );
+					sda . Fill ( dt );
 					Debug . WriteLine ( $"CUSTOMERS : dtCust loaded [{dtCust . Rows . Count}] ...." );
-					//					}
 				}
 			}
 			catch ( Exception ex )
 			{
 				Debug . WriteLine ( $"Failed to load Customer Details - {ex . Message}, {ex . Data}" );
 				//MessageBox . Show ( $"Failed to load Customer Details - {ex . Message}" );
-				return false;
+				return dt;
 			}
 			finally
 			{
 				con . Close ( );
 			}
 
-			return true;
+			return dt;
 		}
 
 		//**************************************************************************************************************************************************************//
-		private static async Task<AllCustomers> LoadCustomerCollection ( )
+		private static async Task<AllCustomers> LoadCustomerCollection (DataTable dtCust )
 		{
-			object bptr = new object ( );
 			int count = 0;
-			//			CustCollection bptr = new CustCollection ( );
-			//			lock ( bptr . LockCustLoadData )
-			//			{
-			//			lock ( bptr )
 			Flags . SqlCustActive = true;
 			{
 				try
@@ -348,7 +288,7 @@ namespace WPFPages . Views
 					}
 				}
 			} // End Lock
-			Console . WriteLine ( $"Customers Db Total = {Custinternalcollection . Count}" );
+			Console . WriteLine ( $"Customers Db Total = {Custinternalcollection? . Count}" );
 			//			Custinternalcollection = null;
 			return Custinternalcollection;
 		}

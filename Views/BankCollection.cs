@@ -36,6 +36,10 @@ namespace WPFPages . Views
 		public BankCollection ( ) : base ( )
 		{
 		}
+		#endregion
+
+		#region LoadBank()
+
 		public async static Task<BankCollection> LoadBank ( BankCollection cc , string caller , int ViewerType = 1 , bool NotifyAll = false )
 		//public static BankCollection LoadBank ( BankCollection cc, string caller, int ViewerType = 1, bool NotifyAll = false )
 		{
@@ -63,13 +67,13 @@ namespace WPFPages . Views
 					//					Debug . WriteLine ( $"\n ***** Loading BankAccount Data from disk (using Abbreviated Await Control system)*****\n" );
 					Bankinternalcollection . ClearItems ( );
 					// Abstract the main data load call to a method that uses AWAITABLE  calles
-					ProcessRequest ( ) . ConfigureAwait ( false );
+					//ProcessRequest ( ) . ConfigureAwait ( false );
 
 					// We now have the pointer to the Bank data in variable Bankinternalcollection
 					if ( Flags . IsMultiMode == false )
 					{
 						BankCollection db = new BankCollection ( );
-						SelectViewer ( ViewerType, Bankinternalcollection );
+//						SelectViewer ( ViewerType, Bankinternalcollection );
 						return db;
 					}
 					else
@@ -85,14 +89,15 @@ namespace WPFPages . Views
 				return null;
 			}
 		}
+		#endregion
 
-		private static async Task ProcessRequest ( )
-		{
-			// Load data fro SQL into dtBank Datatable
-			//LoadBankData();
-			//// this returns "Bankinternalcollection" as a pointer to the correct viewer
-			//Bankinternalcollection = await LoadBankCollection().ConfigureAwait(false);
-		}
+		//private static async Task ProcessRequest ( )
+		//{
+		//	// Load data fro SQL into dtBank Datatable
+		//	//LoadBankData();
+		//	//// this returns "Bankinternalcollection" as a pointer to the correct viewer
+		//	//Bankinternalcollection = await LoadBankCollection().ConfigureAwait(false);
+		//}
 
 		public bool LoadBankTaskInSortOrderasync ( bool Notify = false, int i = -1 )
 		// No longer used
@@ -126,6 +131,7 @@ namespace WPFPages . Views
 			//		//					Debug . WriteLine ( $"Just Called LoadBankCollection () in second Task.Run() : Thread = { Thread . CurrentThread . ManagedThreadId}" );
 			//	}, TaskScheduler.FromCurrentSynchronizationContext()
 			// );
+			//			#endregion process code to load data
 			#endregion process code to load data
 
 			#region Success//Error reporting/handling
@@ -176,65 +182,59 @@ namespace WPFPages . Views
 			//					}
 			//				}, CancellationToken . None, TaskContinuationOptions . OnlyOnFaulted, TaskScheduler . FromCurrentSynchronizationContext ( )
 			//			);
-
-			#endregion Continuations
-
-			//			Debug . WriteLine ( $"BANKACCOUNT : END OF PROCESSING & Error checking functionality\nBANKACCOUNT : *** Bankcollection total = {Bankinternalcollection . Count} ***\n\n" );
-
 			#endregion Success//Error reporting/handling
+
 			// Finally fill and return The global Dataset
 			Flags . BankCollection = Bankinternalcollection;
-			//			MasterBankcollection = Bankinternalcollection;
-			//			Bankcollection = Bankinternalcollection;
 			return true;
 		}
 
-		public static bool SelectViewer ( int ViewerType, BankCollection tmp )
-		{
-			bool result = false;
-			switch ( ViewerType )
-			{
-				//case 1:
-				//	SqlViewerBankcollection = tmp;
-				//	result = true;
-				//	break;
-				//case 2:
-				//	EditDbBankcollection = tmp;
-				//	result = true;
-				//	break;
-				//case 3:
-				//	MultiBankcollection = tmp;
-				//	result = true;
-				//	break;
-				//case 4:
-				//	BankViewerDbcollection = tmp;
-				//	result = true;
-				//	break;
+		//public static bool SelectViewer ( int ViewerType, BankCollection tmp )
+		//{
+		//	bool result = false;
+		//	switch ( ViewerType )
+		//	{
+		//		//case 1:
+		//		//	SqlViewerBankcollection = tmp;
+		//		//	result = true;
+		//		//	break;
+		//		//case 2:
+		//		//	EditDbBankcollection = tmp;
+		//		//	result = true;
+		//		//	break;
+		//		//case 3:
+		//		//	MultiBankcollection = tmp;
+		//		//	result = true;
+		//		//	break;
+		//		//case 4:
+		//		//	BankViewerDbcollection = tmp;
+		//		//	result = true;
+		//		//	break;
 
 
-				//case 5:
-				//	CustViewerDbcollection = tmp;
-				//	result = true;
-				//	break;
-				//case 6:
-				//	DetViewerDbcollection = tmp;
-				//	result = true;
-				//	break;
-				//case 7:
-				//	SqlViewerCustcollection = tmp;
-				//	result = true;
-				//	break;
-				//case 8:
-				//	SqlViewerDetcollection = tmp;
-				//	result = true;
-				//	break;
-				case 9:
-					//					= tmp;
-					result = true;
-					break;
-			}
-			return result;
-		}
+		//		//case 5:
+		//		//	CustViewerDbcollection = tmp;
+		//		//	result = true;
+		//		//	break;
+		//		//case 6:
+		//		//	DetViewerDbcollection = tmp;
+		//		//	result = true;
+		//		//	break;
+		//		//case 7:
+		//		//	SqlViewerCustcollection = tmp;
+		//		//	result = true;
+		//		//	break;
+		//		//case 8:
+		//		//	SqlViewerDetcollection = tmp;
+		//		//	result = true;
+		//		//	break;
+		//		case 9:
+		//			//					= tmp;
+		//			result = true;
+		//			break;
+		//	}
+		//	return result;
+		//}
 
 		#region LOAD THE DATA
 
@@ -257,7 +257,7 @@ namespace WPFPages . Views
 				temp . ClearItems ( );
 			}
 
-			await ProcessRequest ( );
+//			await ProcessRequest ( );
 
 			return Bankinternalcollection;
 		}
@@ -376,13 +376,14 @@ namespace WPFPages . Views
 		}
 
 
-
-		public static DataTable LoadSelectedBankData ( int Min, int Max, int Tot )
+		#region Specialist Load methods
+		public static DataTable LoadSelectedBankData (string seltype="", int Min=-1, int Max=-1, int Tot=-1 )
 		{
 			DataTable dt = new DataTable ( );
 			SqlConnection con;
 			string ConString = "";
 			string commandline = "";
+			string selection = seltype.ToUpper();
 			ConString = ( string ) Properties . Settings . Default [ "BankSysConnectionString" ];
 			Debug . WriteLine ( $"Making new SQL connection in BANKCOLLECTION" );
 			con = new SqlConnection ( ConString );
@@ -405,8 +406,22 @@ namespace WPFPages . Views
 					else
 					{
 						// Create a valid Query Command string for a Max # of records with start/End parameters for CustNo
-						commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
-							$" where CustNo > {Min} AND CustNo < {Max} order by CustNo + BankNo ";
+						if ( selection == "" || selection == "CUSTNO" )
+							commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
+								$" where CustNo > {Min} AND CustNo < {Max} order by CustNo + BankNo ";
+						else if ( selection == "BANKNO" )
+							commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
+								$" where BankNo > {Min} AND BankjNo < {Max} order by CustNo + BankNo ";
+						else if ( selection == "ACTYPE" )
+							commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
+								$" where AcType > {Min} AND AcType < {Max} order by CustNo + BankNo ";
+						else if ( selection == "INTRATE" )
+							commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
+								$" where IntRate > {Min} AND IntRate < {Max} order by CustNo + BankNo ";
+						else if ( selection == "BALANCE" )
+							commandline = $"Select Top {Tot} Id, BankNo, CustNo, AcType, Balance, IntRate, ODate, CDate  from BankAccount  " +
+								$" where Balance > {Min} AND Balance < {Max} order by CustNo + BankNo ";
+
 					}
 					SqlCommand cmd = new SqlCommand ( commandline, con );
 					SqlDataAdapter sda = new SqlDataAdapter ( cmd );
@@ -432,13 +447,13 @@ namespace WPFPages . Views
 		/// <returns></returns>
 		public  static BankCollection LoadSelectedCollection ( BankCollection bankCollection, int max = -1, DataTable dtBank = null, bool Notify = false )
 		{
-			object bptr = new object ( );
+			int  count = 0;
 			try
 			{
 				//if max is not Received, set to total records in DtBank
-				if ( max == -1 )
-					max = dtBank . Rows . Count;
-				for ( int i = 0 ; i < max ; i++ )
+//				if ( max == -1 )
+					//max = dtBank . Rows . Count;
+				for ( int i = 0 ; i < dtBank . Rows . Count ; i++ )
 				{
 					temp . Add ( new BankAccountViewModel
 					{
@@ -451,13 +466,14 @@ namespace WPFPages . Views
 						ODate = Convert . ToDateTime ( dtBank . Rows [ i ] [ 6 ] ),
 						CDate = Convert . ToDateTime ( dtBank . Rows [ i ] [ 7 ] ),
 					} );
+					count++;
 				}
 
 			}
 			catch ( Exception ex )
 			{
-				Debug . WriteLine ( $"BANK : SQL Error in BankCollection load function : {ex . Message}, {ex . Data}" );
-				MessageBox . Show ( $"BANK : SQL Error in BankCollection load function : {ex . Message}, {ex . Data}" );
+				Debug . WriteLine ( $"BANK : SQL Error in BankCollection load function (count = {count}) : {ex . Message}, {ex . Data}" );
+				//MessageBox . Show ( $"BANK : SQL Error in BankCollection load function : {ex . Message}, {ex . Data}" );
 			}
 			finally
 			{
@@ -481,6 +497,8 @@ namespace WPFPages . Views
 			else
 				return null;
 		}
+		#endregion Specialist Load methods
+
 		#endregion LOAD THE DATA
 
 		public void ListBankInfo ( KeyboardDelegate KeyBoardDelegate )
