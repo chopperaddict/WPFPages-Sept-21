@@ -94,13 +94,19 @@
 					<Setter Property="Background" Value="#00dd00"></Setter>
 					<Setter Property="Foreground" Value="Black"></Setter>
 					<Setter Property="FontWeight" Value="DemiBold"></Setter>
-					--><!--<Setter Property="Height" Value="25"></Setter>--><!--
+					-->
+			<!--<Setter Property="Height" Value="25"></Setter>-->
+			<!--
 				</Trigger>
 				<Trigger Property="ItemsControl.AlternationIndex" Value="1">
-					--><!--<Setter Property="Background" Value="Gray"></Setter>--><!--
+					-->
+			<!--<Setter Property="Background" Value="Gray"></Setter>-->
+			<!--
 					<Setter Property="Foreground" Value="Red"></Setter>
 					<Setter Property="FontWeight" Value="DemiBold"></Setter>
-					--><!--<Setter Property="Height" Value="25"></Setter>--><!--
+					-->
+			<!--<Setter Property="Height" Value="25"></Setter>-->
+			<!--
 				</Trigger>
 				<Trigger Property="IsSelected" Value="False">
 					<Setter Property="Background" Value="{StaticResource Green4}"></Setter>
@@ -138,7 +144,7 @@
 
 		<CollectionViewSource x:Key="src" Source="{Binding DetViewerView}" />
 
-		
+
 	</Window.Resources>
 
 	<Window.CommandBindings>
@@ -207,7 +213,7 @@
 					IsCheckable="false"  
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					Background="#35F6FB"
 					Click="Linq2_Click"
 					Foreground="Black"
@@ -215,31 +221,31 @@
 					IsCheckable="False"  
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					Click="Linq3_Click"
 					Header="A/c Type 3 Only"
 					IsCheckable="False"   
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					Click="Linq4_Click"
 					Header="A/c Type 4 Only"
 					IsCheckable="False"   
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					Click="Linq5_Click"
 					Header="Multi A/C Holders"
 					IsCheckable="False"   
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <Separator />
+				<Separator />
 				<MenuItem Header="All Records"
 						Click="Linq6_Click"
 						IsCheckable="False"   
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <Separator />
+				<Separator />
 			</MenuItem>
 
 			<MenuItem
@@ -247,7 +253,7 @@
 				Click="Filter_Click"
 				Foreground="{StaticResource Black1}"
 				Header="Filtering">
-                
+
 				<MenuItem
 					x:Name="FilterReset"
 						Click="Filterx_Click"
@@ -255,12 +261,12 @@
 					IsCheckable="false"   
                     Template="{StaticResource MenuItemCtrlTemplate1}">
 
-                <MenuItem.Icon >
+					<MenuItem.Icon >
 						<Image x:Name="FontsizeIcon" 
 						 Source="Magnify plus.png" Width="20" Height="25" />
 					</MenuItem.Icon>
 				</MenuItem>
-				
+
 				<MenuItem
 					x:Name="Filter1"
 					Click="Filterx_Click"
@@ -268,28 +274,28 @@
 					IsCheckable="false"   
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					x:Name="Filter2"
 					Click="Filterx_Click"
 					Header="A/c Type = 2"
 					IsCheckable="false"   
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					x:Name="Filter3"
 					Click="Filterx_Click"
 					Header="A/c Type = 3"
 					IsCheckable="false"   
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					x:Name="Filter4"
 					Click="Filterx_Click"
 					Header="A/c Type = 4"
 					IsCheckable="false"   
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-            </MenuItem>
+			</MenuItem>
 
 			<MenuItem
 				Width="50"
@@ -314,7 +320,7 @@
 						 Source="Magnify plus.png" Width="20" Height="25" />
 				</MenuItem.Icon>
 			</MenuItem>
-			
+
 			<MenuItem
 				Width="50"
 				Command="command:MyCommands.CloseWin"
@@ -347,6 +353,7 @@
 			HorizontalContentAlignment="Center"
 			IsSynchronizedWithCurrentItem="False"
 			IsTabStop="False"
+			Loaded="DetGrid_Loaded"
 			Margin="0,0,0,19"
 			Padding="-20"
 			PreviewMouseLeftButtonDown="DetGrid_PreviewMouseLeftButtonDown"
@@ -361,146 +368,7 @@
 			VerticalContentAlignment="Center"					
 			VerticalGridLinesBrush="{StaticResource Black2}"
 			CellStyle="{StaticResource DetailsGridStyle}">
-			
-			<DataGrid.Columns >
-				<DataGridTemplateColumn
-					x:Name="ID"
-					Width="40"
-					Header="Id"
-					SortMemberPath="Id">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding Path=Id}" 
-								/>
 
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-					<DataGridTemplateColumn
-					x:Name="CUSTNO"
-					Width="70"
-					Header="Cust #"
-					SortMemberPath="CustNo">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding CustNo}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-
-				<DataGridTemplateColumn
-					x:Name="BANKNO"
-					Width="70"
-					Header="Bank #"
-					SortMemberPath="BankNo">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding BankNo, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-				<DataGridTemplateColumn
-					x:Name="ACTYPE"
-					Width="40"
-					Header="Type #"
-					SortMemberPath="AcType">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding AcType, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-				<DataGridTemplateColumn
-					x:Name="BALANCE"
-					Width="100"
-					Header="Balance"
-					SortMemberPath="AcType">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding Balance, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='£ ##,###,###.00'}"/>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-				<DataGridTemplateColumn
-					x:Name="INTRATE"
-					Width="60"
-					Header="Int %"
-					SortMemberPath="IntRate">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding IntRate, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='0.00'}"/>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-				<!--the next 2 show 2 ways to format a date - 1 a Converter the other a direct Format string-->
-				<DataGridTemplateColumn
-					x:Name="ODATE"
-					Width="90"
-					Header="Opened"
-					SortMemberPath="ODate">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding Path=ODate, StringFormat='dd/MM/yyyy'}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-					<DataGridTemplateColumn.CellEditingTemplate>
-						<DataTemplate>
-							<DatePicker SelectedDate="{Binding Path=ODate, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-									HorizontalContentAlignment="Center"/>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellEditingTemplate>
-				</DataGridTemplateColumn>
-
-
-				<DataGridTemplateColumn
-					x:Name="CDATE"
-					Width="90"
-					Header="Closed"
-					SortMemberPath="CDate">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding Path=CDate, StringFormat='dd/MM/yyyy'}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-					<DataGridTemplateColumn.CellEditingTemplate>
-						<DataTemplate>
-							<DatePicker SelectedDate="{Binding Path=CDate, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-									HorizontalContentAlignment="Center"/>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellEditingTemplate>
-				</DataGridTemplateColumn>
-	
-			</DataGrid.Columns>
 
 
 		</DataGrid>
@@ -544,7 +412,22 @@
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Stretch"
 				Margin="-5,-1,-15,-10"
+				>
+				<TextBox
+				x:Name="DisplayType"
+				Background="DarkGray"				
+				FontSize="23"
+				FontWeight="DemiBold"
+				Foreground="{StaticResource Black0}"
+				Height="30"
+				MaxLength="1"				
+				PreviewKeyUp="DisplayType_PreviewKeyUp"				
+				Padding="-3"
+				Text="0"
+				TextAlignment="Center"
+				VerticalAlignment="Top" Margin="320,104,42,0"
 				/>
+			</Border>
 			<TextBlock
 					x:Name="textBlock"
 					Canvas.Left="2"
@@ -772,6 +655,15 @@
 					Text=" Counter"
 					TextAlignment="Center"
 					TextTrimming="WordEllipsis" />
+			<TextBlock
+	   x:Name="textBlock_Copy2"
+	   Grid.Column="2"
+	   Grid.Row="2"
+	   Height="25"
+	   Padding="5,5,5,5"
+	   FontWeight="Bold"
+	   Foreground="Black"
+	   Text="Column Sorting" Margin="25,38,95,9" Grid.RowSpan="2" Grid.ColumnSpan="2" />
 
 		</Grid>
 		<!--#region buttons-->

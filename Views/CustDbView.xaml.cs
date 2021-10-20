@@ -1,5 +1,6 @@
 ﻿using System;
 using System . Collections . Generic;
+using System . Collections . ObjectModel;
 using System . ComponentModel;
 using System . Diagnostics;
 using System . IO;
@@ -118,7 +119,7 @@ namespace WPFPages . Views
 			EventControl . GlobalDataChanged += EventControl_GlobalDataChanged;
 
 			Flags . SqlCustActive = true;
-			await AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
+			AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
 
 			SaveBttn . IsEnabled = false;
 			// Save linkage setting as we need to disable it while we are loading
@@ -185,7 +186,7 @@ namespace WPFPages . Views
 			this . CustGrid . Items . Clear ( );
 			Mouse . OverrideCursor = Cursors . Wait;
 			Flags . SqlCustActive = true;
-			CustDbViewcollection = await AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
+			CustDbViewcollection = AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
 			IsDirty = false;
 		}
 
@@ -234,7 +235,7 @@ namespace WPFPages . Views
 				// and this will notify any other open viewers as well
 				cvmCurrent = null;
 				Flags . SqlCustActive = true;
-				await AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 2 , true );
+				AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 2 , true );
 				return;
 			}
 
@@ -357,6 +358,10 @@ namespace WPFPages . Views
 				SaveBttn . IsEnabled = false;
 				IsDirty = false;
 			}
+			// We must also clear our "loaded" columns, or else it stopsworking
+			ObservableCollection<DataGridColumn> dgc = CustGrid.Columns;
+			dgc . Clear ( );
+
 			t1 . Abort ( null );
 			Flags . CustDbEditor = null;
 			EventControl . EditIndexChanged -= EventControl_EditIndexChanged;
@@ -1077,7 +1082,7 @@ namespace WPFPages . Views
 				this . CustGrid . ItemsSource = null;
 				this . CustGrid . Items . Clear ( );
 				Flags . SqlCustActive = true;
-				await AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 1 , true );
+				AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 1 , true );
 				this . CustGrid . ItemsSource = CustviewerView;
 				// Notify everyone else of the data change
 				EventControl . TriggerViewerDataUpdated ( CustviewerView ,
@@ -1378,6 +1383,12 @@ namespace WPFPages . Views
 		{
 			//Send window handle and a message in "parameter"
 			Dispatcher . Invoke ( ( ) => { MenuCommands . Close_Executed ( sender , e . Parameter ); } );
+		}
+
+		private void CustGrid_Loaded ( object sender , RoutedEventArgs e )
+		{
+			DataGridUtilities . LoadDataGridColumns ( CustGrid , "DGFullCustomerColumns" );
+			ObservableCollection<DataGridColumn> dgc = CustGrid.Columns;
 		}
 
 		#endregion Applicaton built in Commands

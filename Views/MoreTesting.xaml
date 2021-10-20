@@ -1,4 +1,4 @@
-﻿<Window
+﻿<Window x:Class="WPFPages.Views.MoreTesting"      
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,8 @@
       xmlns:local="clr-namespace:WPFPages.Views"
       xmlns:data="clr-namespace:WPFPages.ViewModels"
       xmlns:cmd="clr-namespace:WPFPages.Commands"
-      xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="WPFPages.Views.MoreTesting"
-      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" 
+	xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d"
       x:Name="Moretesting"
       Title="Hit Ctrl F8 to break..." 

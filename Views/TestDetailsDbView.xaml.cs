@@ -543,7 +543,7 @@ namespace WPFPages.Views
 		//		DetailsViewModel bgr = this . DetGrid . SelectedItem as DetailsViewModel;
 		//		Flags . IsMultiMode = true;
 		//		DetailCollection det = new DetailCollection ( );
-		//		await DetailCollection . LoadDet ( TestDetDbcollection , "DETAILSDBVIEW", 2, true );
+		//		DetailCollection . LoadDet ( TestDetDbcollection , "DETAILSDBVIEW", 2, true );
 
 		//		ControlTemplate tmp = Utils . GetDictionaryControlTemplate ( "HorizontalGradientTemplateGray" );
 		//		MultiAccounts . Template = tmp;
@@ -569,7 +569,7 @@ namespace WPFPages.Views
 		//		DetailsViewModel bgr = this . DetGrid . SelectedItem as DetailsViewModel;
 
 		//		DetailCollection det = new DetailCollection ( );
-		//		await DetailCollection . LoadDet ( TestDetDbcollection , "DETAILSDBVIEW", 2, true );
+		//		DetailCollection . LoadDet ( TestDetDbcollection , "DETAILSDBVIEW", 2, true );
 		//		// Just reset our current itemssource to man Db
 		//		this . DetGrid . ItemsSource = null;
 		//		this . DetGrid . ItemsSource = TestDetviewerView;

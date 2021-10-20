@@ -369,13 +369,31 @@
 		<GradientStop Offset="1" Color="#FFF5BC00" />
 	</LinearGradientBrush>
 
-	<LinearGradientBrush x:Key="HeaderBrushYellow" StartPoint="0.0,0" EndPoint="0.0,1">
-		<GradientStop Offset="0" Color="#FFFFFF00" />
-		<GradientStop Offset="0.2" Color="#FFf5d816" />
-		<GradientStop Offset="0.409" Color="#FFE79500" />
-		<GradientStop Offset="0.642" Color="#FFF5BC00" />
-		<GradientStop Offset="0.842" Color="#FFAF7800" />
-		<GradientStop Offset="1" Color="#FF38320c" />
+	<LinearGradientBrush x:Key="HeaderBrushYellowReversed" StartPoint="1,0" EndPoint="0,1">
+		<GradientStop Offset="1" Color="#FFFFFF00" />
+		<GradientStop Offset="0.842" Color="#FFf5d816" />
+		<GradientStop Offset="0.642" Color="#FFE79500" />
+		<GradientStop Offset="0.409" Color="#FFF5BC00" />
+		<GradientStop Offset="0.2" Color="#FFAF7800" />
+		<GradientStop Offset="0" Color="#FF38320c" />
+	</LinearGradientBrush>
+
+	<LinearGradientBrush x:Key="HeaderBrushHorizontalYellow" StartPoint="1,1" EndPoint="1,0">
+		<GradientStop Offset="0" Color="#FF38320c" />
+		<GradientStop Offset="0.2" Color="#FFAF7800" />
+		<GradientStop Offset="0.409" Color="#FFF5BC00" />
+		<GradientStop Offset="0.62" Color="#FFE79500" />
+		<GradientStop Offset="0.82" Color="#FFf5d816" />
+		<GradientStop Offset="1" Color="#FFFFFF00" />
+	</LinearGradientBrush>
+
+	<LinearGradientBrush x:Key="HeaderBrushYellow" StartPoint="0,1" EndPoint="1,0">
+		<GradientStop Offset="1" Color="#FFFFFF00" />
+		<GradientStop Offset="0.842" Color="#FFf5d816" />
+		<GradientStop Offset="0.642" Color="#FFE79500" />
+		<GradientStop Offset="0.409" Color="#FFF5BC00" />
+		<GradientStop Offset="0.2" Color="#FFAF7800" />
+		<GradientStop Offset="0" Color="#FF38320c" />
 	</LinearGradientBrush>
 
 	<LinearGradientBrush x:Key="HeaderBorderBrushYellow" StartPoint="0,0" EndPoint="0,1">
@@ -497,6 +515,7 @@
 			</Trigger>
 		</Style.Triggers>
 	</Style>
+	
 	<Style x:Key="HeaderStyleGreen" TargetType="DataGridColumnHeader">
 		<Setter Property="Background" Value="{StaticResource HeaderBrushGreen}" />
 		<Setter Property="Foreground" Value="White" />
@@ -515,8 +534,8 @@
 	</Style>
 
 	<Style x:Key="HeaderStyleYellow" TargetType="DataGridColumnHeader">
-		<Setter Property="Background" Value="{StaticResource HeaderBrushYellow}" />
-		<Setter Property="Foreground" Value="White" />
+		<Setter Property="Background" Value="{StaticResource HeaderBrushHorizontalYellow}" />
+		<Setter Property="Foreground" Value="Black" />
 		<Setter Property="BorderBrush" Value="{StaticResource HeaderBorderBrushYellow}" />
 		<Setter Property="BorderThickness" Value="1" />
 		<Setter Property="SnapsToDevicePixels" Value="True" />

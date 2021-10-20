@@ -1540,8 +1540,8 @@ namespace WPFPages . Views
 
                 private void MoreTesting_Click ( object sender, RoutedEventArgs e )
                 {
-                        MoreTesting test = new MoreTesting ( );
-                        test . Show ( );
+                        MoreTesting tst = new MoreTesting ( );
+                        tst . Show ( );
                 }
 
                 private void MenuItem_Click ( object sender, RoutedEventArgs e )

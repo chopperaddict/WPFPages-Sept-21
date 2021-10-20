@@ -1,5 +1,6 @@
 ﻿using System;
 using System . Collections . Generic;
+using System . Collections . ObjectModel;
 using System . ComponentModel;
 using System . Configuration;
 using System . Data;
@@ -88,6 +89,14 @@ namespace WPFPages . Views
 			get; set;
 		}
 
+		private static readonly DataGridColumn dataGridColumn   ;
+		private DataGridColumn[] DGBankColumnsCollection = {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
+		private DataGridColumn[] DGCustColumnsCollection
+			= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn ,dataGridColumn };
+		private DataGridColumn[] DGDetailsColumnsCollection= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
 
 		private string _bankno = "";
 		private string _custno = "";
@@ -151,9 +160,11 @@ namespace WPFPages . Views
 			EventControl . ViewerDataUpdated += EventControl_DataUpdated;
 			EventControl . DetDataLoaded += EventControl_DetDataLoaded;
 			EventControl . GlobalDataChanged += EventControl_GlobalDataChanged;
+			DataGridUtilities . LoadDataGridColumns ( DetGrid , "DGDetailsColumns1" );
+
 
 			Flags . SqlDetActive  = true;
-			await DetailCollection . LoadDet ( "DETAILSDBVIEW", 2, true );
+			DetailCollection . LoadDet ( "DETAILSDBVIEW", 2, true );
 
 			SaveBttn . IsEnabled = false;
 			// Save linkage setting as we need to disable it while we are loading
@@ -189,13 +200,13 @@ namespace WPFPages . Views
 			Startup = false;
 		}
 
-		private async void EventControl_GlobalDataChanged ( object sender, GlobalEventArgs e )
+		private  void EventControl_GlobalDataChanged ( object sender, GlobalEventArgs e )
 		{
 			if ( e . CallerType == "DETAILSDBVIEWER" )
 				return;
 			//Update our own data tyoe only
 			Flags . SqlDetActive  = true;
-			await DetailCollection . LoadDet ( "DETAILS", 2, true );
+			DetailCollection . LoadDet ( "DETAILS", 2, true );
 
 		}
 
@@ -264,7 +275,7 @@ namespace WPFPages . Views
 			Utils . SetGridRowSelectionOn ( DetGrid, 0 );
 //			bool reslt = false;
 		}
-		private async void EventControl_DataUpdated ( object sender, LoadedEventArgs e )
+		private  void EventControl_DataUpdated ( object sender, LoadedEventArgs e )
 		{
 			if ( e . CallerDb == "DETAILSDBVIEW" || e . CallerDb == "DETAILS" )
 				return;
@@ -281,7 +292,7 @@ namespace WPFPages . Views
 			this . DetGrid . Items . Clear ( );
 			Mouse . OverrideCursor = Cursors . Wait;
 			Flags . SqlDetActive  = true;
-			await DetailCollection . LoadDet ( "DETAILSDBVIEW", 2, true );
+			DetailCollection . LoadDet ( "DETAILSDBVIEW", 2, true );
 			IsDirty = false;
 		}
 		#endregion DATA BASED EVENT HANDLERS
@@ -332,6 +343,10 @@ namespace WPFPages . Views
 				SaveBttn . IsEnabled = false;
 				IsDirty = false;
 			}
+			// We must also clear our "loaded" columns, or else it stopsworking
+			ObservableCollection<DataGridColumn> dgc = DetGrid.Columns;
+			dgc . Clear ( );
+
 			// Close our monitor thread
 
 			//UnSubscribe from Bank Data Changed event declared in EventControl
@@ -593,7 +608,7 @@ namespace WPFPages . Views
 		//		DetailsViewModel bgr = this . DetGrid . SelectedItem as DetailsViewModel;
 		//		Flags . IsMultiMode = true;
 		//		DetailCollection det = new DetailCollection ( );
-		//		await DetailCollection . LoadDet ( DetViewerDbcollection, "DETAILSDBVIEW", 2, true );
+		//		DetailCollection . LoadDet ( DetViewerDbcollection, "DETAILSDBVIEW", 2, true );
 
 		//		ControlTemplate tmp = Utils . GetDictionaryControlTemplate ( "HorizontalGradientTemplateGray" );
 		//		MultiAccounts . Template = tmp;
@@ -619,7 +634,7 @@ namespace WPFPages . Views
 		//		DetailsViewModel bgr = this . DetGrid . SelectedItem as DetailsViewModel;
 
 		//		DetailCollection det = new DetailCollection ( );
-		//		await DetailCollection . LoadDet ( DetViewerDbcollection, "DETAILSDBVIEW", 2, true );
+		//		DetailCollection . LoadDet ( DetViewerDbcollection, "DETAILSDBVIEW", 2, true );
 		//		// Just reset our current itemssource to man Db
 		//		this . DetGrid . ItemsSource = null;
 		//		this . DetGrid . ItemsSource = DetviewerView;
@@ -1094,7 +1109,7 @@ namespace WPFPages . Views
 				// and this will notify any other open viewers as well
 				bvmCurrent = null;
 				Flags . SqlDetActive  = true;
-				await DetailCollection . LoadDet ( "DETAILSDBVIEW", 2, true );
+				DetailCollection . LoadDet ( "DETAILSDBVIEW", 2, true );
 				return;
 			}
 
@@ -1541,7 +1556,7 @@ namespace WPFPages . Views
 
 		}
 
-		private async void ContextEdit_Click ( object sender, RoutedEventArgs e )
+		private  void ContextEdit_Click ( object sender, RoutedEventArgs e )
 		{
 			DetailsViewModel dvm = new DetailsViewModel ( );
 			int currsel = 0;
@@ -1562,7 +1577,7 @@ namespace WPFPages . Views
 				this . DetGrid . ItemsSource = null;
 				this . DetGrid . Items . Clear ( );
 				Flags . SqlDetActive  = true;
-				await DetailCollection . LoadDet ( "DETAILS", 2, true );
+				DetailCollection . LoadDet ( "DETAILS", 2, true );
 				this . DetGrid . ItemsSource = DetviewerView;
 				// Notify everyone else of the data change
 				EventControl . TriggerViewerDataUpdated ( DetviewerView,
@@ -1671,7 +1686,6 @@ namespace WPFPages . Views
 
 			}
 		}
-
 		private void CloseWin ( object sender, ExecutedRoutedEventArgs e )
 		{
 			this . Close ( );
@@ -1680,6 +1694,35 @@ namespace WPFPages . Views
 		{
 			e . CanExecute = true;
 
+		}
+
+		private void DetGrid_Loaded ( object sender , RoutedEventArgs e )
+		{
+			int counter = 0;
+			if ( DetGrid . Columns . Count == 0 )
+			{
+				DataGridUtilities . LoadDataGridColumns ( DetGrid , "DGMultiDetailsColumns" );
+				DataGridUtilities . LoadDataGridTextColumns ( DetGrid , "DGMultiDetailsTextColumns" );
+				//Saved default Columns layout
+			}
+			foreach ( var item in DetGrid . Columns )
+			{
+				DGDetailsColumnsCollection [ counter++ ] = item;
+			}
+			DataGridSupport . SortDetailsColumns ( DetGrid , DGDetailsColumnsCollection );
+		}
+
+		private void DisplayType_PreviewKeyUp ( object sender , KeyEventArgs e )
+		{
+			if ( DisplayType . Text == "" )
+				return;
+			int value = Convert.ToInt32(DisplayType.Text);
+			if ( value >= 0 && value <= 2 )
+			{
+				DataGridSupport . SortDetailsColumns ( DetGrid , DGDetailsColumnsCollection , value );
+				DetGrid . Refresh ( );
+				DisplayType . Text = value . ToString ( );
+			}
 		}
 	}
 }

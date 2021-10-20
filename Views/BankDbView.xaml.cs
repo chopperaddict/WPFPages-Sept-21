@@ -30,6 +30,15 @@ namespace WPFPages . Views
 		private  BankCollection BankViewcollection = null;
 		private Stopwatch timer = new Stopwatch();
 		static int counter = 0;
+
+		private static readonly DataGridColumn dataGridColumn   ;
+		private DataGridColumn[] DGBankColumnsCollection = {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
+		private DataGridColumn[] DGCustColumnsCollection
+			= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn ,dataGridColumn };
+		private DataGridColumn[] DGDetailsColumnsCollection= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
 		//		public WpfCommand LoadNwCommand {get; set;}
 
 		// Get our personal Collection view of the Db
@@ -405,7 +414,12 @@ namespace WPFPages . Views
 			//			DataFields . DataContext = this . BankGrid . SelectedItem;
 			BankViewcollection = null;
 			Utils . SaveProperty ( "BankDbView_bindex" , bindex . ToString ( ) );
+			
+			// We must clear our "loaded" columns, or else it stopsworking
+			ObservableCollection<DataGridColumn> dgc = BankGrid.Columns;
+			dgc . Clear ( );
 		}
+
 
 		private void BankGrid_SelectionChanged ( object sender , System . Windows . Controls . SelectionChangedEventArgs e )
 		{
@@ -1586,6 +1600,23 @@ namespace WPFPages . Views
 		{
 			BankGrid . ItemsSource = null;
 			await BankCollection . LoadBank ( BankViewcollection , "BANKDBVIEW" , 99 , true );
+		}
+
+		private void BankGrid_Loaded ( object sender , RoutedEventArgs e )
+		{
+			//			DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGColumns3" );
+			int counter = 0;
+			if ( BankGrid . Columns . Count == 0 )
+			{
+				DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGBankColumns" );
+//				DataGridUtilities . LoadDataGridTextColumns ( BankGrid , "DGMultiBankTextColumns" );
+			}
+			//Saved default Columns layout
+			foreach ( var item in BankGrid . Columns )
+			{
+				DGBankColumnsCollection [ counter++ ] = item;
+			}
+			DataGridSupport . SortBankColumns ( BankGrid , DGBankColumnsCollection );
 		}
 		#endregion CollectionView handlers
 

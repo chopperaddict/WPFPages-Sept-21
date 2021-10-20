@@ -67,7 +67,7 @@ namespace WPFPages
 			}
 		}
 
-
+		#region play tunes / sounds
 		// Declare the first few notes of the song, "Mary Had A Little Lamb".
 		// Define the frequencies of notes in an octave, as well as
 		// silence (rest).
@@ -227,6 +227,8 @@ namespace WPFPages
 			}
 			return null;
 		}
+		
+		#endregion play tunes / sounds
 
 		//Generic form of Selection forcing code below
 		/// <summary>
@@ -297,6 +299,7 @@ namespace WPFPages
 
 		#endregion BRUSHES SUPPORT
 
+		#region drag Drop data conversion Helper mmethods
 		public static BankAccountViewModel CreateBankRecordFromString ( string type , string input )
 		{
 			int index = 0;
@@ -604,6 +607,9 @@ namespace WPFPages
 			return datastring;
 		}
 
+		#endregion drag Drop data conversion Helper mmethods
+
+		#region System Settings helpers
 		public static void SaveProperty ( string setting , string value )
 		{
 			try
@@ -685,6 +691,8 @@ namespace WPFPages
 				Console . WriteLine ( "Error reading app settings" );
 			}
 		}
+
+		#endregion System Settings helpers
 		public static string GetExportFileName ( string filespec )
 		// opens  the common file open dialog
 		{
@@ -755,8 +763,6 @@ namespace WPFPages
 				YYYMMDD = datebits [ 2 ] + "/" + datebits [ 1 ] + "/" + datebits [ 0 ];
 			return YYYMMDD;
 		}
-
-
 		public static void HandleCtrlFnKeys ( bool key1 , KeyEventArgs e )
 		{
 			if ( key1 && e . Key == Key . F5 )
@@ -906,6 +912,7 @@ namespace WPFPages
 			return result;
 		}
 
+		#region datagrid scrolling / Search helpers
 		public static void SetSelectedItemFirstRow ( object dataGrid , object selectedItem )
 		{
 			//If target datagrid Empty, throw exception
@@ -1112,14 +1119,11 @@ namespace WPFPages
 			Dgrid . UpdateLayout ( );
 		}
 
+		#endregion datagrid scrolling / Search helpers
+
 		//		public NewFlags Flags = new NewFlags();
 		//************************************************************************************//
-		/// <summary>
-		///  checks an Enum in Flags.cs andf appends the correct sort 
-		///  order to the SQL command string it receives
-		/// </summary>
-		/// <param name="commandline"></param>
-		/// <returns></returns>
+
 		public static string GetDataSortOrder ( string commandline )
 		{
 			if ( Flags . SortOrderRequested == ( int ) Flags . SortOrderEnum . DEFAULT )
@@ -1141,7 +1145,6 @@ namespace WPFPages
 			return commandline;
 		}
 
-		//************************************************************************************//
 		public static bool CheckForExistingGuid ( Guid guid )
 		{
 			bool retval = false;
@@ -1161,7 +1164,8 @@ namespace WPFPages
 			}
 			return retval;
 		}
-		//************************************************************************************//
+
+		#region Window control/ find methods
 		public static void GetWindowHandles ( )
 		{
 #if SHOWWINDOWDATA
@@ -1191,25 +1195,18 @@ namespace WPFPages
 			return result;
 		}
 
-		//************************************************************************************//
+		#endregion Window control/ find methods
+		
 		public static Style GetDictionaryStyle ( string tempname )
 		{
 			Style ctmp = System . Windows . Application . Current . FindResource ( tempname ) as Style;
 			return ctmp;
 		}
-		//************************************************************************************//
-		//public static Template GetDictionaryTemplate ( string tempname )
-		//{
-		//	Template ctmp = System . Windows . Application . Current . FindResource ( tempname ) as Template;
-		//	return ctmp;
-		//}
-		//************************************************************************************//
 		public static ControlTemplate GetDictionaryControlTemplate ( string tempname )
 		{
 			ControlTemplate ctmp = System . Windows . Application . Current . FindResource ( tempname ) as ControlTemplate;
 			return ctmp;
 		}
-		//************************************************************************************//
 		public static Brush GetDictionaryBrush ( string brushname )
 		{
 			Brush brs = null;
@@ -1273,6 +1270,103 @@ namespace WPFPages
 				;
 			}
 			return true;
+		}
+		public static string GetPrettyGridStatistics ( DataGrid Grid , int current )
+		{
+			string output = "";
+			if ( current != -1 )
+				output = $"{current} / {Grid . Items . Count}";
+			else
+				output = $"0 / {Grid . Items . Count}";
+			return output;
+		}
+
+		#region drag/Drop automation
+		/// <summary>
+		/// Handles the making of any window to be draggable via a simple click/Drag inside them
+		/// Very useful method
+		/// </summary>
+		/// <param name="inst"></param>
+		public static void SetupWindowDrag ( Window inst )
+		{
+			inst . MouseDown += delegate
+			{try
+				{inst . DragMove ( );}
+				catch { return; }
+			};
+		}
+
+		#endregion drag/Drop automation
+
+		/// <summary>
+		/// Creates a BMP from any control passed into it   ???
+		/// </summary>
+		/// <param name="element"></param>
+		/// <returns></returns>
+		public static RenderTargetBitmap RenderBitmap ( FrameworkElement element )
+		{
+			double topLeft = 0;
+			double topRight = 0;
+			int width = ( int ) element . ActualWidth;
+			int height = ( int ) element . ActualHeight;
+			double dpiX = 96; // this is the magic number
+			double dpiY = 96; // this is the magic number
+
+			PixelFormat pixelFormat = PixelFormats . Default;
+			VisualBrush elementBrush = new VisualBrush ( element );
+			DrawingVisual visual = new DrawingVisual ( );
+			DrawingContext dc = visual . RenderOpen ( );
+
+			dc . DrawRectangle ( elementBrush , null , new Rect ( topLeft , topRight , width , height ) );
+			dc . Close ( );
+			RenderTargetBitmap bitmap = new RenderTargetBitmap ( width, height, dpiX, dpiY, pixelFormat );
+			bitmap . Render ( visual );
+			return bitmap;
+		}
+
+		public  static void LoadBankDbGeneric ( BankCollection bvm , string caller="",bool Notify = false , int lowvalue = -1 , int highvalue = -1 , int maxrecords = -1 )
+		{
+			if ( maxrecords == -1 )
+				BankCollection . LoadBank ( cc: bvm , caller: caller , ViewerType: 99 , NotifyAll: Notify );
+			else
+			{
+				DataTable dtBank  = new DataTable();
+				dtBank = BankCollection . LoadSelectedBankData ( Min: lowvalue, Max: highvalue, Tot: maxrecords );
+				bvm = BankCollection . LoadSelectedCollection ( bankCollection: bvm , max: -1 , dtBank: dtBank , Notify: Notify );
+			}
+
+		}
+
+		#region Visual Stlye / Search Helpers
+		/// <summary>
+		/// a different version of FindChild - find by object TYPE
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="childType"></param>
+		/// <returns></returns>
+		public static DependencyObject FindChild ( DependencyObject o , Type childType )
+		{
+			DependencyObject foundChild = null;
+			if ( o != null )
+			{
+				int childrenCount = VisualTreeHelper . GetChildrenCount ( o );
+				for ( int i = 0 ; i < childrenCount ; i++ )
+				{
+					var child = VisualTreeHelper . GetChild ( o, i );
+					if ( child . GetType ( ) != childType )
+					{
+						foundChild = FindChild ( child , childType );
+						//if(foundChild == null)
+						//        FindChild ( child, childType );
+					}
+					else
+					{
+						foundChild = child;
+						break;
+					}
+				}
+			}
+			return foundChild;
 		}
 		public static parentItem FindVisualParent<parentItem> ( DependencyObject obj ) where parentItem : DependencyObject
 		{
@@ -1350,103 +1444,7 @@ namespace WPFPages
 			}
 			return foundChild;
 		}
-
-		/// <summary>
-		/// a different version of FindChild - find by object TYPE
-		/// </summary>
-		/// <param name="o"></param>
-		/// <param name="childType"></param>
-		/// <returns></returns>
-		public static DependencyObject FindChild ( DependencyObject o , Type childType )
-		{
-			DependencyObject foundChild = null;
-			if ( o != null )
-			{
-				int childrenCount = VisualTreeHelper . GetChildrenCount ( o );
-				for ( int i = 0 ; i < childrenCount ; i++ )
-				{
-					var child = VisualTreeHelper . GetChild ( o, i );
-					if ( child . GetType ( ) != childType )
-					{
-						foundChild = FindChild ( child , childType );
-						//if(foundChild == null)
-						//        FindChild ( child, childType );
-					}
-					else
-					{
-						foundChild = child;
-						break;
-					}
-				}
-			}
-			return foundChild;
-		}
-		public static string GetPrettyGridStatistics ( DataGrid Grid , int current )
-		{
-			string output = "";
-			if ( current != -1 )
-				output = $"{current} / {Grid . Items . Count}";
-			else
-				output = $"0 / {Grid . Items . Count}";
-			return output;
-		}
-		/// <summary>
-		/// Handles the making of any window to be draggable via a simple click/Drag inside them
-		/// Very useful method
-		/// </summary>
-		/// <param name="inst"></param>
-		public static void SetupWindowDrag ( Window inst )
-		{
-			inst . MouseDown += delegate
-			{
-				try
-				{
-					inst . DragMove ( );
-				}
-				catch { return; }
-			};
-		}
-
-		/// <summary>
-		/// Creates a BMP from any control passed into it
-		/// </summary>
-		/// <param name="element"></param>
-		/// <returns></returns>
-		public static RenderTargetBitmap RenderBitmap ( FrameworkElement element )
-		{
-			double topLeft = 0;
-			double topRight = 0;
-			int width = ( int ) element . ActualWidth;
-			int height = ( int ) element . ActualHeight;
-			double dpiX = 96; // this is the magic number
-			double dpiY = 96; // this is the magic number
-
-			PixelFormat pixelFormat = PixelFormats . Default;
-			VisualBrush elementBrush = new VisualBrush ( element );
-			DrawingVisual visual = new DrawingVisual ( );
-			DrawingContext dc = visual . RenderOpen ( );
-
-			dc . DrawRectangle ( elementBrush , null , new Rect ( topLeft , topRight , width , height ) );
-			dc . Close ( );
-
-			RenderTargetBitmap bitmap = new RenderTargetBitmap ( width, height, dpiX, dpiY, pixelFormat );
-
-			bitmap . Render ( visual );
-			return bitmap;
-		}
-
-		public async static void LoadBankDbGeneric ( BankCollection bvm , bool Notify = false , int lowvalue = -1 , int highvalue = -1 , int maxrecords = -1 )
-		{
-			if ( maxrecords == -1 )
-				await BankCollection . LoadBank ( cc: bvm , caller: "BankAccount" , ViewerType: 99 , NotifyAll: Notify );
-			else
-			{
-				DataTable dtBank  = new DataTable();
-				dtBank = BankCollection . LoadSelectedBankData ( Min: 1055000 , Max: 1080000 , Tot: 40 );
-				bvm = BankCollection . LoadSelectedCollection ( bankCollection: bvm , max: -1 , dtBank: dtBank , Notify: Notify );
-			}
-
-		}
+		#endregion Visual Stlye / Search Helpers
 		// Utilities to support converters
 		#region UTILITIES
 		//public class ConverterUtils

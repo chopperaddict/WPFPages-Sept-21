@@ -1765,6 +1765,8 @@
 
 					<DataGrid x:Name="datagrid"
 						  AlternatingRowBackground="{StaticResource Blue9}"
+						  att:DataGridColumnsColorAP.HeaderBackground="Red"
+						  att:DataGridColumnsColorAP.HeaderForeground="White"
 						  AutoGenerateColumns="false"
 						  Background="{StaticResource Blue8}"
 						  BorderThickness="1"
@@ -1773,8 +1775,6 @@
 						  CellStyle="{StaticResource BankAccountGridStyle}"
 						  ItemsSource="{Binding bankcollection}"
 						  HorizontalAlignment="Stretch"
-						  att:DataGridColumnsColorAP.HeaderBackground="Red"
-						  att:DataGridColumnsColorAP.HeaderForeground="White"
 						  Margin="1,7,0,8"
 						  MinHeight="150"
 						  Padding="1"

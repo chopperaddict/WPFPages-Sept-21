@@ -368,7 +368,7 @@ namespace WPFPages .Views
 			//if ( dgea == 0 )
 			//{
 			//				bvmCurrent = null;
-			//				await DetailCollection . LoadDet ( DetViewerDbcollection, "DETAILSDBVIEW", 2, true );
+			//				DetailCollection . LoadDet ( DetViewerDbcollection, "DETAILSDBVIEW", 2, true );
 			//				return false;
 			//}
 

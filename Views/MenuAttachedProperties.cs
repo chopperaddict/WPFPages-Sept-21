@@ -170,7 +170,7 @@ namespace WPFPages .Views
 
             // Using a DependencyProperty as the backing store for MenuItemSelectedBackground.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MenuItemSelectedBackgroundProperty =
-                  DependencyProperty.RegisterAttached("MenuItemSelectedBackground", typeof(Brush ), typeof(MenuAttachedProperties), new PropertyMetadata((Brush)default));
+                  DependencyProperty.RegisterAttached("MenuItemSelectedBackground", typeof(Brush ), typeof(MenuAttachedProperties), new PropertyMetadata((Brush)Brushes.Yellow));
             #endregion MenuItemSelectedBackground 
 
             #region MenuSelectedForeground

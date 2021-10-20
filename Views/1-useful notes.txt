@@ -1,4 +1,17 @@
-// Templates that support  AP color control
+=================================================
+// How  to use DataGridColumns  from and x:Array in seperate file
+
+	// Load the selected set of columns, params are (Datagrid name, Array  required)
+	
+	DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGColumns3" );
+
+		// We must also clear our "loaded" columns, or else it stopsworking
+		ObservableCollection<DataGridColumn> dgc = BankGrid.Columns;
+		dgc . Clear ( );
+
+=================================================
+
+	// Templates that support  AP color control
 		
 	*** Class DataGridColorCtrlAp ***
 	   CellStyle :  BankAccountGridStyle

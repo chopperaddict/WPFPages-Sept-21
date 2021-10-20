@@ -25,7 +25,6 @@ namespace WPFPages . Views
 		public GroupedAccounts ( )
 		{
 			InitializeComponent ( );
-
 			//Create a grouping  so we can layout by AcType - don't know how this works really
 			//but it works well.  It reads the list of items in the Control (a ListView in this case)
 			// and creates another form of Collection, a Collectionview()
@@ -34,36 +33,8 @@ namespace WPFPages . Views
 				Mouse . OverrideCursor = System . Windows . Input . Cursors . Wait;
 				EventControl . BankDataLoaded += EventControl_BankDataLoaded;
 				Utils . LoadBankDbGeneric ( bvm: SqlBankcollection , Notify: true , maxrecords: 200 );
-//					BankCollection . LoadBank ( SqlBankcollection, "BANKLISTVIEW", 1, true );
-			}
-			//else
-			//{
-			//	this . Show ( );
-			//	Mouse . OverrideCursor = System . Windows . Input . Cursors . Wait;
-			//	if ( MainWindow . TestBankcollection . Count > 0 )
-			//	{
-			//		SqlBankcollection = MainWindow . TestBankcollection;
-			//		var accounts = from items in SqlBankcollection
-			//			       where ( items . AcType == 1 )
-			//			       orderby items . AcType, items . CustNo, items . BankNo
-			//			       select items;
-			//		lview3 . Items . Clear ( );
-			//		SqlBankcollection = new BankCollection();
-			//		foreach ( var item in accounts )
-			//		{
-			//			SqlBankcollection . Add ( item );
-			//		}
-			//		lview3 . ItemsSource = SqlBankcollection;
-			//	}
-			//	else
-			//	{
-			//		Mouse . OverrideCursor = System . Windows . Input . Cursors . Wait;
-			//		EventControl . BankDataLoaded += EventControl_BankDataLoaded;
-			//		BankCollection . LoadBank ( SqlBankcollection, "BANKLISTVIEW", 1, true );
-
-			//	}
 				Mouse . OverrideCursor = System . Windows . Input . Cursors . Arrow;
-//			}
+			}
 		}
 		private async void EventControl_BankDataLoaded ( object sender, LoadedEventArgs e )
 		{

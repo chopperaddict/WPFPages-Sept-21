@@ -34,6 +34,15 @@ namespace WPFPages . Views
 		private ObservableCollection<nwcustomer> NwCustomers6 = new ObservableCollection<nwcustomer> ( );
 		ObservableCollection<CustomerViewModel> Customers1 = new ObservableCollection<CustomerViewModel> ( );
 
+		private static readonly DataGridColumn dataGridColumn   ;
+		private DataGridColumn[] DGBankColumnsCollection = {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
+		private DataGridColumn[] DGCustColumnsCollection
+			= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn ,dataGridColumn };
+		private DataGridColumn[] DGDetailsColumnsCollection= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
+
 		private CollectionView view1 = null;
 		private CollectionView view2 = null;
 		private CollectionView view3 = null;
@@ -72,10 +81,14 @@ namespace WPFPages . Views
 		private async void CustGrid_Loaded ( object sender , RoutedEventArgs e )
 		{
 			EventControl . CustDataLoaded += EventControl_CustDataLoaded;
+			DataGridUtilities . LoadDataGridColumns ( CustGrid , "DGMultiCustomerColumns" );
+			DataGridUtilities . LoadDataGridTextColumns ( CustGrid , "DGMultiCustomerTextColumns" );
+			DataGridSupport . SortCustomerColumns ( CustGrid , DGCustColumnsCollection );
+
 			this . CustGrid . ItemsSource = null;
 			this . CustGrid . Items . Clear ( );
 			AllCustomers CustViewcollection = new AllCustomers ( );
-			CustViewcollection = await AllCustomers . LoadCust ( CustViewcollection , "CUSTDBVIEW" , 3 , true );
+			CustViewcollection = AllCustomers . LoadCust ( CustViewcollection , "CUSTDBVIEW" , 3 , true );
 		}
 
 		private void EventControl_CustDataLoaded ( object sender , LoadedEventArgs e )
@@ -563,6 +576,21 @@ namespace WPFPages . Views
 			this . BankGrid . ItemsSource = null;
 			this . BankGrid . Items . Clear ( );
 			EventControl . BankDataLoaded += EventControl_BankDataLoaded1;
+			//DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGMultiBankColumns" );
+			//DataGridUtilities . LoadDataGridTextColumns ( BankGrid , "DGMultiBankTextColumns" );
+			//DataGridSupport . SortBankColumns ( BankGrid, DGBankColumnsCollection);
+			int counter = 0;
+			if ( BankGrid . Columns . Count == 0 )
+			{
+				DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGMultiBankColumns" );
+				DataGridUtilities . LoadDataGridTextColumns ( BankGrid , "DGMultiBankTextColumns" );
+			}
+			//Saved default Columns layout
+			foreach ( var item in BankGrid . Columns )
+			{
+				DGBankColumnsCollection [ counter++ ] = item;
+			}
+			DataGridSupport . SortBankColumns ( BankGrid , DGBankColumnsCollection );
 
 			BankCollection BankViewcollection = new BankCollection ( );
 			await BankCollection . LoadBank ( BankViewcollection , "BANKDATA" , 7 , true );
@@ -770,6 +798,11 @@ namespace WPFPages . Views
 				view3 . DetachFromSourceCollection ( );
 			if ( view4 != null && !view4 . IsEmpty )
 				view4 . DetachFromSourceCollection ( );
+			ObservableCollection<DataGridColumn> dgc2 = CustGrid.Columns;
+			dgc2 . Clear ( );
+			ObservableCollection<DataGridColumn> dgc1 = BankGrid.Columns;
+			dgc1 . Clear ( );
+
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System . Collections . ObjectModel;
 using System . ComponentModel;
 using System . Data;
 using System . Diagnostics;
@@ -296,7 +297,7 @@ namespace WPFPages . Views
 				this . DataGrid2 . Items . Clear ( );
 				Mouse . OverrideCursor = Cursors . Wait;
 				Flags . SqlCustActive  = true;
-				await AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
+				AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
 				//this . DataGrid2 . ItemsSource = EditDbCustcollection;
 				//this . DataGrid2 . SelectedIndex = currsel;
 				//this . DataGrid2 . Refresh ( );
@@ -321,7 +322,7 @@ namespace WPFPages . Views
 				this . DetailsGrid . Items . Clear ( );
 				Mouse . OverrideCursor = Cursors . Wait;
 				Flags . SqlDetActive  = true;
-				await DetailCollection . LoadDet ( "EDITDB", 2, true );
+				DetailCollection . LoadDet ( "EDITDB", 2, true );
 				//this . DetailsGrid . ItemsSource = EditDbDetcollection;
 				//this . DetailsGrid . SelectedIndex = currsel;
 				//this . DetailsGrid . Refresh ( );
@@ -372,6 +373,7 @@ namespace WPFPages . Views
 			ThisParent = sqldb;
 			//Identify individual windows for update protection
 			this.Tag = (Guid)Guid.NewGuid();
+			DataGridUtilities . LoadDataGridColumns ( DetailsGrid , "DGEditDbColuns1" );
 
 			// data load code Now moved to WindowLoaded() method  16/5/2021
 
@@ -414,7 +416,7 @@ namespace WPFPages . Views
 		{
 			if ( EditDbDetcollection == null || EditDbDetcollection . Count == 0 )
 				Mouse . OverrideCursor = Cursors . Wait;
-			await DetailCollection . LoadDet ( "EDITDB", 2, true );
+			DetailCollection . LoadDet ( "EDITDB", 2, true );
 			Mouse . OverrideCursor = Cursors . Arrow;
 			//this  . DetailsGrid . ItemsSource = EditDbDetcollection;
 			return EditDbDetcollection;
@@ -617,7 +619,7 @@ namespace WPFPages . Views
 				if ( EditDbCustcollection == null || EditDbCustcollection . Count == 0 )
 				{
 					Flags . SqlCustActive  = true;
-					await AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
+					AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
 				}
 //				this . DataGrid2 . ItemsSource = EditDbDetcollection;
 			}
@@ -967,6 +969,15 @@ namespace WPFPages . Views
 			Flags . ActiveEditGrid = null;
 			Flags . CurrentEditDbViewer = null;
 			Flags . CurrentSqlViewer . RefreshBtn . IsEnabled = true;
+			// We must also clear our "loaded" columns, or else it stopsworking
+			ObservableCollection<DataGridColumn> dgc = DetailsGrid.Columns;
+			dgc . Clear ( );
+			// We must also clear our "loaded" columns, or else it stopsworking
+			ObservableCollection<DataGridColumn> dgc2 = DataGrid1.Columns;
+			dgc2 . Clear ( );
+
+
+
 		}
 		private void Window_Closed ( object sender, EventArgs e )
 		{
@@ -1340,7 +1351,7 @@ namespace WPFPages . Views
 
 				this . DataGrid2 . ItemsSource = EditDbCustcollection;
 				Flags . SqlCustActive  = true;
-				await AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
+				AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
 				this . DataGrid2 . SelectedIndex = currsel;
 			}
 			//			Debug . WriteLine ( $" 2-5-END *** TRACE *** EDITDB : DataGrid2_RowEditEnding - Exiting\n*** Should *** be Processing completed...\n" );
@@ -1372,7 +1383,7 @@ namespace WPFPages . Views
 
 				this . DetailsGrid . ItemsSource = null;
 				this . DetailsGrid . ItemsSource = EditDbDetcollection;
-				await DetailCollection . LoadDet ( "EDITDB", 2, true );
+				DetailCollection . LoadDet ( "EDITDB", 2, true );
 				this . DetailsGrid . SelectedIndex = currsel;
 			}
 		}
@@ -1929,7 +1940,7 @@ namespace WPFPages . Views
 				sqlh . UpdateDbRow ( CurrentDb, this . DataGrid2 . SelectedItem );
 				IsDirty = false;
 				Flags . SqlCustActive  = true;
-				EditDbCustcollection = await AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
+				EditDbCustcollection = AllCustomers . LoadCust ( EditDbCustcollection, "EDITDB", 2, true );
 				dGrid . ItemsSource = null;
 //				dGrid . ItemsSource = EditDbCustcollection;
 //				dGrid . SelectedIndex = currsel;
@@ -1949,7 +1960,7 @@ namespace WPFPages . Views
 				sqlh . UpdateDbRow ( CurrentDb, this . DetailsGrid . SelectedItem );
 				IsDirty = false;
 				Flags . SqlDetActive  = true;
-				await DetailCollection . LoadDet ( "DETAILS", 2, true );
+				DetailCollection . LoadDet ( "DETAILS", 2, true );
 				dGrid . ItemsSource = null;
 //				dGrid . ItemsSource = EditDbDetcollection;
 //				dGrid . SelectedIndex = currsel;
@@ -2341,6 +2352,13 @@ namespace WPFPages . Views
 				allowParentChange = true;
 			else
 				allowParentChange = false;
+		}
+
+		private void DataGrid1_Loaded ( object sender , RoutedEventArgs e )
+		{
+			DataGridUtilities . LoadDataGridColumns ( DataGrid1 , "DGBankColums1" );
+			ObservableCollection<DataGridColumn> dgc = DataGrid1.Columns;
+
 		}
 
 		private void Topmost_Checked ( object sender, RoutedEventArgs e )

@@ -37,7 +37,7 @@ namespace WPFPages . Views
 		#endregion CONSTRUCTOR
 
 		#region startup/load data / load collection (CustCollection)
-		public async static Task<AllCustomers> LoadCust ( AllCustomers cc , string caller , int ViewerType = 1 , bool NotifyAll = false , int start = 0 , int end = 0 , int max = 0 )
+		public  static AllCustomers LoadCust ( AllCustomers cc , string caller , int ViewerType = 1 , bool NotifyAll = false , int start = 0 , int end = 0 , int max = 0 )
 		{
 			Notify = NotifyAll;
 			Caller = caller;
@@ -60,32 +60,15 @@ namespace WPFPages . Views
 					}
 					return Custinternalcollection;
 				}
-				else
-				{
-					//// We now have the ONE AND ONLY pointer the the Bank data in variable Bankcollection
-					//Flags . CustCollection = Custinternalcollection;
-					//if ( Flags . IsMultiMode == false )
-					//{
-					//	// Finally fill and return The global Dataset
-					//	SelectViewer ( ViewerType, Custinternalcollection );
-					//	return null;
-					//}
-					//else
-					//{
-					//	// return the "working  copy" pointer, it has  filled the relevant collection to match the viewer
-					//	return null;
-					//}
-				}
 				if ( Flags . IsMultiMode == false )
 				{
 					AllCustomers db = new AllCustomers ( );
-					//                                        SelectViewer ( ViewerType, Custinternalcollection );
 					return db;
 				}
 				else
 				{
 					// return the "working  copy" pointer, it has  filled the relevant collection to match the viewer
-					return null;
+					return Custinternalcollection;
 				}
 
 			}
@@ -97,7 +80,7 @@ namespace WPFPages . Views
 		}
 
 
-		public async Task<AllCustomers> LoadCustomerTaskInSortOrderAsync ( bool b = false , int row = 0 , bool NotifyAll = false )
+		public  AllCustomers LoadCustomerTaskInSortOrderAsync ( bool b = false , int row = 0 , bool NotifyAll = false )
 		{
 			DataTable dt = new DataTable();
 			if ( dtCust . Rows . Count > 0 )
@@ -108,21 +91,21 @@ namespace WPFPages . Views
 
 			#region process code to load data
 
-			Task t1 = Task . Run (
-						    async ( ) =>
-						    {
-							    //                                                Console . WriteLine ( $"Calling LoadCustDataSql" );
-							    await LoadCustDataSql ( dt);
-						    }
-					  );
-			t1 . ContinueWith
-			(
-				  async ( Custinternalcollection ) =>
-				  {
+			//Task t1 = Task . Run (
+			//			    async ( ) =>
+			//			    {
+			//				    //                                                Console . WriteLine ( $"Calling LoadCustDataSql" );
+							    LoadCustDataSql ( dt);
+			//			    }
+			//		  );
+			//t1 . ContinueWith
+			//(
+			//	  async ( Custinternalcollection ) =>
+			//	  {
 					  Console . WriteLine ( $"dtCust = {dtCust . Rows . Count} Calling LoadCustomerCollection" );
-					  await LoadCustomerCollection (dt );
-				  } , TaskScheduler . FromCurrentSynchronizationContext ( )
-			 );
+					  LoadCustomerCollection (dt );
+				//  } , TaskScheduler . FromCurrentSynchronizationContext ( )
+			 //);
 
 			#endregion process code to load data
 
@@ -130,44 +113,37 @@ namespace WPFPages . Views
 
 			// Now handle "post processing of errors etc"
 			//This will ONLY run if there were No Exceptions  and it ALL ran successfully!!
-			t1 . ContinueWith (
-				  ( Custinternalcollection ) =>
-				  {
-						  //					Debug . WriteLine ( $"CUSTOMERS : Task.Run() Completed : Status was [ {Custinternalcollection . Status} ]." );
-					  } , CancellationToken . None , TaskContinuationOptions . OnlyOnRanToCompletion , TaskScheduler . FromCurrentSynchronizationContext ( )
-			);
-			//This will iterate through ALL of the Exceptions that may have occured in the previous Tasks
-			// but ONLY if there were any Exceptions !!
-			t1 . ContinueWith (
-				  ( Custinternalcollection ) =>
-				  {
-					  AggregateException ae = t1 . Exception . Flatten ( );
-					  Debug . WriteLine ( $"Exception in Custinternalcollection  data processing \n" );
-					  MessageBox . Show ( $"Exception in CustCollection  data processing \n" );
-					  foreach ( var item in ae . InnerExceptions )
-					  {
-						  Debug . WriteLine ( $"CustCollection : Exception : {item . Message}, : {item . Data}" );
-					  }
-				  } , CancellationToken . None , TaskContinuationOptions . OnlyOnFaulted , TaskScheduler . FromCurrentSynchronizationContext ( )
-			);
-			//			Debug . WriteLine ( $"CUSTOMER : END OF PROCESSING & Error checking functionality\nCUSTOMER : *** Detcollection total = {Custinternalcollection . Count} ***\n\n" );
+			//t1 . ContinueWith (
+			//	  ( Custinternalcollection ) =>
+			//	  {
+			//			  //					Debug . WriteLine ( $"CUSTOMERS : Task.Run() Completed : Status was [ {Custinternalcollection . Status} ]." );
+			//		  } , CancellationToken . None , TaskContinuationOptions . OnlyOnRanToCompletion , TaskScheduler . FromCurrentSynchronizationContext ( )
+			//);
+			////This will iterate through ALL of the Exceptions that may have occured in the previous Tasks
+			//// but ONLY if there were any Exceptions !!
+			//t1 . ContinueWith (
+			//	  ( Custinternalcollection ) =>
+			//	  {
+			//		  AggregateException ae = t1 . Exception . Flatten ( );
+			//		  Debug . WriteLine ( $"Exception in Custinternalcollection  data processing \n" );
+			//		  MessageBox . Show ( $"Exception in CustCollection  data processing \n" );
+			//		  foreach ( var item in ae . InnerExceptions )
+			//		  {
+			//			  Debug . WriteLine ( $"CustCollection : Exception : {item . Message}, : {item . Data}" );
+			//		  }
+			//	  } , CancellationToken . None , TaskContinuationOptions . OnlyOnFaulted , TaskScheduler . FromCurrentSynchronizationContext ( )
+			//);
+			////			Debug . WriteLine ( $"CUSTOMER : END OF PROCESSING & Error checking functionality\nCUSTOMER : *** Detcollection total = {Custinternalcollection . Count} ***\n\n" );
 
 			#endregion Success//Error reporting/handling
 			Flags . CustCollection = Custinternalcollection;
 			return Custinternalcollection;
-
-			//// Load data fro SQL into dtBank Datatable
-			//CustCollection c = new CustCollection ( );
-			//await c . LoadCustDataSql ( ) . ConfigureAwait ( false );
-			//// this returns "Bankinternalcollection" as a pointer to the correct viewer
-			//await LoadCustomerTest ( ) . ConfigureAwait ( false );
-
-		}
+   		}
 
 		/// Handles the actual conneciton ot SQL to load the Details Db data required
 		/// </summary>
 		/// <returns></returns>
-		public async static Task<DataTable> LoadCustDataSql ( DataTable dt = null , int mode = -1 , bool isMultiMode = false )
+		public  static DataTable LoadCustDataSql ( DataTable dt = null , int mode = -1 , bool isMultiMode = false )
 		//Load data from Sql Server
 		{
 			SqlConnection con;
@@ -234,7 +210,7 @@ namespace WPFPages . Views
 		}
 
 		//**************************************************************************************************************************************************************//
-		private static async Task<AllCustomers> LoadCustomerCollection (DataTable dtCust )
+		private static  AllCustomers LoadCustomerCollection (DataTable dtCust )
 		{
 			int count = 0;
 			Flags . SqlCustActive = true;
@@ -292,7 +268,7 @@ namespace WPFPages . Views
 			//			Custinternalcollection = null;
 			return Custinternalcollection;
 		}
-		public async static Task<AllCustomers> LoadCustomerTest ( bool Notify = true )
+		public  static AllCustomers LoadCustomerTest ( bool Notify = true )
 
 		{
 			int count = 0;

@@ -344,7 +344,6 @@
     <Compile Include="Views\MultiviewListBoxViewers.xaml.cs">
       <DependentUpon>MultiviewListBoxViewers.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewEditdb.cs" />
     <Compile Include="Views\ViewModelBase.cs" />
     <Compile Include="Views\DbSelector.xaml.cs">
       <DependentUpon>DbSelector.xaml</DependentUpon>

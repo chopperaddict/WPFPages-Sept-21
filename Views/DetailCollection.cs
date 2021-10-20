@@ -9,9 +9,11 @@ using System . Security . AccessControl;
 using System . Security . Cryptography;
 using System . Threading;
 using System . Threading . Tasks;
+using System . Timers;
 using System . Windows;
 using System . Windows . Controls . Primitives;
 using System . Windows . Input;
+using System . Windows . Threading;
 
 using WPFPages . ViewModels;
 
@@ -30,88 +32,44 @@ namespace WPFPages . Views
 		public ObservableCollection<DetailsViewModel> DetCollection = new ObservableCollection<DetailsViewModel> ( );
 
 		// working entity to load data into
-		public static DetCollection internalcollection = null;
+		public static DetCollection internalcollection = new DetCollection();
 		public static DataTable dtDetails = new DataTable ( );
-
-		public static async Task<DetCollection> LoadDet ( string caller, int ViewerType = 1, bool NotifyAll = false )
+		private static Stopwatch timer = new Stopwatch();
+		public static void  LoadDet ( string caller , int ViewerType = 1 , bool NotifyAll = false )
 		{
 			bool result = false;
-			object lockobject = new object ( );
 			Notify = NotifyAll;
 			Caller = caller;
 			try
-			{
-				internalcollection = null;
-				internalcollection = new DetCollection ( );
-
+			{					
+				//internalcollection = null;
+				//internalcollection = new DetCollection ( );
+				timer . Start ( );
+				dtDetails . Clear ( );
 				LoadDetailsTaskInSortOrderAsync ( internalcollection );
-				return internalcollection;
+				Console . WriteLine ( $" DETAILS DB - ALL DONE - EXITING DETAILS SQL load : Time elapsed = {timer.ElapsedMilliseconds}" );
 			}
 			catch ( Exception ex )
 			{
-				Debug . WriteLine ( $"Error in Details Load system : {ex . Message} + {ex . Data}" );
+				Debug . WriteLine ( $"Error in Details Load system : {ex . Message} + {ex . Data} Time elapsed = {timer . ElapsedMilliseconds}" );
 			}
-			return null;
+			timer . Stop ( );
+			timer . Reset ( );
+			return;
 		}
 
-		public static async Task<bool> LoadDetailsTaskInSortOrderAsync ( DetCollection internalcollection )
-		{
-			//			NotifyAll = NotifyAll;
-//			bool result = false;
 
+		public static bool LoadDetailsTaskInSortOrderAsync ( DetCollection internalcollection )
+		{
 			if ( dtDetails . Rows . Count > 0 )
 				dtDetails . Clear ( );
 
-			#region process code to load data
-
-			Task t1 = Task . Run (
-				async ( ) =>
-				{
-					Debug . WriteLine ( $"DETCOLLECTION : Calling LOADDETAILSDATASQL()" );
-					await LoadDetailsDataSql ( );
-					Debug . WriteLine ( $"DETCOLLECTION : Completed LOADDETAILSDATASQL()" );
-				}
-				);
-			t1 . ContinueWith
-			(
-				async ( result ) =>
-				{
-					Debug . WriteLine ( $"DETCOLLECTION : Calling LOADDETCOLLECTION()" );
-					await LoadDetCollection ( internalcollection );
-					Debug . WriteLine ( $"DETCOLLECTION : Completed LOADDETCOLLECTION()" );
-				}, TaskScheduler . FromCurrentSynchronizationContext ( )
-			 );
-			;
-
-			#endregion process code to load data
-
-			#region Success//Error reporting/handling
-
-			// Now handle "post processing of errors etc"
-			//This will ONLY run if there were No Exceptions  and it ALL ran successfully!!
-			t1 . ContinueWith (
-				( Detinternalcollection ) =>
-				{
-					//				Debug . WriteLine ( $"DETAILS : Task.Run() Completed : Status was [ {Detinternalcollection . Status} ]." );
-				}, CancellationToken . None, TaskContinuationOptions . OnlyOnRanToCompletion, TaskScheduler . FromCurrentSynchronizationContext ( )
-			);
-			//This will iterate through ALL of the Exceptions that may have occured in the previous Tasks
-			// but ONLY if there were any Exceptions !!
-			t1 . ContinueWith (
-				( Detinternalcollection ) =>
-				{
-					AggregateException ae = t1 . Exception . Flatten ( );
-					Debug . WriteLine ( $"Exception in DetCollection data processing \n" );
-					foreach ( var item in ae . InnerExceptions )
-					{
-						Debug . WriteLine ( $"DetCollection : Exception : {item . Message}, : {item . Data}" );
-					}
-				}, CancellationToken . None, TaskContinuationOptions . NotOnRanToCompletion, TaskScheduler . FromCurrentSynchronizationContext ( )
-			);
-
-			//			Debug . WriteLine ($"DETAILS : END OF PROCESSING & Error checking functionality\nDETAILS : *** Detcollection total = {Detcollection.Count} ***\n\n");
-			#endregion Success//Error reporting/handling
-
+			Debug . WriteLine ( $"DETCOLLECTION : Calling LOADDETAILSDATASQL(),  Time elapsed = {timer . ElapsedMilliseconds}" );
+			LoadDetailsDataSql ( );
+			Debug . WriteLine ( $"DETCOLLECTION : Completed LOADDETAILSDATASQL()" );
+			Debug . WriteLine ( $"DETCOLLECTION : Calling LOADDETCOLLECTION() Time elapsed = {timer . ElapsedMilliseconds}" );
+			LoadDetCollection ( internalcollection );
+			Debug . WriteLine ( $"DETCOLLECTION : Completed LOADDETCOLLECTION()  Time elapsed = { timer . ElapsedMilliseconds}" );
 			return true;
 		}
 
@@ -119,23 +77,15 @@ namespace WPFPages . Views
 		/// </summary>
 		/// <returns></returns>
 		//**************************************************************************************************************************************************************//
-		public static async Task<DataTable> LoadDetailsDataSql ( bool isMultiMode = false )
+		public static DataTable LoadDetailsDataSql ( bool isMultiMode = false )
 		{
-			object bptr = new object ( );
-			Stopwatch st = new Stopwatch ( );
-
-			st . Start ( );
 			SqlConnection con;
 			string ConString = "";
-			string commandline = "";
+			string filterline = "";
 			ConString = ( string ) Properties . Settings . Default [ "BankSysConnectionString" ];
-			Debug . WriteLine ( $"Making new SQL connection in DETAILSCOLLECTION" );
+			Debug . WriteLine ( $"Making new SQL connection in DETAILSCOLLECTION,  Time elapsed = {timer . ElapsedMilliseconds}" );
+			
 			con = new SqlConnection ( ConString );
-			//if ( con== null )
-			//{
-			//	Debug . WriteLine ( $"DETAILCOLLECTION : No SQL Connection, reconnecting ..." );
-			//	con= new SqlConnection ( ConString );
-			//}
 			try
 			{
 				Debug . WriteLine ( $"Using new SQL connection in DETAILSCOLLECTION" );
@@ -144,30 +94,25 @@ namespace WPFPages . Views
 					if ( Flags . IsMultiMode )
 					{
 						// Create a valid Query Command string including any active sort ordering
-						commandline = $"SELECT * FROM SECACCOUNTS WHERE CUSTNO IN "
+						filterline = $"SELECT * FROM SECACCOUNTS WHERE CUSTNO IN "
 							+ $"(SELECT CUSTNO FROM SECACCOUNTS  "
 							+ $" GROUP BY CUSTNO"
 							+ $" HAVING COUNT(*) > 1) ORDER BY ";
-						commandline = Utils . GetDataSortOrder ( commandline );
+						filterline = Utils . GetDataSortOrder ( filterline );
 					}
 					else if ( Flags . FilterCommand != "" )
 					{
-						commandline = Flags . FilterCommand;
+						filterline = Flags . FilterCommand;
 					}
 					else
 					{
 						// Create a valid Query Command string including any active sort ordering
-						commandline = "Select * from SecAccounts  order by ";
-						commandline = Utils . GetDataSortOrder ( commandline );
+						filterline = "Select * from SecAccounts  order by ";
+						filterline = Utils . GetDataSortOrder ( filterline );
 					}
-					SqlCommand cmd = new SqlCommand ( commandline, con );
+					SqlCommand cmd = new SqlCommand ( filterline , con );
 					SqlDataAdapter sda = new SqlDataAdapter ( cmd );
-
-					//					lock (bptr)
-					//					{
 					sda . Fill ( dtDetails );
-					//					}
-					st . Stop ( );
 				}
 			}
 			catch ( Exception ex )
@@ -177,33 +122,32 @@ namespace WPFPages . Views
 			}
 			finally
 			{
+				Console . WriteLine ($" SQL data loaded : Time elapsed = {timer . ElapsedMilliseconds}" );
 				con . Close ( );
 			}
 			return dtDetails;
 		}
 
 		//**************************************************************************************************************************************************************//
-		public static async Task<bool> LoadDetCollection ( DetCollection internalcollection )
+		public static DetCollection LoadDetCollection ( DetCollection internalcollection )
 		{
-			object bptr = new object ( );
 			int count = 0;
-			//			lock (bptr)
-			//			{
 			try
 			{
+				Console . WriteLine ( $" Loading Datable with {dtDetails.Rows.Count} records: Time elapsed = {timer . ElapsedMilliseconds}" );
+				internalcollection . Clear ( );
 				for ( int i = 0 ; i < dtDetails . Rows . Count ; i++ )
 				{
 					internalcollection . Add ( new DetailsViewModel
 					{
-						Id = Convert . ToInt32 ( dtDetails . Rows [ i ] [ 0 ] ),
-						BankNo = dtDetails . Rows [ i ] [ 1 ] . ToString ( ),
-						CustNo = dtDetails . Rows [ i ] [ 2 ] . ToString ( ),
-						AcType = Convert . ToInt32 ( dtDetails . Rows [ i ] [ 3 ] ),
-						Balance = Convert . ToDecimal ( dtDetails . Rows [ i ] [ 4 ] ),
-						IntRate = Convert . ToDecimal ( dtDetails . Rows [ i ] [ 5 ] ),
-						ODate = Convert . ToDateTime ( dtDetails . Rows [ i ] [ 6 ] ),
-						CDate = Convert . ToDateTime ( dtDetails . Rows [ i ] [ 7 ] ),
-						//							Integervalues = dtDetails.Rows[i][8] as DetailsViewModel.Internalclass
+						Id = Convert . ToInt32 ( dtDetails . Rows [ i ] [ 0 ] ) ,
+						BankNo = dtDetails . Rows [ i ] [ 1 ] . ToString ( ) ,
+						CustNo = dtDetails . Rows [ i ] [ 2 ] . ToString ( ) ,
+						AcType = Convert . ToInt32 ( dtDetails . Rows [ i ] [ 3 ] ) ,
+						Balance = Convert . ToDecimal ( dtDetails . Rows [ i ] [ 4 ] ) ,
+						IntRate = Convert . ToDecimal ( dtDetails . Rows [ i ] [ 5 ] ) ,
+						ODate = Convert . ToDateTime ( dtDetails . Rows [ i ] [ 6 ] ) ,
+						CDate = Convert . ToDateTime ( dtDetails . Rows [ i ] [ 7 ] ) ,
 					} );
 					count = i;
 				}
@@ -212,25 +156,26 @@ namespace WPFPages . Views
 			{
 				Debug . WriteLine ( $"DETAILS : ERROR in  LoadDetCollection() : loading Details into ObservableCollection \"DetCollection\" : [{ex . Message}] : {ex . Data} ...." );
 				MessageBox . Show ( $"DETAILS : ERROR in  LoadDetCollection() : loading Details into ObservableCollection \"DetCollection\" : [{ex . Message}] : {ex . Data} ...." );
-				return false;
+				return null;
 			}
 			finally
 			{
 				if ( Notify )
 				{
-					EventControl . TriggerDetDataLoaded ( null,
+					EventControl . TriggerDetDataLoaded ( null ,
 						new LoadedEventArgs
 						{
-							CallerType = "SQLSERVER",
-							CallerDb = Caller,
-							DataSource = internalcollection,
+							CallerType = "SQLSERVER" ,
+							CallerDb = Caller ,
+							DataSource = internalcollection ,
 							RowCount = internalcollection . Count
 						} );
 				}
 			}
-			return true;
+			Console . WriteLine ( $" DETAILS DB Loading () ALL FINISHED : Time elapsed = {timer . ElapsedMilliseconds}" );
+			return internalcollection;
 		}
-		public static DataTable LoadDetailsDirect ( DataTable dtDetails, string Sqlcommand = "Select* from SecAccounts order by CustNo, BankNo" )
+		public static DataTable LoadDetailsDirect ( DataTable dtDetails , string Sqlcommand = "Select* from SecAccounts order by CustNo, BankNo" )
 		{
 			SqlConnection con;
 			string ConString = "";
@@ -266,7 +211,7 @@ namespace WPFPages . Views
 			return dtDetails;
 		}
 
-		public static DetCollection LoadDetailsCollectionDirect ( DetCollection collection, DataTable dtDetails )
+		public static DetCollection LoadDetailsCollectionDirect ( DetCollection collection , DataTable dtDetails )
 		{
 			int count = 0;
 			try
@@ -275,13 +220,13 @@ namespace WPFPages . Views
 				{
 					collection . Add ( new DetailsViewModel
 					{
-						Id = Convert . ToInt32 ( dtDetails . Rows [ i ] [ 0 ] ),
-						BankNo = dtDetails . Rows [ i ] [ 1 ] . ToString ( ),
-						CustNo = dtDetails . Rows [ i ] [ 2 ] . ToString ( ),
-						AcType = Convert . ToInt32 ( dtDetails . Rows [ i ] [ 3 ] ),
-						Balance = Convert . ToDecimal ( dtDetails . Rows [ i ] [ 4 ] ),
-						IntRate = Convert . ToDecimal ( dtDetails . Rows [ i ] [ 5 ] ),
-						ODate = Convert . ToDateTime ( dtDetails . Rows [ i ] [ 6 ] ),
+						Id = Convert . ToInt32 ( dtDetails . Rows [ i ] [ 0 ] ) ,
+						BankNo = dtDetails . Rows [ i ] [ 1 ] . ToString ( ) ,
+						CustNo = dtDetails . Rows [ i ] [ 2 ] . ToString ( ) ,
+						AcType = Convert . ToInt32 ( dtDetails . Rows [ i ] [ 3 ] ) ,
+						Balance = Convert . ToDecimal ( dtDetails . Rows [ i ] [ 4 ] ) ,
+						IntRate = Convert . ToDecimal ( dtDetails . Rows [ i ] [ 5 ] ) ,
+						ODate = Convert . ToDateTime ( dtDetails . Rows [ i ] [ 6 ] ) ,
 						CDate = Convert . ToDateTime ( dtDetails . Rows [ i ] [ 7 ] )
 					} );
 					count = i;
@@ -297,12 +242,12 @@ namespace WPFPages . Views
 			{
 				if ( Notify )
 				{
-					EventControl . TriggerDetDataLoaded ( null,
+					EventControl . TriggerDetDataLoaded ( null ,
 						new LoadedEventArgs
 						{
-							CallerType = "SQLSERVER",
-							CallerDb = Caller,
-							DataSource = internalcollection,
+							CallerType = "SQLSERVER" ,
+							CallerDb = Caller ,
+							DataSource = internalcollection ,
 							RowCount = internalcollection . Count
 						} );
 				}
@@ -361,7 +306,7 @@ namespace WPFPages . Views
 			return dt;
 		}
 
-		public static int ExportDetData ( string path, string dbType )
+		public static int ExportDetData ( string path , string dbType )
 		{
 			int count = 0;
 			string output = "";
@@ -380,10 +325,10 @@ namespace WPFPages . Views
 			Console . WriteLine ( $"Writing results of SQL enquiry to {path} ..." );
 			foreach ( DataRow objRow in ds . Tables [ 0 ] . Rows )
 			{
-				output += ParseDbRow ( "DETAILS", objRow );
+				output += ParseDbRow ( "DETAILS" , objRow );
 				count++;
 			}
-			System . IO . File . WriteAllText ( path, output );
+			System . IO . File . WriteAllText ( path , output );
 			Console . WriteLine ( $"Export of {count - 1} records from the [ {dbType} ] Db has been completed successfully." );
 			return count;
 		}
@@ -395,7 +340,7 @@ namespace WPFPages . Views
 		/// <param name="dbType"></param>
 		/// <param name="objRow"></param>
 		/// <returns></returns>
-		public static string ParseDbRow ( string dbType, DataRow objRow )
+		public static string ParseDbRow ( string dbType , DataRow objRow )
 		{
 			string tmp = "", s = "";
 			string [ ] odat, cdat, revstr;

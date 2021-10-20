@@ -479,6 +479,7 @@
 			HorizontalContentAlignment="Center"
 			IsSynchronizedWithCurrentItem="False"
 			IsTabStop="False"
+			Loaded="BankGrid_Loaded"
 			Margin="0,0,0,8"
 			Padding="-10"
 			PreviewMouseRightButtonDown="BankGrid_PreviewMouseRightButtonDown"
@@ -505,147 +506,7 @@
 
 			<!--#endregion Bank DataGrid Style-->
 
-
-			<!--#region bank Columns-->
-			<DataGrid.Columns>
-
-				<DataGridTemplateColumn				
-					x:Name="ID"
-					Width="40"
-					Header="Id"
-					SortMemberPath="Id">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding Id}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-				<DataGridTemplateColumn
-					x:Name="CUSTNO"
-					Width="100"
-					Header="Customer #"
-					SortMemberPath="CustNo">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding CustNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-
-				<DataGridTemplateColumn
-					x:Name="BANKNO"
-					Width="80"
-					Header="Bank #"
-					SortMemberPath="BankNo" >
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding BankNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-				<DataGridTemplateColumn
-					Width="30"
-					Header="Type"
-					SortMemberPath="AcType" >
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding AcType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-				<DataGridTemplateColumn
-					Width="90"
-					Header="Balance"
-					SortMemberPath="Balance" >
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding Balance, Mode=TwoWay, 
-								UpdateSourceTrigger=LostFocus, StringFormat='£ ##,###,###.00'}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-
-				<DataGridTemplateColumn
-					Width="50"
-					Header="Interest"
-					SortMemberPath="IntRate" >
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding IntRate, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat='0.00'}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-				<!--  CellStyle="{StaticResource CenterText}"  -->
-
-				<!--  the next 2 show 2 ways to format a date - 1 a Converter the other a direct Format string  -->
-				<DataGridTemplateColumn
-					Width="80"
-					Header="Open Date"
-					SortMemberPath="ODate">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding Path=ODate, Converter={StaticResource DateConvert}}" />
-							<!--Text="{Binding Path=ODate, StringFormat='dd/MM/yyyy'}" />-->
-
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-					<DataGridTemplateColumn.CellEditingTemplate>
-						<DataTemplate>
-							<DatePicker SelectedDate="{Binding Path=ODate, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellEditingTemplate>
-				</DataGridTemplateColumn>
-
-				<DataGridTemplateColumn
-					Width="80"
-					Header="Close Date"
-					SortMemberPath="CDate">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								Text="{Binding Path=CDate, Converter={StaticResource DateConvert}}" />
-							<!--Text="{Binding Path=CDate, StringFormat='dd/MM/yyyy'}" />-->
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-					<DataGridTemplateColumn.CellEditingTemplate>
-						<DataTemplate>
-							<DatePicker SelectedDate="{Binding Path=CDate, StringFormat='dd/MM/yyyy', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-						</DataTemplate>
-					</DataGridTemplateColumn.CellEditingTemplate>
-				</DataGridTemplateColumn>
-
-			</DataGrid.Columns>
-			<!--#endregion bankfields-->
-
-
-		</DataGrid>
+   		</DataGrid>
 
 		<!--DataContext="{Binding Bankcollection}"-->
 		<Grid x:Name="DataFields"

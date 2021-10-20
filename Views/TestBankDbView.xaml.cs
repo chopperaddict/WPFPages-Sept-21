@@ -2,6 +2,7 @@
 
 using System;
 using System .Collections .Generic;
+using System . Collections . ObjectModel;
 using System .ComponentModel;
 using System .Diagnostics;
 using System .Linq;
@@ -27,6 +28,14 @@ namespace WPFPages .Views
 	/// </summary>
 	public partial class TestBankDbView : Window
 	{
+		private static readonly DataGridColumn dataGridColumn   ;
+		private DataGridColumn[] DGBankColumnsCollection = {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
+		private DataGridColumn[] DGCustColumnsCollection
+			= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn ,dataGridColumn };
+		private DataGridColumn[] DGDetailsColumnsCollection= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
 
 		public TestBankDbView ( )
 		{
@@ -192,7 +201,7 @@ namespace WPFPages .Views
 
 			await TestBankCollection .LoadBank ( TestBankcollection , "BANKDBVIEW" , 3 , true );
 
-			SaveBttn .IsEnabled = false;
+			//SaveBttn .IsEnabled = false;
 			// Save linkage setting as we need to disable it while we are loading
 			bool tmp = Flags.LinkviewerRecords;
 
@@ -540,20 +549,26 @@ namespace WPFPages .Views
 
 		private void Window_Closing ( object sender , System .ComponentModel .CancelEventArgs e )
 		{
-			if ( ( Flags .LinkviewerRecords == false && IsDirty )
-					|| SaveBttn .IsEnabled )
-			{
-				MessageBoxResult result = MessageBox.Show
-					("You have unsaved changes.  Do you want them saved now ?", "Possible Data Loss", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-				if ( result == MessageBoxResult .Yes )
-				{
-					SaveButton ( );
-				}
-				// Do not want ot save it, so disable  save button again
-				SaveBttn .IsEnabled = false;
-				IsDirty = false;
-			}
-			Flags .BankDbEditor = null;
+			//if ( ( Flags .LinkviewerRecords == false && IsDirty )
+			//		|| SaveBttn .IsEnabled )
+			//{
+			//	MessageBoxResult result = MessageBox.Show
+			//		("You have unsaved changes.  Do you want them saved now ?", "Possible Data Loss", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+			//	if ( result == MessageBoxResult .Yes )
+			//	{
+			//		SaveButton ( );
+			//	}
+			//	// Do not want ot save it, so disable  save button again
+			//	SaveBttn .IsEnabled = false;
+			//	IsDirty = false;
+			//}
+
+			// We must also clear our "loaded" columns, or else it stopsworking
+			ObservableCollection<DataGridColumn> dgc = BankGrid.Columns;
+			dgc . Clear ( );
+
+
+			Flags . BankDbEditor = null;
 			EventControl .EditIndexChanged -= EventControl_EditIndexChanged;
 			// A Multiviewer has changed the current index 
 			EventControl .MultiViewerIndexChanged -= EventControl_EditIndexChanged;
@@ -642,64 +657,64 @@ namespace WPFPages .Views
 			Debug .WriteLine ( $"Current Bank row  (bindex = {bindex}" );
 		}
 
-		private async Task<bool> SaveButton ( object sender = null , RoutedEventArgs e = null )
-		{
-			//inprogress = true;
-			//bindex = this . BankGrid . SelectedIndex;
-			//cindex = this . CustomerGrid . SelectedIndex;
-			//dindex = this . DetailsGrid . SelectedIndex;
+		//private async Task<bool> SaveButton ( object sender = null , RoutedEventArgs e = null )
+		//{
+		//	//inprogress = true;
+		//	//bindex = this . BankGrid . SelectedIndex;
+		//	//cindex = this . CustomerGrid . SelectedIndex;
+		//	//dindex = this . DetailsGrid . SelectedIndex;
 
-			// Get the current rows data
-			IsDirty = false;
-			int CurrentSelection = this.BankGrid.SelectedIndex;
-			this .BankGrid .SelectedItem = this .BankGrid .SelectedIndex;
-			BankAccountViewModel bvm = new BankAccountViewModel();
-			bvm = this .BankGrid .SelectedItem as BankAccountViewModel;
-			if ( bvm == null )
-				return false;
+		//	// Get the current rows data
+		//	IsDirty = false;
+		//	int CurrentSelection = this.BankGrid.SelectedIndex;
+		//	this .BankGrid .SelectedItem = this .BankGrid .SelectedIndex;
+		//	BankAccountViewModel bvm = new BankAccountViewModel();
+		//	bvm = this .BankGrid .SelectedItem as BankAccountViewModel;
+		//	if ( bvm == null )
+		//		return false;
 
-			SaveFieldData ( );
+		//	SaveFieldData ( );
 
-			// update the current rows data content to send  to Update process
-			//bvm.BankNo = Bankno.Text;
-			//bvm.CustNo = Custno.Text;
-			//bvm.AcType = Convert.ToInt32(acType.Text);
-			//bvm.Balance = Convert.ToDecimal(balance.Text);
-			//bvm.ODate = Convert.ToDateTime(odate.Text);
-			//bvm.CDate = Convert.ToDateTime(cdate.Text);
-			// Call Handler to update ALL Db's via SQL
-			SQLHandlers sqlh = new SQLHandlers();
-			await sqlh .UpdateDbRow ( "BANKACCOUNT" , bvm );
+		//	// update the current rows data content to send  to Update process
+		//	//bvm.BankNo = Bankno.Text;
+		//	//bvm.CustNo = Custno.Text;
+		//	//bvm.AcType = Convert.ToInt32(acType.Text);
+		//	//bvm.Balance = Convert.ToDecimal(balance.Text);
+		//	//bvm.ODate = Convert.ToDateTime(odate.Text);
+		//	//bvm.CDate = Convert.ToDateTime(cdate.Text);
+		//	// Call Handler to update ALL Db's via SQL
+		//	SQLHandlers sqlh = new SQLHandlers();
+		//	await sqlh .UpdateDbRow ( "BANKACCOUNT" , bvm );
 
-			TestBankcollection = null;
-			TestBankCollection bank = new TestBankCollection();
-			TestBankcollection = await bank .ReLoadBankData ( );
+		//	TestBankcollection = null;
+		//	TestBankCollection bank = new TestBankCollection();
+		//	TestBankcollection = await bank .ReLoadBankData ( );
 
-			//			Debug . WriteLine ( $" 4-3 *** TRACE *** BANKDBVIEW : SaveButton BANKACCOUNT - Sending TriggerBankDataLoaded Event trigger" );
-			//			SendDataChanged ( null, this . BankGrid, "BANKACCOUNT" );
+		//	//			Debug . WriteLine ( $" 4-3 *** TRACE *** BANKDBVIEW : SaveButton BANKACCOUNT - Sending TriggerBankDataLoaded Event trigger" );
+		//	//			SendDataChanged ( null, this . BankGrid, "BANKACCOUNT" );
 
-			//EventControl.TriggerViewerDataUpdated(TestBankcollection,
-			//	new LoadedEventArgs
-			//	{
-			//		CallerType = "BANKDBVIEW",
-			//		CallerDb = "BANKACCOUNT",
-			//		DataSource = TestBankcollection,
-			//		RowCount = this.BankGrid.SelectedIndex
-			//	});
+		//	//EventControl.TriggerViewerDataUpdated(TestBankcollection,
+		//	//	new LoadedEventArgs
+		//	//	{
+		//	//		CallerType = "BANKDBVIEW",
+		//	//		CallerDb = "BANKACCOUNT",
+		//	//		DataSource = TestBankcollection,
+		//	//		RowCount = this.BankGrid.SelectedIndex
+		//	//	});
 
-			//Gotta reload our data because the update clears it down totally to null
-			//this . BankGrid . SelectedIndex = CurrentSelection;
-			//this . BankGrid . SelectedItem = CurrentSelection;
-			//this . BankGrid . Refresh ( );
+		//	//Gotta reload our data because the update clears it down totally to null
+		//	//this . BankGrid . SelectedIndex = CurrentSelection;
+		//	//this . BankGrid . SelectedItem = CurrentSelection;
+		//	//this . BankGrid . Refresh ( );
 
-			//this . BankGrid . ItemsSource = null;
-			//this . BankGrid . ItemsSource = TestBankcollection;
-			//this . BankGrid . Refresh ( );
+		//	//this . BankGrid . ItemsSource = null;
+		//	//this . BankGrid . ItemsSource = TestBankcollection;
+		//	//this . BankGrid . Refresh ( );
 
-			SaveBttn .IsEnabled = false;
-			IsDirty = false;
-			return true;
-		}
+		//	SaveBttn .IsEnabled = false;
+		//	IsDirty = false;
+		//	return true;
+		//}
 
 
 		/// <summary>
@@ -744,7 +759,7 @@ namespace WPFPages .Views
 
 		private void SaveBtn ( object sender , RoutedEventArgs e )
 		{
-			SaveButton ( sender , e );
+			//SaveButton ( sender , e );
 		}
 
 		private void LinkRecords_Click ( object sender , RoutedEventArgs e )
@@ -1006,7 +1021,7 @@ namespace WPFPages .Views
 		private void Edit_LostFocus ( object sender , RoutedEventArgs e )
 		{
 			IsDirty = true;
-			SaveBttn .IsEnabled = true;
+			//SaveBttn .IsEnabled = true;
 		}
 		#region KEYHANDLER for EDIT fields
 
@@ -1274,8 +1289,8 @@ namespace WPFPages .Views
 
 		private void CompareFieldData ( )
 		{
-			if ( SaveBttn == null )
-				return;
+//			if ( SaveBttn == null )
+//				return;
 			//if (_bankno != Bankno.Text)
 			//	SaveBttn.IsEnabled = true;
 			//if (_custno != Custno.Text)
@@ -1289,8 +1304,8 @@ namespace WPFPages .Views
 			//if (_cdate != cdate.Text)
 			//	SaveBttn.IsEnabled = true;
 
-			if ( SaveBttn .IsEnabled )
-				IsDirty = true;
+//			if ( SaveBttn .IsEnabled )
+//				IsDirty = true;
 		}
 
 		private void ContextShowJson_Click ( object sender , RoutedEventArgs e )
@@ -1398,6 +1413,24 @@ namespace WPFPages .Views
 			Close ( );
 		}
 
+		private void BankGrid_Loaded ( object sender , RoutedEventArgs e )
+		{
+			int counter = 0;
+			if ( BankGrid . Columns . Count == 0 )
+			{
+				DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGMultiBankColumns" );
+				DataGridUtilities . LoadDataGridTextColumns ( BankGrid , "DGMultiBankTextColumns" );
+			}
+			//Saved default Columns layout
+			foreach ( var item in BankGrid . Columns )
+			{
+				DGBankColumnsCollection [ counter++ ] = item;
+			}
+			DataGridSupport . SortBankColumns ( BankGrid , DGBankColumnsCollection );
 
+			//DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGMultiBankColumns" );
+			//DataGridUtilities . LoadDataGridTextColumns ( BankGrid , "DGMultiBankTextColumns" );
+			//DataGridSupport . SortBankColumns ( BankGrid ,DGBankColumnsCollection );
+		}
 	}
 }

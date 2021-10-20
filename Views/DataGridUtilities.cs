@@ -10,7 +10,7 @@ namespace WPFPages . Views
 {
         public static class DataGridUtilities
         {
-                public static void LoadDataGridColumns ( object sender, RoutedEventArgs e )
+                public static void LoadDataGridColumns ( object sender, string ColumnsTemplate )
                 {
                         //This works just fine
                         // Load  the BANKACCOUNT columns definitions from the Resourcefile "BankDataGridColumns.xaml"
@@ -18,7 +18,7 @@ namespace WPFPages . Views
                         if ( dg . Columns . Count == 0 )
                         {
                                 // Get columns setup from an x:Array stored in Resources somewhere.
-                                DataGridColumn [ ] columns = dg . FindResource ( "DGColumns" ) as DataGridColumn [ ];
+                                DataGridColumn [ ] columns = dg . FindResource ( ColumnsTemplate ) as DataGridColumn [ ];
                                 dg . Columns . Clear ( );
                                 try
                                 {
@@ -33,31 +33,31 @@ namespace WPFPages . Views
                                 }
                         }
                 }
-                public static void LoadDataGridColumns2 ( object sender, RoutedEventArgs e )
-                {
-                        //This works just fine
-                        // Load  the CUSTOMER columns definitions from the Resourcefile "BankDataGridColumns.xaml"
-                        DataGrid dg2 = sender as DataGrid;
-                  if ( dg2 . Columns . Count == 0 )
-                  {
-                        dg2 . Columns . Clear ( );
-                        dg2 . ItemsSource = null;
-                        dg2 . Items . Clear ( );
-                  }
-                        // Get columns setup from an x:Array stored in Resources somewhere.
-                        DataGridColumn [ ] columns2 = dg2 . FindResource ( "DGColumns2" ) as DataGridColumn [ ];
-                        //dg2 . Columns . Clear ( );
-                        try
-                        {
-                                foreach ( var item2 in columns2 )
-                                {
-                                        dg2 . Columns . Add ( item2 );
-                                }
-                        }
-                        catch
-                        {
+		public static void LoadDataGridTextColumns ( object sender , string TextColumnsTemplate )
+		{
+			//This works just fine
+			// Load  the CUSTOMER columns definitions from the Resourcefile "BankDataGridColumns.xaml"
+			DataGrid dg2 = sender as DataGrid;
+			//if ( dg2 . Columns . Count == 0 )
+			//{
+			//	dg2 . Columns . Clear ( );
+			//	dg2 . ItemsSource = null;
+			//	dg2 . Items . Clear ( );
+			//}
+			//// Get columns setup from an x:Array stored in Resources somewhere.
+			DataGridTextColumn [ ] columns = dg2 . FindResource ( TextColumnsTemplate ) as DataGridTextColumn [ ];
+			//dg2 . Columns . Clear ( );
+			try
+			{
+				foreach ( var item2 in columns )
+				{
+					dg2 . Columns . Add ( item2 );
+				}
+			}
+			catch
+			{
 
-                        }
-                }
-        }
+			}
+		}
+	}
 }

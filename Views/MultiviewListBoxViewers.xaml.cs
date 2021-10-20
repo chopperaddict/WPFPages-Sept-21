@@ -44,6 +44,16 @@ namespace WPFPages . Views
 		public List<CustomerViewModel> CustList = new List<CustomerViewModel>();
 		public List<DetailsViewModel> DetList = new List<DetailsViewModel>();
 
+		private static readonly DataGridColumn dataGridColumn   ;
+		private DataGridColumn[] DGBankColumnsCollection = {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
+		private DataGridColumn[] DGCustColumnsCollection
+			= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn ,dataGridColumn };
+		private DataGridColumn[] DGDetailsColumnsCollection= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn };
+
+
 		private bool ExpandAll = false;
 		private bool MouseLeftBtnDown = false;
 		//CURRENT Foreground color
@@ -247,11 +257,13 @@ namespace WPFPages . Views
 			this . Show ( );
 			Utils . SetupWindowDrag ( this );
 			Flags . SqlBankActive = true;
-			DataGridUtilities . LoadDataGridColumns ( datagrid, e );
-			DataGridUtilities . LoadDataGridColumns2 ( datagrid2, e );
+			
+			// Load Columns layout BEFORE loading data
+			DataGridUtilities . LoadDataGridColumns ( datagrid, "DGColumns" );
+			DataGridUtilities . LoadDataGridColumns ( datagrid2, "DGColumns2" );
 
 			await BankCollection . LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
-			await AllCustomers . LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
+			AllCustomers . LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
 
 			uclistboxheight = UCListbox . ActualHeight;
 			uclistbox2height = UCListbox2 . ActualHeight;
@@ -405,7 +417,7 @@ namespace WPFPages . Views
 			//UCListbox2 . Items . Clear ( );
 			////Reload data for both types
 			//await BankCollection . LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
-			//await AllCustomers . LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
+			//AllCustomers . LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
 		}
 
 		private void LbiExpander_Expanded ( object sender , RoutedEventArgs e )
@@ -1307,20 +1319,6 @@ namespace WPFPages . Views
 			DropDataGridData ddg = new DropDataGridData();
 			ddg . Show ( );
 		}
-
-		private void LoadColumns ( object sender , RoutedEventArgs e )
-		{
-			//This calls the Datagrid utilities file DataGridUtilities.CS
-			DataGridUtilities . LoadDataGridColumns ( sender , e );
-
-		}
-
-		private void LoadColumns2 ( object sender , RoutedEventArgs e )
-		{
-			DataGridUtilities . LoadDataGridColumns2 ( sender , e );
-
-		}
-
 		private void CloseBtn_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
 			this . Close ( );
