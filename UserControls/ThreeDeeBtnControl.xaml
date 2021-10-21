@@ -396,7 +396,7 @@
                                           <Setter TargetName="Pressed" Property="Visibility" Value="Visible" />
 
                                           <!--Hide button side when button down-->
-                                          <Setter TargetName="H3" Property="Height" Value="{Binding PressedHoleHeight, RelativeSource={RelativeSource FindAncestor,	AncestorType=local:ThreeDeeBtnControl}}" />
+                                          <Setter TargetName="H3" Property="Height" Value="{Binding PressedHoleHeight, RelativeSource={RelativeSource FindAncestor, AncestorType=local:ThreeDeeBtnControl}}" />
                                           <!--/ Handle Text Vertical position on Mouseover //-->
                                           <Setter TargetName="Btn6Content" Property="Margin" Value="0 10  0  0" />
                                     </DataTrigger>

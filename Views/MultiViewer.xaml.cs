@@ -94,6 +94,10 @@ namespace WPFPages . Views
 			WaitMessage . SelectedIndex = 0;
 			WaitMessage . SelectedItem = 0;
 			WaitMessage . CurrentItem = 1;
+			ColumnSelection . Items . Add ( 0 );
+			ColumnSelection . Items . Add ( 1 );
+			ColumnSelection . Items . Add ( 2 );
+
 			WaitMessage . Refresh ( );
 			this . Refresh ( );
 		}
@@ -104,10 +108,7 @@ namespace WPFPages . Views
 
 			Mouse . OverrideCursor = Cursors . Wait;
 			inprogress = true;
-			//DataGridUtilities . LoadDataGridColumns ( CustomerGrid , "DGMultiCustomerColumns" );
-			//DataGridUtilities . LoadDataGridTextColumns ( CustomerGrid , "DGMultiCustomerTextColumns" );
-			//DataGridSupport.SortCustomerColumns ( CustomerGrid, DGCustColumnsCollection );
-
+	
 			if ( CustomerGrid . Columns . Count == 0 )
 			{
 				DataGridUtilities . LoadDataGridColumns ( CustomerGrid , "DGMultiCustomerColumns" );
@@ -118,11 +119,6 @@ namespace WPFPages . Views
 			{
 				DGCustColumnsCollection [ counter++ ] = item;
 			}
-
-			//DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGMultiBankColumns" );
-			//DataGridUtilities . LoadDataGridTextColumns ( BankGrid , "DGMultiBankTextColumns" );
-			//DataGridSupport . SortBankColumns ( BankGrid , DGBankColumnsCollection );
-
 			if ( BankGrid . Columns . Count == 0 )
 			{
 				DataGridUtilities . LoadDataGridColumns ( BankGrid , "DGMultiBankColumns" );
@@ -135,15 +131,10 @@ namespace WPFPages . Views
 				DGBankColumnsCollection [ counter++ ] = item;
 			}
 			DataGridSupport . SortBankColumns ( BankGrid , DGBankColumnsCollection );
-
-			//DataGridUtilities . LoadDataGridColumns ( DetailsGrid , "DGMultiDetailsColumns" );
-			//DataGridUtilities . LoadDataGridTextColumns ( DetailsGrid , "DGMultiDetailsTextColumns" );
-			//DataGridSupport . SortDetailsColumns ( DetailsGrid , DGDetailsColumnsCollection );
 			counter = 0;
 			if ( DetailsGrid . Columns . Count == 0 )
 			{
 				DataGridUtilities . LoadDataGridColumns ( DetailsGrid , "DGDetailsColumns1" );
-				//DataGridUtilities . LoadDataGridTextColumns ( DetailsGrid , "DGDetailsTextColumns1" );
 			}
 			//Saved default Columns layout
 			foreach ( var item in DetailsGrid . Columns )
@@ -2936,6 +2927,33 @@ namespace WPFPages . Views
 		}
 		public scrollData ScrollData = new scrollData ( );
 
+		private void Columns_SelectionChanged ( object sender , SelectionChangedEventArgs e )
+		{
+			ListBox lb = sender as ListBox;
+			var  Content = lb . SelectedItem;
+			//ListBoxItem lbi = Content as  ListBoxItem;
+			var selection = int.Parse(Content.ToString());
+			if ( selection >= 0 && selection <= 2 )
+			{
+				//if ( CurrentDb == "BANKACCOUNT" )
+				//{
+					//					int[] sortorder = { 2,3,1,5,4,7,6,0};
+					DataGridSupport . SortBankColumns ( BankGrid , DGBankColumnsCollection , selection );
+					BankGrid . Refresh ( );
+				//}
+				//if ( CurrentDb == "CUSTOMER" )
+				//{
+					DataGridSupport . SortCustomerColumns ( CustomerGrid , DGCustColumnsCollection , selection );
+					CustomerGrid . Refresh ( );
+				//}
+				//if ( CurrentDb == "DETAILS" )
+				//{
+					DataGridSupport . SortDetailsColumns ( DetailsGrid , DGDetailsColumnsCollection , selection );
+					DetailsGrid . Refresh ( );
+				//}
+				//				DisplayType  = value . ToString ( );
+			}
 
+		}
 	}
 }

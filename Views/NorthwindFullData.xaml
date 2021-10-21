@@ -118,7 +118,7 @@
                   <RowDefinition Height="1*" />
                   <RowDefinition Height="25" />
                   <RowDefinition Height="0.6*" />
-                  <RowDefinition Height="70" />
+                  <RowDefinition Height="100" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="10" />
@@ -1051,43 +1051,27 @@
 			TextColor="{StaticResource Red5}"
 			/>-->
             <local:ThreeDeeBtnControl    x:Name="Btn1"
-				     Click="Btn2_Click"
-					FontDecoration="Bold"
-				     FontWeight="Bold"
-				     RotateAngle="5"
-					TextHeight ="17"
-					BtnText="Close"
-					Height="Auto"
-					Width="Auto"
-					BtnTextColor="{StaticResource White0}"
-					BtnTextColorDown="{StaticResource Yellow0}"
-					BtnBorder="{StaticResource Magenta0}"
-					BorderWidth="0"
-					FillTop="{DynamicResource MultiRedRadial}"
-					FillSide="{StaticResource Red4}"
-					FillHole="{StaticResource Black0}" Margin="27,10,0,10" Grid.Column="6" Grid.Row="8" />
-            <!--<Button
-			Width="80"
-			Height="40"
-				Grid.Column="5" Grid.Row="8"
-			Margin="70,0,0,0"
-			Background="Green"
-			FontSize="18"
-			Content="Import"
-			Click="Import_Click"
-			Foreground="White" />-->
-            <!--Command="{Binding Command, Source={StaticResource Commands}}"-->
-            <!--<Button
-			Width="180"
-			\Click="ShowSelectedView_Click"
-			Height="40"
-			Grid.Column="5" Grid.Row="8"
-			Margin="-49,15,0,15"
-			Background="Blue"
-			FontSize="18"
-			Content="Selected Item View"
-			Foreground="White" HorizontalAlignment="Left" />-->
-
+                  BorderWidth="0"
+                  BtnTextColorDown="{StaticResource Yellow0}"
+                  BtnBorder="{StaticResource Magenta0}"
+                  BtnTextColor="{StaticResource White0}"
+                  BtnText="Close"
+                  Click="Btn2_Click"
+                  FillTop="{DynamicResource MultiRedRadial}"
+                  FillSide="{StaticResource Red4}"
+                  FillHole="{StaticResource Black0}" 
+                  FontDecoration="Bold"
+                  FontWeight="Bold"
+			Grid.Column="6" 
+			Grid.Row="8" 
+                  Height="87"
+			Margin="17,10,0,10" 
+		     PressedHoleHeight="10"
+                  RotateAngle="5"
+                  TextHeight ="17"
+                  Width="130"
+						     />
+   
             <local:ThreeDeeBtnControl    x:Name="Export"
 				Click="Export_Click"
 				FontDecoration="Bold"
@@ -1095,15 +1079,15 @@
 			     RotateAngle="5"
 				TextHeight ="17"
 				BtnText="Export"
-				Height="Auto"
-				Width="Auto"
-				BtnTextColor="{StaticResource Red1}"
+				Height="67"
+                  Width="110"
+						     BtnTextColor="{StaticResource Red1}"
 				BtnTextColorDown="{StaticResource Yellow0}"
 				BtnBorder="{StaticResource Magenta0}"
 				BorderWidth="0"
 				FillTop="{DynamicResource MultiYellowRadial}"
 				FillSide="{StaticResource Orange2}"
-				FillHole="{StaticResource Black0}" Margin="218,10,118,10" Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="2" />
+				FillHole="{StaticResource Black0}" Margin="198,10,118,10" Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="2" />
             <local:ThreeDeeBtnControl    x:Name="Import"
 			  Click="Import_Click"
 			  FontDecoration="Bold"
@@ -1111,31 +1095,37 @@
 			  TextHeight ="17"
 			     RotateAngle="5"
 			  BtnText="Import"
-			  Height="Auto"
-			  Width="Auto"
-			  BtnTextColor="{StaticResource White0}"
+			  Height="67"
+                  Width="110"
+			BtnTextColor="{StaticResource White0}"
 			  BtnTextColorDown="{StaticResource Yellow0}"
 			  BtnBorder="{StaticResource Gray1}"
 			  BorderWidth="1"
 			  FillTop="{DynamicResource MultiBlueRadial}"
 			  FillSide="{StaticResource Cyan4}"
-			  FillHole="{StaticResource Black0}" Margin="99,9,87,11" Grid.Column="5" Grid.Row="8" />
-            <local:ThreeDeeBtnControl    x:Name="Individual"
-			  Click="ShowSelectedView_Click"
-			  FontDecoration="Bold"
-			     FontWeight="Bold"
-			  TextHeight ="17"
-			     RotateAngle="5"
-			  BtnText="Individual"
-			  Height="Auto"
-			  Width="Auto"
-			  BtnTextColor="{StaticResource White0}"
-			  BtnTextColorDown="{StaticResource Yellow0}"
-			  BtnBorder="{StaticResource Gray1}"
-			  BorderWidth="1"
-			  FillTop="{DynamicResource MultiGreenRadial}"
-			  FillSide="{StaticResource Green7}"
-			  FillHole="{StaticResource Black0}" Margin="68,9,208,11" Grid.Column="3" Grid.Row="8" Grid.ColumnSpan="3" />
-            <!--#endregion buttons-->
+			  FillHole="{StaticResource Black0}" Margin="79,9,87,11" Grid.Column="5" Grid.Row="8" />
+		<local:ThreeDeeBtnControl    x:Name="Individual"
+                  BorderWidth="1"
+                  BtnText="Individual"
+                  BtnTextColor="{StaticResource White0}"
+                  BtnTextColorDown="{StaticResource Yellow0}"
+                  BtnBorder="{StaticResource Gray1}"
+                  Click="ShowSelectedView_Click"
+                  FillTop="{DynamicResource MultiGreenRadial}"
+                  FillSide="{StaticResource Green7}"
+                  FillHole="{StaticResource Black0}" 
+                  FontDecoration="Bold"
+                  FontWeight="Bold"
+                  Grid.Column="3" 
+                  Grid.Row="8" 
+                  Grid.ColumnSpan="3" 
+                  Height="67"
+                  Margin="48,9,208,11" 
+                  TextHeight ="17"
+                  RotateAngle="5"
+                  Width="110"
+						     />
+		
+		<!--#endregion buttons-->
       </Grid>
 </Window>

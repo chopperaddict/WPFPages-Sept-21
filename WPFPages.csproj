@@ -385,11 +385,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DataTemplates\ListViewDataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\ListViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplates\TextBlockStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dicts\AppButtonsDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dicts\BankDataGridColumns.xaml">
+    <Page Include="Dicts\DataGridColumns.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -422,6 +434,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DataGridStyles\NWStyleTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dicts\ListBoxStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -809,7 +825,6 @@
     <None Include="DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
-    <None Include="Design\projectGuides.guides" />
     <None Include="Snippets\Propchanged.snippet" />
     <None Include="ViewModels\Icons\calls-record.icns" />
     <None Include="ViewModels\Icons\cloud.icns" />
@@ -864,6 +879,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />
+    <Folder Include="Design\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <ItemGroup>

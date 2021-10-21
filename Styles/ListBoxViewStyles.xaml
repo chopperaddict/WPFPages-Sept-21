@@ -2,16 +2,16 @@
 		xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" 
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	
-	<!--  Style for ListBoxItems in (Top) viewer listbox  -->
+	<!--  Style for ListBoxItems in (Top) viewer listbox  --><!--
 	<Style x:Key="_ListBoxItemStyle1" TargetType="ListBoxItem">
-		<!--<Setter Property="Background" Value="{StaticResource Gray2}" />-->
-		<!--<Setter Property="Foreground" Value="{StaticResource Black0}" />-->
+		--><!--<Setter Property="Background" Value="{StaticResource Gray2}" />-->
+		<!--<Setter Property="Foreground" Value="{StaticResource Black0}" />--><!--
 		<Setter Property="FontWeight" Value="Normal" />
 		<Setter Property="FontSize" Value="14" />
 		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 		<Setter Property="Width" Value="{Binding Path=Width, ElementName=ViewersList}" />
 
-		<!--Remove focus rectangle - IT WORKS-->
+		--><!--Remove focus rectangle - IT WORKS--><!--
 		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
 		<Setter Property="Template">
@@ -87,7 +87,7 @@
 		</Setter>
 	</Style>
 
-	<!--// Default ListView Style-->
+	--><!--// Default ListView Style--><!--
 	<Style x:Key="ListViewStyle12" TargetType="{x:Type ListView}">
 		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
 		<Setter Property="BorderBrush" Value="{StaticResource ListBorder}"/>
@@ -140,9 +140,9 @@
 	<SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#3D26A0DA"/>
 	<SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF26A0DA"/>
 
-	<!--<SolidColorBrush x:Key="fground" Color="Black"/>-->
+	--><!--<SolidColorBrush x:Key="fground" Color="Black"/>-->
 
-	<!--//Default (GENERIC DATA) style for ListViewItems-->
+	<!--//Default (GENERIC DATA) style for ListViewItems--><!--
 	<Style x:Key="lvItemStyle1" TargetType="{x:Type ListViewItem}">
 		<Setter Property="SnapsToDevicePixels" Value="True"/>
 		<Setter Property="Padding" Value="4,1"/>
@@ -209,7 +209,7 @@
 	</Style>
 
 	<Style x:Key="ListViewStyle1" TargetType="{x:Type ListView}">
-		<!--<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>-->
+		--><!--<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>--><!--
 		<Setter Property="Background" Value="{DynamicResource Red5}"/>
 		<Setter Property="BorderBrush" Value="{StaticResource ListBorder}"/>
 		<Setter Property="BorderThickness" Value="1"/>
@@ -239,25 +239,25 @@
 							</MultiTrigger.Conditions>
 							<Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
 						</MultiTrigger>
-						<!--<MultiTrigger>
+						--><!--<MultiTrigger>
                                                 <MultiTrigger.Conditions>
                                                       <Condition Property="IsSelected" Value="true"/>
                                                       <Condition Property="Background" Value="{StaticResource Red0}"/>
                                                       <Condition Property="Foreground" Value="{StaticResource Yellow0}"/>
                                                 </MultiTrigger.Conditions>
                                                 <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
-                                          </MultiTrigger>-->
+                                          </MultiTrigger>--><!--
 						<MultiTrigger>
 							<MultiTrigger.Conditions>
 								<Condition Property="IsMouseOver" Value="true"/>
 							</MultiTrigger.Conditions>
 							<Setter Property="Background" Value="{StaticResource Red4}"/>
-							<!--<Setter Property="Foreground" Value="{StaticResource White0}"/>-->
+							--><!--<Setter Property="Foreground" Value="{StaticResource White0}"/>--><!--
 						</MultiTrigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
-	</Style>
+	</Style>-->
 
 </ResourceDictionary>

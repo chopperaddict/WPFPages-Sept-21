@@ -104,9 +104,6 @@ namespace WPFPages . UserControls
 		#region Dependency Properties
 
 		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-		/// <summary>
-		/// Dependency property = Fill() for the the Ellipse !
-		/// </summary>
 		public Brush FillColor
 		{
 			get
@@ -115,26 +112,14 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-//				SetValue ( FillColorProperty , value );
-//				OnPropertyChanged ( "FillColor" );
-//				Ellipse9 . Fill = FillColor;
-//				BtnText . Foreground = MouseoverTextColor;
-//				BtnText . Text = MouseoverButtonText;
-//				Ellipse9 . UpdateLayout ( );
+				SetValue ( FillColorProperty , value );
 			}
 		}
-
 		public static readonly DependencyProperty FillColorProperty =
 			DependencyProperty . RegisterAttached ( "FillColor",
 			typeof ( Brush ),
 			typeof ( CloseReturnButton ),
 			new PropertyMetadata ( default) );
-
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-		/// <summary>
-		/// Dependency property = Fill() for the the Ellipse !
-		/// </summary>
 		public Brush MouseOverColor
 		{
 			get
@@ -143,22 +128,14 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-				//SetValue ( MouseOverColorProperty, value );
-				//OnPropertyChanged ( "MouseOverColor" );
-//				Ellipse9 . Fill = MouseOverColor;
-				//BtnText . Foreground = MouseoverTextColor;
-				//BtnText . Text = MouseoverButtonText;
-//				Ellipse9 . UpdateLayout ( );
+				SetValue ( MouseOverColorProperty, value );
 			}
 		}
-
 		public static readonly DependencyProperty MouseOverColorProperty =
 			DependencyProperty . RegisterAttached ( "MouseOverColor",
 			typeof ( Brush ),
 			typeof ( CloseReturnButton ),
 			new PropertyMetadata ( default) );
-
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 		//// Button's standard text color
 		public Brush TextColor
@@ -170,12 +147,6 @@ namespace WPFPages . UserControls
 			set
 			{
 				SetValue ( TextColorProperty , value );
-				//OnPropertyChanged ( "TextColor" );
-//				SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				                        //Ellipse9 . Fill = sb;
-//								BtnText . Foreground = TextColor;
-//				BtnText . Text = MouseoverButtonText;
-//				Ellipse9 . UpdateLayout ( );
 			}
 		}    
 		public static readonly DependencyProperty TextColorProperty =
@@ -194,8 +165,6 @@ namespace WPFPages . UserControls
 				return true;
 		}
 
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
 		//// Ellipse Button's text color on mouseover
 		public Brush MouseoverTextColor
 		{
@@ -205,14 +174,7 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-				//SetValue ( MouseoverTextColorProperty , value );
-				//OnPropertyChanged ( "MouseOverTextColor" );
-
-				//SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//Ellipse9 . Fill = sb;
-//				BtnText . Foreground = MouseoverTextColor;
-				//BtnText . Text = MouseoverButtonText;
-//				Ellipse9 . UpdateLayout ( );
+				SetValue ( MouseoverTextColorProperty , value );
 			}
 		}
 		public static readonly DependencyProperty MouseoverTextColorProperty =
@@ -221,7 +183,6 @@ namespace WPFPages . UserControls
 				typeof ( CloseReturnButton ),
 				new PropertyMetadata ( default )
 				);
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 		public Brush ColorBackground
 		{
@@ -229,13 +190,7 @@ namespace WPFPages . UserControls
 			{ return ( Brush ) GetValue ( ColorBackgroundProperty ); }
 			set
 			{
-				//SetValue ( ColorBackgroundProperty , value );
-				//OnPropertyChanged ( "ColorBackground" );
-				//SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//Ellipse9 . Fill = sb;
-				//BtnText . Foreground = MouseoverTextColor;
-				//BtnText . Text = MouseoverButtonText;
-				//Ellipse9 . UpdateLayout ( );
+				SetValue ( ColorBackgroundProperty , value );
 			}
 		}
 		//// Enclosing Grid Background color
@@ -245,9 +200,6 @@ namespace WPFPages . UserControls
 				typeof ( CloseReturnButton ),
 				new UIPropertyMetadata ( default ));
 
-
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
 		public string ButtonText
 		{
 			get
@@ -256,13 +208,7 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-				//SetValue ( ButtonTextProperty , value );
-				//OnPropertyChanged ( "ButtonText" );
-				////SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//Ellipse9 . Fill = sb;
-				//BtnText . Foreground = MouseoverTextColor;
-//				BtnText . Text = ButtonText;
-//				Ellipse9 . UpdateLayout ( );
+				SetValue ( ButtonTextProperty , value );
 			}
 		}
 		//// Ellipse Button's text
@@ -273,8 +219,6 @@ namespace WPFPages . UserControls
 				new PropertyMetadata ( default) 
 				);
 
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
 		public string MouseoverButtonText
 		{
 			get
@@ -283,13 +227,7 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-				//SetValue ( MouseoverButtonTextProperty , value );
-				//OnPropertyChanged ( "MouseoverButtonText" );
-				//SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//Ellipse9 . Fill = sb;
-				//BtnText . Foreground = MouseoverTextColor;
-				//BtnText . Text = MouseoverButtonText;
-				//Ellipse9 . UpdateLayout ( );
+				SetValue ( MouseoverButtonTextProperty , value );
 			}
 		}
 		//// Ellipse Button's text
@@ -299,8 +237,6 @@ namespace WPFPages . UserControls
 				typeof ( CloseReturnButton ),
 				new PropertyMetadata ( default )
 				);
-	
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 		////// Ellipse Border color
 		public Brush BorderColor
 		{
@@ -310,13 +246,7 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-				//SetValue ( BorderColorProperty , value as Brush );
-				//OnPropertyChanged ( "BorderColor" );
-				//	SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//	Ellipse9 . Fill = sb;
-				//	BtnText . Foreground = MouseoverTextColor;
-				//	BtnText . Text = MouseoverButtonText;
-				//	Ellipse9 . UpdateLayout ( );
+				SetValue ( BorderColorProperty , value as Brush );
 			}
 		}
 		public static readonly DependencyProperty BorderColorProperty =
@@ -325,7 +255,6 @@ namespace WPFPages . UserControls
 				typeof ( CloseReturnButton ),
 				new PropertyMetadata ( default)
 				);
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 		////// Ellipse Border width
 		public double StrokeWidth
@@ -336,13 +265,7 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-//				SetValue ( StrokeWidthProperty , ( double ) value );
-//				OnPropertyChanged ( "StrokeWidth" );
-				//SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//Ellipse9 . Fill = sb;
-				//BtnText . Foreground = MouseoverTextColor;
-				//BtnText . Text = MouseoverButtonText;
-				//Ellipse9 . UpdateLayout ( );
+				SetValue ( StrokeWidthProperty , ( double ) value );
 			}
 		}
 		public static readonly DependencyProperty StrokeWidthProperty =
@@ -352,7 +275,6 @@ namespace WPFPages . UserControls
 				new PropertyMetadata ( (double)1 )
 				);
 
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 		////// Ellipse Font Size
 		public int FontHeight
@@ -363,13 +285,7 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-				//				SetValue ( StrokeWidthProperty , ( double ) value );
-				//				OnPropertyChanged ( "StrokeWidth" );
-				//SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//Ellipse9 . Fill = sb;
-				//BtnText . Foreground = MouseoverTextColor;
-				//BtnText . Text = MouseoverButtonText;
-				//Ellipse9 . UpdateLayout ( );
+				SetValue ( StrokeWidthProperty , ( double ) value );
 			}
 		}
 		public static readonly DependencyProperty FontHeightProperty=
@@ -379,7 +295,6 @@ namespace WPFPages . UserControls
 				new PropertyMetadata ( default)
 				);
 
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 		////// Ellipse Width
 		public int BtnWidth
 		{
@@ -389,13 +304,7 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-				//				SetValue ( StrokeWidthProperty , ( double ) value );
-				//				OnPropertyChanged ( "StrokeWidth" );
-				//SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//Ellipse9 . Fill = sb;
-				//BtnText . Foreground = MouseoverTextColor;
-				//BtnText . Text = MouseoverButtonText;
-				//Ellipse9 . UpdateLayout ( );
+				SetValue ( StrokeWidthProperty , ( double ) value );
 			}
 		}
 		public static readonly DependencyProperty BtnWidthProperty=
@@ -405,7 +314,6 @@ namespace WPFPages . UserControls
 				new PropertyMetadata ( default)
 				);
 
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 		////// Ellipse Width
 		 public  int  BorderWidth
 		{
@@ -415,13 +323,7 @@ namespace WPFPages . UserControls
 			}
 			set
 			{
-				//				SetValue ( StrokeWidthProperty , ( double ) value );
-				//				OnPropertyChanged ( "StrokeWidth" );
-				//SolidColorBrush sb = MouseOverColor as SolidColorBrush;
-				//Ellipse9 . Fill = sb;
-				//BtnText . Foreground = MouseoverTextColor;
-				//BtnText . Text = MouseoverButtonText;
-				//Ellipse9 . UpdateLayout ( );
+				SetValue ( StrokeWidthProperty , ( double ) value );				
 			}
 		}
 		public static readonly DependencyProperty BorderWidthProperty =
@@ -430,8 +332,7 @@ namespace WPFPages . UserControls
 				typeof ( CloseReturnButton ),
 				new PropertyMetadata ( default)
 				);
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
+		
 		#endregion Dependency Properties
 
 		private void CloseButton_Click ( object sender, MouseButtonEventArgs e )

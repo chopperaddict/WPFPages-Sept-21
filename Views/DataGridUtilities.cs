@@ -13,7 +13,7 @@ namespace WPFPages . Views
                 public static void LoadDataGridColumns ( object sender, string ColumnsTemplate )
                 {
                         //This works just fine
-                        // Load  the BANKACCOUNT columns definitions from the Resourcefile "BankDataGridColumns.xaml"
+                        // Load  the BANKACCOUNT columns definitions from the Resourcefile "DataGridColumns.xaml"
                         DataGrid dg = sender as DataGrid;
                         if ( dg . Columns . Count == 0 )
                         {
@@ -36,7 +36,7 @@ namespace WPFPages . Views
 		public static void LoadDataGridTextColumns ( object sender , string TextColumnsTemplate )
 		{
 			//This works just fine
-			// Load  the CUSTOMER columns definitions from the Resourcefile "BankDataGridColumns.xaml"
+			// Load  the CUSTOMER columns definitions from the Resourcefile "DataGridColumns.xaml"
 			DataGrid dg2 = sender as DataGrid;
 			//if ( dg2 . Columns . Count == 0 )
 			//{

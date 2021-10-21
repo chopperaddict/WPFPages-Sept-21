@@ -351,14 +351,49 @@
 	</LinearGradientBrush>
 
 	<LinearGradientBrush x:Key="HeaderBorderBrushBlue" StartPoint="0.2,0" EndPoint="0.2,1">
-		<GradientStop Offset="0" Color="#FF6B8E95" />
-		<GradientStop Offset="0.2" Color="#FF14A7C1" />
-		<GradientStop Offset="0.4" Color="#FF2C50A9" />
-		<GradientStop Offset="0.6" Color="#FF2C4183" />
-		<GradientStop Offset="0.8" Color="#FF1D4855" />
-		<GradientStop Offset="1" Color="#FF193A44" />
+		<GradientStop Offset="1"	Color="#FF6B8E95" />
+		<GradientStop Offset="0.9"	 Color="#FF14A7C1" />
+		<GradientStop Offset="0.6"	 Color="#BA00018F" />
+		<GradientStop Offset="0.4"	 Color="#FF2C4183" />
+		<GradientStop Offset="0.2"	 Color="#FF1D4855" />
+		<GradientStop Offset="0"	Color="#FF193A44" />
 	</LinearGradientBrush>
 
+	<!--//Tested - verified 20/10/21-->
+	<!--NB 1,0 to 0,1  AND 0,1 to 1,0 both give Vertical shading-->
+	<LinearGradientBrush x:Key="HeaderBrushVerticalBluetoBlackToBlue" StartPoint="1,0" EndPoint="0,1">
+		<GradientStop Offset="1"	Color="#FF14A7C1" />
+		<GradientStop Offset="0.8"	 Color="#F21470E0" />
+		<GradientStop Offset="0.6"	 Color="#DA143CAF" />
+		<GradientStop Offset="0.5"	 Color="#DA143C71" />
+		<GradientStop Offset="0.4"	 Color="#DA143CAF" />
+		<GradientStop Offset="0.2"	 Color="#F21470E0" />
+		<GradientStop Offset="0"	Color="#FF14A7C1" />
+	</LinearGradientBrush>
+
+	<!--//Tested - verified 20/10/21-->
+	<!--NB 0,0 to 0,1  AND 0,1 to 0,0 both give horizontal shading-->
+	<LinearGradientBrush x:Key="HeaderBrushHorizontalBlackToBlueToBlack" StartPoint="0,1" EndPoint="0,0">
+		<GradientStop Offset="1"	Color="#FF14A7C1" />
+		<GradientStop Offset="0.8"	 Color="#F21470E0" />
+		<GradientStop Offset="0.6"	 Color="#DA143CAF" />
+		<GradientStop Offset="0.5"	 Color="#DA143C71" />
+		<GradientStop Offset="0.4"	 Color="#DA143CAF" />
+		<GradientStop Offset="0.2"	 Color="#F21470E0" />
+		<GradientStop Offset="0"	Color="#FF14A7C1" />
+	</LinearGradientBrush>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<LinearGradientBrush x:Key="HorizontalYellowGradient" StartPoint="0,0" EndPoint="1,1">
 		<GradientStop Offset="0" Color="AliceBlue" />
 		<GradientStop Offset="1" Color="Orange" />
@@ -387,6 +422,17 @@
 		<GradientStop Offset="1" Color="#FFFFFF00" />
 	</LinearGradientBrush>
 
+
+	<LinearGradientBrush x:Key="HeaderBorderBrushYellow" StartPoint="0,1" EndPoint="1,0">
+		<GradientStop Offset="1" Color="#FFFFFF00" />
+		<GradientStop Offset="0.842" Color="#FFf5d816" />
+		<GradientStop Offset="0.642" Color="#FFE79500" />
+		<GradientStop Offset="0.409" Color="#FFF5BC00" />
+		<GradientStop Offset="0.2" Color="#FFAF7800" />
+		<GradientStop Offset="0" Color="#FF38320c" />
+	</LinearGradientBrush>
+
+
 	<LinearGradientBrush x:Key="HeaderBrushYellow" StartPoint="0,1" EndPoint="1,0">
 		<GradientStop Offset="1" Color="#FFFFFF00" />
 		<GradientStop Offset="0.842" Color="#FFf5d816" />
@@ -396,15 +442,41 @@
 		<GradientStop Offset="0" Color="#FF38320c" />
 	</LinearGradientBrush>
 
-	<LinearGradientBrush x:Key="HeaderBorderBrushYellow" StartPoint="0,0" EndPoint="0,1">
-		<GradientStop Offset="1" Color="#FFFFFF00" />
-		<GradientStop Offset="0.842" Color="#FFf5d816" />
-		<GradientStop Offset="0.642" Color="#FFE79500" />
-		<GradientStop Offset="0.409" Color="#FFF5BC00" />
-		<GradientStop Offset="0.2" Color="#FFAF7800" />
-		<GradientStop Offset="0" Color="#FF38320c" />
+	<!--#region Yellow Horizontal gradient Brushes-->
+	
+	<!--//Tested - verified 20/10/21-->
+	<LinearGradientBrush x:Key="HeaderHorizontalBrushYellowToBlackToYellow" StartPoint="0,0" EndPoint="0,1">
+		<GradientStop Offset="1" Color="#FFE79500" />
+		<GradientStop Offset="0.92" Color="#FFf5d816" />
+		<GradientStop Offset="0.642" Color="#FF385E60" />
+		<GradientStop Offset="0.409" Color="#FFAF7800" />
+		<GradientStop Offset="0.25" Color="#FFF5BC00" />
+		<GradientStop Offset="0" Color="#FFFFFF00" />
 	</LinearGradientBrush>
 
+	<!--//Tested - verified 20/10/21-->
+	<LinearGradientBrush x:Key="HeaderVerticalBrushYellowToBlack" StartPoint="1,1" EndPoint="0,0">
+		<GradientStop Offset="1"	Color="#FFFFFF00" />
+		<GradientStop Offset="0.9"	Color="#FFf5d816" />
+		<GradientStop Offset="0.6"	Color="#FFE79500" />
+		<GradientStop Offset="0.4"	Color="#FFF5BC00" />
+		<GradientStop Offset="0.2"	 Color="#FFAF7800" />
+		<GradientStop Offset="0"	Color="#FF38320c" />
+	</LinearGradientBrush>
+	<!--#endregion Yellow Horizontal gradient Brushes-->
+
+	<!--//Tested - verified 20/10/21-->
+	<LinearGradientBrush x:Key="HeaderHorizontalBrushGreenToBlack" StartPoint="0,1" EndPoint="0,0">
+		<GradientStop Offset="1" Color="#FF00FF00" />
+		<GradientStop Offset="0.7" Color="#FF00AB00" />
+		<GradientStop Offset="0.7" Color="#FF00A400" />
+		<GradientStop Offset="0.5" Color="#FF006700" />
+		<GradientStop Offset="0.6" Color="#FF00A400" />
+		<GradientStop Offset="0.3" Color="#FF00AB00" />
+		<GradientStop Offset="0.0" Color="#EF00FF00" />
+	</LinearGradientBrush>
+
+	
 	<LinearGradientBrush x:Key="HorizontalGreenGradient" StartPoint="0,0" EndPoint="0,1">
 		<GradientStop Offset="0" Color="AliceBlue" />
 		<GradientStop Offset="1" Color="#FF107F03" />
@@ -415,6 +487,11 @@
 		<GradientStop Offset="1" Color="#A1005100" />
 	</LinearGradientBrush>
 
+
+
+	
+	
+	
 	<LinearGradientBrush x:Key="HeaderBrushGreen" StartPoint="0.5,0" EndPoint="0.5,1">
 		<GradientStop Offset="0" Color="#FF75DD75" />
 		<GradientStop Offset="1" Color="#FF00FF00" />
@@ -477,10 +554,75 @@
 		<GradientStop Offset="0.552" Color="#FF70191f" />
 		<GradientStop Offset="0.546" Color="#ff4f2225" />
 	</LinearGradientBrush>
-
 	<!--#endregion-->
 
-	
+	<!--=================================================================================================-->
+	<!--//Tested - verified 20/10/21-->
+	<!--Horizontal Yellow To Dark To Yellow-->
+	<LinearGradientBrush x:Key="HeaderHorizontalBrushYellowToDarkToYellow" StartPoint="1,0" EndPoint="1,1">
+		<GradientStop Offset="1" Color="#FFFFFF00" />
+		<GradientStop Offset="0.9" Color="#FFF5BC00" />
+		<GradientStop Offset="0.7" Color="#FFC2B400" />
+		<GradientStop Offset="0.5" Color="#94C25B00" />
+		<GradientStop Offset="0.3 " Color="#FFC2B400" />
+		<GradientStop Offset="0.1" Color="#FFF5BC00" />
+		<GradientStop Offset="0" Color="#FFFFFF00" />
+	</LinearGradientBrush>
+
+	<!--//Tested - verified 20/10/21-->
+	<!--Horizontal Yellow To Black To Yellow-->
+	<LinearGradientBrush x:Key="HeaderVerticalBrushYellowToBlackToYellow" StartPoint="0,1" EndPoint="1,1">
+		<GradientStop Offset="1" Color="#FFFFFF00" />
+		<GradientStop Offset="0.8" Color="#FFF5BC00" />
+		<GradientStop Offset="0.4" Color="#FFAF7800" />
+		<GradientStop Offset="0.5" Color="#FF385E60" />
+		<GradientStop Offset="0.3" Color="#FFAF7800" />
+		<GradientStop Offset="0.2" Color="#FFF5BC00" />
+		<GradientStop Offset="0" Color="#FFFFFF00" />
+	</LinearGradientBrush>
+
+	<!--//Tested - verified 20/10/21-->
+	<!--Black to Yellow vertically downwards-->
+	<LinearGradientBrush x:Key="HeaderHorizontalBrushBlackToYellow" StartPoint="0,0" EndPoint="0,1">
+		<GradientStop Offset="1"	Color="#FFFFFF00" />
+		<GradientStop Offset="0.9"	Color="#FFf5d816" />
+		<GradientStop Offset="0.6"	Color="#FFE79500" />
+		<GradientStop Offset="0.4"	Color="#FFF5BC00" />
+		<GradientStop Offset="0.2"	 Color="#FFAF7800" />
+		<GradientStop Offset="0"	Color="#FF38320c" />
+	</LinearGradientBrush>
+
+	<!--//Tested - verified 20/10/21-->
+	<!--Yellow to Black vertically downwards-->
+	<LinearGradientBrush x:Key="HeaderHorizontalBrushYellowToBlack" StartPoint="0,1" EndPoint="0,0">
+		<GradientStop Offset="1"	Color="#FFFFFF00" />
+		<GradientStop Offset="0.9"	Color="#FFf5d816" />
+		<GradientStop Offset="0.6"	Color="#FFE79500" />
+		<GradientStop Offset="0.4"	Color="#FFF5BC00" />
+		<GradientStop Offset="0.2"	 Color="#FFAF7800" />
+		<GradientStop Offset="0"	Color="#FF38320c" />
+	</LinearGradientBrush>
+
+
+	<Style x:Key="HeaderStyleYellow" TargetType="DataGridColumnHeader">
+		<Setter Property="Background" Value="{StaticResource HeaderBrushHorizontalYellow}" />
+		<Setter Property="Foreground" Value="{StaticResource White0}" />
+		<Setter Property="BorderBrush" Value="{StaticResource Black4}" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="HorizontalContentAlignment" Value="Center" />
+		<Setter Property="MinWidth" Value="0" />
+		<Setter Property="MinHeight" Value="25" />
+		<Setter Property="Cursor" Value="Hand" />
+		<Style.Triggers>
+			<Trigger Property="IsMouseOver" Value="true">
+				<Setter Property="Background" Value="{StaticResource HeaderHorizontalBrushBlackToYellow}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+	<!--=================================================================================================-->
+
+
 	<Style x:Key="HGradientBtn">
 		<Setter Property="Control.Background" Value="{StaticResource HeaderBrushBlue}" />
 		<Setter Property="Control.Foreground" Value="White" />
@@ -497,8 +639,7 @@
 			</Trigger>
 		</Style.Triggers>
 	</Style>
-
-
+ 
 	<Style x:Key="HeaderStyleRed" TargetType="DataGridColumnHeader">
 		<Setter Property="Background" Value="{StaticResource HeaderBrushRed}" />
 		<Setter Property="Foreground" Value="White" />
@@ -533,23 +674,7 @@
 		</Style.Triggers>
 	</Style>
 
-	<Style x:Key="HeaderStyleYellow" TargetType="DataGridColumnHeader">
-		<Setter Property="Background" Value="{StaticResource HeaderBrushHorizontalYellow}" />
-		<Setter Property="Foreground" Value="Black" />
-		<Setter Property="BorderBrush" Value="{StaticResource HeaderBorderBrushYellow}" />
-		<Setter Property="BorderThickness" Value="1" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="MinWidth" Value="0" />
-		<Setter Property="MinHeight" Value="30" />
-		<Setter Property="Cursor" Value="Hand" />
-		<Style.Triggers>
-			<Trigger Property="IsMouseOver" Value="true">
-				<Setter Property="Background" Value="{StaticResource HeaderBorderBrushYellow}" />
-			</Trigger>
-		</Style.Triggers>
-	</Style>
-
+	
 	<!--#endregion END OF Test of downloaded Datagrid column header Style
 		Gives a really nice top to bottom gradient with 
 		darkest color in horizontal center bar-->
@@ -592,7 +717,7 @@
 	<!--
 		A BUTTON WITH A DROP SHADOW THAT DEMONSTRATES THE USE OF [CONTENTPPRESENTER]
 		TO DISPLAY THE TEXT DEFINED IN THE BUTTON CONTROL ITSELF IN ITS XAML CODE
-	-->
+	--><!--
 	<ControlTemplate x:Key="MyEllipseButtonTemplate" TargetType="Button">
 		<Grid>
 			<Grid.RowDefinitions>
@@ -601,21 +726,166 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="150" />
 			</Grid.ColumnDefinitions>
-			<!--
+			--><!--
 				This Is how to create a drop shadow, using the color
 				defined in the button declaration xaml code
 				NB we MUST use TemplateBinding to access default properties like Background
-			-->
+			--><!--
 			<Ellipse Margin="5,5,0,0" Fill="{TemplateBinding Foreground}" />
-			<!--  This border creates the frontmost button outline and fill color/Style  -->
+			--><!--  This border creates the frontmost button outline and fill color/Style  --><!--
 			<Ellipse Margin="0,0,5,5" Fill="{TemplateBinding Background}" />
-			<!--  //This is used to show the text Content  -->
+			--><!--  //This is used to show the text Content  --><!--
 			<Border Margin="0" Background="Transparent">
-				<!--  Adding this one line lets the control above display the "Content" property  -->
+				--><!--  Adding this one line lets the control above display the "Content" property  --><!--
 				<ContentPresenter />
 			</Border>
 		</Grid>
 
-	</ControlTemplate>
+	</ControlTemplate>-->
+
+	<Style x:Key="MyFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Control}">
+                        <Grid Margin="3,2">
+                            <Rectangle
+							Name="r1"
+							Stroke="Black"
+							StrokeDashArray="2 2"
+							StrokeThickness="1" />
+                            <Border
+							Name="border"
+							Width="{TemplateBinding ActualWidth}"
+							Height="{TemplateBinding ActualHeight}"
+							BorderThickness="1"
+							CornerRadius="2" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+	<Style x:Key="ShadowStyle">
+		<Setter Property="Control.Foreground" Value="LightGray" />
+	</Style>
+
+
+	<Style x:Key="RedButton" TargetType="Button">
+		<Setter Property="OverridesDefaultStyle" Value="True" />
+		<Setter Property="Margin" Value="2" />
+		<Setter Property="FontFamily" Value="Verdana" />
+		<Setter Property="FontSize" Value="11px" />
+		<Setter Property="FontWeight" Value="Bold" />
+		<!--<Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}" />-->
+		<Setter Property="Background">
+			<Setter.Value>
+				<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+					<GradientStop Offset="0" Color="#EEBBEE" />
+					<GradientStop Offset="1" Color="#ff7777" />
+					<GradientStop Offset="0.509" Color="#FF3333" />
+					<GradientStop Offset="0.522" Color="#FFd11608" />
+				</LinearGradientBrush>
+			</Setter.Value>
+		</Setter>
+
+		<Setter Property="Foreground">
+			<Setter.Value>
+				<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+					<GradientStop Offset="0" Color="White" />
+					<GradientStop Offset="1" Color="Black" />
+				</LinearGradientBrush>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Border
+						Name="border"
+						Padding="4,2"
+						Background="{TemplateBinding Background}"
+						BorderBrush="DarkGray"
+						BorderThickness="1"
+						CornerRadius="3">
+						<Grid>
+							<ContentPresenter
+								Name="contentShadow"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Style="{StaticResource ShadowStyle}">
+
+								<!--<ContentPresenter.RenderTransform>
+									<TranslateTransform X="1.0" Y="1.0" />
+								</ContentPresenter.RenderTransform>-->
+							</ContentPresenter>
+
+							<ContentPresenter
+								Name="content"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center">
+								<ContentPresenter.RenderTransform>
+									<TranslateTransform X="0.0" Y="0.0" />
+								</ContentPresenter.RenderTransform>
+							</ContentPresenter>
+						</Grid>
+					</Border>
+
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="border" Property="BorderBrush" Value="Black" />
+							<!--<Setter Property="Foreground" Value="Red" />-->
+							<Setter Property="Foreground">
+								<Setter.Value>
+									<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+										<GradientStop Offset="0" Color="White" />
+										<GradientStop Offset="1" Color="Black" />
+									</LinearGradientBrush>
+								</Setter.Value>
+							</Setter>
+							<Setter Property="FontWeight" Value="Black" />
+							<Setter Property="FontSize" Value="12" />
+
+							<Setter Property="Background">
+								<Setter.Value>
+									<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+										<GradientStop Offset="1" Color="#ffdddd" />
+										<GradientStop Offset="1" Color="#FF9999" />
+										<GradientStop Offset="0" Color="#FF2222" />
+									</LinearGradientBrush>
+								</Setter.Value>
+							</Setter>
+
+						</Trigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter Property="Background">
+								<Setter.Value>
+									<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+										<GradientStop Offset="0.314" Color="#FF224022" />
+										<GradientStop Offset="0.553" Color="#FF336633" />
+										<GradientStop Offset="1" Color="#FF00FF00" />
+									</LinearGradientBrush>
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="content" Property="RenderTransform">
+								<Setter.Value>
+									<TranslateTransform Y="1.0" />
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+						<Trigger Property="IsDefaulted" Value="True">
+							<Setter TargetName="border" Property="BorderBrush" Value="#FF282828" />
+						</Trigger>
+						<Trigger Property="IsFocused" Value="True">
+							<Setter TargetName="border" Property="BorderBrush" Value="#FF282828" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter TargetName="border" Property="Opacity" Value="0.5" />
+							<Setter Property="Foreground" Value="Black" />
+						</Trigger>
+
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
 </ResourceDictionary>

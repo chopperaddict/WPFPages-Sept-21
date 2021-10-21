@@ -373,7 +373,7 @@ namespace WPFPages . Views
 			ThisParent = sqldb;
 			//Identify individual windows for update protection
 			this.Tag = (Guid)Guid.NewGuid();
-			DataGridUtilities . LoadDataGridColumns ( DetailsGrid , "DGEditDbColuns1" );
+			DataGridUtilities . LoadDataGridColumns ( DetailsGrid , "DGEditDbColumns" );
 
 			// data load code Now moved to WindowLoaded() method  16/5/2021
 
@@ -421,11 +421,10 @@ namespace WPFPages . Views
 			//this  . DetailsGrid . ItemsSource = EditDbDetcollection;
 			return EditDbDetcollection;
 		}
-		private async static Task<BankCollection> LoadBankData ( BankCollection EditDbBankcollection )
+		private  static void LoadBankData ( BankCollection EditDbBankcollection )
 		{
 			Flags . SqlBankActive  = true;
 			BankCollection . LoadBank ( EditDbBankcollection, "EDITDB", 2, true );
-			return EditDbBankcollection;
 		}
 
 		#endregion CONSTRUCTORS
@@ -601,7 +600,7 @@ namespace WPFPages . Views
 					if ( EditDbBankcollection == null || EditDbBankcollection . Count == 0 )
 					{
 						Flags . SqlBankActive  = true;
-						EditDbBankcollection = await LoadBankData ( EditDbBankcollection );
+						LoadBankData ( EditDbBankcollection );
 					}
 				}
 				else
@@ -1491,7 +1490,7 @@ namespace WPFPages . Views
 			}
 
 			SelectDone = true;
-			if ( UpdateInProgress ) return;
+//			if ( UpdateInProgress ) return;
 
 			if ( this . DataGrid1 . SelectedIndex == -1 ) return;
 			IsDirty = false;
@@ -2356,7 +2355,7 @@ namespace WPFPages . Views
 
 		private void DataGrid1_Loaded ( object sender , RoutedEventArgs e )
 		{
-			DataGridUtilities . LoadDataGridColumns ( DataGrid1 , "DGBankColums1" );
+			DataGridUtilities . LoadDataGridColumns ( DataGrid1 , "DGBankColumns" );
 			ObservableCollection<DataGridColumn> dgc = DataGrid1.Columns;
 
 		}

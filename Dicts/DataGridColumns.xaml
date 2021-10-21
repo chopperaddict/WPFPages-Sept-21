@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+			  xmlns:dateconv="clr-namespace:WPFPages.Converts"
+			  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
 	<!--This is  the way to extract *** Datagrid *** Columns from source file and then use the Loaded method to load them at run time-->
@@ -1540,5 +1541,16 @@
 		</DataGridTemplateColumn>
 	</x:Array >
 	<!--#endregion datagrid columns  "DGColumns3"-->
+
+
+
+
+	<x:Array x:Key="LVBankColumns" Type="{x:Type ItemContainerTemplate}">
+		<ItemContainerTemplate>
+		</ItemContainerTemplate>
+	</x:Array >
+
+
+
 
 </ResourceDictionary>

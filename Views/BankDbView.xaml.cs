@@ -102,7 +102,7 @@ namespace WPFPages . Views
 			this . Tag = ( Guid ) Guid . NewGuid ( );
 			this . Refresh ( );
 			this . DataContext = BankviewerView;
-			// This STOPS all those infuriating debug messages from appearing
+			// This STOPS all those infuriating binding debug messages from appearing
 			// Add it to any window you do not want these messages to show in
 			System . Diagnostics . PresentationTraceSources . DataBindingSource . Switch . Level = System . Diagnostics . SourceLevels . Critical;
 

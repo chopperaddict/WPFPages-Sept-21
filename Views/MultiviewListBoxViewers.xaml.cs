@@ -65,7 +65,17 @@ namespace WPFPages . Views
 
 		public double uclistboxheight = 0;
 		public double uclistbox2height = 0;
+
 		#region full properties
+
+		private double dg1Width;
+
+		public double Dg1Width
+		{
+			get { return dg1Width; }
+			set { dg1Width = value; }
+		}
+
 		public bool AreItemsExpanded
 		{
 			get
@@ -252,15 +262,44 @@ namespace WPFPages . Views
 		}
 		private async void Window_Loaded ( object sender , RoutedEventArgs e )
 		{
+			int counter = 0;
 			EventControl . BankDataLoaded += EventControl_BankDataLoaded;
 			EventControl . CustDataLoaded += EventControl_CustDataLoaded;
 			this . Show ( );
 			Utils . SetupWindowDrag ( this );
 			Flags . SqlBankActive = true;
-			
+
+			ColumnSelection . Items . Add ( 0 );
+			ColumnSelection . Items . Add ( 1 );
+			ColumnSelection . Items . Add ( 2 );
+
+
 			// Load Columns layout BEFORE loading data
-			DataGridUtilities . LoadDataGridColumns ( datagrid, "DGColumns" );
-			DataGridUtilities . LoadDataGridColumns ( datagrid2, "DGColumns2" );
+			if ( datagrid. Columns . Count == 0 )
+			{
+				DataGridUtilities . LoadDataGridColumns ( datagrid , "DGMultiBankColumns" );
+				DataGridUtilities . LoadDataGridTextColumns ( datagrid , "DGMultiBankTextColumns" );
+			}
+			//Saved default Columns layout
+			foreach ( var item in datagrid . Columns )
+			{
+				DGBankColumnsCollection [ counter++ ] = item;
+			}
+			DataGridSupport . SortBankColumns ( datagrid , DGBankColumnsCollection );
+
+			if ( datagrid2 . Columns . Count == 0 )
+			{
+				DataGridUtilities . LoadDataGridColumns ( datagrid2 , "DGMultiCustomerColumns" );
+				DataGridUtilities . LoadDataGridTextColumns ( datagrid2 , "DGMultiCustomerTextColumns" );
+			}
+			//Saved default Columns layout
+			counter = 0;
+			foreach ( var item in datagrid2. Columns )
+			{
+				DGCustColumnsCollection [ counter++ ] = item;
+			}
+			DataGridSupport . SortCustomerColumns ( datagrid2 , DGCustColumnsCollection );
+			// Columns are all loaded ...
 
 			await BankCollection . LoadBank ( SqlBankcollection , "SQLDBVIEWER" , 1 , true );
 			AllCustomers . LoadCust ( SqlCustcollection , "" , 1 , true , 0 , 0 , 0 );
@@ -269,6 +308,7 @@ namespace WPFPages . Views
 			uclistbox2height = UCListbox2 . ActualHeight;
 			datagrid . BringIntoView ( );
 			datagrid2 . BringIntoView ( );
+			dg1Width = datagrid . ActualWidth;
 		}
 
 		private void EventControl_BankDataLoaded ( object sender , LoadedEventArgs e )
@@ -474,14 +514,17 @@ namespace WPFPages . Views
 				if ( datagrid . SelectedItem != null )
 					datagrid . ScrollIntoView ( datagrid . SelectedItem );
 				this . Refresh ( );
+				datagrid . Width = dg1Width;
 				datagrid . Focus ( );
 				datagrid . Refresh ( );
 				datagrid . SelectedIndex = GridSelection;
 				datagrid . SelectedItem = GridSelection;
+				ColumnSelection . Visibility = Visibility . Visible;
 			}
 			else
 			{
 				//Switch  to ListView view
+				dg1Width = datagrid . ActualWidth;
 				datagrid . Visibility = Visibility . Collapsed;
 				datagrid2 . Visibility = Visibility . Collapsed;
 				UCListbox . Visibility = Visibility . Visible;
@@ -494,6 +537,7 @@ namespace WPFPages . Views
 				if ( UCListbox . SelectedItem != null )
 					UCListbox . ScrollIntoView ( UCListbox . SelectedItem );
 				UCListbox . Focus ( );
+				ColumnSelection . Visibility = Visibility . Hidden;
 			}
 			//if ( UCListbox2 .Visibility == Visibility .Visible )
 			//{
@@ -985,6 +1029,22 @@ namespace WPFPages . Views
 			tot = Convert . ToInt32 ( MaxRecords . Text );
 			AllCustomers . LoadCust ( SqlCustcollection , "MULTIVIEWLISTBOXVIEWERS" , start: min , end: max , max: tot , NotifyAll: true );
 			Mouse . OverrideCursor = System . Windows . Input . Cursors . Arrow;
+
+		}
+		private void Columns_SelectionChanged ( object sender , SelectionChangedEventArgs e )
+		{
+			ListBox lb = sender as ListBox;
+			var  Content = lb . SelectedItem;
+			//ListBoxItem lbi = Content as  ListBoxItem;
+			var selection = int.Parse(Content.ToString());
+			if ( selection >= 0 && selection <= 2 )
+			{
+				//					int[] sortorder = { 2,3,1,5,4,7,6,0};
+				DataGridSupport . SortBankColumns ( datagrid , DGBankColumnsCollection , selection );
+				datagrid . Refresh ( );
+				DataGridSupport . SortCustomerColumns ( datagrid2 , DGCustColumnsCollection , selection );
+				datagrid2 . Refresh ( );
+			}
 
 		}
 

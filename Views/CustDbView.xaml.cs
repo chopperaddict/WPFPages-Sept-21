@@ -19,6 +19,14 @@ using WPFPages . ViewModels;
 
 namespace WPFPages . Views
 {
+	public  class ColumnsValues
+	{
+		public List<int > ColumnsSortValues = new List<int>();
+
+		public  ColumnsValues ( )
+		{
+		}
+	}
 	/// <summary>
 	/// Interaction logic for CustDbView.xaml
 	/// </summary>
@@ -26,17 +34,21 @@ namespace WPFPages . Views
 	{
 		private static AllCustomers CustDbViewcollection = null;// = new CustCollection ( );//. CustViewerDbcollection;
 											  // Get our personal Collection view of the Db
+		private static readonly DataGridColumn dataGridColumn   ;
+		private DataGridColumn[] DGCustColumnsCollection
+			= {dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,
+			dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn,dataGridColumn ,dataGridColumn };
 		private ICollectionView CustviewerView
 		{
 			get; set;
 		}
 
+		public  ColumnsValues coval = new ColumnsValues();
 		//		private CustomerCollection Custcollection = new CustomerCollection ( );
 
 		CollectionViewSource cvs = new CollectionViewSource();
 
-
-
+		
 		// Crucial structure for use when a Grid row is being edited
 		private static CustRowData cvmCurrent = null;
 
@@ -102,11 +114,10 @@ namespace WPFPages . Views
 			this . Show ( );
 			this . Refresh ( );
 			Startup = true;
-
 			string ndx = ( string ) Properties . Settings . Default [ "CustDbView_cindex" ];
 			cindex = int . Parse ( ndx );
 			this . CustGrid . SelectedIndex = cindex < 0 ? 0 : cindex;
-
+			this.DataContext = this;
 			Utils . SetupWindowDrag ( this );
 			// An EditDb has changed the current index
 			EventControl . EditIndexChanged += EventControl_EditIndexChanged;
@@ -118,6 +129,24 @@ namespace WPFPages . Views
 			EventControl . CustDataLoaded += EventControl_CustDataLoaded;
 			EventControl . GlobalDataChanged += EventControl_GlobalDataChanged;
 
+			ColumnSelection.Items.Add ( 0 );
+			ColumnSelection . Items . Add ( 1 );
+			ColumnSelection . Items . Add ( 2 );
+			// Sort the columns
+			int counter = 0;
+			if ( CustGrid . Columns . Count == 0 )
+			{
+				DataGridUtilities . LoadDataGridColumns ( CustGrid , "DGMultiCustomerColumns" );
+				DataGridUtilities . LoadDataGridTextColumns ( CustGrid , "DGMultiCustomerTextColumns" );
+			}
+			//Saved default Columns layout
+			foreach ( var item in CustGrid . Columns )
+			{
+				DGCustColumnsCollection [ counter++ ] = item;
+			}
+			DataGridSupport . SortCustomerColumns ( CustGrid , DGCustColumnsCollection );
+
+			// Load the data
 			Flags . SqlCustActive = true;
 			AllCustomers . LoadCust ( CustDbViewcollection , "CUSTDBVIEW" , 3 , true );
 
@@ -868,6 +897,22 @@ namespace WPFPages . Views
 		}
 		private void CustGrid_PreviewMouseLeftButtonDown ( object sender , MouseButtonEventArgs e )
 		{
+			ListBox lb = sender as ListBox;
+			if(lb != null)
+			{
+				if ( ColumnSelection . Height < 400 )
+				{
+					ColumnSelection . Height = 400;
+					ColumnSelection . Refresh ( );
+					ColumnSelection . Focus ( );
+				}
+				else
+				{
+					ColumnSelection . Height = 30;
+					ColumnSelection . Refresh ( );
+				}
+				return;
+			}
 			// Gotta make sure it is not anywhere in the Scrollbar we clicked on 
 			if ( Utils . HitTestScrollBar ( sender , e ) )
 				return;
@@ -1395,6 +1440,15 @@ namespace WPFPages . Views
 
 		#endregion Commands
 		//#####################
+		private void Columns_SelectionChanged ( object sender , SelectionChangedEventArgs e )
+		{
+			ListBox lb = sender as ListBox;
+			var  Content = lb . SelectedItem;
+			//ListBoxItem lbi = Content as  ListBoxItem;
+			var selection = int.Parse(Content.ToString());
+			DataGridSupport . SortCustomerColumns ( CustGrid , DGCustColumnsCollection,  selection);
+			CustGrid . Refresh ( );
+		}
 	}
 }
 

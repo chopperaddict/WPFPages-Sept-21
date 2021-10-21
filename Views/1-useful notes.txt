@@ -1,4 +1,10 @@
 =================================================
+
+	// This STOPS all those infuriating binding debug messages from appearing
+	// Add it to any window you do not want these messages to show in
+	System . Diagnostics . PresentationTraceSources . DataBindingSource . Switch . Level = System . Diagnostics . SourceLevels . Critical;
+
+=================================================
 // How  to use DataGridColumns  from and x:Array in seperate file
 
 	// Load the selected set of columns, params are (Datagrid name, Array  required)

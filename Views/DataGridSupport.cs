@@ -21,7 +21,7 @@ namespace WPFPages
 	public class DataGridSupport
 	{
 		// Maximum allowabke sort options allowed to avoid invlaid column settings
-		private static int MAXBANKSORTS=1;
+		private static int MAXBANKSORTS=2;
 		private static int MAXCUSTOMERSORTS=2;
 		private static int MAXDETAILSSORTS=2;
 

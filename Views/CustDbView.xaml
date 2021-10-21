@@ -22,13 +22,70 @@
 	Width="800" 
 >
 	<!--d:DataContext="{d:DesignInstance Type=local:SqlCustCollection}"-->
-
 	<Window.Resources>
 
-            <!--<dateconv:TxtToUpConverter x:Key="textToUpper"/>-->
-            <dateconv:Actype2Name x:Key="Actype2StringConvert"/>
-            
-            <ContextMenu x:Key="ContextMenu1">
+		<!--<dateconv:TxtToUpConverter x:Key="textToUpper"/>-->
+		<dateconv:Actype2Name x:Key="Actype2StringConvert"/>
+
+		<Style x:Key="_ColumnsListBoxItemStyle" TargetType="ListBoxItem">
+			<!--<Setter Property="Border.Background" Value="{TemplateBinding Background}"/>-->
+			<!--<Setter Property="Foreground" Value="{TemplateBinding Foreground}"/>
+			<Setter Property="BorderBrush" Value="{TemplateBinding BorderBrush}"/>
+			<Setter Property="BorderThickness" Value="{TemplateBinding BorderThickness}"/>-->
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBoxItem">
+						<Border Name="_Border"
+			
+							  Padding="2"
+							  SnapsToDevicePixels="true">
+							<ContentPresenter />
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsSelected" Value="false">
+								<Setter TargetName="_Border" Property="Background" Value="{StaticResource Blue0}"/>
+								<Setter Property="TextElement.Foreground" Value="White"/>
+								<Setter Property="TextElement.FontWeight" Value="Medium"/>
+							</Trigger>
+							<Trigger Property="IsSelected" Value="true">
+								<Setter TargetName="_Border" Property="Background" Value="{StaticResource Red5}"/>
+								<Setter Property="TextElement.Foreground" Value="White"/>
+								<Setter Property="TextElement.FontWeight" Value="Bold"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+
+		<Style x:Key="_ColumnsListBoxStyle" TargetType="ListBox">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ListBox">
+						<Border Name="_Border"
+							  Padding="2"
+							  SnapsToDevicePixels="true">
+							<ContentPresenter />
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsSelected" Value="false">
+								<Setter TargetName="_Border" Property="Background" Value="{StaticResource Blue0}"/>
+								<Setter Property="TextElement.Foreground" Value="White"/>
+								<Setter Property="TextElement.FontWeight" Value="Medium"/>
+							</Trigger>
+							<Trigger Property="IsSelected" Value="true">
+								<Setter TargetName="_Border" Property="Background" Value="{StaticResource Red3}"/>
+								<Setter Property="TextElement.Foreground" Value="White"/>
+								<Setter Property="TextElement.FontWeight" Value="Bold"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<ContextMenu x:Key="ContextMenu1">
 			<MenuItem Header="View currently selected Record in JSON Format"  Click="ContextShowJson_Click" >
 				<MenuItem.Icon>
 					<Image Source="/Icons/text-message.png"  />
@@ -91,10 +148,10 @@
 			</MenuItem>
 		</ContextMenu>
 
-		<Style x:Key="HeaderStyleYellow" TargetType="DataGridColumnHeader">
-			<Setter Property="Background" Value="{StaticResource HeaderBrushYellow}" />
+		<!--<Setter Property="BorderBrush" Value="{StaticResource HeaderBorderBrushYellow}" />-->
+		<!--<Style x:Key="HeaderStyleYellow" TargetType="DataGridColumnHeader">
+			<Setter Property="Background" Value="{StaticResource HeaderBrushHorizontalYellow}" />
 			<Setter Property="Foreground" Value="White" />
-			<Setter Property="BorderBrush" Value="{StaticResource HeaderBorderBrushYellow}" />
 			<Setter Property="BorderThickness" Value="1" />
 			<Setter Property="SnapsToDevicePixels" Value="True" />
 			<Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -106,12 +163,12 @@
 					<Setter Property= "Background" Value="{StaticResource HeaderBorderBrushYellow}" />
 				</Trigger>
 			</Style.Triggers>
-		</Style>
+		</Style>-->
 	</Window.Resources>
 
-    <Window.CommandBindings>
-        <!--These are NEEDED for the Commands in the ContextMenu to work-->
-        <!--<CommandBinding Command="ApplicationCommands.New" 
+	<Window.CommandBindings>
+		<!--These are NEEDED for the Commands in the ContextMenu to work-->
+		<!--<CommandBinding Command="ApplicationCommands.New" 
 		    Executed="Command_New"
 		    CanExecute="CommandNew_CanExecute" />
         <CommandBinding Command="ApplicationCommands.Cut" 
@@ -124,31 +181,31 @@
 		    Executed="Command_Paste"
 		    CanExecute="CommandPaste_CanExecute" />-->
 
-        <!--custom command-->
-        <CommandBinding Command="cmd:MyCommands.Exit" 		    
+		<!--custom command-->
+		<CommandBinding Command="cmd:MyCommands.Exit" 		    
 			CanExecute="CommandExit_CanExecute"
 		    Executed="Command_Exit"
                         />
-        
-        <CommandBinding Command="cmd:MyCommands.ShowMessage" 
+
+		<CommandBinding Command="cmd:MyCommands.ShowMessage" 
 		    CanExecute="ShowMessage_CanExecute"
 		    Executed="Show_Message"/>
-        <CommandBinding Command="cmd:MyCommands.CloseWin" 
+		<CommandBinding Command="cmd:MyCommands.CloseWin" 
 		    CanExecute="Close_CanExecute"
 		    Executed="CloseWin"/>
-        <!--Now we have to add CommandBindings for the Hot key version-->
-        <CommandBinding Command="cmd:MyCommands.Hello" 
+		<!--Now we have to add CommandBindings for the Hot key version-->
+		<CommandBinding Command="cmd:MyCommands.Hello" 
 			CanExecute="Hello_CanExecute"                         
 			Executed="Hello_Executed"/>
-        <!--Executed="{Binding (self:Commandclass.Hello_Executed)}"/>-->
-        <CommandBinding Command="cmd:MyCommands.Bye" 
+		<!--Executed="{Binding (self:Commandclass.Hello_Executed)}"/>-->
+		<CommandBinding Command="cmd:MyCommands.Bye" 
 			CanExecute="Bye_CanExecute" 
 			Executed="Bye_Executed"/>
-        <!--Executed="{Binding (Views:BankDbView.Hello_Executed), RelativeSource={RelativeSource AncestorType={x:Type Application}}}"/>-->
+		<!--Executed="{Binding (Views:BankDbView.Hello_Executed), RelativeSource={RelativeSource AncestorType={x:Type Application}}}"/>-->
 
-    </Window.CommandBindings>
+	</Window.CommandBindings>
 
-    <Grid>
+	<Grid>
 
 		<!--#region grid setup-->
 
@@ -177,23 +234,24 @@
 		<!--#endregion grid setup-->
 
 		<Menu
+			Background="Transparent" 
 			Grid.Row="0"
 			Grid.Column="1"
-			Width="440"
+			Grid.ColumnSpan="2"
 			Height="50"
 			HorizontalAlignment="Left"
+			local:MenuAttachedProperties.MenuItemBackground="{StaticResource HeaderBorderBrushYellow}"
+			local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource HeaderBrushYellowReversed}"
+			local:MenuAttachedProperties.MenuItemForeground="{StaticResource Black0}"
+			local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource White0}"
+			local:MenuAttachedProperties.MenuFontSize="14"
+			local:MenuAttachedProperties.MenuFontWeight="DemiBold"
+			local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
+			local:MenuAttachedProperties.MenuItemBorderThickness="1"
+			local:MenuAttachedProperties.MenuItemHeight ="25"
+			local:MenuAttachedProperties.MenuItemMargin="1"
 			VerticalAlignment="Stretch"
-            local:MenuAttachedProperties.MenuItemSelectedBackground="{StaticResource HeaderBrushYellow}"
-            local:MenuAttachedProperties.MenuItemBackground="{StaticResource HeaderBorderBrushYellow}"
-            local:MenuAttachedProperties.MenuItemForeground="{StaticResource Black0}"
-            local:MenuAttachedProperties.MenuSelectedForeground="{StaticResource White0}"
-            local:MenuAttachedProperties.MenuFontSize="14"
-            local:MenuAttachedProperties.MenuFontWeight="DemiBold"
-            local:MenuAttachedProperties.MenuItemBorderColor="{StaticResource Blue2}"
-            local:MenuAttachedProperties.MenuItemBorderThickness="1"
-            local:MenuAttachedProperties.MenuItemHeight ="30"
-            local:MenuAttachedProperties.MenuItemMargin="2"
-			Background="Transparent" Grid.ColumnSpan="2">
+			Width="440">
 
 			<MenuItem  Header="_Linq Queries" 
 					Width="80" 
@@ -203,37 +261,37 @@
 					    IsCheckable="false"
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem Header="A/c Type 2 Only"
+				<MenuItem Header="A/c Type 2 Only"
 					Click="Linq2_Click"
 					IsCheckable="False"
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem Header="A/c Type 3 Only"
+				<MenuItem Header="A/c Type 3 Only"
 					Click="Linq3_Click"
 					IsCheckable="False"
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                    <MenuItem Header="A/c Type 4 Only"
+				<MenuItem Header="A/c Type 4 Only"
 					Click="Linq4_Click"
 					IsCheckable="False"
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                    <MenuItem Header="Multi A/C Holders"
+				<MenuItem Header="Multi A/C Holders"
 					Click="Linq5_Click"
 					IsCheckable="False"
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
-                
-                <Separator Height="7"
+
+				<Separator Height="7"
                             Style="{StaticResource Menu_Separator}"/>
-                
-                <MenuItem Header="All Records"
+
+				<MenuItem Header="All Records"
 						Background="#35F6FB"
 						Click="Linq6_Click"
 						Foreground="Black"						
 						IsCheckable="False" 
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-  			</MenuItem>
+			</MenuItem>
 
 			<MenuItem  Header="Filtering" 
 				    Click="Filter_Click"
@@ -252,35 +310,35 @@
 				    Foreground="{StaticResource White2}">
 			</MenuItem>
 
-            <MenuItem
+			<MenuItem
 				Width="Auto"
 				Foreground="{StaticResource White1}"
 				Header="Commands">
-                <MenuItem
+				<MenuItem
 					Command="ApplicationCommands.New"
 					CommandParameter="Selectedindex"
 						Header="Show current Index" 
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <MenuItem
+				<MenuItem
 					Command="ApplicationCommands.Cut"
 					CommandParameter="Selectedindex"
 					Header="Show current CustNo" 
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
-                <!--//===========================================-->
-                
-                <MenuItem
+				<!--//===========================================-->
+
+				<MenuItem
 					Command="cmd:MyCommands.Exit"                    
                     CommandParameter="Parameter = Window is about to be closed"
 					Header="Exit with parameter" 
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
-                <!--Command="{Binding local:BankDbView.Hello_Executed,
+				<!--Command="{Binding local:BankDbView.Hello_Executed,
                     RelativeSource={RelativeSource AncestorType={x:Type local:BankDbView}}}"-->
-                <MenuItem Name="HelloItem"
+				<MenuItem Name="HelloItem"
 					Command="cmd:MyCommands.Hello"
                     CommandParameter="This  a parameter ! !"
   					InputGestureText="Ctrl+H"
@@ -288,56 +346,56 @@
                     Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
-                <Separator Style="{StaticResource Menu_Separator}"/>
+				<Separator Style="{StaticResource Menu_Separator}"/>
 
-                <MenuItem
+				<MenuItem
 					Command="cmd:MyCommands.ShowMessage"
 					Foreground="{StaticResource Red0}"
 					Header="Show MessageBox"                       Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
 
-	<!--region std app commands-->
-			<!--STANDARD APPLICATION LEVEL COMMANDS-->
-                
-                <MenuItem
+				<!--region std app commands-->
+				<!--STANDARD APPLICATION LEVEL COMMANDS-->
+
+				<MenuItem
 					Command="ApplicationCommands.Copy"
                     CommandParameter="This is text to be copied"
 	                    Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-              <MenuItem
+				<MenuItem
 					Command="ApplicationCommands.Paste"
                     CommandParameter="This is text to be copied"
 	                   Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-                <!--endregion std app commands-->
+				<!--endregion std app commands-->
 
-                <MenuItem
+				<MenuItem
 					Command="cmd:MyCommands.CloseWin"
 					Foreground="{StaticResource Red0}"
 					Header="Close Window" 
                        Template="{StaticResource MenuItemCtrlTemplate1}"/>
 
-            </MenuItem>
+			</MenuItem>
 
-            <MenuItem Header ="Larger Font"
+			<MenuItem Header ="Larger Font"
 				    x:Name="SizeChangeMenuItem2" 
 				    Width="130"
 				    Click="changesize_Click2">
-                <MenuItem.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBlock Text="Larger xxxx" 
+				<MenuItem.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal" >
+							<TextBlock Text="Larger xxxx" 
 								     VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </MenuItem.ItemTemplate>
-                <MenuItem.Icon >
-                    <Image x:Name="FontsizeIcon2" 
+						</StackPanel>
+					</DataTemplate>
+				</MenuItem.ItemTemplate>
+				<MenuItem.Icon >
+					<Image x:Name="FontsizeIcon2" 
 						 Source="/icons/Magnify plus.png" Width="20" Height="25" />
-                </MenuItem.Icon>
-            </MenuItem>
+				</MenuItem.Icon>
+			</MenuItem>
 
-            <MenuItem Header ="Larger Font"
+			<MenuItem Header ="Larger Font"
 				    x:Name="SizeChangeMenuItem3" 
 				    Width="130"
 				    Click="changesize_Click3">
@@ -370,7 +428,7 @@
 		</Menu>
 
 		<!--// Columns are loaded from x:Array-->
-	    <DataGrid
+		<DataGrid
 				x:Name="CustGrid"
 				AlternatingRowBackground="{StaticResource Yellow2}"
 				AutoGenerateColumns="False"			    
@@ -383,6 +441,7 @@
 				Grid.ColumnSpan="3" 
 				Grid.Row="1"
 				Grid.RowSpan="1"
+				HorizontalGridLinesBrush="Black"
 				HorizontalContentAlignment="Center"
 				IsSynchronizedWithCurrentItem="False"
 				IsTabStop="False"
@@ -418,13 +477,11 @@
 		</DataGrid>
 
 		<Grid x:Name="DataFields"
-			DataContext="CustGrid"
-			Grid.Column="1" 
-			Grid.ColumnSpan="2" 
+			DataContext="CustGrid" 
+			Grid.ColumnSpan="3" 
 			Grid.Row="1"
-			Grid.RowSpan="2"
-			HorizontalAlignment="Stretch"
-			Margin="-3,230,0,3"
+			Grid.RowSpan="3"
+			Margin="11,0,1,7"
 			VerticalAlignment="Bottom"
 			>
 			<Grid.RowDefinitions>
@@ -436,9 +493,11 @@
 
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="80"/>
-				<ColumnDefinition Width="80"/>
+				<ColumnDefinition Width="62"/>
+				<ColumnDefinition Width="18"/>
 				<ColumnDefinition Width="90"/>
-				<ColumnDefinition Width="110"/>
+				<ColumnDefinition Width="36"/>
+				<ColumnDefinition Width="74"/>
 			</Grid.ColumnDefinitions>
 			<!--#endregion Text Fields-->
 
@@ -448,19 +507,15 @@
 				BorderThickness="2"
 				Grid.Row="0"
 				Grid.Column="0"
-				Grid.ColumnSpan="4"
+				Grid.ColumnSpan="6"
 				Grid.RowSpan="4"
-				HorizontalAlignment="Stretch"
-				VerticalAlignment="Stretch"
 				Margin="5,1,-40,-8"
 				/>
 			<TextBlock
 					x:Name="textBlock"
 					FontWeight="Bold"
 					Foreground="White"
-					Grid.Column="0"
-					Grid.Row="0"
-					Height="25"
+					Height="24"
 					HorizontalAlignment="Center"
 					Padding="10,5,5,5"
 					VerticalAlignment="Center"
@@ -470,7 +525,6 @@
 			<TextBlock
 					x:Name="textBlock_Copy"
 					Foreground="White"
-					Grid.Column="0"
 					Grid.Row="1"
 					Width="70"
 					Height="25"
@@ -483,10 +537,9 @@
 			<TextBlock
 					x:Name="textBlock_Copy5"
 					Foreground="White"
-					Grid.Column="0"
 					Grid.Row="2"
 					Width="70"
-					Height="25"
+					Height="26"
 					Padding="10,5,5,5"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center"
@@ -496,10 +549,9 @@
 			<TextBlock
 					x:Name="textBlock_Copy1"
 					Foreground="White"
-					Grid.Column="0"
 					Grid.Row="3"
 					Width="84"
-					Height="25"
+					Height="26"
 					Padding="15,5,5,5"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center"
@@ -511,19 +563,18 @@
 					x:Name="Custno"
 					Foreground="Black"
 					Grid.Column="1"
-					Grid.Row="0"
 					Width="90"
 					Height="24"
-					Margin="5,0,-35,0"
+					Margin="15,0,0,0"
 					Padding="5,2,5,5"
-					HorizontalAlignment="Center"
+					HorizontalAlignment="Left"
 					IsTabStop="True"
 					VerticalAlignment="Center"
 					HorizontalContentAlignment="Center"
 					FontSize="12"
 					TabIndex="0"
 					LostFocus ="Edit_LostFocus"
-					Text="{Binding CustNo, FallbackValue=Cust  #, UpdateSourceTrigger=LostFocus}" />
+					Text="{Binding CustNo, FallbackValue=Cust  #, UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" />
 
 
 			<TextBox
@@ -532,9 +583,9 @@
 					Grid.Row="1"
 					Width="90"
 					Height="24"
-					Margin="5,0,-35,0"
+					Margin="15,0,0,0"
 					Padding="5,2,5,5"
-					HorizontalAlignment="Center"
+					HorizontalAlignment="Left"
 					VerticalAlignment="Center"
 					HorizontalContentAlignment="Center"
 					IsTabStop="True"
@@ -543,7 +594,7 @@
 					RenderTransformOrigin="0.422,2.208"
 					TabIndex="1"
 					LostFocus ="Edit_LostFocus"
-					Text="{Binding BankNo, FallbackValue=Bank A/c #, UpdateSourceTrigger=LostFocus}" />
+					Text="{Binding BankNo, FallbackValue=Bank A/c #, UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" />
 
 			<TextBox
 					x:Name="acType"
@@ -552,9 +603,9 @@
 					Grid.Row="2"
 					Width="90"
 					Height="24"
-					Margin="5,0,-35,0"
+					Margin="15,0,0,0"
 					Padding="5,3,0,0"
-					HorizontalAlignment="Center"
+					HorizontalAlignment="Left"
 					IsTabStop="True"
 					VerticalAlignment="Center"
 					HorizontalContentAlignment="Center"
@@ -564,7 +615,7 @@
 					LostFocus ="Edit_LostFocus"
 					Text="{Binding AcType, FallbackValue=AcType, UpdateSourceTrigger=LostFocus}"
 					TextAlignment="Center"
-					TextChanged="TextChanged" />
+					TextChanged="TextChanged" Grid.ColumnSpan="3" />
 
 
 			<TextBox
@@ -574,43 +625,43 @@
 					Width="104"
 					Height="32"
 					Padding="5,3,0,0"
-					HorizontalAlignment="Center"
+					HorizontalAlignment="Left"
 					VerticalAlignment="Center"
 					HorizontalContentAlignment="Center"
 					IsTabStop="True"
 					FontSize="16"
 					FontWeight="DemiBold"
 					Foreground="Red"
-					Margin="5,0,-35,0"
+					Margin="8,0,0,0"
 					SelectionChanged="SelectionChanged"
 					TabIndex="3"
 					LostFocus ="Edit_LostFocus"
 					Text="{Binding Balance, FallbackValue=Balance, UpdateSourceTrigger=LostFocus}"
 					TextAlignment="Center"
-					TextChanged="TextChanged" />
+					TextChanged="TextChanged" Grid.ColumnSpan="3" />
 
 
 			<TextBlock
 					x:Name="textBlock_Copy3"
 					Foreground="White"
-					Grid.Column="2"
+					Grid.Column="3"
 					Grid.Row="1"
 					Width="88"
 					Height="24"
-					Margin="15,0,-35,0"
+					Margin="26,4,12,5"
 					Padding="5,5,5,5"
 					FontWeight="DemiBold"
 					Text="Date Opened"
-					TextAlignment="Center" />
+					TextAlignment="Center" Grid.ColumnSpan="2" />
 
 			<TextBox
 					x:Name="odate"
 					Foreground="Black"
-					Grid.Column="3"
+					Grid.Column="4"
 					Grid.Row="1"
 					Width="90"
 					Height="24"
-					Margin="15,0,-35,0"
+					Margin="35,4,-15,5"
 					Padding="5,3,0,0"
 					HorizontalContentAlignment="Center"
 					IsTabStop="True"
@@ -620,27 +671,27 @@
 					LostFocus ="Edit_LostFocus"
 					Text="{Binding ODate, FallbackValue=ODate, StringFormat=dd/MM/yyyy, UpdateSourceTrigger=LostFocus}"
 					TextAlignment="Center"
-					TextChanged="TextChanged" />
+					TextChanged="TextChanged" Grid.ColumnSpan="2" />
 
 			<TextBlock
 					x:Name="textBlock_Copy4"
 					Foreground="White"
-					Grid.Column="2"
+					Grid.Column="3"
 					Grid.Row="2"
-					Margin="3,0,-35,0"
+					Margin="29,7,27,8"
 					Width="70"
 					Height="25"
 					Padding="5,5,5,5"
 					FontWeight="Bold"
-					Text="Close Date" />
+					Text="Close Date" Grid.ColumnSpan="2" />
 
 			<TextBox
 					x:Name="cdate"
-					Grid.Column="3"
+					Grid.Column="4"
 					Grid.Row="2"
 					Width="90"
 					Height="24"
-					Margin="15,0,-35,0"
+					Margin="35,8,-15,8"
 					Padding="5,3,0,0"
 					HorizontalContentAlignment="Center"
 					IsTabStop="True"
@@ -651,14 +702,14 @@
 					LostFocus ="Edit_LostFocus"
 					Text="{Binding CDate, FallbackValue=CDate, StringFormat=dd/MM/yyyy, UpdateSourceTrigger=LostFocus}"
 					TextAlignment="Center"
-					TextChanged="TextChanged" />
+					TextChanged="TextChanged" Grid.ColumnSpan="2" />
 			<TextBlock
 					x:Name="Count"
-					Grid.Column="4"
+					Grid.Column="5"
 					Grid.Row="0"
 					Width="88"
 					Height="24"
-					Margin="15,0,-35,0"
+					Margin="0,8,-14,8"
 					Padding="5,3,5,5"
 					Background="DarkGray"
 					FontSize="14"
@@ -667,6 +718,37 @@
 					Text=" Counter"
 					TextAlignment="Center"
 					TextTrimming="WordEllipsis" />
+
+			<TextBlock 				
+				Foreground="{StaticResource White0}"
+				Grid.Column="5" 	
+				Height="36"
+				Panel.ZIndex="15" 
+				Text="    Sort Columns" 
+				TextWrapping="Wrap"
+				Margin="133,12,-117,25" Grid.RowSpan="2" />
+
+			<ListBox	x:Name="ColumnSelection" 
+				Background="{StaticResource Blue4}"
+				BorderBrush="#FFE04B1F" 
+				IsEnabled="True"
+				Focusable="True"					
+				FontSize="16"
+				Foreground="White"
+				SelectedIndex="0"
+				Grid.Column="5" 
+				Grid.Row="1" 	
+				Grid.RowSpan="3" 
+				HorizontalContentAlignment="Center"
+				IsTabStop="True"
+				 ItemContainerStyle="{StaticResource _ColumnsListBoxItemStyle}"
+				Margin="147,10,-95,15"
+				Panel.ZIndex="15" 
+				SelectionChanged="Columns_SelectionChanged"
+				VerticalContentAlignment="Center" >
+				
+				<!--<ListBoxItem Style="{StaticResource _ColumnsListBoxItemStyle}"/>-->
+			</ListBox>
 
 		</Grid>
 
@@ -688,8 +770,9 @@
 				Template="{StaticResource HorizontalGradientTemplateRed}" 
 				Width="100"
 			/>
+		<!--Background="{StaticResource HeaderBrushYellow}"-->
 		<Button
-				Background="{StaticResource HeaderBrushYellow}"
+				Background="{StaticResource HeaderHorizontalBrushYellowToDarkToYellow}"
 				Click="Close_Click"
 				Content="Close"
 				Foreground="White"
@@ -699,8 +782,8 @@
 				HorizontalAlignment="Left"
 				IsTabStop="False"
 				KeyDown="ShowCust_KeyDown" 
-				Template="{StaticResource HorizontalGradientTemplateYellow}" 
 				VerticalAlignment="Top"
+				Template="{StaticResource HorizontalGradientTemplateYellow}" 
 				Width="100" Margin="20,99,0,0" />
 		<CheckBox x:Name="OntopChkbox"
 				Click="OntopChkbox_Click"

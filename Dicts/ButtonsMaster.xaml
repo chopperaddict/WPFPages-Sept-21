@@ -288,8 +288,9 @@
 				</Setter>
 				<Setter Property="Background" TargetName="border">
 					<Setter.Value>
-						<LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
-							<GradientStop Color="#FF595013" Offset="0.314"/>
+						<!--<LinearGradientBrush StartPoint="0,0" EndPoint="1,0">-->
+							<LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+								<GradientStop Color="#FF595013" Offset="0.314"/>
 							<GradientStop Color="#FF7d7015" Offset="0.553"/>
 							<GradientStop Color="#F5d816" Offset="1"/>
 						</LinearGradientBrush>
@@ -442,7 +443,7 @@
 				<Setter Property="Control.Foreground"  TargetName="border">
 					<Setter.Value>
 						<LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
-							<GradientStop Color="White" Offset="0.454"/>
+							<GradientStop Color="White" Offset="0.154"/>
 							<GradientStop Color="gray" Offset="0.633"/>
 							<GradientStop Color="#FF000000" Offset="1"/>
 						</LinearGradientBrush>

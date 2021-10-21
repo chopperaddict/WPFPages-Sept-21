@@ -14,30 +14,31 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
-                 <ResourceDictionary Source="Dicts\Menus.xaml" />
-                <ResourceDictionary Source="Dicts\StylesDict.xaml" />
-                <ResourceDictionary Source="Dicts\ColorsDictionary.xaml" />
-                <ResourceDictionary Source="Dicts\ButtonsMaster.xaml" />
-                <ResourceDictionary Source="Dicts\DiagonalGradients.xaml" />
-                <ResourceDictionary Source="Dicts\HorizontalGradients.xaml" />
-                <ResourceDictionary Source="Dicts\VerticalGradients.xaml" />
-                <ResourceDictionary Source="Dicts\BaseDictionary.xaml" />
-                <ResourceDictionary Source="Dicts\AppButtonsDictionary.xaml" />
-                <ResourceDictionary Source="Dicts\ButtonDictionary.xaml" />
-                <ResourceDictionary Source="Dicts\TestDictionary.xaml" />
-                <ResourceDictionary Source="Dicts\BaseDictionary.xaml" />
-                <ResourceDictionary Source="Dicts\BtnsDict.xaml" />
-                <ResourceDictionary Source="Dicts\DGCellStyles.xaml" />
-                <ResourceDictionary Source="DataGridStyles\NwStyleTemplate.xaml" />
-                <ResourceDictionary Source="DataGridStyles\BankDatagridStyleTemplate.xaml" />
-                <ResourceDictionary Source="DataGridStyles\CustomerDatagridStyleTemplate.xaml" />
-                <ResourceDictionary Source="DataTemplates\BankDataTemplates.xaml" />
-                <ResourceDictionary Source="DataTemplates\CustomersDataTemplates.xaml" />
-                  <ResourceDictionary Source="Styles\StdMenuStyle.xaml" />
-			<ResourceDictionary Source="Styles\ListBoxViewStyles.xaml" />
-			<ResourceDictionary Source="Dicts\BankDataGridColumns.xaml" />
-				<!--<ResourceDictionary Source="DataTemplates\BankAccountDataTemplates.xaml" />
-			<ResourceDictionary Source="DataTemplates\CustomersDataTemplates.xaml" />-->
+                  <ResourceDictionary Source="Dicts\Menus.xaml" />
+                  <ResourceDictionary Source="Dicts\StylesDict.xaml" />
+                  <ResourceDictionary Source="Dicts\ColorsDictionary.xaml" />
+                  <ResourceDictionary Source="Dicts\ButtonsMaster.xaml" />
+                  <ResourceDictionary Source="Dicts\DiagonalGradients.xaml" />
+                  <ResourceDictionary Source="Dicts\HorizontalGradients.xaml" />
+                  <ResourceDictionary Source="Dicts\VerticalGradients.xaml" />
+                  <ResourceDictionary Source="Dicts\BaseDictionary.xaml" />
+                  <ResourceDictionary Source="Dicts\AppButtonsDictionary.xaml" />
+                  <ResourceDictionary Source="Dicts\ButtonDictionary.xaml" />
+                  <ResourceDictionary Source="Dicts\TestDictionary.xaml" />
+                  <ResourceDictionary Source="Dicts\BaseDictionary.xaml" />
+                  <ResourceDictionary Source="Dicts\BtnsDict.xaml" />
+                  <ResourceDictionary Source="Dicts\DGCellStyles.xaml" />
+                  <ResourceDictionary Source="DataGridStyles\NwStyleTemplate.xaml" />
+                  <ResourceDictionary Source="DataGridStyles\BankDatagridStyleTemplate.xaml" />
+                  <ResourceDictionary Source="DataGridStyles\CustomerDatagridStyleTemplate.xaml" />
+                  <ResourceDictionary Source="DataTemplates\BankDataTemplates.xaml" />
+                  <ResourceDictionary Source="DataTemplates\CustomersDataTemplates.xaml" />
+			<ResourceDictionary Source="DataTemplates\ListviewStyles.xaml" />
+			<ResourceDictionary Source="DataTemplates\TextBlockStyles.xaml" />
+			<ResourceDictionary Source="Styles\StdMenuStyle.xaml" />
+                  <ResourceDictionary Source="Styles\ListBoxViewStyles.xaml" />
+			<ResourceDictionary Source="Dicts\DataGridColumns.xaml" />
+			<ResourceDictionary Source="Dicts\ListBoxStyles.xaml" />
 			<ResourceDictionary Source="DataTemplates\NWDataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

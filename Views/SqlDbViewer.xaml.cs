@@ -465,6 +465,9 @@ namespace WPFPages
 			WaitMessage . Refresh ( );
 			this . UpdateLayout ( );
 			this . Refresh ( );
+			ColumnSelection . Items . Add ( 0 );
+			ColumnSelection . Items . Add ( 1 );
+			ColumnSelection . Items . Add ( 2 );
 
 
 			this . BankGrid . AllowDrop = true;
@@ -7026,6 +7029,35 @@ namespace WPFPages
 				}
 				DisplayType . Text = value . ToString ( );
 			}
+		}
+
+		private void Columns_SelectionChanged ( object sender , SelectionChangedEventArgs e )
+		{
+			ListBox lb = sender as ListBox;
+			var  Content = lb . SelectedItem;
+			//ListBoxItem lbi = Content as  ListBoxItem;
+			var selection = int.Parse(Content.ToString());
+			if ( selection >= 0 && selection <= 2 )
+			{
+				if ( CurrentDb == "BANKACCOUNT" )
+				{
+//					int[] sortorder = { 2,3,1,5,4,7,6,0};
+					DataGridSupport . SortBankColumns ( BankGrid , DGBankColumnsCollection , selection );
+					BankGrid . Refresh ( );
+				}
+				if ( CurrentDb == "CUSTOMER" )
+				{
+					DataGridSupport . SortCustomerColumns ( CustomerGrid , DGCustColumnsCollection , selection );
+					CustomerGrid . Refresh ( );
+				}
+				if ( CurrentDb == "DETAILS" )
+				{
+					DataGridSupport . SortDetailsColumns ( DetailsGrid , DGDetailsColumnsCollection , selection );
+					DetailsGrid . Refresh ( );
+				}
+//				DisplayType  = value . ToString ( );
+			}
+
 		}
 	}
 }

@@ -30,9 +30,9 @@
 
 		<Style x:Key="CotextMenuItem1" TargetType="MenuItem">
 		</Style>
-		
+
 		<!--#region Context Menu-->
-		
+
 		<ContextMenu x:Key="ContextMenu1">
 			<MenuItem 
 				Name ="linq1" Header="Linq Queries"  
@@ -473,10 +473,10 @@
 			</Style.Triggers>
 		</Style>
 
-		<Style x:Key="HeaderStyleYellow" TargetType="DataGridColumnHeader">
+		<!--<Style x:Key="HeaderStyleYellow" TargetType="DataGridColumnHeader">
 			<Setter Property="Background" Value="{StaticResource HeaderBrushYellow}" />
 			<Setter Property="Foreground" Value="White" />
-			<Setter Property="BorderBrush" Value="{StaticResource HeaderBorderBrushYellow}" />
+			<Setter Property="BorderBrush" Value="{StaticResource HeaderBrushYellow}" />
 			<Setter Property="BorderThickness" Value="1" />
 			<Setter Property="SnapsToDevicePixels" Value="True" />
 			<Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -485,10 +485,10 @@
 			<Setter Property="Cursor" Value="Hand" />
 			<Style.Triggers>
 				<Trigger Property="IsMouseOver" Value="true">
-					<Setter Property= "Background" Value="{StaticResource HeaderBorderBrushYellow}" />
+					<Setter Property= "Background" Value="{StaticResource HeaderBrushYellow}" />
 				</Trigger>
 			</Style.Triggers>
-		</Style>
+		</Style>-->
 
 		<!--Test of downloaded Datagrid column header Style-->
 	</Window.Resources>
@@ -516,7 +516,7 @@
 			<ColumnDefinition Width="3.5*" />
 			<ColumnDefinition Width="110" />
 			<ColumnDefinition Width="175" />
-			<ColumnDefinition Width="10" />
+			<ColumnDefinition Width="30" />
 		</Grid.ColumnDefinitions>
 		<Grid.Background>
 			<!--create an elegant left to right light-> Dark gradient as a background-->
@@ -745,7 +745,8 @@
 				Foreground="White"
 				  Grid.Row="0"
 				  Grid.Column="0"
-				  Grid.ColumnSpan="1"				Template="{StaticResource HorizontalGradientTemplateGray}"
+				  Grid.ColumnSpan="1"				
+				Template="{StaticResource HorizontalGradientTemplateGray}"
 				  Margin="5,0,0,0"
 				MouseDown="Window_MouseDown"
 				Content="Multiple A/c's Only">
@@ -775,6 +776,7 @@
 
 				<!--Bank Account Button-->
 				<Button x:Name="ShowBank" Width="130" Height="35" 
+					Background="{StaticResource HeaderBrushBlue}"
 					IsEnabled="true"
 					Focusable="True"
 					Tag="true;"
@@ -782,16 +784,19 @@
 					Content="Bank A/c's (0)"
 					Margin="-2,12,0,0"
 					MouseDown="Window_MouseDown"
-					Background="{StaticResource HeaderBrushBlue}"
 					Foreground="White"
-					Template="{StaticResource HorizontalGradientTemplateBlue}" />
+					Template="{StaticResource HorizontalGradientTemplateBlue}"
+					  />
+				<!--Background="{StaticResource HeaderBrushBlue}"-->
 
 				<!--Customer Account Button-->
+				<!--Background="{StaticResource HeaderHorizontalBrushBlackToYellow}"-->
+				<!--Background="{StaticResource HeaderHorizontalBrushYellowToBlackToYellow}"-->
 				<Button x:Name="ShowCust" Width="145" Height="35"
+					  Background="{StaticResource HeaderHorizontalBrushYellowToDarkToYellow}"
 					IsEnabled="true"
 					Focusable="True"
 					Click="ShowCust_Click"
-					Background="{StaticResource HeaderBrushYellow}"
 					Foreground="White"
 					Margin="10,12,0,0"
 					Template="{StaticResource HorizontalGradientTemplateYellow}"
@@ -799,14 +804,16 @@
 					Content="Customer A/c's (0)" />
 
 				<!--Details Account Button-->
+				<!--Background="{StaticResource HeaderBrushGreen}"-->
+				<!--Background="{StaticResource HeaderHorizontalBrushGreenToBlack}"-->
 				<Button x:Name="ShowDetails" 
+					  Background="{StaticResource HeaderBrushGreen}"
 					Margin="6,12,0,0"
 					Width="125" Height="35" 
 					IsEnabled="true"
 					Focusable="True"
 					Click="ShowDetails_Click"
 					MouseDown="Window_MouseDown"
-					Background="{StaticResource HeaderBrushGreen}"
 					Foreground="White"
 					Template="{StaticResource HorizontalGradientTemplateGreen}"
 					Content="Details A/c's  (0)">
@@ -851,7 +858,7 @@
 				Height="200"
 				Orientation="Vertical"
 				Width="600"
-				Visibility="Visible" Margin="0,0,0,0" >
+				Visibility="Visible" Margin="92,-30,165,17" >
 
 				<TextBlock
 					FontSize="26"
@@ -946,13 +953,14 @@
 
 			<!--#region Customers data Grid-->
 			<!--Columns are loaded from Template-->
+			<!--AlternatingRowBackground="{StaticResource Yellow3}"-->
 			<DataGrid x:Name="CustomerGrid"
-				AlternatingRowBackground="{StaticResource Yellow3}"
 				AllowDrop="True"
-			    AutoGenerateColumns="False"
+			    	AlternatingRowBackground="{StaticResource Yellow2}"
+				AutoGenerateColumns="False"
 				BeginningEdit="CustomerGrid_BeginningEdit"
-				BorderBrush="{StaticResource Yellow3}"
 				BorderThickness="2"
+				BorderBrush="{StaticResource Yellow3}"
 				CanUserAddRows="false"
 				CanUserSortColumns="True"
 				CellEditEnding="CustomerGrid_CellEditEnding"
@@ -980,10 +988,10 @@
 				TabIndex="2"
 				TargetUpdated="CustomerGrid_TargetUpdated"
 				VerticalAlignment="Stretch"
-				VerticalGridLinesBrush="{StaticResource Orange0}"
 				VirtualizingPanel.ScrollUnit="Pixel"
 				Visibility="Collapsed"
 				CellStyle="{StaticResource CustomerGridStyle}">
+				<!--VerticalGridLinesBrush="{StaticResource Orange0}"-->
 
 				<!--This makes the selected row visible when window looses focus - works on any grid-->
 				<DataGrid.Resources>
@@ -1080,7 +1088,7 @@
 				Padding="5"
 				Text="Count"
 				TextAlignment="Center"
-				VerticalAlignment="Center" Margin="10,0,35,0"
+				VerticalAlignment="Center" Margin="-60,0,105,0"
 				/>
 
 			<!--Close Window Button-->
@@ -1105,15 +1113,14 @@
 				FontSize="23"
 				FontWeight="DemiBold"
 				Foreground="{StaticResource Black0}"
-				Grid.Column="1"
+				Grid.Column="2"
 				Height="30"
 				MaxLength="1"				
 				PreviewKeyUp="DisplayType_PreviewKeyUp"				
 				Padding="-3"
 				Text="0"
 				TextAlignment="Center"
-				VerticalAlignment="Center" Margin="113,0,137,0" 
-				Grid.ColumnSpan="2"
+				VerticalAlignment="Center" Margin="11,0,119,0"
 				/>
 
 		</Grid>
@@ -1125,14 +1132,61 @@
 				Grid.Column="1"
 				Grid.Row="6"
 				Height="30"
-				HorizontalAlignment="Stretch"
-				Margin="0,5,5,5"
+				Margin="0,0,68,0"
 				Padding="6"
 				Style="{StaticResource gradientblue}"
 				Text="Status comments "
 				TextAlignment="Center"
 				VerticalAlignment="Center"
 				/>
+		<!--<ComboBox	x:Name="ColumnSelection" 
+				IsEnabled="True"
+				Margin="410,5,68,5"
+				Focusable="True"
+				MaxDropDownHeight="1000"
+				FontSize="20"
+				Foreground="{StaticResource Black0}"
+				IsTabStop="True"
+				SelectionChanged="ComboBox_SelectionChanged"
+				VerticalContentAlignment="Center" 
+				Panel.ZIndex="5" 
+				BorderBrush="#FFE04B1F" Grid.Column="1" Grid.Row="1"				
+				>-->
+
+		<!--<ComboBoxItem Content="0" IsSelected="True"/>
+			<ComboBoxItem Content="1"/>
+			<ComboBoxItem Content="2"/>
+		</ComboBox>-->
+
+		<TextBlock 				
+				Foreground="{StaticResource White0}"
+				Grid.Column="3"
+				Panel.ZIndex="15" 
+				Text="    Sort Columns" 
+				TextWrapping="Wrap" Margin="41,19,43,3" Grid.Row="1" />
+
+		<ListBox	x:Name="ColumnSelection" 
+				Background="{StaticResource Blue4}"
+				BorderBrush="#FFE04B1F" 
+				IsEnabled="True"
+				Focusable="True"					
+				FontSize="16"
+				Foreground="White"
+				Grid.RowSpan="2" 
+				Grid.Row="4" 
+				HorizontalContentAlignment="Center"
+				IsTabStop="True"
+				ItemContainerStyle="{StaticResource _ColumnsListBoxItemStyle}"				
+				SelectedIndex="0"						
+				SelectionChanged="Columns_SelectionChanged"
+				VerticalContentAlignment="Center" 
+				Visibility="Visible" 
+				Grid.Column="4" 
+				Margin="3,59,3,84" >
+			<!--ItemContainerStyle="{StaticResource _ColumnsListBoxItemStyle}"-->
+
+			<!--<ListBoxItem Style="{StaticResource _ColumnsListBoxItemStyle}"/>-->
+		</ListBox>
 
 	</Grid>
 </Window>
